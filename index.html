@@ -2062,7 +2062,19 @@ document.getElementById("openExportBtn").addEventListener("click",()=>{
 // CLOUD SYNC
 const syncOverlay=document.getElementById("syncOverlay");const syncStatusEl=document.getElementById("syncStatus");
 let firebaseInitialized=false, currentUser=null;
+// Default Firebase config baked into this deployment — no manual entry needed.
+// (Anyone forking this app for their own Firebase project can still override
+// this via the "advanced" settings panel, which takes priority if saved.)
+const DEFAULT_FIREBASE_CONFIG={
+  apiKey:"AIzaSyCA-teF3dMVSAk8ZA0jUI63rYjdMPKoU2o",
+  authDomain:"timeblock-pomodoro.firebaseapp.com",
+  projectId:"timeblock-pomodoro",
+  storageBucket:"timeblock-pomodoro.firebasestorage.app",
+  messagingSenderId:"510294270836",
+  appId:"1:510294270836:web:60caa3cf4031f40bfd4221",
+};
 function loadCloudConfig(){try{const r=localStorage.getItem(CK);return r?JSON.parse(r):null;}catch(e){return null;}}
+function activeFirebaseConfig(){ const saved=loadCloudConfig(); return saved?.firebaseConfig?.apiKey ? saved.firebaseConfig : DEFAULT_FIREBASE_CONFIG; }
 function saveCloudConfig(c){try{localStorage.setItem(CK,JSON.stringify(c));}catch(e){}}
 
 function ensureFirebaseInit(fc){
@@ -2122,9 +2134,7 @@ document.getElementById("syncConnectBtn").addEventListener("click",()=>{
 });
 
 document.getElementById("googleSignInBtn").addEventListener("click",async()=>{
-  const cfg=loadCloudConfig();
-  if(!cfg?.firebaseConfig?.apiKey){ alert("ต้องตั้งค่า Firebase ก่อน (กด \"ตั้งค่า Firebase ของแอปนี้\" ด้านล่าง)"); return; }
-  if(!ensureFirebaseInit(cfg.firebaseConfig)) return;
+  if(!ensureFirebaseInit(activeFirebaseConfig())) return;
   try{
     await firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider());
     syncOverlay.classList.remove("show");
@@ -2158,8 +2168,7 @@ checkNotifPerm();
 renderAll();
 setInterval(tick,1000);
 tick();
-const savedCloud=loadCloudConfig();
-if(savedCloud?.firebaseConfig?.apiKey) ensureFirebaseInit(savedCloud.firebaseConfig);
+ensureFirebaseInit(activeFirebaseConfig());
 </script>
 </body>
 </html>
