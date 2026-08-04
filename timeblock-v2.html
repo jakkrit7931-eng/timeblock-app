@@ -1035,30 +1035,34 @@ const CHARACTER_CHROMA={char2:true,char3:true}; // only these were shot on a gre
 function loadMascotStyle(){try{return localStorage.getItem(MK)||"clock";}catch(e){return"clock";}}
 // chroma-key: these mascot videos are shot on a solid green background — key it out live so
 // only the character shows through, blending with the app's UI instead of a green box.
-let chromaKeyRAF=null;
+let chromaKeyRAF=null,chromaKeyFailed=false;
 function stopChromaKey(){if(chromaKeyRAF){cancelAnimationFrame(chromaKeyRAF);chromaKeyRAF=null;}}
 function startChromaKey(videoEl,canvasEl){
   stopChromaKey();
+  chromaKeyFailed=false;
   const ctx=canvasEl.getContext("2d",{willReadFrequently:true});
-  const W=180,H=Math.round(W*videoEl.videoHeight/(videoEl.videoWidth||W)||240);
+  const W=180,H=Math.round(W*(videoEl.videoHeight||1280)/(videoEl.videoWidth||720));
   canvasEl.width=W;canvasEl.height=H;
   function frame(){
-    if(videoEl.readyState>=2){
-      ctx.drawImage(videoEl,0,0,W,H);
-      const img=ctx.getImageData(0,0,W,H),d=img.data;
-      for(let i=0;i<d.length;i+=4){
-        const r=d[i],g=d[i+1],b=d[i+2];
-        // green-screen key: green clearly dominant over red & blue = background
-        const greenness=g-Math.max(r,b);
-        if(greenness>18){
-          d[i+3]=0; // fully transparent
-        }else if(greenness>-6){
-          d[i+3]=Math.max(0,Math.min(255,(18-greenness)/24*255)); // feather the edge
+    try{
+      if(videoEl.readyState>=2){
+        ctx.drawImage(videoEl,0,0,W,H);
+        const img=ctx.getImageData(0,0,W,H),d=img.data;
+        for(let i=0;i<d.length;i+=4){
+          const r=d[i],g=d[i+1],b=d[i+2];
+          const greenness=g-Math.max(r,b);
+          if(greenness>18)d[i+3]=0;
+          else if(greenness>-6)d[i+3]=Math.max(0,Math.min(255,(18-greenness)/24*255));
         }
+        ctx.putImageData(img,0,0);
       }
-      ctx.putImageData(img,0,0);
+      chromaKeyRAF=requestAnimationFrame(frame);
+    }catch(e){
+      // canvas read failed (e.g. tainted canvas) — fall back to showing the plain video instead of a blank frame
+      chromaKeyFailed=true;
+      canvasEl.style.display="none";
+      videoEl.style.cssText="display:block;object-fit:contain;border-radius:10px;";
     }
-    chromaKeyRAF=requestAnimationFrame(frame);
   }
   frame();
 }
@@ -1067,7 +1071,7 @@ function setMascotStyle(k){
   const vidSrc=CHARACTER_VIDEOS[k];
   if(vidSrc&&CHARACTER_CHROMA[k]){
     svgEl.style.display="none";
-    videoEl.style.cssText="visibility:hidden;position:absolute;width:1px;height:1px;pointer-events:none;";
+    videoEl.style.cssText="visibility:hidden;position:fixed;left:-9999px;top:0;width:180px;height:320px;pointer-events:none;";
     canvasEl.style.display="block";
     videoEl.src=vidSrc;
     videoEl.onloadeddata=()=>startChromaKey(videoEl,canvasEl);
