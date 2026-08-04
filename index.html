@@ -151,8 +151,9 @@ body{margin:0;background:var(--bg-page);font-family:-apple-system,"Segoe UI","No
 .sprite-wrap{position:relative;width:168px;height:226px;}
 .mascot-accessory{position:absolute;top:-4px;left:4px;width:26px;height:26px;z-index:2;}
 .mascot-accessory svg{width:100%;height:100%;}
-.mascot-sprite{width:168px;height:226px;-webkit-mask-image:radial-gradient(ellipse 62% 58% at 50% 46%,#000 52%,transparent 100%);mask-image:radial-gradient(ellipse 62% 58% at 50% 46%,#000 52%,transparent 100%);}
-video.mascot-sprite{filter:contrast(1.04);}
+.mascot-sprite{width:168px;height:226px;}
+video.mascot-sprite{border-radius:14px;}
+canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .mascot-sprite .mascot-body{transform-origin:center;}
 .is-idle .mascot-body{animation:idleSway 2.4s ease-in-out infinite;}
 .is-walking .mascot-body{animation:idleSway 2.4s ease-in-out infinite;}
@@ -706,9 +707,13 @@ video.mascot-sprite{filter:contrast(1.04);}
       <div class="row2">
         <div class="field"><label>หมวดหมู่</label>
           <select id="g_category">
-            <option value="main">🔴 หลัก</option>
-            <option value="skill">🔵 สกิล</option>
-            <option value="income">🟡 รายได้</option>
+            <option value="work">🎯 งาน/โปรดักทีวิตี้</option>
+            <option value="body">💧 สุขภาพกาย</option>
+            <option value="mind">🧠 จิตใจ/สติ</option>
+            <option value="learn">📚 การเรียนรู้</option>
+            <option value="money">💰 การเงิน</option>
+            <option value="home">🧹 งานบ้าน/ระเบียบ</option>
+            <option value="social">🤝 ความสัมพันธ์</option>
             <option value="hold">⚪ รอก่อน</option>
           </select>
         </div>
@@ -942,6 +947,29 @@ function dateStrFromDate(d){return d.getFullYear()+"-"+String(d.getMonth()+1).pa
 function todayStr(){return dateStrFromDate(new Date());}
 function addDays(s,n){const d=new Date(s+"T00:00:00");d.setDate(d.getDate()+n);return dateStrFromDate(d);}
 function toMinutes(t){const[h,m]=t.split(":").map(Number);return h*60+m;}
+function minutesToHM(m){m=Math.max(0,Math.min(24*60,m));return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0");}
+function nextFreeSlotToday(durMin){
+  const today=todayStr();
+  let startM=Math.ceil(currentNowMin()/15)*15;
+  const todays=blocks.filter(b=>b.date===today).sort((a,b)=>toMinutes(a.start)-toMinutes(b.start));
+  let moved=true;
+  while(moved){
+    moved=false;
+    for(const b of todays){
+      const bs=toMinutes(b.start),be=toMinutes(b.end);
+      if(startM<be&&startM+durMin>bs){startM=be;moved=true;}
+    }
+  }
+  if(startM+durMin>24*60)startM=24*60-durMin;
+  return{start:minutesToHM(startM),end:minutesToHM(startM+durMin)};
+}
+function createBlockFromMilestone(title,goalId){
+  const slot=nextFreeSlotToday(30);
+  blocks.push({id:uid(),title,date:todayStr(),start:slot.start,end:slot.end,goalId,mode:"none",completed:null});
+  saveState();
+  showToast(`สร้าง time block "${title}" เวลา ${slot.start} แล้ว`);
+  renderAll();
+}
 function nowPlus(m){const d=new Date(Date.now()+m*60000);return d.getHours().toString().padStart(2,"0")+":"+d.getMinutes().toString().padStart(2,"0");}
 function formatViewDate(s){const today=todayStr(),d=new Date(s+"T00:00:00"),lbl=d.toLocaleDateString("th-TH",{weekday:"short",day:"numeric",month:"short"});if(s===today)return"วันนี้ · "+lbl;if(s===addDays(today,1))return"พรุ่งนี้ · "+lbl;if(s===addDays(today,-1))return"เมื่อวาน · "+lbl;return lbl;}
 function startOfWeek(s){const d=new Date(s+"T00:00:00"),day=d.getDay();d.setDate(d.getDate()-day);return dateStrFromDate(d);}
@@ -1109,7 +1137,7 @@ function notify(eyebrow,msg){document.getElementById("mascotEyebrow").textConten
 const mascotInner=document.getElementById("mascotInner"),speechBubble=document.getElementById("speechBubble");
 let mascotTimer=null;
 function setMascotPos(state,anim){if(!anim)mascotInner.classList.add("no-anim");mascotInner.classList.remove("pos-onstage","pos-exit-left");if(state==="onstage")mascotInner.classList.add("pos-onstage");else if(state==="exit")mascotInner.classList.add("pos-exit-left");if(!anim){void mascotInner.offsetWidth;mascotInner.classList.remove("no-anim");}}
-function mascotShow(){ // brings the mascot on stage once and leaves it there permanently
+function mascotShow(){ // brings the mascot on stage (used when it has something to say)
   mascotInner.classList.add("is-idle");
   setMascotPos("onstage",true);
 }
@@ -1119,17 +1147,17 @@ function mascotWalkIn(msg){
   mascotInner.classList.add("is-talking");
   speechBubble.classList.add("show");
   if(voiceEnabled)speak(msg);
-  mascotTimer=setTimeout(hideSpeechBubble,15000);
+  mascotTimer=setTimeout(mascotWalkOut,15000);
 }
-function hideSpeechBubble(){
+function mascotWalkOut(){
   clearTimeout(mascotTimer);
   speechBubble.classList.remove("show");
   mascotInner.classList.remove("is-talking");
   window.speechSynthesis?.cancel();
+  setMascotPos("exit",true); // fades the character itself back out
 }
-function mascotWalkOut(){hideSpeechBubble();} // kept for compatibility with older calls — mascot itself no longer leaves
-document.getElementById("mascotOkBtn").addEventListener("click",hideSpeechBubble);
-document.getElementById("snoozeBtn").addEventListener("click",()=>{snoozeUntil=Date.now()+5*60000;hideSpeechBubble();});
+document.getElementById("mascotOkBtn").addEventListener("click",mascotWalkOut);
+document.getElementById("snoozeBtn").addEventListener("click",()=>{snoozeUntil=Date.now()+5*60000;mascotWalkOut();});
 
 // TICK
 function tick(){
@@ -1334,7 +1362,20 @@ function sparklineSvg(values){
   return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${bars}</svg>`;
 }
 
-const PJ_CATS={main:{label:"หลัก",color:"var(--focus)",bg:"var(--focus-soft)",border:"var(--focus-border)"},skill:{label:"สกิล",color:"#1a6ecc",bg:"#e6f1fb",border:"#b5d4f488"},income:{label:"รายได้",color:"#9a5c00",bg:"#fbeedd",border:"#fac77588"},hold:{label:"รอก่อน",color:"var(--ink-muted)",bg:"var(--paper)",border:"var(--line)"}};
+const PJ_CATS={
+  work:{label:"งาน/โปรดักทีวิตี้",color:"var(--focus)",bg:"var(--focus-soft)",border:"var(--focus-border)"},
+  body:{label:"สุขภาพกาย",color:"#1a9c6e",bg:"#e2f6ee",border:"#8ee0bf88"},
+  mind:{label:"จิตใจ/สติ",color:"#7a4fa3",bg:"#f1e9f8",border:"#cbb0e588"},
+  learn:{label:"การเรียนรู้",color:"#1a6ecc",bg:"#e6f1fb",border:"#b5d4f488"},
+  money:{label:"การเงิน",color:"#9a5c00",bg:"#fbeedd",border:"#fac77588"},
+  home:{label:"งานบ้าน/ระเบียบ",color:"#8a6d3b",bg:"#f3ede1",border:"#d9c69f88"},
+  social:{label:"ความสัมพันธ์",color:"#b2557a",bg:"#fbe9f0",border:"#eab0c688"},
+  hold:{label:"รอก่อน",color:"var(--ink-muted)",bg:"var(--paper)",border:"var(--line)"},
+  // aliases so goals saved under the old category set still render correctly
+  main:{label:"งาน/โปรดักทีวิตี้",color:"var(--focus)",bg:"var(--focus-soft)",border:"var(--focus-border)"},
+  skill:{label:"การเรียนรู้",color:"#1a6ecc",bg:"#e6f1fb",border:"#b5d4f488"},
+  income:{label:"การเงิน",color:"#9a5c00",bg:"#fbeedd",border:"#fac77588"},
+};
 function renderToday(){
   const vd=viewDate,nm=currentNowMin();
   document.getElementById("dateLabel").textContent=viewMode==="week"?formatWeekRange(startOfWeek(vd)):formatViewDate(vd);
@@ -1939,6 +1980,7 @@ function renderSubtaskList(){
     <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--line);">
       <input type="checkbox" class="subtask-done" data-idx="${i}" ${s.done?"checked":""}>
       <input type="text" class="subtask-title" data-idx="${i}" value="${esc(s.title)}" placeholder="ชื่อ milestone" style="flex:1;border:none;background:transparent;font-size:13px;font-family:inherit;color:var(--ink);${s.done?"text-decoration:line-through;color:var(--ink-muted);":""}">
+      <button type="button" class="subtask-schedule" data-idx="${i}" title="สร้าง time block วันนี้" style="border:none;background:none;color:var(--focus);font-size:15px;cursor:pointer;line-height:1;">📅</button>
       <button type="button" class="subtask-remove" data-idx="${i}" style="border:none;background:none;color:var(--ink-muted);font-size:12px;cursor:pointer;">✕</button>
     </div>`).join("");
 }
@@ -1950,7 +1992,13 @@ document.getElementById("addSubtaskBtn").addEventListener("click",()=>{
 });
 document.getElementById("projectSubtaskList").addEventListener("click",e=>{
   const rm=e.target.closest(".subtask-remove");
-  if(rm){currentSubtasks.splice(Number(rm.dataset.idx),1);renderSubtaskList();}
+  if(rm){currentSubtasks.splice(Number(rm.dataset.idx),1);renderSubtaskList();return;}
+  const sc=e.target.closest(".subtask-schedule");
+  if(sc){
+    const s=currentSubtasks[Number(sc.dataset.idx)];
+    if(!s.title.trim()){showToast("ตั้งชื่อ milestone ก่อนนะ");return;}
+    createBlockFromMilestone(s.title.trim(),editingGoalId||"");
+  }
 });
 document.getElementById("projectSubtaskList").addEventListener("change",e=>{
   const cb=e.target.closest(".subtask-done");
@@ -1994,7 +2042,7 @@ function openGoalModal(goal){
   document.getElementById("goalModalTitle").textContent=goal?"แก้ไขโปรเจกต์":"โปรเจกต์ใหม่";
   document.getElementById("g_emoji").value=goal?.emoji||"📌";
   document.getElementById("g_title").value=goal?.title||"";
-  document.getElementById("g_category").value=goal?.category||"main";
+  document.getElementById("g_category").value=goal?.category||"work";
   document.getElementById("g_deadline").value=goal?.deadline||"";
   document.getElementById("g_targetHours").value=goal?.targetHours||20;
   document.getElementById("g_unit").value=goal?.unit||"";
@@ -2028,7 +2076,7 @@ document.getElementById("goalSaveBtn").addEventListener("click",()=>{
   const data={
     title,
     emoji:document.getElementById("g_emoji").value.trim()||"📌",
-    category:document.getElementById("g_category").value||"main",
+    category:document.getElementById("g_category").value||"work",
     deadline:pickedGoalMode==="habit"?"":(document.getElementById("g_deadline").value||""),
     mode:pickedGoalMode,
     targetHours:pickedGoalMode==="time"?(parseFloat(document.getElementById("g_targetHours").value)||0):0,
@@ -2283,7 +2331,7 @@ function renderProjects(){
   const nonHabitGoals=goals.filter(g=>g.mode!=="habit");
   if(!nonHabitGoals.length){html+='<p class="empty">ยังไม่มีเป้าหมาย — กด + เพื่อเพิ่ม</p>';}
   else{
-    const catOrder={main:0,skill:1,income:2,hold:3};
+    const catOrder={work:0,main:0,body:1,mind:2,learn:3,skill:3,money:4,income:4,home:5,social:6,hold:7};
     const sorted=[...nonHabitGoals].sort((a,b)=>{
       const da=daysUntilGoal(a.deadline),db=daysUntilGoal(b.deadline);
       if(da!==null&&db!==null) return da-db;
@@ -2662,7 +2710,6 @@ if(window.matchMedia)window.matchMedia("(prefers-color-scheme: dark)").addEventL
 const hasData=loadState();
 if(!hasData)seedBlocks();
 setMascotStyle(loadMascotStyle());
-mascotShow();
 document.getElementById("voiceToggle").checked=true;
 const pcInit=loadPCS();
 document.getElementById("phoneCatchToggle").checked=pcInit.enabled;
