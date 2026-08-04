@@ -148,15 +148,18 @@ body{margin:0;background:var(--bg-page);font-family:-apple-system,"Segoe UI","No
 .mascot-msg{font-size:14px;font-weight:500;margin:0 0 10px;line-height:1.5;}
 .mascot-actions{display:flex;gap:7px;}
 .mascot-actions button{flex:1;border-radius:10px;padding:7px;font-size:12px;cursor:pointer;}
-.sprite-wrap{position:relative;width:128px;height:172px;}
+.sprite-wrap{position:relative;width:168px;height:226px;}
 .mascot-accessory{position:absolute;top:-4px;left:4px;width:26px;height:26px;z-index:2;}
 .mascot-accessory svg{width:100%;height:100%;}
-.mascot-sprite{width:128px;height:172px;-webkit-mask-image:radial-gradient(ellipse 62% 58% at 50% 46%,#000 52%,transparent 100%);mask-image:radial-gradient(ellipse 62% 58% at 50% 46%,#000 52%,transparent 100%);}
+.mascot-sprite{width:168px;height:226px;-webkit-mask-image:radial-gradient(ellipse 62% 58% at 50% 46%,#000 52%,transparent 100%);mask-image:radial-gradient(ellipse 62% 58% at 50% 46%,#000 52%,transparent 100%);}
 video.mascot-sprite{filter:contrast(1.04);}
 .mascot-sprite .mascot-body{transform-origin:center;}
 .is-idle .mascot-body{animation:idleSway 2.4s ease-in-out infinite;}
 .is-walking .mascot-body{animation:idleSway 2.4s ease-in-out infinite;}
+.is-talking .mascot-body{animation:talkBounce 0.55s ease-in-out infinite;}
+.is-talking .sprite-wrap{animation:talkBounce 0.55s ease-in-out infinite;}
 @keyframes idleSway{0%,100%{transform:rotate(0deg) translateY(0)}50%{transform:rotate(1.5deg) translateY(-2px)}}
+@keyframes talkBounce{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-5px) rotate(-2deg)}}
 @keyframes idleBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @keyframes walkBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
 .is-walking #legL{animation:legSwingA .4s linear infinite;}
@@ -1041,7 +1044,7 @@ function startChromaKey(videoEl,canvasEl){
   stopChromaKey();
   chromaKeyFailed=false;
   const ctx=canvasEl.getContext("2d",{willReadFrequently:true});
-  const W=180,H=Math.round(W*(videoEl.videoHeight||1280)/(videoEl.videoWidth||720));
+  const W=260,H=Math.round(W*(videoEl.videoHeight||1280)/(videoEl.videoWidth||720));
   canvasEl.width=W;canvasEl.height=H;
   function frame(){
     try{
@@ -1071,10 +1074,10 @@ function setMascotStyle(k){
   const vidSrc=CHARACTER_VIDEOS[k];
   if(vidSrc&&CHARACTER_CHROMA[k]){
     svgEl.style.display="none";
-    videoEl.style.cssText="visibility:hidden;position:fixed;left:-9999px;top:0;width:180px;height:320px;pointer-events:none;";
+    videoEl.style.cssText="visibility:hidden;position:fixed;left:-9999px;top:0;width:260px;height:462px;pointer-events:none;";
     canvasEl.style.display="block";
     videoEl.src=vidSrc;
-    videoEl.onloadeddata=()=>startChromaKey(videoEl,canvasEl);
+    videoEl.onloadeddata=()=>{startChromaKey(videoEl,canvasEl);videoEl.play().catch(()=>{});};
   }else if(vidSrc){
     stopChromaKey();
     svgEl.style.display="none";
@@ -1082,6 +1085,7 @@ function setMascotStyle(k){
     videoEl.onloadeddata=null;
     videoEl.src=vidSrc;
     videoEl.style.cssText="display:block;object-fit:contain;border-radius:10px;";
+    videoEl.play().catch(()=>{});
   }else{
     document.getElementById("mascotBodyGroup").innerHTML=MS[k]||MS.clock;
     stopChromaKey();
@@ -1105,10 +1109,27 @@ function notify(eyebrow,msg){document.getElementById("mascotEyebrow").textConten
 const mascotInner=document.getElementById("mascotInner"),speechBubble=document.getElementById("speechBubble");
 let mascotTimer=null;
 function setMascotPos(state,anim){if(!anim)mascotInner.classList.add("no-anim");mascotInner.classList.remove("pos-onstage","pos-exit-left");if(state==="onstage")mascotInner.classList.add("pos-onstage");else if(state==="exit")mascotInner.classList.add("pos-exit-left");if(!anim){void mascotInner.offsetWidth;mascotInner.classList.remove("no-anim");}}
-function mascotWalkIn(msg){clearTimeout(mascotTimer);speechBubble.classList.remove("show");mascotInner.classList.remove("is-idle");mascotInner.classList.add("is-walking");setMascotPos("onstage",true);mascotInner.addEventListener("transitionend",function h(){mascotInner.removeEventListener("transitionend",h);mascotInner.classList.remove("is-walking");mascotInner.classList.add("is-idle");speechBubble.classList.add("show");if(voiceEnabled)speak(msg);mascotTimer=setTimeout(mascotWalkOut,15000);},{once:true});}
-function mascotWalkOut(){clearTimeout(mascotTimer);speechBubble.classList.remove("show");mascotInner.classList.remove("is-idle");mascotInner.classList.add("is-walking");setMascotPos("exit",true);mascotInner.addEventListener("transitionend",function h(){mascotInner.removeEventListener("transitionend",h);mascotInner.classList.remove("is-walking","pos-exit-left");},{once:true});window.speechSynthesis?.cancel();}
-document.getElementById("mascotOkBtn").addEventListener("click",mascotWalkOut);
-document.getElementById("snoozeBtn").addEventListener("click",()=>{snoozeUntil=Date.now()+5*60000;mascotWalkOut();});
+function mascotShow(){ // brings the mascot on stage once and leaves it there permanently
+  mascotInner.classList.add("is-idle");
+  setMascotPos("onstage",true);
+}
+function mascotWalkIn(msg){
+  clearTimeout(mascotTimer);
+  mascotShow();
+  mascotInner.classList.add("is-talking");
+  speechBubble.classList.add("show");
+  if(voiceEnabled)speak(msg);
+  mascotTimer=setTimeout(hideSpeechBubble,15000);
+}
+function hideSpeechBubble(){
+  clearTimeout(mascotTimer);
+  speechBubble.classList.remove("show");
+  mascotInner.classList.remove("is-talking");
+  window.speechSynthesis?.cancel();
+}
+function mascotWalkOut(){hideSpeechBubble();} // kept for compatibility with older calls — mascot itself no longer leaves
+document.getElementById("mascotOkBtn").addEventListener("click",hideSpeechBubble);
+document.getElementById("snoozeBtn").addEventListener("click",()=>{snoozeUntil=Date.now()+5*60000;hideSpeechBubble();});
 
 // TICK
 function tick(){
@@ -2641,6 +2662,7 @@ if(window.matchMedia)window.matchMedia("(prefers-color-scheme: dark)").addEventL
 const hasData=loadState();
 if(!hasData)seedBlocks();
 setMascotStyle(loadMascotStyle());
+mascotShow();
 document.getElementById("voiceToggle").checked=true;
 const pcInit=loadPCS();
 document.getElementById("phoneCatchToggle").checked=pcInit.enabled;
