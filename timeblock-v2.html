@@ -7,11 +7,12 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>TimeBlock + Pomodoro</title>
+<title>FlowMate + Pomodoro</title>
 <style>
-:root{--ink:#1C2024;--ink-soft:#5B6168;--ink-muted:#9BA0A6;--paper:#F1F1ED;--card:#FFFFFF;--line:#E4E3DC;--line-strong:#C8C7BF;--focus:#1F6F5C;--focus-soft:#E4EFEC;--focus-border:#1F6F5C44;--rest:#E08C2B;--rest-soft:#FBEEDD;--danger:#B23B3B;--tab-h:64px;}
+:root{--ink:#1C2024;--ink-soft:#5B6168;--ink-muted:#9BA0A6;--paper:#F1F1ED;--card:#FFFFFF;--line:#E4E3DC;--line-strong:#C8C7BF;--focus:#2f6b52;--focus-soft:#E4EFEC;--focus-border:#2f6b5244;--rest:#E08C2B;--rest-soft:#FBEEDD;--danger:#B23B3B;--tab-h:64px;--bg-page:#E9E9E4;}
+html[data-theme="dark"]{--ink:#EDEDE9;--ink-soft:#B7BEC4;--ink-muted:#9BA1A8;--paper:#1A1C1F;--card:#1F2226;--line:#2C2F34;--line-strong:#3A3F45;--focus:#4A9B78;--focus-soft:#1F2A25;--focus-border:#4A9B7844;--rest:#E08C2B;--rest-soft:#3A2D18;--danger:#E05C5C;--bg-page:#15171A;}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-body{margin:0;background:#E9E9E4;font-family:-apple-system,"Segoe UI","Noto Sans Thai",system-ui,sans-serif;color:var(--ink);padding-bottom:calc(var(--tab-h) + env(safe-area-inset-bottom));}
+body{margin:0;background:var(--bg-page);font-family:-apple-system,"Segoe UI","Noto Sans Thai",system-ui,sans-serif;color:var(--ink);padding-bottom:calc(var(--tab-h) + env(safe-area-inset-bottom));transition:background .2s,color .2s;}
 .page{display:none;max-width:440px;margin:0 auto;padding:16px 16px 8px;}
 .page.active{display:block;}
 .tab-bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:0.5px solid var(--line);display:flex;z-index:40;height:var(--tab-h);padding-bottom:env(safe-area-inset-bottom);}
@@ -136,24 +137,25 @@ body{margin:0;background:#E9E9E4;font-family:-apple-system,"Segoe UI","Noto Sans
 .day-chip.picked{background:var(--ink);color:var(--paper);border-color:var(--ink);}
 .notif-banner{display:flex;align-items:center;gap:8px;background:var(--focus-soft);border:0.5px solid var(--focus-border);border-radius:12px;padding:10px 12px;margin-bottom:10px;font-size:12px;}
 .notif-banner button{margin-left:auto;font-size:11px;border:0.5px solid var(--focus);background:none;color:var(--focus);border-radius:7px;padding:3px 10px;cursor:pointer;}
-.mascot-walker{position:fixed;left:0;right:0;bottom:calc(var(--tab-h) + 60px);display:flex;justify-content:center;pointer-events:none;z-index:60;}
-.mascot-inner{display:flex;flex-direction:column;align-items:center;transform:translateX(140vw);transition:transform 1s cubic-bezier(.3,.7,.3,1);pointer-events:auto;}
+.mascot-walker{position:fixed;right:14px;left:auto;bottom:calc(var(--tab-h) + 16px);display:flex;justify-content:flex-end;pointer-events:none;z-index:60;}
+.mascot-inner{display:flex;flex-direction:column;align-items:flex-end;opacity:0;transform:translateY(14px) scale(.92);transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.3,1);pointer-events:auto;}
 .mascot-inner.no-anim{transition:none;}
-.mascot-inner.pos-onstage{transform:translateX(0);}
-.mascot-inner.pos-exit-left{transform:translateX(-140vw);transition-timing-function:cubic-bezier(.6,0,1,1);}
-.speech-bubble{width:260px;background:var(--card);border:0.5px solid var(--line);border-radius:16px;padding:12px 14px;margin-bottom:6px;text-align:center;opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s;}
+.mascot-inner.pos-onstage{opacity:1;transform:translateY(0) scale(1);}
+.mascot-inner.pos-exit-left{opacity:0;transform:translateY(14px) scale(.92);transition-timing-function:ease-in;}
+.speech-bubble{width:220px;background:var(--card);border:0.5px solid var(--line);border-radius:16px;border-bottom-right-radius:4px;padding:12px 14px;margin-bottom:6px;text-align:left;opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s;}
 .speech-bubble.show{opacity:1;transform:translateY(0);}
 .mascot-eyebrow{font-size:10px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin:0 0 5px;}
 .mascot-msg{font-size:14px;font-weight:500;margin:0 0 10px;line-height:1.5;}
 .mascot-actions{display:flex;gap:7px;}
 .mascot-actions button{flex:1;border-radius:10px;padding:7px;font-size:12px;cursor:pointer;}
-.sprite-wrap{position:relative;width:64px;height:86px;}
+.sprite-wrap{position:relative;width:56px;height:76px;}
 .mascot-accessory{position:absolute;top:-4px;right:4px;width:22px;height:22px;z-index:2;}
 .mascot-accessory svg{width:100%;height:100%;}
-.mascot-sprite{width:64px;height:86px;}
+.mascot-sprite{width:56px;height:76px;}
 .mascot-sprite .mascot-body{transform-origin:center;}
-.is-idle .mascot-body{animation:idleBob 1.6s ease-in-out infinite;}
-.is-walking .mascot-body{animation:walkBob .4s ease-in-out infinite;}
+.is-idle .mascot-body{animation:idleSway 2.4s ease-in-out infinite;}
+.is-walking .mascot-body{animation:idleSway 2.4s ease-in-out infinite;}
+@keyframes idleSway{0%,100%{transform:rotate(0deg) translateY(0)}50%{transform:rotate(1.5deg) translateY(-2px)}}
 @keyframes idleBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @keyframes walkBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
 .is-walking #legL{animation:legSwingA .4s linear infinite;}
@@ -323,7 +325,7 @@ body{margin:0;background:#E9E9E4;font-family:-apple-system,"Segoe UI","Noto Sans
 
 <!-- PAGE: Today -->
 <div class="page active" id="page-today">
-  <div class="app-head"><h1>time block</h1><span class="clock" id="clockNow">--:--:--</span></div>
+  <div class="app-head"><div style="display:flex;align-items:center;gap:7px;"><svg width="20" height="20" viewBox="0 0 56 56" style="flex-shrink:0"><path d="M8 40 Q 16 16 28 28 Q 40 40 48 16" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/><circle cx="48" cy="16" r="7" fill="var(--focus)"/></svg><h1>time block</h1></div><div style="display:flex;align-items:center;gap:10px;"><span class="clock" id="clockNow">--:--:--</span><button id="openProfileBtn" style="width:28px;height:28px;border-radius:50%;border:0.5px solid var(--line);background:var(--paper);padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></button></div></div>
   <div class="day-nav">
     <button class="day-nav-btn" id="prevDayBtn">‹</button>
     <span class="day-nav-label" id="dateLabel">วันนี้</span>
@@ -465,7 +467,17 @@ body{margin:0;background:#E9E9E4;font-family:-apple-system,"Segoe UI","Noto Sans
     <span>อนุญาตการแจ้งเตือนเพื่อรับสัญญาณตอนย่อหน้าต่าง</span>
     <button id="notifBtn">เปิด</button>
   </div>
-  <p class="section-label" style="margin-top:0">แจ้งเตือนและตัวละคร</p>
+  <p class="section-label" style="margin-top:0">การแสดงผล</p>
+  <div class="settings-group">
+    <div class="settings-row">
+      <div class="settings-row-left">
+        <svg class="settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <div class="settings-row-text"><p>โหมดมืด</p><small id="darkModeLabel">ปิดอยู่ · ตามระบบ</small></div>
+      </div>
+      <label class="toggle-wrap"><input type="checkbox" id="darkModeToggle"><span class="toggle-track"><span class="toggle-thumb"></span></span></label>
+    </div>
+  </div>
+  <p class="section-label">แจ้งเตือนและตัวละคร</p>
   <div class="settings-group">
     <div class="settings-row" id="openVoiceBtn">
       <div class="settings-row-left">
@@ -618,7 +630,8 @@ body{margin:0;background:#E9E9E4;font-family:-apple-system,"Segoe UI","Noto Sans
     </div>
     <div class="sprite-wrap">
       <div class="mascot-accessory" id="mascotAccessory"></div>
-      <svg class="mascot-sprite" viewBox="0 0 64 86"><g class="mascot-body" id="mascotBodyGroup"></g></svg>
+      <svg class="mascot-sprite" id="mascotSvg" viewBox="0 0 64 86"><g class="mascot-body" id="mascotBodyGroup"></g></svg>
+      <video class="mascot-sprite" id="mascotVideo" style="display:none;object-fit:contain;border-radius:10px;" autoplay loop muted playsinline></video>
     </div>
   </div>
 </div>
@@ -691,13 +704,14 @@ body{margin:0;background:#E9E9E4;font-family:-apple-system,"Segoe UI","Noto Sans
             <option value="hold">⚪ รอก่อน</option>
           </select>
         </div>
-        <div class="field"><label>Deadline</label><input type="date" id="g_deadline"></div>
+        <div class="field" id="g_deadlineField"><label>Deadline</label><input type="date" id="g_deadline"></div>
       </div>
       <label style="font-size:12px;color:var(--ink-soft);display:block;margin-bottom:6px;">วัดผลเป้าหมายแบบไหน</label>
-      <div class="mode-grid" id="goalModeGrid" style="grid-template-columns:1fr 1fr 1fr;">
+      <div class="mode-grid" id="goalModeGrid" style="grid-template-columns:1fr 1fr 1fr 1fr;">
         <button type="button" data-mode="time">⏱ เวลา</button>
         <button type="button" data-mode="task">✓ งานเสร็จ</button>
         <button type="button" data-mode="count">🔢 จำนวน</button>
+        <button type="button" data-mode="habit">🔁 Habit</button>
       </div>
       <div id="goalModeTimeFields">
         <div class="field"><label>เป้าหมายชั่วโมงรวม (สำหรับคำนวณ %)</label><input type="number" id="g_targetHours" min="1" step="1" value="20" placeholder="เช่น 40 ชม."></div>
@@ -713,8 +727,38 @@ body{margin:0;background:#E9E9E4;font-family:-apple-system,"Segoe UI","Noto Sans
         </div>
         <p style="font-size:11px;color:var(--ink-soft);margin:-6px 0 10px">% จะคำนวณจากจำนวนที่สะสมได้จาก time block ที่ผูกไว้และทำเสร็จแล้ว</p>
       </div>
+      <div id="goalModeHabitFields" style="display:none;">
+        <p style="font-size:11px;color:var(--ink-soft);margin:0 0 10px">ไม่มี deadline — วัดผลจาก streak (จำนวนวันติดกันที่กด ✓) ระบบจะสร้าง time block ให้อัตโนมัติทุกวันตามความถี่ที่ตั้ง</p>
+        <div class="field"><label>ความถี่</label>
+          <div class="mode-grid" id="habitFreqGrid" style="grid-template-columns:1fr 1fr;">
+            <button type="button" data-freq="daily">ทุกวัน</button>
+            <button type="button" data-freq="custom">เลือกวัน</button>
+          </div>
+        </div>
+        <div id="habitDaysRow" style="display:none;gap:6px;margin-bottom:11px;flex-wrap:wrap">
+          <button type="button" class="day-chip habit-day-chip" data-day="1">จ</button><button type="button" class="day-chip habit-day-chip" data-day="2">อ</button><button type="button" class="day-chip habit-day-chip" data-day="3">พ</button><button type="button" class="day-chip habit-day-chip" data-day="4">พฤ</button><button type="button" class="day-chip habit-day-chip" data-day="5">ศ</button><button type="button" class="day-chip habit-day-chip" data-day="6">ส</button><button type="button" class="day-chip habit-day-chip" data-day="0">อา</button>
+        </div>
+        <div class="row2">
+          <div class="field"><label>เวลา (ไม่บังคับ)</label><input type="time" id="g_habitTime"></div>
+          <div class="field"><label>ระยะเวลา (นาที)</label><input type="number" id="g_habitDuration" min="5" step="5" value="15"></div>
+        </div>
+        <div class="checkrow"><span>สร้าง time block อัตโนมัติทุกวัน</span><input type="checkbox" id="g_habitAutoBlock" checked></div>
+      </div>
     </div>
     <div class="modal-foot"><div class="modal-actions"><button class="btn-secondary" id="goalDeleteBtn" style="display:none;color:var(--danger)">ลบ</button><button class="btn-primary" id="goalSaveBtn" style="flex:2">บันทึก</button></div></div>
+  </div>
+</div>
+
+<!-- PROFILE MODAL -->
+<div class="overlay" id="profileOverlay">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-head"><h2>โปรไฟล์</h2><button class="modal-close" onclick="document.getElementById('profileOverlay').classList.remove('show')">✕</button></div>
+    <div class="modal-body">
+      <div class="proj-summary-row" id="profileStatsRow"></div>
+      <p class="section-label" style="margin-top:14px">เลือกตัวละคร</p>
+      <div id="profileCharGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;"></div>
+    </div>
   </div>
 </div>
 
@@ -802,6 +846,18 @@ body{margin:0;background:#E9E9E4;font-family:-apple-system,"Segoe UI","Noto Sans
           <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62Z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.97 10.72A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.18.29-1.72V4.95H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.05l3.01-2.33Z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58Z"/></svg>
           เข้าสู่ระบบด้วย Google
         </button>
+        <div style="display:flex;align-items:center;gap:10px;margin:0 0 14px;">
+          <div style="flex:1;height:0.5px;background:var(--line)"></div>
+          <span style="font-size:11px;color:var(--ink-muted);white-space:nowrap">หรือเข้าสู่ระบบด้วยอีเมล</span>
+          <div style="flex:1;height:0.5px;background:var(--line)"></div>
+        </div>
+        <div class="field"><label>อีเมล</label><input type="email" id="emailAuthEmail" placeholder="name@email.com"></div>
+        <div class="field"><label>รหัสผ่าน</label><input type="password" id="emailAuthPassword" placeholder="อย่างน้อย 6 ตัวอักษร"></div>
+        <div style="display:flex;gap:8px;margin-bottom:8px">
+          <button class="btn-secondary" id="emailSignUpBtn" style="flex:1">สมัครสมาชิก</button>
+          <button class="btn-primary" id="emailSignInBtn" style="flex:1">เข้าสู่ระบบ</button>
+        </div>
+        <p id="emailAuthError" style="font-size:11px;color:var(--danger);margin:0 0 12px;display:none"></p>
         <details style="font-size:12px;color:var(--ink-soft)">
           <summary style="cursor:pointer">ตั้งค่า Firebase ของแอปนี้ (สำหรับผู้ดูแลแอป)</summary>
           <div style="margin-top:10px">
@@ -918,9 +974,21 @@ function maybeCatchOnPhone(){const s=loadPCS();if(!s.enabled)return;const nm=cur
 
 // GAMIFICATION
 const MS={clock:`<rect id="legR" x="32" y="62" width="9" height="18" rx="4" fill="#C97A1B"/><rect id="legL" x="23" y="62" width="9" height="18" rx="4" fill="#C97A1B"/><rect id="armL" x="4" y="38" width="9" height="15" rx="4.5" fill="#F2A623"/><rect id="armR" x="51" y="34" width="9" height="15" rx="4.5" fill="#F2A623"/><circle cx="32" cy="42" r="22" fill="#FFFBF2" stroke="#F2A623" stroke-width="4"/><line x1="32" y1="22" x2="32" y2="26" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><line x1="50" y1="42" x2="46" y2="42" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><line x1="32" y1="62" x2="32" y2="58" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><line x1="14" y1="42" x2="18" y2="42" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="18" r="8" fill="#F2A623"/><circle cx="48" cy="18" r="8" fill="#F2A623"/><circle cx="16" cy="9" r="2.5" fill="#C97A1B"/><circle cx="48" cy="9" r="2.5" fill="#C97A1B"/><circle cx="24" cy="40" r="5" fill="#2C2C2A"/><circle cx="40" cy="40" r="5" fill="#2C2C2A"/><circle cx="22.3" cy="38.3" r="1.3" fill="#FFF"/><circle cx="38.3" cy="38.3" r="1.3" fill="#FFF"/><ellipse cx="18" cy="48" rx="4" ry="2.5" fill="#F4A89A" opacity=".7"/><ellipse cx="46" cy="48" rx="4" ry="2.5" fill="#F4A89A" opacity=".7"/><path d="M22 50Q32 58 42 50" stroke="#2C2C2A" stroke-width="3" stroke-linecap="round" fill="none"/>`,robot:`<rect id="legR" x="32" y="62" width="9" height="18" rx="3" fill="#7A8B99"/><rect id="legL" x="23" y="62" width="9" height="18" rx="3" fill="#7A8B99"/><rect id="armL" x="4" y="38" width="9" height="15" rx="3" fill="#9FB4C2"/><rect id="armR" x="51" y="34" width="9" height="15" rx="3" fill="#9FB4C2"/><rect x="10" y="20" width="44" height="42" rx="10" fill="#C9D6DD" stroke="#7A8B99" stroke-width="3"/><line x1="32" y1="20" x2="32" y2="10" stroke="#7A8B99" stroke-width="2"/><circle cx="32" cy="8" r="3" fill="#F2A623"/><rect x="20" y="34" width="9" height="9" rx="2" fill="#2C2C2A"/><rect x="35" y="34" width="9" height="9" rx="2" fill="#2C2C2A"/><line x1="22" y1="52" x2="42" y2="52" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/>`,cat:`<rect id="legR" x="32" y="62" width="9" height="16" rx="4" fill="#D98B3F"/><rect id="legL" x="23" y="62" width="9" height="16" rx="4" fill="#D98B3F"/><ellipse id="armL" cx="9" cy="46" rx="5" ry="8" fill="#F2A623"/><ellipse id="armR" cx="55" cy="42" rx="5" ry="8" fill="#F2A623"/><polygon points="14,18 22,2 28,20" fill="#F2A623"/><polygon points="50,18 42,2 36,20" fill="#F2A623"/><circle cx="32" cy="40" r="22" fill="#F2A623"/><path d="M22 36Q24 32 27 36" stroke="#2C2C2A" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M42 36Q39 32 37 36" stroke="#2C2C2A" stroke-width="2.5" fill="none" stroke-linecap="round"/><polygon points="29,44 35,44 32,48" fill="#C97A1B"/><path d="M24 52Q32 58 40 52" stroke="#2C2C2A" stroke-width="2.5" stroke-linecap="round" fill="none"/>`};
-const MSN={clock:"นาฬิกาปลุก",robot:"หุ่นยนต์",cat:"แมวส้ม"};
+const MSN={clock:"นาฬิกาปลุก",robot:"หุ่นยนต์",cat:"แมวส้ม",char0:"ตัวละคร 1",char1:"ตัวละคร 2"};
+const CHARACTER_VIDEOS={char0:"uploads/Subtle_idle_breathing_animatio.mp4",char1:"uploads/Subtle_idle_breathing_animatio (1).mp4"};
 function loadMascotStyle(){try{return localStorage.getItem(MK)||"clock";}catch(e){return"clock";}}
-function setMascotStyle(k){document.getElementById("mascotBodyGroup").innerHTML=MS[k]||MS.clock;try{localStorage.setItem(MK,k);}catch(e){}document.getElementById("styleLabel").textContent=MSN[k]||"นาฬิกาปลุก";}
+function setMascotStyle(k){
+  const svgEl=document.getElementById("mascotSvg"),videoEl=document.getElementById("mascotVideo");
+  const vidSrc=CHARACTER_VIDEOS[k];
+  if(vidSrc){
+    videoEl.src=vidSrc;videoEl.style.display="block";svgEl.style.display="none";
+  }else{
+    document.getElementById("mascotBodyGroup").innerHTML=MS[k]||MS.clock;
+    videoEl.pause();videoEl.removeAttribute("src");videoEl.style.display="none";svgEl.style.display="block";
+  }
+  try{localStorage.setItem(MK,k);}catch(e){}
+  document.getElementById("styleLabel").textContent=MSN[k]||"นาฬิกาปลุก";
+}
 function accessoryMarkup(tier){if(tier===3)return'<svg viewBox="0 0 24 24"><polygon points="2,9 6,5 9,9 12,3 15,9 18,5 22,9 19,19 5,19" fill="#F2A623" stroke="#C97A1B" stroke-width="1"/></svg>';if(tier===2)return'<svg viewBox="0 0 24 24"><polygon points="12,2 20,20 4,20" fill="#1F6F5C"/><circle cx="12" cy="2" r="2.2" fill="#F2A623"/></svg>';if(tier===1)return'<svg viewBox="0 0 24 24"><polygon points="12,1 15,9 23,9 16,14 19,22 12,17 5,22 8,14 1,9 9,9" fill="#F2A623"/></svg>';return"";}
 function computeStreak(){let s=0,d=todayStr();while(stats.byDate[d]?.focusRounds>0){s++;d=addDays(d,-1);}if(!s){d=addDays(todayStr(),-1);while(stats.byDate[d]?.focusRounds>0){s++;d=addDays(d,-1);}}return s;}
 function recordFocusCompletions(n){const d=todayStr();if(!stats.byDate[d])stats.byDate[d]={focusRounds:0};stats.byDate[d].focusRounds+=n;saveState();refreshGamification();}
@@ -1070,6 +1138,10 @@ function goalProgress(goalId){
   const blocksTotal=blocks.filter(b=>b.goalId===goalId).length;
   const blocksDone=blocks.filter(b=>b.goalId===goalId&&b.completed===true).length; // explicit ✓ mark, not time-elapsed
 
+  if(mode==="habit"){
+    const streak=goalStreak(goalId);
+    return{pct:0,logged:streak,target:0,blocksDone,blocksTotal,mode,streak};
+  }
   if(mode==="count"){
     const target=g?.targetCount||0;
     const logged=blocks.filter(b=>b.goalId===goalId&&b.completed===true).reduce((s,b)=>s+(Number(b.countAchieved??b.countAmount)||0),0);
@@ -1729,15 +1801,33 @@ document.getElementById("saveBtn").addEventListener("click",()=>{
 // GOAL MODAL
 const goalOverlay=document.getElementById("goalOverlay");let editingGoalId=null;
 let pickedGoalMode="time";
+let pickedHabitFreq="daily";
+const pickedHabitDays=new Set();
 function updateGoalModeGrid(){
   document.querySelectorAll("#goalModeGrid button").forEach(b=>b.classList.toggle("picked",b.dataset.mode===pickedGoalMode));
   document.getElementById("goalModeTimeFields").style.display=pickedGoalMode==="time"?"block":"none";
   document.getElementById("goalModeTaskFields").style.display=pickedGoalMode==="task"?"block":"none";
   document.getElementById("goalModeCountFields").style.display=pickedGoalMode==="count"?"block":"none";
+  document.getElementById("goalModeHabitFields").style.display=pickedGoalMode==="habit"?"block":"none";
+  document.getElementById("g_deadlineField").style.display=pickedGoalMode==="habit"?"none":"block";
 }
 document.getElementById("goalModeGrid").addEventListener("click",e=>{
   const b=e.target.closest("button");if(!b)return;
   pickedGoalMode=b.dataset.mode;updateGoalModeGrid();
+});
+function updateHabitFreqGrid(){
+  document.querySelectorAll("#habitFreqGrid button").forEach(b=>b.classList.toggle("picked",b.dataset.freq===pickedHabitFreq));
+  document.getElementById("habitDaysRow").style.display=pickedHabitFreq==="custom"?"flex":"none";
+}
+document.getElementById("habitFreqGrid").addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;
+  pickedHabitFreq=b.dataset.freq;updateHabitFreqGrid();
+});
+document.getElementById("habitDaysRow").addEventListener("click",e=>{
+  const b=e.target.closest(".habit-day-chip");if(!b)return;
+  const day=Number(b.dataset.day);
+  if(pickedHabitDays.has(day))pickedHabitDays.delete(day);else pickedHabitDays.add(day);
+  document.querySelectorAll(".habit-day-chip").forEach(b=>b.classList.toggle("picked",pickedHabitDays.has(Number(b.dataset.day))));
 });
 function openGoalModal(goal){
   editingGoalId=goal?goal.id:null;
@@ -1749,6 +1839,13 @@ function openGoalModal(goal){
   document.getElementById("g_targetHours").value=goal?.targetHours||20;
   document.getElementById("g_unit").value=goal?.unit||"";
   document.getElementById("g_targetCount").value=goal?.targetCount||"";
+  document.getElementById("g_habitTime").value=goal?.habitTime||"";
+  document.getElementById("g_habitDuration").value=goal?.habitDuration||15;
+  document.getElementById("g_habitAutoBlock").checked=goal?.habitAutoBlock!==false;
+  pickedHabitFreq=goal?.habitFreq||"daily";
+  pickedHabitDays.clear();(goal?.habitDays||[]).forEach(d=>pickedHabitDays.add(d));
+  document.querySelectorAll(".habit-day-chip").forEach(b=>b.classList.toggle("picked",pickedHabitDays.has(Number(b.dataset.day))));
+  updateHabitFreqGrid();
   // infer mode for goals saved before the mode selector existed
   pickedGoalMode=goal?.mode||(goal?.targetHours>0?"time":goal?"task":"time");
   updateGoalModeGrid();
@@ -1765,22 +1862,81 @@ document.getElementById("goalSaveBtn").addEventListener("click",()=>{
     if(!unit){alert("กรอกหน่วยด้วยครับ เช่น กม., เซ็ต");return;}
     if(!targetCount||targetCount<=0){alert("กรอกเป้าหมายจำนวนด้วยครับ");return;}
   }
+  if(pickedGoalMode==="habit"&&pickedHabitFreq==="custom"&&pickedHabitDays.size===0){alert("เลือกวันในสัปดาห์อย่างน้อย 1 วัน");return;}
   const data={
     title,
     emoji:document.getElementById("g_emoji").value.trim()||"📌",
     category:document.getElementById("g_category").value||"main",
-    deadline:document.getElementById("g_deadline").value||"",
+    deadline:pickedGoalMode==="habit"?"":(document.getElementById("g_deadline").value||""),
     mode:pickedGoalMode,
     targetHours:pickedGoalMode==="time"?(parseFloat(document.getElementById("g_targetHours").value)||0):0,
     unit:pickedGoalMode==="count"?document.getElementById("g_unit").value.trim():"",
     targetCount:pickedGoalMode==="count"?(parseFloat(document.getElementById("g_targetCount").value)||0):0,
+    habitFreq:pickedGoalMode==="habit"?pickedHabitFreq:undefined,
+    habitDays:pickedGoalMode==="habit"?Array.from(pickedHabitDays):undefined,
+    habitTime:pickedGoalMode==="habit"?document.getElementById("g_habitTime").value:undefined,
+    habitDuration:pickedGoalMode==="habit"?(parseInt(document.getElementById("g_habitDuration").value)||15):undefined,
+    habitAutoBlock:pickedGoalMode==="habit"?document.getElementById("g_habitAutoBlock").checked:undefined,
     _isProject:true,
   };
   if(editingGoalId){Object.assign(goals.find(g=>g.id===editingGoalId),data);}
   else goals.push({id:uid(),...data});
-  saveState();goalOverlay.classList.remove("show");renderAll();
+  saveState();goalOverlay.classList.remove("show");
+  if(pickedGoalMode==="habit")ensureHabitBlocksForToday();
+  renderAll();
 });
 document.getElementById("goalDeleteBtn").addEventListener("click",()=>{if(!confirm("ลบโปรเจกต์นี้ใช่ไหม?"))return;goals=goals.filter(g=>g.id!==editingGoalId);blocks.forEach(b=>{if(b.goalId===editingGoalId)b.goalId="";});saveState();goalOverlay.classList.remove("show");renderAll();});
+
+// HABIT SYSTEM — auto-generate today's block from habit goals + streak calc
+function habitAppliesToDate(goal,dateStr){
+  if(goal.habitFreq==="custom"){
+    const dow=new Date(dateStr+"T00:00:00").getDay();
+    return (goal.habitDays||[]).includes(dow);
+  }
+  return true; // daily
+}
+function ensureHabitBlocksForToday(){
+  const today=todayStr();
+  let changed=false;
+  goals.filter(g=>g.mode==="habit"&&g.habitAutoBlock!==false).forEach(g=>{
+    if(!habitAppliesToDate(g,today))return;
+    const already=blocks.some(b=>b.goalId===g.id&&b.date===today&&b._habitAuto);
+    if(already)return;
+    const start=g.habitTime||"07:00";
+    const dur=g.habitDuration||15;
+    const [h,m]=start.split(":").map(Number);
+    const endM=h*60+m+dur;
+    const end=String(Math.floor(endM/60)%24).padStart(2,"0")+":"+String(endM%60).padStart(2,"0");
+    blocks.push({id:uid(),title:g.emoji+" "+g.title,date:today,start,end,goalId:g.id,mode:"none",completed:null,_habitAuto:true});
+    changed=true;
+  });
+  if(changed)saveState();
+}
+function habitStreak(goalId){
+  let streak=0,d=todayStr();
+  const doneDates=new Set(blocks.filter(b=>b.goalId===goalId&&b.completed===true).map(b=>b.date));
+  // if today not done yet, start counting from yesterday so an in-progress day doesn't zero the streak
+  if(!doneDates.has(d))d=addDays(d,-1);
+  while(doneDates.has(d)){streak++;d=addDays(d,-1);}
+  return streak;
+}
+function habitLast21Days(goalId){
+  const doneDates=new Set(blocks.filter(b=>b.goalId===goalId&&b.completed===true).map(b=>b.date));
+  const days=[];
+  for(let i=20;i>=0;i--)days.push(doneDates.has(addDays(todayStr(),-i)));
+  return days;
+}
+function toggleHabitToday(goalId){
+  const td=todayStr();
+  let block=blocks.find(b=>b.goalId===goalId&&b.date===td);
+  if(!block){
+    const g=goals.find(x=>x.id===goalId);if(!g)return;
+    block={id:uid(),title:(g.emoji||"🔁")+" "+g.title,date:td,start:g.habitTime||"07:00",end:g.habitTime||"07:15",goalId,mode:"none",completed:null,_habitAuto:true};
+    blocks.push(block);
+  }
+  block.completed=block.completed===true?null:true;
+  saveState();renderAll();
+}
 
 // VOICE SETTINGS
 const voiceOverlay=document.getElementById("voiceOverlay");let pickedProvider="auto";
@@ -1812,8 +1968,24 @@ document.getElementById("phoneCatchSaveBtn").addEventListener("click",()=>{saveP
 
 // MASCOT STYLE PICKER
 const styleOverlay=document.getElementById("styleOverlay");
-document.getElementById("openStyleBtn").addEventListener("click",()=>{const cur=loadMascotStyle();document.getElementById("styleGrid").innerHTML=Object.keys(MS).map(k=>`<button data-style="${k}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;border:2px solid ${k===cur?"var(--focus)":"var(--line)"};background:var(--paper);border-radius:12px;padding:8px;cursor:pointer"><svg viewBox="0 0 64 86" style="width:48px;height:65px"><g>${MS[k].replace(/\sid="[^"]*"/g,"")}</g></svg><span style="font-size:11px">${MSN[k]}</span></button>`).join("");styleOverlay.classList.add("show");});
+document.getElementById("openStyleBtn").addEventListener("click",()=>{const cur=loadMascotStyle();const keys=[...Object.keys(MS),...Object.keys(CHARACTER_VIDEOS)];document.getElementById("styleGrid").innerHTML=keys.map(k=>`<button data-style="${k}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;border:2px solid ${k===cur?"var(--focus)":"var(--line)"};background:var(--paper);border-radius:12px;padding:8px;cursor:pointer">${CHARACTER_VIDEOS[k]?`<video src="${CHARACTER_VIDEOS[k]}" style="width:48px;height:65px;object-fit:cover;border-radius:8px" autoplay loop muted playsinline></video>`:`<svg viewBox="0 0 64 86" style="width:48px;height:65px"><g>${MS[k].replace(/\sid="[^"]*"/g,"")}</g></svg>`}<span style="font-size:11px">${MSN[k]}</span></button>`).join("");styleOverlay.classList.add("show");});
 document.getElementById("styleGrid").addEventListener("click",e=>{const b=e.target.closest("button[data-style]");if(!b)return;setMascotStyle(b.dataset.style);document.getElementById("openStyleBtn").click();});
+
+// PROFILE
+document.getElementById("openProfileBtn").addEventListener("click",()=>{
+  const streak=streakCount();
+  const totalSessions=totalFocusSessions();
+  const goalsAchieved=goals.filter(g=>g.mode!=="habit"&&goalProgress(g.id).pct>=100).length;
+  document.getElementById("profileStatsRow").innerHTML=`
+    <div class="proj-sum-box"><span class="proj-sum-val">${streak}</span><span class="proj-sum-lbl">วัน streak</span></div>
+    <div class="proj-sum-box proj-sum-box-highlight"><span class="proj-sum-val" style="color:var(--focus)">${totalSessions}</span><span class="proj-sum-lbl" style="color:var(--focus)">รอบโฟกัสสำเร็จ</span></div>
+    <div class="proj-sum-box"><span class="proj-sum-val">${goalsAchieved}</span><span class="proj-sum-lbl">เป้าหมายสำเร็จ</span></div>`;
+  const cur=loadMascotStyle();
+  const profKeys=[...Object.keys(MS),...Object.keys(CHARACTER_VIDEOS)];
+  document.getElementById("profileCharGrid").innerHTML=profKeys.map(k=>`<button data-style="${k}" style="display:flex;flex-direction:column;align-items:center;gap:6px;border:2px solid ${k===cur?"var(--focus)":"var(--line)"};background:var(--paper);border-radius:12px;padding:8px;cursor:pointer">${CHARACTER_VIDEOS[k]?`<video src="${CHARACTER_VIDEOS[k]}" style="width:44px;height:60px;object-fit:cover;border-radius:8px" autoplay loop muted playsinline></video>`:`<svg viewBox="0 0 64 86" style="width:44px;height:60px"><g>${MS[k].replace(/\sid="[^"]*"/g,"")}</g></svg>`}<span style="font-size:11px">${MSN[k]}</span></button>`).join("");
+  document.getElementById("profileOverlay").classList.add("show");
+});
+document.getElementById("profileCharGrid").addEventListener("click",e=>{const b=e.target.closest("button[data-style]");if(!b)return;setMascotStyle(b.dataset.style);document.getElementById("openProfileBtn").click();});
 document.getElementById("styleCloseBtn").addEventListener("click",()=>styleOverlay.classList.remove("show"));
 
 // SETTINGS MISC
@@ -1850,10 +2022,11 @@ function renderProjects(){
 
   // project cards from goals
   let html=`<p class="section-label" style="margin-top:0">ความคืบหน้าเป้าหมาย</p>`;
-  if(!goals.length){html+='<p class="empty">ยังไม่มีเป้าหมาย — กด + เพื่อเพิ่ม</p>';}
+  const nonHabitGoals=goals.filter(g=>g.mode!=="habit");
+  if(!nonHabitGoals.length){html+='<p class="empty">ยังไม่มีเป้าหมาย — กด + เพื่อเพิ่ม</p>';}
   else{
     const catOrder={main:0,skill:1,income:2,hold:3};
-    const sorted=[...goals].sort((a,b)=>{
+    const sorted=[...nonHabitGoals].sort((a,b)=>{
       const da=daysUntilGoal(a.deadline),db=daysUntilGoal(b.deadline);
       if(da!==null&&db!==null) return da-db;
       if(da!==null) return -1;
@@ -1939,6 +2112,26 @@ function renderProgress(){
   html+="</div>";
 
   html+=disciplineChartHtml(disciplineRange);
+
+  // habit cards
+  const habitGoals=goals.filter(g=>g.mode==="habit");
+  if(habitGoals.length){
+    html+=`<p class="section-label">🔁 Habit</p>`;
+    habitGoals.forEach(g=>{
+      const streak=habitStreak(g.id);
+      const days21=habitLast21Days(g.id);
+      const doneToday=blocks.some(b=>b.goalId===g.id&&b.date===td&&b.completed===true);
+      const grid=days21.map(d=>`<span style="width:10px;height:10px;border-radius:3px;display:inline-block;background:${d?"var(--focus)":"var(--line)"}"></span>`).join("");
+      html+=`<div class="goal-card" style="margin-bottom:8px;">
+        <div class="goal-card-top">
+          <div class="goal-card-title">${g.emoji||"🔁"} ${esc(g.title)}</div>
+          <button type="button" class="circle-btn circle-check${doneToday?" is-done":""}" onclick="toggleHabitToday('${g.id}')" style="width:30px;height:30px;">${doneToday?"✓":""}</button>
+        </div>
+        <div class="goal-meta">🔥 streak ${streak} วัน</div>
+        <div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:8px;">${grid}</div>
+      </div>`;
+    });
+  }
 
   // today summary banner
   const tb=blocks.filter(b=>b.date===td&&b.completed===true);
@@ -2120,6 +2313,9 @@ function updateSyncModalView(){
 document.getElementById("openSyncBtn").addEventListener("click",()=>{
   const cfg=loadCloudConfig();
   ["apiKey","authDomain","projectId","storageBucket","messagingSenderId","appId"].forEach(k=>document.getElementById("cfg_"+k).value=cfg?.firebaseConfig?.[k]||"");
+  document.getElementById("emailAuthEmail").value="";
+  document.getElementById("emailAuthPassword").value="";
+  document.getElementById("emailAuthError").style.display="none";
   updateSyncModalView();
   syncOverlay.classList.add("show");
 });
@@ -2140,6 +2336,28 @@ document.getElementById("googleSignInBtn").addEventListener("click",async()=>{
     syncOverlay.classList.remove("show");
   }catch(e){ showToast("เข้าสู่ระบบไม่สำเร็จ: "+e.message); }
 });
+function showEmailAuthError(msg){const el=document.getElementById("emailAuthError");el.textContent=msg;el.style.display=msg?"block":"none";}
+document.getElementById("emailSignInBtn").addEventListener("click",async()=>{
+  if(!ensureFirebaseInit(activeFirebaseConfig())) return;
+  showEmailAuthError("");
+  const email=document.getElementById("emailAuthEmail").value.trim(),pass=document.getElementById("emailAuthPassword").value;
+  if(!email||!pass){showEmailAuthError("กรอกอีเมลและรหัสผ่านด้วย");return;}
+  try{
+    await firebase.auth().signInWithEmailAndPassword(email,pass);
+    syncOverlay.classList.remove("show");
+  }catch(e){ showEmailAuthError("เข้าสู่ระบบไม่สำเร็จ: "+e.message); }
+});
+document.getElementById("emailSignUpBtn").addEventListener("click",async()=>{
+  if(!ensureFirebaseInit(activeFirebaseConfig())) return;
+  showEmailAuthError("");
+  const email=document.getElementById("emailAuthEmail").value.trim(),pass=document.getElementById("emailAuthPassword").value;
+  if(!email||!pass){showEmailAuthError("กรอกอีเมลและรหัสผ่านด้วย");return;}
+  if(pass.length<6){showEmailAuthError("รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร");return;}
+  try{
+    await firebase.auth().createUserWithEmailAndPassword(email,pass);
+    syncOverlay.classList.remove("show");
+  }catch(e){ showEmailAuthError("สมัครสมาชิกไม่สำเร็จ: "+e.message); }
+});
 document.getElementById("syncSignOutBtn").addEventListener("click",async()=>{
   await firebase.auth().signOut();
   syncOverlay.classList.remove("show");
@@ -2149,12 +2367,33 @@ function queueCloudPush(){if(!cloudConnected||!cloudDocRef||applyingRemoteUpdate
 function applyRemoteSnapshot(data){applyingRemoteUpdate=true;if(Array.isArray(data.blocks)){blocks=data.blocks;blocks.forEach(b=>{if(!b.date)b.date=todayStr();});}if(Array.isArray(data.goals))goals=data.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;});if(data.timerState){Object.keys(timerState).forEach(k=>delete timerState[k]);Object.assign(timerState,data.timerState);}if(data.prevActiveId!==undefined)prevActiveId=data.prevActiveId;if(data.stats?.byDate)stats=data.stats;try{localStorage.setItem(SK,JSON.stringify({blocks,goals,timerState,prevActiveId,stats}));}catch(e){}renderAll();applyingRemoteUpdate=false;}
 
 // VISIBILITY / FOCUS
-document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){tick();maybeCatchOnPhone();}});
-window.addEventListener("focus",()=>{tick();maybeCatchOnPhone();});
-window.addEventListener("pageshow",()=>{tick();maybeCatchOnPhone();});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){ensureHabitBlocksForToday();tick();maybeCatchOnPhone();}});
+window.addEventListener("focus",()=>{ensureHabitBlocksForToday();tick();maybeCatchOnPhone();});
+window.addEventListener("pageshow",()=>{ensureHabitBlocksForToday();tick();maybeCatchOnPhone();});
 
 // SERVICE WORKER
 if("serviceWorker" in navigator)navigator.serviceWorker.register("service-worker.js").catch(()=>{});
+
+// DARK MODE
+const DMK="tb_dark_mode";
+function loadDarkPref(){try{return localStorage.getItem(DMK);}catch(e){return null;}}
+function saveDarkPref(v){try{if(v===null)localStorage.removeItem(DMK);else localStorage.setItem(DMK,v);}catch(e){}}
+function systemPrefersDark(){return window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;}
+function applyDarkMode(){
+  const pref=loadDarkPref();
+  const isDark=pref===null?systemPrefersDark():pref==="1";
+  document.documentElement.setAttribute("data-theme",isDark?"dark":"light");
+  const toggle=document.getElementById("darkModeToggle"), label=document.getElementById("darkModeLabel");
+  if(toggle)toggle.checked=isDark;
+  if(label)label.textContent=(pref===null?(isDark?"เปิดอยู่":"ปิดอยู่")+" · ตามระบบ":(isDark?"เปิดอยู่":"ปิดอยู่"));
+  const meta=document.querySelector('meta[name="theme-color"]');
+  if(meta)meta.setAttribute("content",isDark?"#15171A":"#1C2024");
+}
+document.getElementById("darkModeToggle").addEventListener("change",e=>{
+  saveDarkPref(e.target.checked?"1":"0");
+  applyDarkMode();
+});
+if(window.matchMedia)window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{if(loadDarkPref()===null)applyDarkMode();});
 
 // BOOT
 const hasData=loadState();
@@ -2165,6 +2404,8 @@ const pcInit=loadPCS();
 document.getElementById("phoneCatchToggle").checked=pcInit.enabled;
 document.getElementById("phoneCatchLabel").textContent=(pcInit.enabled?"เปิดอยู่":"ปิดอยู่")+" · โทน"+(pcInit.tone==="harsh"?"โหด":"อ่อนโยน");
 checkNotifPerm();
+applyDarkMode();
+ensureHabitBlocksForToday();
 renderAll();
 setInterval(tick,1000);
 tick();

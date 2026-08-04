@@ -1,10 +1,12 @@
-const CACHE_NAME = "timeblock-pomodoro-v3";
+const CACHE_NAME = "flowmate-pomodoro-v5";
 const ASSETS = [
   "./index.html",
   "./timeblock-v2.html",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",
+  "./uploads/Subtle_idle_breathing_animatio.mp4",
+  "./uploads/Subtle_idle_breathing_animatio (1).mp4",
 ];
 
 self.addEventListener("install", (event) => {

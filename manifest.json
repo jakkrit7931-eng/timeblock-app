@@ -1,6 +1,6 @@
 {
-  "name": "TimeBlock + Pomodoro",
-  "short_name": "TimeBlock",
+  "name": "FlowMate + Pomodoro",
+  "short_name": "FlowMate",
   "description": "Time block และ pomodoro หลายโหมด พร้อมตัวละครและเสียงแจ้งเตือน",
   "start_url": "./index.html",
   "scope": "./",
