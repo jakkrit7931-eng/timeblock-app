@@ -49,7 +49,6 @@ body{margin:0;background:var(--bg-page);font-family:-apple-system,"Segoe UI","No
 .card.active-block .tag{background:var(--card);}
 .card-details{font-size:12px;color:var(--ink-soft);margin-top:5px;}
 .card2{border-radius:18px;box-shadow:0 1px 2px rgba(28,32,36,.05);border-left:3px solid transparent;}
-.card2.src-habit{border-left-color:#8FBF6E;}
 .card2.src-project{border-left-color:#F5C242;}
 .card2-row{display:flex;align-items:center;gap:9px;}
 .card2-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
@@ -267,7 +266,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .proj-win-title{font-size:12px;font-weight:600;color:var(--focus);margin:0 0 2px;}
 .proj-win-sub{font-size:11px;color:var(--focus);margin:0;opacity:.8;}
 .proj-edit-modal-body .field{margin-bottom:10px;}
-.proj-grid{display:grid;grid-template-columns:3fr 1fr;gap:16px;}
+.proj-grid{display:block;}
 .proj-col-label{font-size:11px;font-weight:700;color:var(--ink-soft);letter-spacing:0.4px;margin:0 0 10px;}
 .proj-card2{background:var(--card);border-radius:16px;padding:18px 20px;margin-bottom:12px;cursor:pointer;transition:opacity .2s;}
 .proj-card2.proj-dimmed{opacity:.5;}
@@ -279,22 +278,40 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .proj-card2-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
 .proj-card2-modepill{background:var(--focus-soft);color:#4C9A7A;font-size:11px;padding:4px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:3px;flex-shrink:0;}
 .proj-card2-num{font-size:11px;color:var(--ink-muted);}
-.habit-panel{background:var(--card);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:14px;height:100%;}
-.habit-row-item+.habit-row-item{border-top:0.5px solid var(--line);padding-top:14px;}
-.habit-row-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;gap:6px;}
-.habit-row-name{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ink);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.habit-row-streak{font-size:10px;font-weight:700;color:var(--rest);display:flex;align-items:center;gap:2px;flex-shrink:0;cursor:pointer;}
-.habit-row-strip{display:flex;gap:3px;}
-.habit-row-strip span{flex:1;height:5px;border-radius:3px;background:var(--line);}
-.habit-row-strip span.on{background:#4C9A7A;}
-.gallery-popup-backdrop{position:fixed;inset:0;background:rgba(20,20,18,.45);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:70;padding:20px;}
-.gallery-popup-backdrop.show{display:flex;}
-.gallery-popup{width:100%;max-width:480px;max-height:80vh;overflow-y:auto;background:var(--card);border-radius:20px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.25);}
-.gallery-popup-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
-.gallery-popup-title{font-size:17px;font-weight:700;color:var(--ink);}
-.gallery-popup-close{width:28px;height:28px;border-radius:50%;background:var(--paper);border:none;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--ink-soft);cursor:pointer;flex-shrink:0;}
-.gallery-popup-sub{font-size:12px;color:var(--ink-muted);margin:0 0 18px;}
-.gallery-popup-footer{display:flex;gap:10px;margin-top:4px;}
+/* ── Progress review ── */
+.progress-shell{max-width:736px;margin:0 auto;padding-bottom:16px;}
+.progress-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;}
+.progress-period,.progress-modes{display:flex;gap:3px;background:var(--card);border:0.5px solid var(--line);border-radius:11px;padding:3px;overflow-x:auto;scrollbar-width:none;}
+.progress-period::-webkit-scrollbar,.progress-modes::-webkit-scrollbar{display:none;}
+.progress-chip{border:0;background:transparent;color:var(--ink-soft);font:inherit;font-size:11px;font-weight:600;padding:7px 11px;border-radius:8px;white-space:nowrap;cursor:pointer;}
+.progress-chip.active{background:var(--focus);color:#fff;box-shadow:0 1px 3px rgba(47,107,82,.18);}
+.progress-modes{margin-bottom:14px;width:100%;}
+.progress-modes .progress-chip{flex:1;}
+.progress-hero{background:linear-gradient(145deg,#2F6B52,#245640);color:#fff;border-radius:18px;padding:20px;margin-bottom:12px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;}
+.progress-eyebrow{font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;opacity:.72;margin:0 0 7px;}
+.progress-hero h2{font-size:19px;line-height:1.35;margin:0 0 6px;}
+.progress-hero p{font-size:12px;line-height:1.55;opacity:.78;margin:0;}
+.progress-score{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#fff var(--score),rgba(255,255,255,.18) 0);position:relative;flex-shrink:0;}
+.progress-score:after{content:"";position:absolute;inset:6px;border-radius:50%;background:#2A6049;}
+.progress-score strong{position:relative;z-index:1;font-size:20px;}.progress-score span{font-size:10px;font-weight:500;}
+.progress-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+.progress-card{background:var(--card);border:0.5px solid var(--line);border-radius:16px;padding:15px;}
+.progress-stat strong{display:block;font-size:18px;margin-bottom:2px;}.progress-stat span{font-size:10.5px;color:var(--ink-soft);}
+.progress-section{margin-bottom:12px;}.progress-section-head{display:flex;align-items:end;justify-content:space-between;gap:10px;margin-bottom:12px;}
+.progress-section h3{font-size:14px;margin:0;}.progress-section-sub{font-size:10.5px;color:var(--ink-muted);margin:2px 0 0;}
+.progress-bars{height:126px;display:flex;align-items:end;gap:6px;padding-top:8px;}
+.progress-daybar{flex:1;min-width:0;height:100%;display:flex;align-items:end;justify-content:center;gap:2px;position:relative;padding-bottom:21px;}
+.progress-bar-plan,.progress-bar-actual{width:min(11px,42%);border-radius:4px 4px 2px 2px;min-height:2px;}.progress-bar-plan{background:var(--line);}.progress-bar-actual{background:var(--focus);}
+.progress-daybar label{position:absolute;bottom:0;font-size:9px;color:var(--ink-muted);white-space:nowrap;}
+.progress-legend{display:flex;gap:12px;font-size:10px;color:var(--ink-soft);}.progress-legend i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:4px;}
+.progress-insights{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}.progress-insight{min-height:118px;}
+.progress-badge{display:inline-block;font-size:9px;font-weight:700;padding:4px 8px;border-radius:20px;background:var(--focus-soft);color:var(--focus);margin-bottom:9px;}
+.progress-badge.warn{background:#FFF3DE;color:#9A6A1C;}.progress-insight h4{font-size:13px;margin:0 0 5px;}.progress-insight p{font-size:11px;line-height:1.55;color:var(--ink-soft);margin:0;}
+.progress-list{display:flex;flex-direction:column;gap:8px;}.progress-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--line);}.progress-row:last-child{border-bottom:0;}
+.progress-row-main{min-width:0;flex:1;}.progress-row-title{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}.progress-row-meta{font-size:10px;color:var(--ink-soft);margin-top:2px;}.progress-row-value{text-align:right;font-size:12px;font-weight:700;white-space:nowrap;}
+.progress-review-btn{width:100%;border:0.5px solid var(--focus-border);background:var(--focus-soft);color:var(--focus);border-radius:13px;padding:12px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;}
+.progress-review{display:none;margin-top:8px;}.progress-review.open{display:block;}.progress-empty{text-align:center;padding:28px 12px;color:var(--ink-soft);font-size:12px;}
+@media(max-width:600px){.progress-toolbar{align-items:stretch;flex-direction:column}.progress-period{align-self:flex-end}.progress-modes .progress-chip{flex:none}.progress-hero{grid-template-columns:1fr auto;padding:17px}.progress-hero h2{font-size:17px}.progress-stat-grid{grid-template-columns:repeat(3,1fr)}.progress-stat{padding:12px 9px}.progress-stat strong{font-size:16px}.progress-insights{grid-template-columns:1fr}.progress-bars{gap:3px}}
 .confirm-popup-backdrop{position:fixed;inset:0;background:rgba(20,20,18,.45);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;z-index:200;padding:20px;opacity:0;pointer-events:none;transition:opacity .15s;}
 .confirm-popup-backdrop.show{opacity:1;pointer-events:auto;}
 .confirm-popup{width:100%;max-width:340px;background:var(--card);border-radius:20px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.25);transform:scale(.96);transition:transform .15s;}
@@ -347,6 +364,190 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .ly-cell{aspect-ratio:1;border-radius:1.5px;}
 @media (min-width: 900px){
   .light-year-grid{grid-template-columns:repeat(4,1fr);}
+}
+
+/* ── Unified premium popup system ── */
+:root{
+  --popup-radius:22px;
+  --popup-shadow:0 24px 70px rgba(28,32,36,.18),0 3px 14px rgba(28,32,36,.08);
+  --popup-backdrop:rgba(24,27,25,.42);
+}
+html[data-theme="dark"]{
+  --popup-shadow:0 28px 80px rgba(0,0,0,.48),0 3px 16px rgba(0,0,0,.28);
+  --popup-backdrop:rgba(4,6,5,.66);
+}
+.overlay,.day-modal-overlay,.pomo-full-overlay,.confirm-popup-backdrop{
+  background:var(--popup-backdrop);
+  -webkit-backdrop-filter:blur(8px) saturate(.9);
+  backdrop-filter:blur(8px) saturate(.9);
+}
+.overlay.show,.day-modal-overlay.show,.pomo-full-overlay.show{
+  animation:popupFadeIn .18s ease-out both;
+}
+.modal,.day-modal,.pomo-full-panel,.confirm-popup{
+  background:var(--card);
+  border:1px solid color-mix(in srgb,var(--line) 76%,transparent);
+  border-radius:var(--popup-radius);
+  box-shadow:var(--popup-shadow);
+  overflow:hidden;
+}
+.overlay.show .modal,.day-modal-overlay.show .day-modal,.pomo-full-overlay.show .pomo-full-panel{
+  animation:popupLiftIn .22s cubic-bezier(.2,.8,.2,1) both;
+}
+.modal{max-width:456px;max-height:min(86dvh,760px);}
+.day-modal{max-width:456px;max-height:min(78dvh,680px);}
+.pomo-full-panel{max-width:366px;padding:22px;}
+.modal-head{
+  min-height:58px;
+  padding:16px 20px 13px;
+  border-bottom:1px solid var(--line);
+  background:color-mix(in srgb,var(--card) 94%,var(--paper));
+  margin:0;
+}
+.modal-head h2{
+  font-size:16px;
+  line-height:1.35;
+  font-weight:650;
+  letter-spacing:-.012em;
+}
+.modal-close{
+  width:32px;
+  height:32px;
+  padding:0;
+  display:grid;
+  place-items:center;
+  flex:0 0 auto;
+  border:1px solid var(--line);
+  border-radius:50%;
+  background:var(--paper);
+  color:var(--ink-soft);
+  font-size:14px;
+  line-height:1;
+  transition:background .15s,border-color .15s,color .15s,transform .15s;
+}
+.modal-close:hover{background:var(--focus-soft);border-color:var(--focus-border);color:var(--focus);}
+.modal-close:active{transform:scale(.94);}
+.modal-body{padding:18px 20px 20px;scrollbar-width:thin;scrollbar-color:var(--line-strong) transparent;}
+.modal-foot{
+  padding:12px 20px calc(12px + env(safe-area-inset-bottom));
+  border-top:1px solid var(--line);
+  background:color-mix(in srgb,var(--card) 94%,var(--paper));
+}
+.modal-actions,.confirm-popup-actions,.pomo-full-actions{gap:10px;}
+.field{margin-bottom:14px;}
+.field label{font-size:11.5px;font-weight:550;color:var(--ink-soft);margin-bottom:6px;}
+.field input,.field select,.field textarea,#newHarshPhrase{
+  min-height:42px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:10px 12px;
+  background:color-mix(in srgb,var(--paper) 72%,var(--card));
+  outline:none;
+  transition:border-color .15s,box-shadow .15s,background .15s;
+}
+.field textarea{min-height:88px;resize:vertical;}
+.field input:focus,.field select:focus,.field textarea:focus,#newHarshPhrase:focus{
+  border-color:var(--focus);
+  background:var(--card);
+  box-shadow:0 0 0 3px var(--focus-border);
+}
+.mode-grid{gap:8px;}
+.mode-grid button,.day-chip,.checkrow{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:color-mix(in srgb,var(--paper) 72%,var(--card));
+}
+.mode-grid button{min-height:42px;padding:9px 10px;transition:all .15s;}
+.mode-grid button:hover{border-color:var(--line-strong);background:var(--card);}
+.mode-grid button.picked,.day-chip.picked{background:var(--focus);border-color:var(--focus);color:#fff;box-shadow:0 5px 14px rgba(47,107,82,.18);}
+.btn-primary,.btn-secondary,.confirm-popup-btn{
+  min-height:44px;
+  border-radius:12px;
+  padding:11px 14px;
+  font-size:13px;
+  font-weight:600;
+  transition:transform .12s,opacity .12s,box-shadow .15s;
+}
+.btn-primary{background:var(--focus);color:#fff;box-shadow:0 5px 14px rgba(47,107,82,.16);}
+.btn-secondary,.confirm-popup-btn-cancel{background:var(--card);color:var(--ink);border:1px solid var(--line);}
+.btn-primary:hover{box-shadow:0 7px 18px rgba(47,107,82,.22);}
+.btn-primary:active,.btn-secondary:active,.confirm-popup-btn:active{transform:translateY(1px);opacity:.9;}
+.day-popup-row{padding:11px 10px;margin:0 -10px;border-radius:12px;border-bottom:0;transition:background .15s;}
+.day-popup-row+.day-popup-row{border-top:1px solid var(--line);}
+.day-popup-row:hover{background:var(--paper);}
+.day-popup-row.is-active{padding:11px 10px;background:var(--focus-soft);}
+.day-popup-title{font-size:13.5px;font-weight:600;}
+.day-popup-meta{font-size:11.5px;margin-top:2px;}
+.confirm-popup{max-width:356px;padding:24px;}
+.confirm-popup-backdrop{transition:opacity .18s ease;}
+.confirm-popup-backdrop.show .confirm-popup{animation:popupLiftIn .2s cubic-bezier(.2,.8,.2,1) both;}
+.confirm-popup-icon{width:46px;height:46px;margin-bottom:16px;font-size:19px;}
+.confirm-popup-title{font-size:16px;font-weight:650;line-height:1.4;letter-spacing:-.01em;}
+.confirm-popup-msg{font-size:12.5px;color:var(--ink-soft);line-height:1.65;margin-bottom:22px;}
+.confirm-popup-btn-confirm{box-shadow:0 5px 14px rgba(28,32,36,.13);}
+.pomo-full-overlay{padding:18px;}
+.pomo-full-title{font-size:16px;font-weight:650;letter-spacing:-.01em;}
+.pomo-full-ring-wrap{width:230px;height:230px;}
+#ttsToast{
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;
+  padding:11px 16px;
+  background:color-mix(in srgb,var(--ink) 94%,transparent);
+  box-shadow:0 12px 34px rgba(0,0,0,.2);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+}
+@keyframes popupFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes popupLiftIn{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media (max-width:599px){
+  .overlay,.day-modal-overlay{align-items:flex-end;padding:0;}
+  .modal,.day-modal{
+    width:100%;
+    max-width:none;
+    max-height:91dvh;
+    border-width:1px 0 0;
+    border-radius:24px 24px 0 0;
+    box-shadow:0 -12px 40px rgba(28,32,36,.16);
+  }
+  .modal-handle{display:block;width:36px;height:4px;border-radius:4px;background:var(--line-strong);margin:8px auto 0;flex:0 0 auto;}
+  .modal-head{min-height:52px;padding:11px 16px 12px;}
+  .modal-body{padding:16px;}
+  .modal-foot{padding:10px 16px calc(10px + env(safe-area-inset-bottom));}
+  .confirm-popup-backdrop{align-items:center;padding:20px;}
+  .confirm-popup-actions{flex-direction:column-reverse;}
+  .confirm-popup-btn{width:100%;}
+  .pomo-full-panel{border-radius:24px;}
+  .row2{gap:10px;}
+}
+@media (prefers-reduced-motion:reduce){
+  .overlay.show,.day-modal-overlay.show,.pomo-full-overlay.show,
+  .overlay.show .modal,.day-modal-overlay.show .day-modal,
+  .pomo-full-overlay.show .pomo-full-panel,.confirm-popup-backdrop.show .confirm-popup{animation:none;}
+}
+
+/* Premium Task editor */
+#goalOverlay .goal-modal{max-width:570px;border-radius:24px;}
+.goal-task-card{display:grid;grid-template-columns:44px minmax(0,1fr) 38px;gap:12px;padding:14px;margin-bottom:10px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--paper) 55%,var(--card));transition:border-color .15s,box-shadow .15s;}
+.goal-task-card:focus-within{border-color:var(--focus-border);box-shadow:0 0 0 3px color-mix(in srgb,var(--focus) 8%,transparent);}
+.goal-task-icon{width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--focus-border);border-radius:13px;background:var(--focus-soft);color:var(--focus);cursor:pointer;padding:0;}
+.goal-task-icon:hover{border-color:var(--focus);}
+.goal-task-fields{min-width:0;}
+.goal-task-title{width:100%;min-height:42px!important;margin:0 0 9px!important;padding:9px 11px!important;border:1px solid var(--line)!important;border-radius:11px!important;background:var(--card)!important;font-size:13.5px!important;font-weight:580;}
+.goal-task-meta{display:grid;grid-template-columns:minmax(150px,1fr);gap:9px;}
+.goal-task-meta-field label{display:block;margin:0 0 5px;font-size:10.5px;font-weight:550;color:var(--ink-muted);}
+.goal-task-meta-field input{width:100%;height:38px;min-height:38px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);padding:7px 9px;font:inherit;font-size:12px;}
+.goal-task-actions{display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:8px;}
+.goal-task-done,.goal-task-remove,.goal-task-schedule{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink-soft);cursor:pointer;padding:0;}
+.goal-task-done input{width:17px;height:17px;accent-color:var(--focus);}
+.goal-task-schedule{color:var(--focus);}
+.goal-task-remove:hover{border-color:color-mix(in srgb,var(--danger) 35%,var(--line));color:var(--danger);}
+.goal-task-add{min-height:46px;border:1.5px dashed var(--focus-border)!important;background:var(--focus-soft)!important;color:var(--focus)!important;font-weight:650;}
+.goal-task-empty{padding:20px 14px;border:1px dashed var(--line-strong);border-radius:14px;text-align:center;color:var(--ink-muted);font-size:12px;line-height:1.6;}
+@media (max-width:599px){
+  #goalOverlay .goal-modal{border-radius:24px 24px 0 0;}
+  .goal-task-card{grid-template-columns:44px minmax(0,1fr);padding:12px;}
+  .goal-task-actions{grid-column:1/-1;flex-direction:row;justify-content:flex-end;border-top:1px solid var(--line);padding-top:10px;}
+  .goal-task-meta{grid-template-columns:1fr;}
 }
 
 
@@ -451,22 +652,27 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
   </div>
 </div>
 
-<!-- Count amount confirm modal -->
+<!-- Block result modal -->
 <div class="overlay" id="countConfirmOverlay">
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-head">
-      <h2 id="countConfirmTitle">ทำได้เท่าไหร่</h2>
+      <h2 id="countConfirmTitle">บันทึกผล</h2>
       <button class="modal-close" onclick="document.getElementById('countConfirmOverlay').classList.remove('show')">✕</button>
     </div>
     <div class="modal-body">
-      <div class="field">
-        <label id="countConfirmLabel">จำนวน</label>
-        <input type="number" id="countConfirmInput" min="0" step="0.1">
+      <div class="field" id="resultActualMinutesRow">
+        <label>โฟกัสจริง (นาที)</label>
+        <input type="number" id="resultActualMinutes" min="0" step="0.1">
+      </div>
+      <div class="field" id="resultCountAchievedRow" style="display:none">
+        <label>ทำได้ (<span id="resultCountUnitLabel"></span>)</label>
+        <input type="number" id="resultCountAchieved" min="0" step="0.1">
       </div>
     </div>
-    <div class="modal-foot">
-      <button class="btn-primary" id="countConfirmBtn" style="width:100%">บันทึก</button>
+    <div class="modal-foot" style="display:flex;gap:10px">
+      <button class="btn-secondary" id="resultNeedsMoreBtn" style="flex:1">ทำต่อ</button>
+      <button class="btn-primary" id="countConfirmBtn" style="flex:1">เสร็จแล้ว</button>
     </div>
   </div>
 </div>
@@ -616,27 +822,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
   <div class="app-head"><h1>เป้าหมาย</h1><span class="clock" id="clockNow3"></span></div>
   <p class="section-label" style="margin-top:0">ความคืบหน้าเป้าหมาย</p>
   <div class="proj-dash" id="projDash"></div>
-  <div class="proj-grid" style="margin-top:16px;">
-    <button class="add-btn" id="openProjAddBtn" style="margin-bottom:0;">+ เพิ่มเป้าหมาย</button>
-    <button class="btn-secondary" id="openHabitGalleryBtn" style="white-space:nowrap;">🎓 Habit Gallery</button>
-  </div>
-</div>
-
-<!-- HABIT GALLERY POPUP -->
-<div class="gallery-popup-backdrop" id="habitGalleryPopupBackdrop">
-  <div class="gallery-popup" id="habitGalleryPopup">
-    <div class="gallery-popup-head">
-      <div class="gallery-popup-title">🎓 Habit Gallery</div>
-      <button type="button" class="gallery-popup-close" id="habitGalleryPopupCloseBtn">✕</button>
-    </div>
-    <p class="gallery-popup-sub">เลือกนิสัยสำเร็จรูปเพิ่มเข้าเร็วๆ</p>
-    <div id="habitGalleryChips"></div>
-    <div id="habitGalleryConfig" style="display:none;background:var(--paper);border:0.5px solid var(--line);border-radius:16px;padding:14px;margin-top:4px;margin-bottom:16px;"></div>
-    <div class="gallery-popup-footer">
-      <button type="button" class="btn-secondary" id="habitGalleryPopupCancelBtn" style="flex:1;">ยกเลิก</button>
-      <button type="button" class="btn-primary" id="habitGalleryConfirmBtn" style="flex:2;display:none;">เพิ่มนิสัยที่เลือก</button>
-    </div>
-  </div>
+  <button class="add-btn" id="openProjAddBtn" style="margin-top:16px;margin-bottom:0;">+ เพิ่มเป้าหมาย</button>
 </div>
 
 <!-- PAGE: Progress -->
@@ -699,6 +885,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
       <div class="field"><label>วันที่</label><input type="date" id="f_date"></div>
       <div class="row2"><div class="field"><label>เริ่ม</label><input type="time" id="f_start"></div><div class="field"><label>จบ</label><input type="time" id="f_end"></div></div>
       <div class="field"><label>ผูกกับเป้าหมาย</label><select id="f_goalId"></select></div>
+      <div class="field"><label>ผูกกับ Task</label><select id="f_taskId"></select></div>
       <div class="field" id="f_countAmountRow" style="display:none;"><label>จำนวนต่อครั้ง (<span id="f_countUnitLabel"></span>)</label><input type="number" id="f_countAmount" min="0" step="0.1" placeholder="เช่น 5"></div>
       <label style="font-size:12px;color:var(--ink-soft);display:block;margin-bottom:6px">โหมด pomodoro</label>
       <div class="mode-grid" id="modeGrid">
@@ -706,6 +893,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
         <button type="button" data-mode="classic">classic 25/5</button>
         <button type="button" data-mode="deep">deep work 50/10</button>
         <button type="button" data-mode="long">long focus 90/15</button>
+        <button type="button" data-mode="stopwatch">จับเวลา</button>
         <button type="button" data-mode="custom" style="grid-column:span 2">กำหนดเอง</button>
       </div>
       <div class="row2" id="customRow" style="display:none;margin-bottom:11px">
@@ -740,13 +928,13 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 
 <!-- GOAL MODAL -->
 <div class="overlay" id="goalOverlay">
-  <div class="modal">
+  <div class="modal goal-modal">
     <div class="modal-handle"></div>
-    <div class="modal-head"><h2 id="goalModalTitle">โปรเจกต์ใหม่</h2><button class="modal-close" id="goalCancelBtn">✕</button></div>
+    <div class="modal-head"><h2 id="goalModalTitle">Goal ใหม่</h2><button class="modal-close" id="goalCancelBtn">✕</button></div>
     <div class="modal-body">
       <div class="row2">
         <div class="field" style="flex:0 0 64px"><label>ไอคอน</label><button type="button" id="g_iconBtn" style="width:100%;height:42px;border:0.5px solid var(--line);border-radius:10px;background:var(--paper);font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;"><span id="g_iconPreview">📌</span></button><input type="hidden" id="g_emoji" value="📌"></div>
-        <div class="field"><label>ชื่อโปรเจกต์</label><input type="text" id="g_title" placeholder="เช่น Ebook เทรด"></div>
+        <div class="field"><label>ชื่อ Goal</label><input type="text" id="g_title" placeholder="เช่น Ebook เทรด"></div>
       </div>
       <div class="row2">
         <div class="field"><label>หมวดหมู่</label>
@@ -791,11 +979,8 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
         <div class="field" id="g_unitCustomField" style="display:none;"><label>หน่วย (กำหนดเอง)</label><input type="text" id="g_unitCustom" placeholder="เช่น หน้า, บท, ตอน"></div>
         <p style="font-size:11px;color:var(--ink-soft);margin:-6px 0 10px">% จะคำนวณจากจำนวนที่สะสมได้จาก time block ที่ผูกไว้และทำเสร็จแล้ว</p>
       </div>
-      <div id="goalModeProjectFields" style="display:none;">
-        <p style="font-size:11px;color:var(--ink-soft);margin:0 0 10px">% จะคำนวณจากจำนวน milestone ที่ติ๊กเสร็จ เทียบกับทั้งหมด</p>
-        <div id="projectSubtaskList" style="margin-bottom:8px;"></div>
-        <button type="button" id="addSubtaskBtn" class="btn-secondary" style="width:100%;">+ เพิ่ม milestone</button>
-      </div>
+      <div id="goalModeProjectFields" style="display:none;"></div>
+      <div class="field"><label>Tasks</label><p style="font-size:12px;color:var(--ink-soft);margin:-2px 0 10px;">เพิ่มสิ่งที่ต้องทำสำหรับเป้าหมายนี้</p><div id="goalTaskList" style="margin-bottom:8px;"></div><button type="button" id="addGoalTaskBtn" class="btn-secondary goal-task-add" style="width:100%;">＋ เพิ่ม Task</button></div>
     </div>
     <div class="modal-foot"><div class="modal-actions"><button class="btn-secondary" id="goalDeleteBtn" style="display:none;color:var(--danger)">ลบ</button><button class="btn-primary" id="goalSaveBtn" style="flex:2">บันทึก</button></div></div>
   </div>
@@ -968,11 +1153,193 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 <script src="https://cdn.jsdelivr.net/npm/firebase@10.14.0/firebase-firestore-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/firebase@10.14.0/firebase-auth-compat.js"></script>
 <script>
+(function (root, factory) {
+  const api = factory();
+
+  if (typeof module === 'object' && module.exports) {
+    module.exports = api;
+  }
+
+  root.FlowMateCore = api;
+})(globalThis, function () {
+  const SCHEMA_VERSION = 4;
+
+  function normalizeNumber(value) {
+    return Number.isFinite(value) && value >= 0 ? value : 0;
+  }
+
+  function createTask(input) {
+    const source = input || {};
+
+    return {
+      id: String(source.id ?? ''),
+      title: String(source.title ?? '').trim(),
+      done: Boolean(source.done),
+      completedAt: source.completedAt ?? null,
+      due: String(source.due ?? ''),
+      targetCount: normalizeNumber(source.targetCount),
+      icon: String(source.icon ?? ''),
+      iconManual: Boolean(source.iconManual),
+    };
+  }
+
+  function createBlockFromTask(task, goalId, schedule) {
+    const sourceTask = task || {};
+    const sourceSchedule = schedule || {};
+
+    return Object.assign({}, sourceSchedule, {
+      title: String(sourceTask.title ?? '').trim(),
+      goalId: String(goalId ?? ''),
+      taskId: String(sourceTask.id ?? ''),
+      mode: 'none',
+      status: 'planned',
+      completed: null,
+      actualFocusSeconds: 0,
+    });
+  }
+
+  function recordBlockResult(block, result) {
+    const sourceBlock = block || {};
+    const sourceResult = result || {};
+    const merged = Object.assign({}, sourceBlock);
+
+    ['actualFocusSeconds', 'countAchieved'].forEach(function (key) {
+      if (Object.prototype.hasOwnProperty.call(sourceResult, key)) {
+        merged[key] = normalizeNumber(sourceResult[key]);
+      }
+    });
+    if (Object.prototype.hasOwnProperty.call(sourceResult, 'status')) {
+      merged.status = sourceResult.status;
+    }
+    return merged;
+  }
+
+  function isRecord(value) {
+    return value !== null && typeof value === 'object' && !Array.isArray(value);
+  }
+
+  function normalizeMode(goal) {
+    if (goal.mode === 'time' || goal.mode === 'count' || goal.mode === 'project') {
+      return goal.mode;
+    }
+
+    if (goal.mode === 'task') {
+      return 'project';
+    }
+
+    return Number(goal.targetHours) > 0 ? 'time' : 'project';
+  }
+
+  function migrateState(rawState) {
+    if (isRecord(rawState) && rawState.schemaVersion === SCHEMA_VERSION) {
+      return { state: rawState, migrated: false, removedHabitCount: 0 };
+    }
+
+    const source = isRecord(rawState) ? rawState : {};
+    const sourceGoals = Array.isArray(source.goals) ? source.goals : [];
+    const sourceBlocks = Array.isArray(source.blocks) ? source.blocks : [];
+    let removedHabitCount = 0;
+    const goals = sourceGoals.reduce(function (migratedGoals, goal) {
+      if (!isRecord(goal)) {
+        return migratedGoals;
+      }
+
+      if (goal.mode === 'habit') {
+        removedHabitCount += 1;
+        return migratedGoals;
+      }
+
+      const rawTasks = goal.tasks || goal.subtasks || [];
+      const taskSource = Array.isArray(rawTasks) ? rawTasks : [];
+      migratedGoals.push(Object.assign({}, goal, {
+        mode: normalizeMode(goal),
+        tasks: taskSource.map(createTask),
+      }));
+      return migratedGoals;
+    }, []);
+    const blocks = sourceBlocks.filter(isRecord).map(function (block) {
+      return Object.assign({}, block, {
+        taskId: typeof block.taskId === 'string' ? block.taskId : '',
+      });
+    });
+
+    return {
+      state: {
+        schemaVersion: SCHEMA_VERSION,
+        goals: goals,
+        blocks: blocks,
+        timerState: isRecord(source.timerState) ? source.timerState : {},
+        prevActiveId: typeof source.prevActiveId === 'string' ? source.prevActiveId : null,
+        stats: isRecord(source.stats) && isRecord(source.stats.byDate) ? source.stats : { byDate: {} },
+      },
+      migrated: true,
+      removedHabitCount: removedHabitCount,
+    };
+  }
+
+  function calculateGoalProgress(goal, tasks, blocks) {
+    const sourceGoal = goal || {};
+    const mode = sourceGoal.mode;
+    const goalBlocks = (blocks || []).filter(function (block) {
+      return block && block.goalId === sourceGoal.id;
+    });
+    const goalTasks = Array.isArray(tasks) ? tasks : [];
+    let logged = 0;
+    let target = normalizeNumber(sourceGoal.target);
+    let unit = '';
+    let tasksDone = 0;
+    let tasksTotal = 0;
+
+    if (mode === 'project') {
+      tasksTotal = goalTasks.length;
+      tasksDone = goalTasks.filter(function (task) {
+        return task && task.done;
+      }).length;
+      logged = tasksDone;
+      target = tasksTotal;
+      unit = 'tasks';
+    } else if (mode === 'time') {
+      const seconds = goalBlocks.reduce(function (total, block) {
+        return total + normalizeNumber(block.actualFocusSeconds);
+      }, 0);
+      logged = Math.round((seconds / 3600) * 100) / 100;
+      unit = 'hours';
+    } else if (mode === 'count') {
+      logged = goalBlocks.reduce(function (total, block) {
+        return total + normalizeNumber(block.countAchieved);
+      }, 0);
+      unit = String(sourceGoal.unit ?? '');
+    }
+
+    return {
+      mode: mode,
+      pct: target === 0 ? 0 : Math.min(100, Math.round((logged / target) * 100)),
+      logged: logged,
+      target: target,
+      unit: unit,
+      tasksDone: tasksDone,
+      tasksTotal: tasksTotal,
+    };
+  }
+
+  return {
+    SCHEMA_VERSION: SCHEMA_VERSION,
+    createTask: createTask,
+    createBlockFromTask: createBlockFromTask,
+    calculateGoalProgress: calculateGoalProgress,
+    migrateState: migrateState,
+    recordBlockResult: recordBlockResult,
+  };
+});
+
+</script>
+<script>
 const SK="tbv3_state",CK="tbv3_cloud",VK="tbv3_voice",MK="tbv3_mascot",PK="tbv3_phonecatch";
 const MODES={classic:{focus:25,break:5},deep:{focus:50,break:10},long:{focus:90,break:15}};
-let goals=[{id:"g1",title:"ปิดโปรเจกต์ Q3",_isProject:true}],blocks=[],stats={byDate:{}},timerState={};
+let goals=[{id:"g1",title:"ปิดโปรเจกต์ Q3",tasks:[],_isProject:true}],blocks=[],stats={byDate:{}},timerState={};
 let prevActiveId=null,voiceEnabled=true,viewDate=todayStr(),viewMode="day";
 let snoozeUntil=0,lastPhoneCatchAt=0,currentTab="today";
+let progressPeriod=7,progressView="overview",progressReviewOpen=false;
 let cloudDb=null,cloudDocRef=null,cloudUnsub=null,cloudConnected=false,cloudPushTimer=null,applyingRemoteUpdate=false;
 
 function dateStrFromDate(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
@@ -995,11 +1362,12 @@ function nextFreeSlotToday(durMin){
   if(startM+durMin>24*60)startM=24*60-durMin;
   return{start:minutesToHM(startM),end:minutesToHM(startM+durMin)};
 }
-function createBlockFromMilestone(title,goalId){
+function scheduleTaskBlock(task,goalId){
   const slot=nextFreeSlotToday(30);
-  blocks.push({id:uid(),title,date:todayStr(),start:slot.start,end:slot.end,goalId,mode:"none",completed:null});
+  const block=FlowMateCore.createBlockFromTask(task,goalId,{id:uid(),date:todayStr(),start:slot.start,end:slot.end});
+  blocks.push(block);
   saveState();
-  showToast(`สร้าง time block "${title}" เวลา ${slot.start} แล้ว`);
+  showToast(`สร้าง time block "${task.title}" เวลา ${slot.start} แล้ว`);
   renderAll();
 }
 function nowPlus(m){const d=new Date(Date.now()+m*60000);return d.getHours().toString().padStart(2,"0")+":"+d.getMinutes().toString().padStart(2,"0");}
@@ -1013,7 +1381,7 @@ function statusOf(b,nm){const today=todayStr();if(b.date<today)return"elapsed";i
 function setBlockStatus(b,status){const now=new Date().toISOString();b.status=status;b.statusChangedAt=now;b.completed=status==="completed"?true:(status==="skipped"?false:null);if(status==="completed"){b.completedAt=now;delete b.skippedAt;}else if(status==="skipped"){b.skippedAt=now;delete b.completedAt;}else{delete b.completedAt;delete b.skippedAt;}}
 function migrateBlock(b){if(!b.date)b.date=todayStr();if(!b.status)b.status=b.completed===true?"completed":b.completed===false?"skipped":"planned";if(!Number.isFinite(Number(b.actualFocusSeconds)))b.actualFocusSeconds=0;return b;}
 function modeMinutes(b){if(b.mode==="custom")return{focus:b.customFocus,break:b.customBreak};return MODES[b.mode]||null;}
-function modeLabel(b){if(b.mode==="custom")return"กำหนดเอง "+b.customFocus+"/"+b.customBreak;if(b.mode==="classic")return"classic 25/5";if(b.mode==="deep")return"deep work 50/10";if(b.mode==="long")return"long focus 90/15";return"";}
+function modeLabel(b){if(b.mode==="custom")return"กำหนดเอง "+b.customFocus+"/"+b.customBreak;if(b.mode==="classic")return"classic 25/5";if(b.mode==="deep")return"deep work 50/10";if(b.mode==="long")return"long focus 90/15";if(b.mode==="stopwatch")return"จับเวลา";return"";}
 function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function pick(arr){return arr[Math.floor(Math.random()*arr.length)];}
 function showToast(msg){const el=document.getElementById("ttsToast");el.textContent=msg;el.style.display="block";clearTimeout(el._t);el._t=setTimeout(()=>el.style.display="none",4500);}
@@ -1049,8 +1417,8 @@ function showConfirmPopup({title,message,variant="neutral",confirmLabel="ยื�
 }
 
 // PERSISTENCE
-function saveState(){try{localStorage.setItem(SK,JSON.stringify({blocks,goals,timerState,prevActiveId,stats}));}catch(e){}queueCloudPush();}
-function loadState(){try{const r=localStorage.getItem(SK);if(!r)return false;const d=JSON.parse(r);if(Array.isArray(d.blocks)&&d.blocks.length){blocks=d.blocks.map(migrateBlock);if(Array.isArray(d.goals))goals=d.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;(g.subtasks||[]).forEach(s=>{if(s.done&&!Object.hasOwn(s,"completedAt"))s.completedAt=null;});});if(d.timerState)Object.assign(timerState,d.timerState);if(d.prevActiveId)prevActiveId=d.prevActiveId;if(d.stats?.byDate)stats=d.stats;return true;}}catch(e){}return false;}
+function saveState(){try{localStorage.setItem(SK,JSON.stringify({schemaVersion:FlowMateCore.SCHEMA_VERSION,blocks,goals,timerState,prevActiveId,stats}));}catch(e){}queueCloudPush();}
+function loadState(){try{const rawText=localStorage.getItem(SK);if(!rawText)return false;const migration=FlowMateCore.migrateState(JSON.parse(rawText));if(migration.migrated&&localStorage.getItem("tbv3_state_backup_v3")===null)localStorage.setItem("tbv3_state_backup_v3",rawText);blocks=migration.state.blocks.map(migrateBlock);goals=migration.state.goals;timerState=migration.state.timerState;prevActiveId=migration.state.prevActiveId;stats=migration.state.stats;if(migration.migrated)saveState();return true;}catch(e){showToast("ไม่สามารถโหลดข้อมูลที่บันทึกไว้ได้");return false;}}
 function seedBlocks(){function mk(t,s,e,g,m){return{id:uid(),title:t,start:s,end:e,goalId:g||"",mode:m,customFocus:25,customBreak:5,details:"",notify:true,date:todayStr()};}blocks=[mk("ออกกำลังกาย","08:00","09:00","","none"),mk("เขียนรายงาน Q3",nowPlus(0),nowPlus(120),"g1","deep"),mk("ประชุมทีม",nowPlus(125),nowPlus(155),"","none"),mk("ออกแบบ ui",nowPlus(170),nowPlus(290),"g1","classic")];}
 
 // AUDIO / NOTIFICATIONS
@@ -1150,6 +1518,10 @@ function lucideIcon(name,size,strokeWidth){return `<svg viewBox="0 0 24 24" widt
 function lucideSvg(body,size){return `<svg viewBox="0 0 24 24" width="${size||18}" height="${size||18}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;}
 const ICON_CAT_LABEL={"body": "สุขภาพกาย", "mind": "จิตใจ/สติ", "learn": "การเรียนรู้", "money": "การเงิน", "home": "งานบ้าน/ระเบียบ", "social": "ความสัมพันธ์", "work": "งาน/โปรดักทีวิตี้"};
 const ICON_LIB={
+  "palette":{cat:"work",label:"ออกแบบ",emoji:"🎨",svg:`<circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 22a10 10 0 1 0 0-20c-5.5 0-10 4-10 9 0 3 2 5 5 5h1.8a1.5 1.5 0 0 1 1.2 2.4l-.5.7A1.8 1.8 0 0 0 11 22Z"/>`},
+  "code":{cat:"work",label:"เขียนโค้ด/พัฒนา",emoji:"💻",svg:`<path d="m8 9-3 3 3 3"/><path d="m16 9 3 3-3 3"/><path d="m14 5-4 14"/>`},
+  "clipboard":{cat:"work",label:"วางแผน",emoji:"📋",svg:`<rect width="16" height="18" x="4" y="4" rx="2"/><path d="M9 4V2h6v2"/><path d="M8 10h8M8 14h6"/>`},
+  "badgecheck":{cat:"work",label:"ทดสอบ/ตรวจสอบ",emoji:"✅",svg:`<path d="M12 3l2.2 1.6 2.7-.2.8 2.6 2.2 1.6-.8 2.6.8 2.6-2.2 1.6-.8 2.6-2.7-.2L12 21l-2.2-1.6-2.7.2-.8-2.6-2.2-1.6.8-2.6-.8-2.6 2.2-1.6.8-2.6 2.7.2Z"/><path d="m9 12 2 2 4-4"/>`},
   "water_drop":{cat:"body",label:"ดื่มน้ำ",emoji:"💧",svg:`<path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" />`},
   "walk":{cat:"body",label:"เดิน/ก้าวเดิน",emoji:"🚶",svg:`<path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z" /><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z" /><path d="M16 17h4" /><path d="M4 13h4" />`},
   "run":{cat:"body",label:"วิ่ง",emoji:"🏃",svg:`<path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" />`},
@@ -1252,11 +1624,9 @@ function setMascotStyle(k){
   try{localStorage.setItem(MK,k);}catch(e){}
   document.getElementById("styleLabel").textContent=MSN[k]||"นาฬิกาปลุก";
 }
-function accessoryMarkup(tier){if(tier===3)return'<svg viewBox="0 0 24 24"><polygon points="2,9 6,5 9,9 12,3 15,9 18,5 22,9 19,19 5,19" fill="#F2A623" stroke="#C97A1B" stroke-width="1"/></svg>';if(tier===2)return'<svg viewBox="0 0 24 24"><polygon points="12,2 20,20 4,20" fill="#1F6F5C"/><circle cx="12" cy="2" r="2.2" fill="#F2A623"/></svg>';if(tier===1)return'<svg viewBox="0 0 24 24"><polygon points="12,1 15,9 23,9 16,14 19,22 12,17 5,22 8,14 1,9 9,9" fill="#F2A623"/></svg>';return"";}
-function computeStreak(){let s=0,d=todayStr();while(stats.byDate[d]?.focusRounds>0){s++;d=addDays(d,-1);}if(!s){d=addDays(todayStr(),-1);while(stats.byDate[d]?.focusRounds>0){s++;d=addDays(d,-1);}}return s;}
 function recordFocusCompletions(n){const d=todayStr();if(!stats.byDate[d])stats.byDate[d]={focusRounds:0};stats.byDate[d].focusRounds+=n;saveState();refreshGamification();}
 function recordDisciplineScore(score){const d=todayStr();if(!stats.byDate[d])stats.byDate[d]={focusRounds:0};if(!Array.isArray(stats.byDate[d].disciplineScores))stats.byDate[d].disciplineScores=[];stats.byDate[d].disciplineScores.push(score);}
-function refreshGamification(){const streak=computeStreak(),tier=streak>=14?3:streak>=7?2:streak>=3?1:0;const acc=document.getElementById("mascotAccessory");if(acc)acc.innerHTML=accessoryMarkup(tier);if(currentTab==="projects")renderProjects();if(currentTab==="progress")renderProgress();}
+function refreshGamification(){if(currentTab==="projects")renderProjects();if(currentTab==="progress")renderProgress();}
 
 // NOTIFY
 function notify(eyebrow,msg){document.getElementById("mascotEyebrow").textContent=eyebrow;document.getElementById("mascotMsg").textContent=msg;mascotWalkIn(msg);playBeep();sendSysNotif(eyebrow,msg);}
@@ -1385,6 +1755,32 @@ function startFocus(blockId){
 }
 function togglePomoPause(){const b=getActiveBlock();if(!b||!timerState[b.id])return;const ts=timerState[b.id];if(ts.phase==="ready")return;if(!ts.paused){ts.paused=true;ts.remainingMs=ts.phaseEndsAt-Date.now();}else{ts.paused=false;ts.phaseEndsAt=Date.now()+ts.remainingMs;ts.lastAccountingAt=Date.now();}saveState();}
 function skipPomoPhase(){const b=getActiveBlock();if(!b)return;const ts=timerState[b.id],mm=modeMinutes(b);if(!ts||!mm)return;if(ts.phase==="ready"){ts.phase="focus";ts.phaseEndsAt=Date.now()+mm.focus*60000;ts.distractionsThisPhase=0;ts.lastAccountingAt=Date.now();saveState();return;}if(ts.phase==="focus"){recordDisciplineScore(0);ts.distractionsThisPhase=0;ts.phase="break";ts.phaseEndsAt=Date.now()+mm.break*60000;}else{ts.distractionsThisPhase=0;ts.phase="focus";ts.round++;ts.phaseEndsAt=Date.now()+mm.focus*60000;}ts.paused=false;ts.lastAccountingAt=Date.now();saveState();}
+function startStopwatch(blockId){
+  const block=blocks.find(candidate=>candidate.id===blockId);if(!block)return;
+  const ts=timerState[blockId];
+  if(ts?.kind==="stopwatch"){
+    if(ts.running)return;
+    ts.running=true;ts.startedAt=Date.now();saveState();renderToday();return;
+  }
+  timerState[blockId]={kind:"stopwatch",running:true,startedAt:Date.now(),accumulatedMs:0};
+  saveState();renderToday();
+}
+function pauseStopwatch(blockId){
+  const ts=timerState[blockId];if(!ts||ts.kind!=="stopwatch"||!ts.running)return;
+  ts.accumulatedMs+=Math.max(0,Date.now()-ts.startedAt);
+  ts.running=false;ts.startedAt=null;
+  saveState();renderToday();
+}
+function finishStopwatch(blockId){
+  const block=blocks.find(candidate=>candidate.id===blockId);if(!block)return;
+  const ts=timerState[blockId];if(!ts||ts.kind!=="stopwatch")return;
+  if(ts.running)pauseStopwatch(blockId);
+  const finished=timerState[blockId];
+  const actualFocusSeconds=(Number(block.actualFocusSeconds)||0)+Math.round(finished.accumulatedMs/1000);
+  Object.assign(block,FlowMateCore.recordBlockResult(block,{actualFocusSeconds}));
+  delete timerState[blockId];
+  saveState();renderAll();
+}
 document.getElementById("pomoFullClose").addEventListener("click",()=>document.getElementById("pomoFullOverlay").classList.remove("show"));
 document.getElementById("pomoFullPause").addEventListener("click",togglePomoPause);
 document.getElementById("pomoFullSkip").addEventListener("click",skipPomoPhase);
@@ -1413,46 +1809,28 @@ function goalHoursLogged(goalId){
   return blocks.filter(b=>b.goalId===goalId).reduce((sum,b)=>sum+(Number(b.actualFocusSeconds)||0)/3600,0);
 }
 function goalProgress(goalId){
-  const g=goals.find(x=>x.id===goalId);
-  const mode=g?.mode||(g?.targetHours>0?"time":"project"); // infer for goals saved before mode existed
+  const goal=goals.find(x=>x.id===goalId);
+  const mode=goal?.mode||(goal?.targetHours>0?"time":"project"); // infer for goals saved before mode existed
   const blocksTotal=blocks.filter(b=>b.goalId===goalId).length;
   const blocksDone=blocks.filter(b=>b.goalId===goalId&&b.completed===true).length; // explicit ✓ mark, not time-elapsed
 
-  if(mode==="habit"){
-    const streak=goalStreak(goalId);
-    return{pct:0,logged:streak,target:0,blocksDone,blocksTotal,mode,streak};
-  }
   if(mode==="project"){
-    const subtasks=g?.subtasks||[];
-    const subDone=subtasks.filter(s=>s.done).length;
-    const hasWeights=subtasks.some(s=>s.weight);
-    const pct=hasWeights?Math.round(subtasks.filter(s=>s.done).reduce((a,s)=>a+(Number(s.weight)||0),0)):(subtasks.length?Math.round(subDone/subtasks.length*100):0);
-    return{pct,logged:subDone,target:subtasks.length,subtasksDone:subDone,subtasksTotal:subtasks.length,blocksDone,blocksTotal,mode};
+    const progress=FlowMateCore.calculateGoalProgress(goal, goal.tasks || [], blocks);
+    return{...progress,blocksDone,blocksTotal,mode,tasksDone:progress.tasksDone,tasksTotal:progress.tasksTotal};
   }
   if(mode==="count"){
-    const target=g?.targetCount||0;
-    const logged=blocks.filter(b=>b.goalId===goalId&&b.completed===true).reduce((s,b)=>s+(Number(b.countAchieved??b.countAmount)||0),0);
-    const pct=target>0?Math.min(100,Math.round(logged/target*100)):0;
-    return{pct,logged:+logged.toFixed(1),target,unit:g?.unit||"",blocksDone,blocksTotal,mode};
+    const progress=FlowMateCore.calculateGoalProgress({...goal,target:goal?.targetCount||0}, goal?.tasks||[], blocks);
+    return{...progress,blocksDone,blocksTotal,mode};
   }
   if(mode==="time"){
-    const logged=goalHoursLogged(goalId);
-    const target=g?.targetHours||0;
-    const pct=target>0?Math.min(100,Math.round(logged/target*100)):0;
-    return{pct,logged:+logged.toFixed(1),target,blocksDone,blocksTotal,mode};
+    const progress=FlowMateCore.calculateGoalProgress({...goal,target:goal?.targetHours||0}, goal?.tasks||[], blocks);
+    return{...progress,blocksDone,blocksTotal,mode};
   }
   // fallback for any unrecognized/legacy mode value
   return{pct:0,logged:0,target:0,blocksDone,blocksTotal,mode};
 }
 function daysUntilGoal(ds){if(!ds)return null;const diff=new Date(ds+"T00:00:00")-new Date(todayStr()+"T00:00:00");return Math.round(diff/86400000);}
 
-function goalStreak(goalId){
-  let s=0,d=todayStr();
-  const hasToday=blocks.some(b=>b.goalId===goalId&&b.date===d&&b.completed===true);
-  if(!hasToday) d=addDays(d,-1);
-  while(blocks.some(b=>b.goalId===goalId&&b.date===d&&b.completed===true)){ s++; d=addDays(d,-1); }
-  return s;
-}
 function goalLastWorked(goalId){
   const done=blocks.filter(b=>b.goalId===goalId&&b.completed===true).sort((a,b)=>b.date<a.date?-1:1);
   if(!done.length) return null;
@@ -1515,7 +1893,14 @@ function renderToday(){
   list.innerHTML=sorted.map(b=>{
     const st=statusOf(b,nm),mm=modeMinutes(b),goal=goals.find(g=>g.id===b.goalId);
     let inlinePomo="";
-    if(st==="active"&&mm){
+    if((st==="active"||timerState[b.id]?.kind==="stopwatch")&&b.mode==="stopwatch"){
+      const ts=timerState[b.id];
+      const elapsedMs=ts?.kind==="stopwatch"?ts.accumulatedMs+(ts.running?Math.max(0,Date.now()-ts.startedAt):0):0;
+      const elapsed=Math.round(elapsedMs/1000);
+      const label=String(Math.floor(elapsed/60)).padStart(2,"0")+":"+String(elapsed%60).padStart(2,"0");
+      const controls=!ts?`<button type="button" class="start-focus-btn" data-action="stopwatch-start" data-id="${b.id}">▶ เริ่มจับเวลา</button>`:ts.running?`<button type="button" class="icon-btn" data-action="stopwatch-pause" data-id="${b.id}">⏸ หยุด</button><button type="button" class="icon-btn" data-action="stopwatch-finish" data-id="${b.id}">✓ จบ</button>`:`<button type="button" class="icon-btn" data-action="stopwatch-start" data-id="${b.id}">▶ ทำต่อ</button><button type="button" class="icon-btn" data-action="stopwatch-finish" data-id="${b.id}">✓ จบ</button>`;
+      inlinePomo=`<div class="card2-pomo-compact"><span class="card2-pomo-time-lg">${label}</span><span class="card2-pomo-label">จับเวลา</span><div style="margin-left:auto;display:flex;gap:4px;">${controls}</div></div>`;
+    } else if(st==="active"&&mm){
       const ts=timerState[b.id];
       if(!ts){
         inlinePomo=`<div class="card2-start-focus"><button type="button" class="start-focus-btn" data-action="start-focus" data-id="${b.id}">▶ เริ่มโฟกัส</button></div>`;
@@ -1554,7 +1939,7 @@ function renderToday(){
     if(b.completed===false&&b.notDoneReason) badges.push(`<span class="card2-badge card2-badge-continues">${esc(b.notDoneReason)}</span>`);
     const badgeRow=badges.length?`<div class="card2-badges">${badges.join("")}</div>`:"";
     const dotColor=goal?goalColor(goal.id):"#9BA0A6";
-    const sourceClass=goal?.mode==="habit"?"src-habit":goal?.mode==="project"?"src-project":"";
+    const sourceClass=goal?.mode==="project"?"src-project":"";
     return`<div class="block-row"><div class="time-col">${b.start}<br>${b.end}</div><div class="card card2 ${sourceClass} ${b.completed===true?"done":st==="active"?"active-block":""}" data-id="${b.id}">
       <div class="card2-row">
         <span class="card2-dot" style="background:${dotColor}"></span>
@@ -1603,8 +1988,8 @@ document.getElementById("blocksList").addEventListener("click",e=>{
     } else {
       const g=goals.find(x=>x.id===block.goalId);
       const isCount=g&&(g.mode||(g.targetHours>0?"time":"project"))==="count";
-      if(isCount){ openCountConfirmModal(block,g); }
-      else { setBlockStatus(block,"completed"); saveState(); renderToday(); }
+      if(isCount||block.mode==="none"){ openCountConfirmModal(block,g); }
+      else { completeBlock(block,"completed"); saveState(); renderToday(); }
     }
   }
   if(action==="mark-notdone"){
@@ -1613,6 +1998,9 @@ document.getElementById("blocksList").addEventListener("click",e=>{
   if(action==="start-focus"){
     startFocus(id);
   }
+  if(action==="stopwatch-start")startStopwatch(id);
+  if(action==="stopwatch-pause")pauseStopwatch(id);
+  if(action==="stopwatch-finish")finishStopwatch(id);
 });
 
 document.getElementById("prevDayBtn").addEventListener("click",()=>{viewDate=addDays(viewDate,viewMode==="week"?-7:-1);renderToday();});
@@ -1950,6 +2338,13 @@ function populateGoalSelect(selId){
   sel.value=selId||"";
   updateCountAmountField();
 }
+function populateTaskSelect(goalId,taskId){
+  const goal=goals.find(candidate=>candidate.id===goalId);
+  const taskSelect=document.getElementById("f_taskId");
+  const tasks=goal?.tasks||[];
+  taskSelect.innerHTML='<option value="">ไม่ผูกกับ Task</option>'+tasks.map(task=>`<option value="${task.id}">${esc(task.title)}</option>`).join("");
+  taskSelect.value=tasks.some(task=>task.id===taskId)?taskId:"";
+}
 function updateCountAmountField(){
   const goalId=document.getElementById("f_goalId").value;
   const g=goals.find(x=>x.id===goalId);
@@ -1957,7 +2352,11 @@ function updateCountAmountField(){
   document.getElementById("f_countAmountRow").style.display=isCount?"block":"none";
   document.getElementById("f_countUnitLabel").textContent=isCount?(g.unit||""):"";
 }
-document.getElementById("f_goalId").addEventListener("change",updateCountAmountField);
+document.getElementById("f_goalId").addEventListener("change",()=>{
+  const goalId=document.getElementById("f_goalId").value;
+  populateTaskSelect(goalId);
+  updateCountAmountField();
+});
 function updateModeGrid(){
   document.querySelectorAll("#modeGrid button").forEach(b=>b.classList.toggle("picked",b.dataset.mode===pickedMode));
   document.getElementById("customRow").style.display=pickedMode==="custom"?"flex":"none";
@@ -1966,24 +2365,48 @@ function updateModeGrid(){
 const notDoneOverlay=document.getElementById("notDoneOverlay");
 let notDoneBlockId=null, notDonePickedReason="";
 let countConfirmBlockId=null;
+function updateLinkedTaskStatus(block,status){
+  if(!block.taskId||status!=="completed")return;
+  const goal=goals.find(candidate=>candidate.id===block.goalId);
+  const task=goal?.tasks?.find(candidate=>candidate.id===block.taskId);
+  if(task){task.done=true;task.completedAt=new Date().toISOString();}
+}
+function completeBlock(block,status,result){
+  if(result)Object.assign(block,FlowMateCore.recordBlockResult(block,result));
+  setBlockStatus(block,status);
+  updateLinkedTaskStatus(block,status);
+}
 function openCountConfirmModal(block,goal){
   countConfirmBlockId=block.id;
+  const isCount=goal&&(goal.mode||(goal.targetHours>0?"time":"project"))==="count";
   document.getElementById("countConfirmTitle").textContent=block.title;
-  document.getElementById("countConfirmLabel").textContent=`ทำได้กี่ ${goal.unit||""}`;
-  document.getElementById("countConfirmInput").value=block.countAmount??"";
+  document.getElementById("resultActualMinutesRow").style.display="block";
+  document.getElementById("resultCountAchievedRow").style.display=isCount?"block":"none";
+  document.getElementById("resultActualMinutes").value=(Number(block.actualFocusSeconds)||0)/60;
+  document.getElementById("resultCountAchieved").value=block.countAchieved??block.countAmount??"";
+  document.getElementById("resultCountUnitLabel").textContent=goal?.unit||"";
   document.getElementById("countConfirmOverlay").classList.add("show");
 }
-document.getElementById("countConfirmBtn").addEventListener("click",()=>{
+function saveBlockResult(status){
   const block=blocks.find(b=>b.id===countConfirmBlockId);
   if(!block){document.getElementById("countConfirmOverlay").classList.remove("show");return;}
-  const val=document.getElementById("countConfirmInput").value;
-  if(val===""||isNaN(Number(val))){alert("กรอกจำนวนด้วยครับ");return;}
-  block.countAchieved=Number(val);
-  setBlockStatus(block,"completed");
+  const goal=goals.find(candidate=>candidate.id===block.goalId);
+  const isCount=goal&&(goal.mode||(goal.targetHours>0?"time":"project"))==="count";
+  const minutes=Number(document.getElementById("resultActualMinutes").value);
+  if(!Number.isFinite(minutes)||minutes<0){alert("กรอกเวลาที่ถูกต้อง");return;}
+  const result={actualFocusSeconds:minutes*60};
+  if(isCount){
+    const val=document.getElementById("resultCountAchieved").value;
+    if(val===""||isNaN(Number(val))){alert("กรอกจำนวนด้วยครับ");return;}
+  }
+  if(isCount)result.countAchieved=Number(document.getElementById("resultCountAchieved").value);
+  completeBlock(block,status,FlowMateCore.recordBlockResult(block,result));
   saveState();
   document.getElementById("countConfirmOverlay").classList.remove("show");
   renderAll();
-});
+}
+document.getElementById("countConfirmBtn").addEventListener("click",()=>saveBlockResult("completed"));
+document.getElementById("resultNeedsMoreBtn").addEventListener("click",()=>saveBlockResult("planned"));
 
 function openNotDoneModal(block){
   notDoneBlockId=block.id;
@@ -2030,6 +2453,7 @@ function openModal(block,defDate){
   document.getElementById("f_start").value=block?.start||nowPlus(0);
   document.getElementById("f_end").value=block?.end||nowPlus(60);
   populateGoalSelect(block?.goalId);
+  populateTaskSelect(block?.goalId,block?.taskId);
   document.getElementById("f_countAmount").value=block?.countAmount??"";
   document.getElementById("f_details").value=block?.details||"";
   document.getElementById("f_notify").checked=block?block.notify:true;
@@ -2082,7 +2506,9 @@ document.getElementById("saveBtn").addEventListener("click",()=>{
   if(!title||!start||!end){alert("กรอกชื่องานและช่วงเวลาด้วยครับ");return;}
   if(toMinutes(end)<=toMinutes(start)){alert("เวลาจบต้องอยู่หลังเวลาเริ่ม");return;}
   const countAmountRaw=document.getElementById("f_countAmount").value;
-  const data={title,start,end,date:document.getElementById("f_date").value||viewDate,goalId:document.getElementById("f_goalId").value||"",countAmount:countAmountRaw!==""?Number(countAmountRaw):undefined,mode:pickedMode,customFocus:Number(document.getElementById("f_customFocus").value)||25,customBreak:Number(document.getElementById("f_customBreak").value)||5,details:document.getElementById("f_details").value.trim(),notify:document.getElementById("f_notify").checked};
+  const goalId=document.getElementById("f_goalId").value||"",taskId=document.getElementById("f_taskId").value||"",goal=goals.find(candidate=>candidate.id===goalId);
+  if(taskId&&!goal?.tasks?.some(task=>task.id===taskId)){alert("Task ที่เลือกไม่อยู่ในเป้าหมายนี้");return;}
+  const data={title,start,end,date:document.getElementById("f_date").value||viewDate,goalId,taskId,countAmount:countAmountRaw!==""?Number(countAmountRaw):undefined,mode:pickedMode,customFocus:Number(document.getElementById("f_customFocus").value)||25,customBreak:Number(document.getElementById("f_customBreak").value)||5,details:document.getElementById("f_details").value.trim(),notify:document.getElementById("f_notify").checked};
   if(editingId){
     const idx=blocks.findIndex(b=>b.id===editingId),oldBlock=blocks[idx],oldTs=timerState[editingId];
     blocks[idx]={...oldBlock,...data};
@@ -2106,6 +2532,8 @@ document.getElementById("saveBtn").addEventListener("click",()=>{
 const goalOverlay=document.getElementById("goalOverlay");let editingGoalId=null;
 // ICON PICKER
 let pickedIconId="";
+let iconPickerTarget="goal";
+let pickedGoalTaskIndex=null;
 function renderIconPickerGrid(){
   const catOrder=["work","body","mind","learn","money","home","social"];
   const grid=document.getElementById("iconPickerGrid");
@@ -2119,21 +2547,31 @@ function renderIconPickerGrid(){
   }).join("");
 }
 document.getElementById("g_iconBtn").addEventListener("click",()=>{
+  iconPickerTarget="goal";pickedGoalTaskIndex=null;
+  document.getElementById("iconPickerEmojiInput").closest(".field").style.display="block";
   document.getElementById("iconPickerEmojiInput").value=pickedIconId?"":document.getElementById("g_emoji").value;
   renderIconPickerGrid();
   document.getElementById("iconPickerOverlay").classList.add("show");
 });
 document.getElementById("iconPickerGrid").addEventListener("click",e=>{
   const b=e.target.closest(".icon-pick-btn");if(!b)return;
-  pickedIconId=b.dataset.icon;
-  const m=ICON_LIB[pickedIconId];
-  document.getElementById("g_emoji").value=m.emoji;
-  document.getElementById("g_iconPreview").innerHTML=lucideSvg(m.svg,26);
+  const chosen=b.dataset.icon;
+  if(iconPickerTarget==="goal-task"&&pickedGoalTaskIndex!==null){
+    currentTasks[pickedGoalTaskIndex].icon=chosen;
+    currentTasks[pickedGoalTaskIndex].iconManual=true;
+    renderGoalTaskList();
+  }else{
+    pickedIconId=chosen;
+    const m=ICON_LIB[pickedIconId];
+    document.getElementById("g_emoji").value=m.emoji;
+    document.getElementById("g_iconPreview").innerHTML=lucideSvg(m.svg,26);
+  }
   document.getElementById("iconPickerOverlay").classList.remove("show");
 });
 document.getElementById("iconPickerEmojiInput").addEventListener("input",e=>{
   const v=e.target.value.trim();
   if(!v)return;
+  if(iconPickerTarget==="goal-task")return;
   pickedIconId="";
   document.getElementById("g_emoji").value=v;
   document.getElementById("g_iconPreview").textContent=v;
@@ -2146,66 +2584,77 @@ function goalIconHtml(g,size){
   return esc(g.emoji||"📌");
 }
 let pickedGoalMode="time";
-let currentSubtasks=[];
-function rebalanceSubtaskWeights(){
-  const n=currentSubtasks.length;
-  if(!n)return;
-  const base=Math.floor(100/n);
-  let remainder=100-base*n;
-  currentSubtasks.forEach((s,i)=>{s.weight=base+(i<remainder?1:0);});
+function inferTaskIcon(title){
+  const t=(title||"").toLowerCase();
+  const rules=[
+    [/อ่าน|หนังสือ|เรียน|study|read|course|บทเรียน/,"book"],
+    [/ออกแบบ|ดีไซน์|design|ui|ux|ภาพ|ปก/,"palette"],
+    [/วางแผน|แผน|เตรียม|plan|outline|โครง/,"clipboard"],
+    [/โค้ด|พัฒนา|ระบบ|เว็บ|แอป|code|develop|build|api/,"code"],
+    [/ทดสอบ|ตรวจ|รีวิว|แก้บั๊ก|test|review|qa|bug/,"badgecheck"],
+    [/ปล่อย|เผยแพร่|เสร็จ|ส่งมอบ|launch|publish|release|finish/,"flag"],
+    [/เงิน|รายได้|ขาย|งบ|money|sale|budget/,"moneybag"],
+    [/สุขภาพ|ออกกำลัง|วิ่ง|เดิน|health|workout|run/,"run"]
+  ];
+  const hit=rules.find(([rx])=>rx.test(t));
+  if(hit)return hit[1];
+  const category=document.getElementById("g_category")?.value||"work";
+  return {learn:"book",money:"moneybag",home:"house",body:"water_drop",mind:"lotus",social:"handsheart",work:"flag",hold:"flag"}[category]||"flag";
 }
-function subtaskWeightSum(){return currentSubtasks.reduce((a,s)=>a+(Number(s.weight)||0),0);}
-function renderSubtaskList(){
-  const el=document.getElementById("projectSubtaskList");
-  if(!currentSubtasks.length){el.innerHTML=`<p style="font-size:12px;color:var(--ink-muted);margin:0 0 8px">ยังไม่มี milestone — กด "+ เพิ่ม milestone" ด้านล่าง</p>`;return;}
-  const sum=subtaskWeightSum();
-  el.innerHTML=currentSubtasks.map((s,i)=>`
-    <div style="display:flex;align-items:flex-start;gap:8px;padding:9px 0;border-bottom:0.5px solid var(--line);">
-      <div style="width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--paper);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">${i+1}</div>
-      <div style="flex:1;min-width:0;">
-        <input type="text" class="subtask-title" data-idx="${i}" value="${esc(s.title)}" placeholder="ชื่อ milestone" style="width:100%;border:none;background:transparent;font-size:13px;font-family:inherit;color:var(--ink);margin-bottom:4px;${s.done?"text-decoration:line-through;color:var(--ink-muted);":""}">
-        <div style="display:flex;align-items:center;gap:8px;">
-          <input type="checkbox" class="subtask-done" data-idx="${i}" ${s.done?"checked":""}>
-          <input type="date" class="subtask-due" data-idx="${i}" value="${s.due||""}" style="border:none;background:transparent;font-size:11px;color:var(--ink-soft);font-family:inherit;padding:0;">
-          <button type="button" class="subtask-schedule" data-idx="${i}" title="สร้าง time block วันนี้" style="border:none;background:none;color:var(--focus);font-size:14px;cursor:pointer;line-height:1;margin-left:auto;">📅</button>
-        </div>
+let currentTasks=[];
+function renderGoalTaskList(){
+  const el=document.getElementById("goalTaskList");
+  const canSchedule=Boolean(editingGoalId);
+  if(!currentTasks.length){el.innerHTML=`<div class="goal-task-empty">ยังไม่มี Task<br>เพิ่มสิ่งที่ต้องทำให้สำเร็จ</div>`;return;}
+  el.innerHTML=currentTasks.map((task,i)=>`
+    <div class="goal-task-card">
+      <button type="button" class="goal-task-icon" data-idx="${i}" title="เปลี่ยนไอคอน">${lucideSvg(ICON_LIB[task.icon||inferTaskIcon(task.title)]?.svg||ICON_LIB.flag.svg,22)}</button>
+      <div class="goal-task-fields">
+        <input type="text" class="goal-task-title" data-idx="${i}" value="${esc(task.title)}" placeholder="เช่น ออกแบบหน้าหลัก" style="${task.done?"text-decoration:line-through;color:var(--ink-muted);":""}">
+        <div class="goal-task-meta"><div class="goal-task-meta-field"><label>กำหนดเสร็จ</label><input type="date" class="goal-task-due" data-idx="${i}" value="${task.due||""}"></div></div>
       </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;">
-        <input type="number" class="subtask-weight" data-idx="${i}" value="${s.weight??0}" min="0" max="100" style="width:52px;text-align:center;border:0.5px solid var(--focus-border);background:var(--focus-soft);color:var(--focus);border-radius:20px;padding:3px 4px;font-size:12px;font-family:inherit;">
-        <button type="button" class="subtask-remove" data-idx="${i}" style="border:none;background:none;color:var(--ink-muted);font-size:12px;cursor:pointer;">✕</button>
+      <div class="goal-task-actions">
+        <label class="goal-task-done" title="ทำเสร็จแล้ว"><input type="checkbox" data-idx="${i}" ${task.done?"checked":""}></label>
+        <button type="button" class="goal-task-schedule" data-idx="${i}" title="${canSchedule?"สร้าง Time block":"บันทึก Goal ก่อนสร้าง Time block"}" ${canSchedule?"":"disabled"}>${lucideIcon("calendar",17)}</button>
+        <button type="button" class="goal-task-remove" data-idx="${i}" title="ลบ">✕</button>
       </div>
-    </div>`).join("")+
-    `<p style="font-size:11px;color:${sum===100?"var(--ink-muted)":"var(--danger)"};margin:8px 0 0;">รวม ${sum}% ${sum===100?"":"(ต้องเท่ากับ 100% — ปรับตัวเลขด้านบนเอง หรือลบ/เพิ่มให้ auto rebalance)"}</p>`;
+    </div>`).join("");
 }
-document.getElementById("addSubtaskBtn").addEventListener("click",()=>{
-  currentSubtasks.push({id:uid(),title:"",done:false,due:"",weight:0});
-  rebalanceSubtaskWeights();
-  renderSubtaskList();
-  const inputs=document.querySelectorAll(".subtask-title");
+document.getElementById("addGoalTaskBtn").addEventListener("click",()=>{
+  currentTasks.push(FlowMateCore.createTask({id:uid(),title:"",due:"",icon:inferTaskIcon("")}));
+  renderGoalTaskList();
+  const inputs=document.querySelectorAll(".goal-task-title");
   if(inputs.length)inputs[inputs.length-1].focus();
 });
-document.getElementById("projectSubtaskList").addEventListener("click",e=>{
-  const rm=e.target.closest(".subtask-remove");
-  if(rm){currentSubtasks.splice(Number(rm.dataset.idx),1);rebalanceSubtaskWeights();renderSubtaskList();return;}
-  const sc=e.target.closest(".subtask-schedule");
-  if(sc){
-    const s=currentSubtasks[Number(sc.dataset.idx)];
-    if(!s.title.trim()){showToast("ตั้งชื่อ milestone ก่อนนะ");return;}
-    createBlockFromMilestone(s.title.trim(),editingGoalId||"");
-  }
+function scheduleGoalTask(task,goalId){
+  if(!goalId)return;
+  const goal=goals.find(candidate=>candidate.id===goalId);
+  if(!goal)return;
+  const normalizedTask=FlowMateCore.createTask({...task,title:task.title.trim()});
+  const savedTasks=(goal.tasks||[]).map(FlowMateCore.createTask);
+  goal.tasks=savedTasks.some(candidate=>candidate.id===normalizedTask.id)?savedTasks.map(candidate=>candidate.id===normalizedTask.id?normalizedTask:candidate):[...savedTasks,normalizedTask];
+  saveState();
+  scheduleTaskBlock(normalizedTask,goalId);
+}
+document.getElementById("goalTaskList").addEventListener("click",e=>{
+  const icon=e.target.closest(".goal-task-icon");
+  if(icon){pickedGoalTaskIndex=Number(icon.dataset.idx);iconPickerTarget="goal-task";pickedIconId=currentTasks[pickedGoalTaskIndex].icon||inferTaskIcon(currentTasks[pickedGoalTaskIndex].title);renderIconPickerGrid();document.getElementById("iconPickerEmojiInput").value="";document.getElementById("iconPickerEmojiInput").closest(".field").style.display="none";document.getElementById("iconPickerOverlay").classList.add("show");return;}
+  const remove=e.target.closest(".goal-task-remove");
+  if(remove){const index=Number(remove.dataset.idx),task=currentTasks[index];if(!task.title.trim()){currentTasks.splice(index,1);renderGoalTaskList();return;}showConfirmPopup({title:"ลบ Task นี้ใช่ไหม?",message:"Task นี้จะถูกลบออกจากเป้าหมาย",variant:"destructive",confirmLabel:"ลบเลย",onConfirm:()=>{currentTasks.splice(index,1);renderGoalTaskList();}});return;}
+  const schedule=e.target.closest(".goal-task-schedule");
+  if(schedule){if(!editingGoalId)return;const task=currentTasks[Number(schedule.dataset.idx)];if(!task.title.trim()){showToast("ตั้งชื่อ Task ก่อนนะ");return;}scheduleGoalTask(task,editingGoalId);}
 });
-document.getElementById("projectSubtaskList").addEventListener("change",e=>{
-  const cb=e.target.closest(".subtask-done");
-  if(cb){const s=currentSubtasks[Number(cb.dataset.idx)];s.done=cb.checked;s.completedAt=cb.checked?new Date().toISOString():null;renderSubtaskList();return;}
-  const due=e.target.closest(".subtask-due");
-  if(due){currentSubtasks[Number(due.dataset.idx)].due=due.value;return;}
-  const w=e.target.closest(".subtask-weight");
-  if(w){currentSubtasks[Number(w.dataset.idx)].weight=Math.max(0,Math.min(100,Number(w.value)||0));renderSubtaskList();}
+document.getElementById("goalTaskList").addEventListener("change",e=>{
+  const done=e.target.closest(".goal-task-done input");
+  if(done){const task=currentTasks[Number(done.dataset.idx)];task.done=done.checked;task.completedAt=done.checked?new Date().toISOString():null;renderGoalTaskList();return;}
+  const due=e.target.closest(".goal-task-due");
+  if(due){currentTasks[Number(due.dataset.idx)].due=due.value;}
 });
-document.getElementById("projectSubtaskList").addEventListener("input",e=>{
-  const ti=e.target.closest(".subtask-title");
-  if(ti)currentSubtasks[Number(ti.dataset.idx)].title=ti.value;
+document.getElementById("goalTaskList").addEventListener("input",e=>{
+  const titleInput=e.target.closest(".goal-task-title");
+  if(titleInput){const task=currentTasks[Number(titleInput.dataset.idx)];task.title=titleInput.value;if(!task.iconManual)task.icon=inferTaskIcon(titleInput.value);const icon=titleInput.closest(".goal-task-card")?.querySelector(".goal-task-icon");if(icon)icon.innerHTML=lucideSvg(ICON_LIB[task.icon]?.svg||ICON_LIB.flag.svg,22);}
 });
+document.getElementById("g_category").addEventListener("change",()=>{currentTasks.forEach(task=>{if(!task.iconManual)task.icon=inferTaskIcon(task.title);});renderGoalTaskList();});
 function updateGoalModeGrid(){
   document.querySelectorAll("#goalModeGrid button").forEach(b=>b.classList.toggle("picked",b.dataset.mode===pickedGoalMode));
   document.getElementById("goalModeTimeFields").style.display=pickedGoalMode==="time"?"block":"none";
@@ -2219,7 +2668,7 @@ document.getElementById("goalModeGrid").addEventListener("click",e=>{
 });
 function openGoalModal(goal){
   editingGoalId=goal?goal.id:null;
-  document.getElementById("goalModalTitle").textContent=goal?"แก้ไขโปรเจกต์":"โปรเจกต์ใหม่";
+  document.getElementById("goalModalTitle").textContent=goal?"แก้ไข Goal":"Goal ใหม่";
   document.getElementById("g_emoji").value=goal?.emoji||"📌";
   pickedIconId=(goal?.icon&&ICON_LIB[goal.icon])?goal.icon:"";
   document.getElementById("g_iconPreview").innerHTML=pickedIconId?lucideSvg(ICON_LIB[pickedIconId].svg,26):(goal?.emoji||"📌");
@@ -2233,13 +2682,11 @@ function openGoalModal(goal){
   else{document.getElementById("g_unitPreset").value="__custom";document.getElementById("g_unitCustom").value=savedUnit;}
   document.getElementById("g_unitCustomField").style.display=document.getElementById("g_unitPreset").value==="__custom"?"block":"none";
   document.getElementById("g_targetCount").value=goal?.targetCount||"";
-  currentSubtasks=(goal?.subtasks||[]).map(s=>({due:"",weight:0,...s}));
-  if(currentSubtasks.length&&currentSubtasks.some(s=>!s.weight))rebalanceSubtaskWeights();
-  renderSubtaskList();
-  // infer mode for goals saved before the mode selector existed; legacy "task" goals map to project (milestone) mode
+  currentTasks=(goal?.tasks||goal?.subtasks||[]).map(FlowMateCore.createTask);
+  renderGoalTaskList();
+  // infer mode for goals saved before the mode selector existed; legacy "task" goals map to project mode
   pickedGoalMode=goal?.mode||(goal?.targetHours>0?"time":goal?"project":"time");
   if(pickedGoalMode==="task")pickedGoalMode="project";
-  if(pickedGoalMode==="habit")pickedGoalMode="time";
   updateGoalModeGrid();
   document.getElementById("goalDeleteBtn").style.display=goal?"block":"none";
   goalOverlay.classList.add("show");
@@ -2249,7 +2696,7 @@ function currentUnitValue(){const p=document.getElementById("g_unitPreset").valu
 document.getElementById("goalCancelBtn").addEventListener("click",()=>goalOverlay.classList.remove("show"));
 document.getElementById("goalSaveBtn").addEventListener("click",()=>{
   const title=document.getElementById("g_title").value.trim();
-  if(!title){alert("กรอกชื่อโปรเจกต์ด้วย");return;}
+  if(!title){alert("กรอกชื่อ Goal ด้วย");return;}
   if(pickedGoalMode==="count"){
     const unit=currentUnitValue();
     const targetCount=parseFloat(document.getElementById("g_targetCount").value);
@@ -2266,7 +2713,7 @@ document.getElementById("goalSaveBtn").addEventListener("click",()=>{
     targetHours:pickedGoalMode==="time"?(parseFloat(document.getElementById("g_targetHours").value)||0):0,
     unit:pickedGoalMode==="count"?currentUnitValue():"",
     targetCount:pickedGoalMode==="count"?(parseFloat(document.getElementById("g_targetCount").value)||0):0,
-    subtasks:pickedGoalMode==="project"?currentSubtasks.filter(s=>s.title.trim()).map(s=>({id:s.id,title:s.title.trim(),done:!!s.done,completedAt:s.completedAt||null,due:s.due||"",weight:Number(s.weight)||0})):undefined,
+    tasks:currentTasks.filter(task=>task.title.trim()).map(task=>FlowMateCore.createTask({...task,title:task.title.trim()})),
     _isProject:true,
   };
   if(editingGoalId){Object.assign(goals.find(g=>g.id===editingGoalId),data);}
@@ -2275,159 +2722,10 @@ document.getElementById("goalSaveBtn").addEventListener("click",()=>{
   renderAll();
 });
 document.getElementById("goalDeleteBtn").addEventListener("click",()=>{
-  showConfirmPopup({title:"ลบโปรเจกต์นี้ใช่ไหม?",message:"ลบแล้วกู้คืนไม่ได้ — milestone และ time block ที่ผูกไว้กับโปรเจกต์นี้จะหายไปด้วย",variant:"destructive",confirmLabel:"ลบเลย",onConfirm:()=>{
+  showConfirmPopup({title:"ลบ Goal นี้ใช่ไหม?",message:"ลบแล้วกู้คืนไม่ได้ — Task และ time block ที่ผูกไว้กับ Goal นี้จะหายไปด้วย",variant:"destructive",confirmLabel:"ลบเลย",onConfirm:()=>{
     goals=goals.filter(g=>g.id!==editingGoalId);blocks.forEach(b=>{if(b.goalId===editingGoalId)b.goalId="";});saveState();goalOverlay.classList.remove("show");renderAll();
   }});
 });
-
-// HABIT SYSTEM — auto-generate today's block from habit goals + streak calc
-function habitAppliesToDate(goal,dateStr){
-  const dow=new Date(dateStr+"T00:00:00").getDay();
-  if(goal.habitFreq==="custom")return(goal.habitDays||[]).includes(dow);
-  if(goal.habitFreq==="weekdays")return dow>=1&&dow<=5;
-  if(goal.habitFreq==="weekends")return dow===0||dow===6;
-  return true; // daily
-}
-// HABIT GALLERY
-const HABIT_CATEGORIES=[
-  {icon:"footprints",label:"สุขภาพกาย",items:[{name:"ดื่มน้ำ",emoji:"💧"},{name:"นอนให้ครบ",emoji:"😴"},{name:"ยืดเส้น",emoji:"🤸"},{name:"ออกกำลังกาย",emoji:"🏃"},{name:"กินผัก/ผลไม้",emoji:"🥦"},{name:"เดิน 10 นาที",emoji:"🚶"}]},
-  {icon:"flower_2",label:"จิตใจ/สติ",items:[{name:"นั่งสมาธิ",emoji:"🧘"},{name:"จดบันทึกความรู้สึก",emoji:"📓"},{name:"หายใจลึก 5 นาที",emoji:"🌬️"},{name:"งดจอก่อนนอน",emoji:"📵"}]},
-  {icon:"book_open",label:"การเรียนรู้",items:[{name:"อ่านหนังสือ",emoji:"📖"},{name:"ฟัง podcast",emoji:"🎧"},{name:"ฝึกภาษา",emoji:"🗣️"},{name:"ทบทวนบทเรียน",emoji:"📝"}]},
-  {icon:"circle_dollar_sign",label:"การเงิน",items:[{name:"จดรายจ่าย",emoji:"🧾"},{name:"เช็คงบประมาณ",emoji:"📊"},{name:"ออมเงินรายวัน",emoji:"🐷"}]},
-  {icon:"house",label:"งานบ้าน/ระเบียบ",items:[{name:"จัดโต๊ะทำงาน",emoji:"🗂️"},{name:"ล้างจาน",emoji:"🍽️"},{name:"เตรียมของก่อนนอน",emoji:"🎒"}]},
-  {icon:"users",label:"ความสัมพันธ์",items:[{name:"ทักหาครอบครัว",emoji:"📞"},{name:"ขอบคุณใครสักคน",emoji:"🙏"}]},
-  {icon:"briefcase",label:"งาน/โปรดักทีวิตี้",items:[{name:"วางแผนวันถัดไป",emoji:"🗓️"},{name:"เช็ค inbox ครั้งเดียว",emoji:"📥"},{name:"โฟกัสไม่มีประชุม",emoji:"🔕"}]},
-];
-let habitGalleryPicked={}; // key: "cat-item" -> {name,emoji,freqPreset,time}
-function habitGalleryKey(catIdx,itemIdx){return catIdx+"-"+itemIdx;}
-function renderHabitGalleryChips(){
-  document.getElementById("habitGalleryChips").innerHTML=HABIT_CATEGORIES.map((cat,ci)=>`
-    <div style="margin-bottom:16px;">
-      <div style="font-size:12.5px;font-weight:700;color:var(--ink-soft);margin-bottom:8px;display:flex;align-items:center;gap:5px;">${lucideIcon(cat.icon,14)} ${cat.label}</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        ${cat.items.map((it,ii)=>{const k=habitGalleryKey(ci,ii);const on=!!habitGalleryPicked[k];
-          return `<button type="button" data-key="${k}" class="habit-gallery-chip" style="display:flex;align-items:center;gap:6px;border-radius:20px;padding:7px 13px;font-size:12.5px;cursor:pointer;background:${on?"var(--ink)":"var(--card)"};border:1px solid ${on?"var(--ink)":"var(--line)"};color:${on?"#fff":"var(--ink)"};"><span>${it.emoji}</span><span>${it.name}</span>${on?"<span>✓</span>":""}</button>`;
-        }).join("")}
-      </div>
-    </div>`).join("");
-  renderHabitGalleryConfig();
-}
-function renderHabitGalleryConfig(){
-  const keys=Object.keys(habitGalleryPicked);
-  const cfgEl=document.getElementById("habitGalleryConfig"),btnEl=document.getElementById("habitGalleryConfirmBtn");
-  if(!keys.length){cfgEl.style.display="none";btnEl.style.display="none";return;}
-  cfgEl.style.display="block";btnEl.style.display="block";
-  btnEl.textContent=`เพิ่มนิสัยที่เลือก (${keys.length})`;
-  cfgEl.innerHTML=`<div style="font-size:13px;font-weight:700;margin-bottom:10px;">ตั้งค่านิสัยที่เลือก (${keys.length})</div>`+keys.map(k=>{
-    const p=habitGalleryPicked[k];
-    return `<div style="border-top:0.5px solid var(--line);padding:12px 0;" data-cfg-key="${k}">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <span style="font-size:13px;font-weight:600;">${p.emoji} ${p.name}</span>
-        <button type="button" class="habit-gallery-remove" data-key="${k}" style="border:none;background:none;color:var(--ink-muted);font-size:12px;cursor:pointer;">ลบ</button>
-      </div>
-      <select class="habit-gallery-freq" data-key="${k}" style="width:100%;border:0.5px solid var(--line);border-radius:8px;padding:7px 9px;font-size:12.5px;font-family:inherit;background:var(--card);color:var(--ink);margin-bottom:8px;">
-        <option value="daily" ${p.freqPreset==="daily"?"selected":""}>ทุกวัน</option>
-        <option value="weekday" ${p.freqPreset==="weekday"?"selected":""}>จ–ศ (วันทำงาน)</option>
-        <option value="weekend" ${p.freqPreset==="weekend"?"selected":""}>เสาร์–อาทิตย์</option>
-      </select>
-      <select class="habit-gallery-time" data-key="${k}" style="width:100%;border:0.5px solid var(--line);border-radius:8px;padding:7px 9px;font-size:12.5px;font-family:inherit;background:var(--card);color:var(--ink);">
-        <option value="none" ${p.time==="none"?"selected":""}>ไม่ระบุเวลา</option>
-        <option value="07:00" ${p.time==="07:00"?"selected":""}>ตอนเช้า / ตื่นนอน</option>
-        <option value="13:00" ${p.time==="13:00"?"selected":""}>ช่วงบ่าย</option>
-        <option value="20:00" ${p.time==="20:00"?"selected":""}>ก่อนนอน</option>
-      </select>
-    </div>`;
-  }).join("");
-}
-document.getElementById("openHabitGalleryBtn").addEventListener("click",()=>{
-  habitGalleryPicked={};
-  renderHabitGalleryChips();
-  document.getElementById("habitGalleryPopupBackdrop").classList.add("show");
-});
-document.getElementById("habitGalleryPopupCloseBtn").addEventListener("click",()=>document.getElementById("habitGalleryPopupBackdrop").classList.remove("show"));
-document.getElementById("habitGalleryPopupCancelBtn").addEventListener("click",()=>document.getElementById("habitGalleryPopupBackdrop").classList.remove("show"));
-document.getElementById("habitGalleryPopupBackdrop").addEventListener("click",e=>{if(e.target.id==="habitGalleryPopupBackdrop")document.getElementById("habitGalleryPopupBackdrop").classList.remove("show");});
-document.getElementById("habitGalleryChips").addEventListener("click",e=>{
-  const b=e.target.closest(".habit-gallery-chip");if(!b)return;
-  const k=b.dataset.key;
-  if(habitGalleryPicked[k]){delete habitGalleryPicked[k];}
-  else{
-    const [ci,ii]=k.split("-").map(Number);
-    const it=HABIT_CATEGORIES[ci].items[ii];
-    habitGalleryPicked[k]={name:it.name,emoji:it.emoji,freqPreset:"daily",time:"none"};
-  }
-  renderHabitGalleryChips();
-});
-document.getElementById("habitGalleryConfig").addEventListener("click",e=>{
-  const b=e.target.closest(".habit-gallery-remove");if(!b)return;
-  delete habitGalleryPicked[b.dataset.key];
-  renderHabitGalleryChips();
-});
-document.getElementById("habitGalleryConfig").addEventListener("change",e=>{
-  const freqSel=e.target.closest(".habit-gallery-freq"),timeSel=e.target.closest(".habit-gallery-time");
-  if(freqSel)habitGalleryPicked[freqSel.dataset.key].freqPreset=freqSel.value;
-  if(timeSel)habitGalleryPicked[timeSel.dataset.key].time=timeSel.value;
-});
-document.getElementById("habitGalleryConfirmBtn").addEventListener("click",()=>{
-  const FREQ_DAYS={weekday:[1,2,3,4,5],weekend:[6,0]};
-  Object.values(habitGalleryPicked).forEach(p=>{
-    const habitFreq=p.freqPreset==="daily"?"daily":"custom";
-    const habitDays=FREQ_DAYS[p.freqPreset]||[];
-    goals.push({
-      id:uid(),title:p.name,emoji:p.emoji,category:"main",deadline:"",mode:"habit",
-      targetHours:0,unit:"",targetCount:0,
-      habitFreq,habitDays,habitTime:p.time==="none"?"":p.time,habitDuration:15,habitAutoBlock:true,
-      _isProject:true,
-    });
-  });
-  saveState();
-  ensureHabitBlocksForToday();
-  document.getElementById("habitGalleryPopupBackdrop").classList.remove("show");
-  renderAll();
-});
-
-function ensureHabitBlocksForToday(){
-  const today=todayStr();
-  let changed=false;
-  goals.filter(g=>g.mode==="habit"&&g.habitAutoBlock!==false).forEach(g=>{
-    if(!habitAppliesToDate(g,today))return;
-    const already=blocks.some(b=>b.goalId===g.id&&b.date===today&&b._habitAuto);
-    if(already)return;
-    const start=g.habitTime||"07:00";
-    const dur=g.habitDuration||15;
-    const [h,m]=start.split(":").map(Number);
-    const endM=h*60+m+dur;
-    const end=String(Math.floor(endM/60)%24).padStart(2,"0")+":"+String(endM%60).padStart(2,"0");
-    blocks.push({id:uid(),title:g.emoji+" "+g.title,date:today,start,end,goalId:g.id,mode:"none",completed:null,_habitAuto:true});
-    changed=true;
-  });
-  if(changed)saveState();
-}
-function habitStreak(goalId){
-  let streak=0,d=todayStr();
-  const doneDates=new Set(blocks.filter(b=>b.goalId===goalId&&b.completed===true).map(b=>b.date));
-  // if today not done yet, start counting from yesterday so an in-progress day doesn't zero the streak
-  if(!doneDates.has(d))d=addDays(d,-1);
-  while(doneDates.has(d)){streak++;d=addDays(d,-1);}
-  return streak;
-}
-function habitLast21Days(goalId){
-  const doneDates=new Set(blocks.filter(b=>b.goalId===goalId&&b.completed===true).map(b=>b.date));
-  const days=[];
-  for(let i=20;i>=0;i--)days.push(doneDates.has(addDays(todayStr(),-i)));
-  return days;
-}
-function toggleHabitToday(goalId){
-  const td=todayStr();
-  let block=blocks.find(b=>b.goalId===goalId&&b.date===td);
-  if(!block){
-    const g=goals.find(x=>x.id===goalId);if(!g)return;
-    block={id:uid(),title:(g.emoji||"🔁")+" "+g.title,date:td,start:g.habitTime||"07:00",end:g.habitTime||"07:15",goalId,mode:"none",completed:null,_habitAuto:true};
-    blocks.push(block);
-  }
-  setBlockStatus(block,block.completed===true?"planned":"completed");
-  saveState();renderAll();
-}
 
 // VOICE SETTINGS
 const voiceOverlay=document.getElementById("voiceOverlay");let pickedProvider="auto";
@@ -2464,11 +2762,10 @@ document.getElementById("styleGrid").addEventListener("click",e=>{const b=e.targ
 
 // PROFILE
 document.getElementById("openProfileBtn").addEventListener("click",()=>{
-  const streak=streakCount();
   const totalSessions=totalFocusSessions();
-  const goalsAchieved=goals.filter(g=>g.mode!=="habit"&&goalProgress(g.id).pct>=100).length;
+  const goalsAchieved=goals.filter(g=>goalProgress(g.id).pct>=100).length;
   document.getElementById("profileStatsRow").innerHTML=`
-    <div class="proj-sum-box"><span class="proj-sum-val">${streak}</span><span class="proj-sum-lbl">วัน streak</span></div>
+    <div class="proj-sum-box"><span class="proj-sum-val">${blocks.length}</span><span class="proj-sum-lbl">time blocks</span></div>
     <div class="proj-sum-box proj-sum-box-highlight"><span class="proj-sum-val" style="color:var(--focus)">${totalSessions}</span><span class="proj-sum-lbl" style="color:var(--focus)">รอบโฟกัสสำเร็จ</span></div>
     <div class="proj-sum-box"><span class="proj-sum-val">${goalsAchieved}</span><span class="proj-sum-lbl">เป้าหมายสำเร็จ</span></div>`;
   const cur=loadMascotStyle();
@@ -2489,7 +2786,6 @@ document.getElementById("resetDataBtn").addEventListener("click",()=>{
 // PROJECTS TAB — ดึงข้อมูลจาก goals ตรงๆ ไม่มี projects array แยก
 function weekDates(){const td=todayStr();const dow=new Date(td+"T00:00:00").getDay();const sun=addDays(td,-dow);return Array.from({length:7},(_,i)=>addDays(sun,i));}
 function todayDoneHours(){const td=todayStr(),nm=currentNowMin();return blocks.filter(b=>b.date===td&&statusOf(b,nm)!=="upcoming").reduce((s,b)=>s+(toMinutes(b.end)-toMinutes(b.start))/60,0);}
-function streakCount(){return computeStreak();}
 
 let disciplineRange=7;
 function setDisciplineRange(n){ disciplineRange=n; renderProjects(); }
@@ -2519,7 +2815,7 @@ function staircaseHtml(g){
   let curStep=-1; // index of the "current" (in-progress, not yet done) step
 
   if(g.mode==="project"){
-    const subtasks=g.subtasks||[];
+    const subtasks=g.tasks||g.subtasks||[];
     const n=subtasks.length;
     if(!n)return staircasePlaceholder();
     const doneCount=subtasks.filter(s=>s.done).length;
@@ -2573,9 +2869,9 @@ function goalStepStatusLine(g){
   const p=goalProgress(g.id);
   const STEPS=5;
   if(g.mode==="project"){
-    const n=(g.subtasks||[]).length;
+    const n=(g.tasks||g.subtasks||[]).length;
     if(!n)return"ยังไม่เริ่มทำ";
-    const done=p.subtasksDone;
+    const done=p.tasksDone;
     if(done===0)return"ยังไม่เริ่มทำ";
     if(done>=n)return"เสร็จแล้ว 🎉";
     return`กำลังทำ · ขั้นที่ ${done+1} จาก ${n}`;
@@ -2590,14 +2886,13 @@ function renderProjects(){
   const el=document.getElementById("projDash");
   if(!el)return;
 
-  const projectGoals=goals.filter(g=>g.mode!=="habit");
-  const habitGoals=goals.filter(g=>g.mode==="habit");
+  const activeGoals=goals;
 
-  let leftHtml=`<div class="proj-col-label">โปรเจกต์</div>`;
-  if(!projectGoals.length){leftHtml+='<p class="empty">ยังไม่มีเป้าหมาย — กด + เพื่อเพิ่ม</p>';}
+  let goalHtml=`<div class="proj-col-label">Goals</div>`;
+  if(!activeGoals.length){goalHtml+='<p class="empty">ยังไม่มีเป้าหมาย — กด + เพื่อเพิ่ม</p>';}
   else{
     const catOrder={work:0,main:0,body:1,mind:2,learn:3,skill:3,money:4,income:4,home:5,social:6,hold:7};
-    const sorted=[...projectGoals].sort((a,b)=>{
+    const sorted=[...activeGoals].sort((a,b)=>{
       const da=daysUntilGoal(a.deadline),db=daysUntilGoal(b.deadline);
       if(da!==null&&db!==null) return da-db;
       if(da!==null) return -1;
@@ -2608,8 +2903,8 @@ function renderProjects(){
       const p=goalProgress(g.id);
       const isHold=g.category==="hold";
       const modeLabel=p.mode==="count"?"📊 จำนวน":p.mode==="project"?"☑ งานเสร็จ":"⏱ เวลา";
-      const metaRight=p.mode==="count"?`${p.logged}/${p.target||0} ${p.unit||""}`:p.mode==="project"?`${p.subtasksDone}/${p.subtasksTotal} milestone`:`${p.logged}/${p.target||0} ชม.`;
-      leftHtml+=`<div class="proj-card2${isHold?" proj-dimmed":""}" onclick="openGoalModal(goals.find(g=>g.id==='${g.id}'))">
+      const metaRight=p.mode==="count"?`${p.logged}/${p.target||0} ${p.unit||""}`:p.mode==="project"?`${p.tasksDone}/${p.tasksTotal} Tasks`:`${p.logged}/${p.target||0} ชม.`;
+      goalHtml+=`<div class="proj-card2${isHold?" proj-dimmed":""}" onclick="openGoalModal(goals.find(g=>g.id==='${g.id}'))">
         <div class="proj-card2-top">
           <div class="proj-card2-name">${goalIconHtml(g,16)} ${esc(g.title)}</div>
           <div class="proj-card2-pct">${p.pct}%</div>
@@ -2625,99 +2920,56 @@ function renderProjects(){
     });
   }
 
-  const td=todayStr();
-  let rightHtml=`<div class="proj-col-label">นิสัย</div><div class="habit-panel">`;
-  if(!habitGoals.length){
-    rightHtml+='<p class="empty" style="padding:8px 0;">ยังไม่มีนิสัย</p>';
-  }else{
-    habitGoals.forEach(g=>{
-      const streak=habitStreak(g.id);
-      const days7=habitLast21Days(g.id).slice(-7);
-      const strip=days7.map(d=>`<span class="${d?"on":""}"></span>`).join("");
-      rightHtml+=`<div class="habit-row-item" onclick="openGoalModal(goals.find(g=>g.id==='${g.id}'))">
-        <div class="habit-row-top">
-          <div class="habit-row-name">${goalIconHtml(g,13)} ${esc(g.title)}</div>
-          <span class="habit-row-streak">🔥 ${streak}</span>
-        </div>
-        <div class="habit-row-strip">${strip}</div>
-      </div>`;
-    });
-  }
-  rightHtml+=`</div>`;
-
-  el.innerHTML=`<div class="proj-grid">
-    <div>${leftHtml}</div>
-    <div>${rightHtml}</div>
-  </div>`;
+  el.innerHTML=`<div class="proj-grid">${goalHtml}</div>`;
 }
 
 function totalFocusSessions(){
   return Object.values(stats.byDate||{}).reduce((s,d)=>s+(d.focusRounds||0),0);
 }
-function celebrationHeadline(streak){
-  if(streak>=14) return `🔥 ต่อเนื่อง ${streak} วันแล้ว สุดยอดวินัยเลย!`;
-  if(streak>=7) return `🎉 ต่อเนื่อง ${streak} วัน ทำได้ดีมาก!`;
-  if(streak>=3) return `💪 ต่อเนื่อง ${streak} วัน ไปต่อกันเลย!`;
-  if(streak>=1) return `✨ เริ่มสตรีคแล้ว ทำต่อพรุ่งนี้ด้วยนะ`;
-  return `🌱 วันนี้เริ่มสตรีคใหม่กันเถอะ`;
-}
 function renderProgress(){
   const el=document.getElementById("progressDash");
   if(!el)return;
-  const td=todayStr(),nm=currentNowMin();
-  const wd=weekDates();
-  const dayNames=["อา","จ","อ","พ","พฤ","ศ","ส"];
+  const td=todayStr(),days=Array.from({length:progressPeriod},(_,i)=>addDays(td,i-progressPeriod+1));
+  const prevDays=days.map(d=>addDays(d,-progressPeriod));
+  const inDays=(b,arr)=>arr.includes(b.date),mins=b=>Math.max(0,toMinutes(b.end)-toMinutes(b.start));
+  const rangeBlocks=blocks.filter(b=>inDays(b,days)),prevBlocks=blocks.filter(b=>inDays(b,prevDays));
+  const done=rangeBlocks.filter(b=>b.completed===true),reviewed=rangeBlocks.filter(b=>b.completed===true||b.completed===false);
+  const prevDone=prevBlocks.filter(b=>b.completed===true),prevReviewed=prevBlocks.filter(b=>b.completed===true||b.completed===false);
+  const rate=reviewed.length?Math.round(done.length/reviewed.length*100):0,prevRate=prevReviewed.length?Math.round(prevDone.length/prevReviewed.length*100):0;
+  const delta=rate-prevRate,focusSec=rangeBlocks.reduce((s,b)=>s+(Number(b.actualFocusSeconds)||0),0);
+  const plannedMin=rangeBlocks.reduce((s,b)=>s+mins(b),0),focusRounds=days.reduce((s,d)=>s+(stats.byDate?.[d]?.focusRounds||0),0);
+  const distractions=rangeBlocks.reduce((s,b)=>s+(Number(timerState[b.id]?.distractionsTotal)||Number(timerState[b.id]?.distractionsThisPhase)||0),0);
+  const fmtMin=m=>m>=60?`${(m/60).toFixed(m%60?1:0)} ชม.`:`${Math.round(m)} นาที`;
+  const dayLabel=d=>progressPeriod===7?new Date(d+"T00:00:00").toLocaleDateString("th-TH",{weekday:"narrow"}):new Date(d+"T00:00:00").getDate();
+  const modes=[['overview','ภาพรวม'],['goal','Goal'],['focus','Focus'],['pomodoro','Pomodoro']];
+  let html=`<div class="progress-shell"><div class="progress-toolbar"><div><p class="section-label" style="margin:0">ดูการเปลี่ยนแปลงจากข้อมูลจริง</p></div><div class="progress-period"><button class="progress-chip ${progressPeriod===7?'active':''}" onclick="progressPeriod=7;renderProgress()">7 วัน</button><button class="progress-chip ${progressPeriod===30?'active':''}" onclick="progressPeriod=30;renderProgress()">30 วัน</button></div></div>`;
+  html+=`<div class="progress-modes">${modes.map(([id,label])=>`<button class="progress-chip ${progressView===id?'active':''}" onclick="progressView='${id}';renderProgress()">${label}</button>`).join('')}</div>`;
 
-  const streak=streakCount();
-  const totalSessions=totalFocusSessions();
-  const w8h=(()=>{const days=[];for(let i=0;i<56;i++)days.push(addDays(td,-i));return periodTotalHours(days).toFixed(1);})();
-
-  let html=`<div class="progress-banner">${celebrationHeadline(streak)}</div>`;
-  html+=`<div class="proj-summary-row">
-    <div class="proj-sum-box"><span class="proj-sum-val">${streak}</span><span class="proj-sum-lbl">วัน streak</span></div>
-    <div class="proj-sum-box proj-sum-box-highlight"><span class="proj-sum-val" style="color:var(--focus)">${totalSessions}</span><span class="proj-sum-lbl" style="color:var(--focus)">รอบโฟกัสสำเร็จ</span></div>
-    <div class="proj-sum-box"><span class="proj-sum-val">${w8h}h</span><span class="proj-sum-lbl">8 สัปดาห์</span></div>
-  </div>`;
-
-  // week dots
-  html+=`<p class="section-label" style="margin-top:0">สัปดาห์นี้</p><div class="proj-week-dots">`;
-  wd.forEach(d=>{
-    const dow2=new Date(d+"T00:00:00").getDay();
-    const dayBlocks=blocks.filter(b=>b.date===d);
-    const hasDone=d<td?dayBlocks.length>0:(d===td&&dayBlocks.some(b=>statusOf(b,nm)!=="upcoming"));
-    const isToday=d===td;
-    let cls="proj-day-dot"+(isToday?" dot-today":hasDone?" dot-done":d>td?" dot-skip":"");
-    html+=`<div class="proj-day-col"><div class="proj-day-name">${dayNames[dow2]}</div><div class="${cls}">${isToday?"วันนี้":hasDone?"✓":"–"}</div></div>`;
-  });
-  html+="</div>";
-
-  html+=disciplineChartHtml(disciplineRange);
-
-  // habit cards
-  const habitGoals=goals.filter(g=>g.mode==="habit");
-  if(habitGoals.length){
-    html+=`<p class="section-label">🔁 Habit</p>`;
-    habitGoals.forEach(g=>{
-      const streak=habitStreak(g.id);
-      const days21=habitLast21Days(g.id);
-      const doneToday=blocks.some(b=>b.goalId===g.id&&b.date===td&&b.completed===true);
-      const grid=days21.map(d=>`<span style="width:10px;height:10px;border-radius:3px;display:inline-block;background:${d?"var(--focus)":"var(--line)"}"></span>`).join("");
-      html+=`<div class="goal-card" style="margin-bottom:8px;">
-        <div class="goal-card-top">
-          <div class="goal-card-title">${goalIconHtml(g,16)} ${esc(g.title)}</div>
-          <button type="button" class="circle-btn circle-check${doneToday?" is-done":""}" onclick="toggleHabitToday('${g.id}')" style="width:30px;height:30px;">${doneToday?"✓":""}</button>
-        </div>
-        <div class="goal-meta">🔥 streak ${streak} วัน</div>
-        <div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:8px;">${grid}</div>
-      </div>`;
-    });
+  if(progressView==='overview'){
+    const summary=reviewed.length===0?'เริ่มเก็บข้อมูลเพื่อเห็นพัฒนาการ':delta>0?`ทำตามแผนดีขึ้น ${delta}%`:delta<0?`อัตราสำเร็จลดลง ${Math.abs(delta)}%`:'รักษาความสม่ำเสมอได้เท่าเดิม';
+    const skipped=rangeBlocks.filter(b=>b.completed===false),longSkipped=skipped.filter(b=>mins(b)>90).length;
+    const bestGoal=goals.map(g=>({g,n:done.filter(b=>b.goalId===g.id).length})).sort((a,b)=>b.n-a.n)[0];
+    const bars=days.map(d=>({d,p:rangeBlocks.filter(b=>b.date===d).reduce((s,b)=>s+mins(b),0),a:rangeBlocks.filter(b=>b.date===d).reduce((s,b)=>s+(Number(b.actualFocusSeconds)||0)/60,0)}));
+    const maxBar=Math.max(1,...bars.flatMap(x=>[x.p,x.a]));
+    html+=`<section class="progress-hero"><div><p class="progress-eyebrow">${progressPeriod} วันที่ผ่านมา</p><h2>${summary}</h2><p>${reviewed.length?`ประเมินแล้ว ${reviewed.length} งาน · เทียบกับช่วงก่อนหน้า`:'เมื่อกด ✓ หรือ ✕ และใช้ Focus timer ระบบจะวิเคราะห์ให้ตรงขึ้น'}</p></div><div class="progress-score" style="--score:${rate}%"><strong>${rate}<span>%</span></strong></div></section>`;
+    html+=`<div class="progress-stat-grid"><div class="progress-card progress-stat"><strong>${fmtMin(focusSec/60)}</strong><span>โฟกัสจริง</span></div><div class="progress-card progress-stat"><strong>${done.length}/${reviewed.length}</strong><span>งานสำเร็จ</span></div><div class="progress-card progress-stat"><strong>${focusRounds}</strong><span>รอบ Pomodoro</span></div></div>`;
+    html+=`<section class="progress-card progress-section"><div class="progress-section-head"><div><h3>แผนเทียบกับเวลาจริง</h3><p class="progress-section-sub">ไม่รวมเวลาที่แอปปิดอยู่</p></div><div class="progress-legend"><span><i style="background:var(--line)"></i>แผน</span><span><i style="background:var(--focus)"></i>จริง</span></div></div><div class="progress-bars">${bars.map(x=>`<div class="progress-daybar"><i class="progress-bar-plan" style="height:${Math.max(2,x.p/maxBar*100)}%"></i><i class="progress-bar-actual" style="height:${Math.max(2,x.a/maxBar*100)}%"></i><label>${dayLabel(x.d)}</label></div>`).join('')}</div></section>`;
+    html+=`<div class="progress-insights"><article class="progress-card progress-insight"><span class="progress-badge">จุดแข็ง</span><h4>${bestGoal?.n?esc(bestGoal.g.title):'กำลังรอข้อมูลเพิ่ม'}</h4><p>${bestGoal?.n?`ทำสำเร็จ ${bestGoal.n} งาน มากที่สุดในช่วงนี้`:'ทำงานและประเมินผลต่อเนื่อง เพื่อให้เห็นรูปแบบที่ชัดเจน'}</p></article><article class="progress-card progress-insight"><span class="progress-badge warn">จุดติดขัด</span><h4>${longSkipped?'บล็อกยาวถูกข้ามบ่อย':'งานที่ข้ามหรือยังไม่ประเมิน'}</h4><p>${longSkipped?`มี ${longSkipped} บล็อกที่ยาวเกิน 90 นาทีและถูกข้าม ลองแบ่งให้สั้นลง`:`ข้าม ${skipped.length} งาน · ยังไม่ประเมิน ${rangeBlocks.length-reviewed.length} งาน`}</p></article></div>`;
+    html+=`<button class="progress-review-btn" onclick="progressReviewOpen=!progressReviewOpen;renderProgress()">${progressReviewOpen?'ซ่อน':'เปิด'} Weekly Review</button><div class="progress-review ${progressReviewOpen?'open':''}"><div class="progress-card"><div class="progress-row"><div class="progress-row-main"><div class="progress-row-title">เวลาวางแผนทั้งหมด</div><div class="progress-row-meta">เทียบกับเวลาที่จับจริง</div></div><div class="progress-row-value">${fmtMin(plannedMin)} → ${fmtMin(focusSec/60)}</div></div><div class="progress-row"><div class="progress-row-main"><div class="progress-row-title">สิ่งรบกวนที่บันทึกได้</div><div class="progress-row-meta">ระหว่าง Focus session</div></div><div class="progress-row-value">${distractions} ครั้ง</div></div></div></div>`;
+  }else if(progressView==='goal'){
+    const rows=goals.map(g=>{const bs=rangeBlocks.filter(b=>b.goalId===g.id),dn=bs.filter(b=>b.completed===true).length,sec=bs.reduce((s,b)=>s+(Number(b.actualFocusSeconds)||0),0);return{g,bs,dn,sec};}).sort((a,b)=>b.sec-a.sec);
+    html+=progressListSection('Goals','งานเสร็จและเวลาโฟกัสแยกตามเป้าหมาย',rows.map(x=>`${goalIconHtml(x.g,15)}|${esc(x.g.title)}|${x.dn}/${x.bs.length} งาน|${fmtMin(x.sec/60)}`));
+  }else if(progressView==='focus'){
+    const focused=rangeBlocks.filter(b=>(Number(b.actualFocusSeconds)||0)>0).sort((a,b)=>(b.actualFocusSeconds||0)-(a.actualFocusSeconds||0));
+    html+=progressListSection('Focus','เวลาที่ทำจริงจาก Timer',focused.map(b=>`◷|${esc(b.title)}|${b.date} · ${b.start}|${fmtMin((b.actualFocusSeconds||0)/60)}`));
+  }else if(progressView==='pomodoro'){
+    const rows=days.map(d=>({d,n:stats.byDate?.[d]?.focusRounds||0})).filter(x=>x.n).reverse();
+    html+=`<div class="progress-stat-grid"><div class="progress-card progress-stat"><strong>${focusRounds}</strong><span>รอบสำเร็จ</span></div><div class="progress-card progress-stat"><strong>${fmtMin(focusSec/60)}</strong><span>เวลาโฟกัส</span></div><div class="progress-card progress-stat"><strong>${distractions}</strong><span>สิ่งรบกวน</span></div></div>`+progressListSection('Pomodoro รายวัน','นับเฉพาะรอบที่เกิดขึ้นขณะใช้งาน',rows.map(x=>`◉|${new Date(x.d+'T00:00:00').toLocaleDateString('th-TH',{day:'numeric',month:'short'})}|รอบโฟกัสสำเร็จ|${x.n} รอบ`));
   }
-
-  // today summary banner
-  const tb=blocks.filter(b=>b.date===td&&b.completed===true);
-  if(tb.length>0)html+=`<div class="proj-win-banner"><p class="proj-win-title">วันนี้ทำเสร็จไปแล้ว ${tb.length} งาน 💪</p><p class="proj-win-sub">สู้ๆ ต่อไปนะ</p></div>`;
-
-  el.innerHTML=html;
+  el.innerHTML=html+'</div>';
+}
+function progressListSection(title,sub,rows){
+  return `<section class="progress-card progress-section"><div class="progress-section-head"><div><h3>${title}</h3><p class="progress-section-sub">${sub}</p></div></div><div class="progress-list">${rows.length?rows.map(r=>{const [icon,name,meta,val]=r.split('|');return`<div class="progress-row"><div style="width:26px;text-align:center">${icon}</div><div class="progress-row-main"><div class="progress-row-title">${name}</div><div class="progress-row-meta">${meta}</div></div><div class="progress-row-value">${val}</div></div>`}).join(''):'<div class="progress-empty">ยังไม่มีข้อมูลในช่วงเวลานี้</div>'}</div></section>`;
 }
 
 document.getElementById("openProjAddBtn").addEventListener("click",()=>openGoalModal(null));
@@ -2728,22 +2980,17 @@ function parseImportJson(raw){
   try{data=JSON.parse(raw);}catch(e){return{error:"JSON ไม่ถูกต้อง: "+e.message};}
   if(data.type!=="timeblock_import")return{error:'ต้องมี "type": "timeblock_import" ในไฟล์'};
   const res={projects:[],blocks:[],skipped:{projects:0,blocks:0}};
-  // projects — supports all goal modes: time / count / project(milestone) / habit
+  // projects — supports all active Goal modes: time / count / project
   (data.projects||[]).forEach(p=>{
     if(!p.title)return;
     if(p.id&&goals.find(g=>g.id===p.id)){res.skipped.projects++;return;}
-    const mode=["time","count","project","habit"].includes(p.mode)?p.mode:"time";
+    const mode=["time","count","project"].includes(p.mode)?p.mode:"time";
     const item={
       id:p.id||uid(),emoji:p.emoji||"📌",icon:p.icon||"",title:p.title,
-      category:p.category||"work",deadline:mode==="habit"?"":(p.deadline||""),
+      category:p.category||"work",deadline:p.deadline||"",
       mode,targetHours:mode==="time"?(Number(p.targetHours)||20):0,
       unit:mode==="count"?(p.unit||""):"",targetCount:mode==="count"?(Number(p.targetCount)||0):0,
-      subtasks:mode==="project"?(Array.isArray(p.subtasks)?p.subtasks.map(s=>({id:uid(),title:s.title||"",done:!!s.done,due:s.due||"",weight:Number(s.weight)||0})):[]):undefined,
-      habitFreq:mode==="habit"?(p.habitFreq||"custom"):undefined,
-      habitDays:mode==="habit"?(Array.isArray(p.habitDays)?p.habitDays:[]):undefined,
-      habitTime:mode==="habit"?(p.habitTime||""):undefined,
-      habitDuration:mode==="habit"?(Number(p.habitDuration)||15):undefined,
-      habitAutoBlock:mode==="habit"?(p.habitAutoBlock!==false):undefined,
+      tasks:Array.isArray(p.tasks||p.subtasks)?(p.tasks||p.subtasks).map(s=>({id:uid(),title:s.title||"",done:!!s.done,completedAt:null,due:s.due||"",targetCount:0,icon:"",iconManual:false})):[],
       note:p.note||"",_isProject:true,
     };
     res.projects.push(item);
@@ -2973,13 +3220,13 @@ document.getElementById("syncSignOutBtn").addEventListener("click",async()=>{
   syncOverlay.classList.remove("show");
 });
 
-function queueCloudPush(){if(!cloudConnected||!cloudDocRef||applyingRemoteUpdate)return;clearTimeout(cloudPushTimer);cloudPushTimer=setTimeout(()=>cloudDocRef.set({blocks,goals,timerState,prevActiveId,stats,updatedAt:Date.now()}).catch(e=>console.error(e)),500);}
-function applyRemoteSnapshot(data){applyingRemoteUpdate=true;if(Array.isArray(data.blocks))blocks=data.blocks.map(migrateBlock);if(Array.isArray(data.goals))goals=data.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;});if(data.timerState){Object.keys(timerState).forEach(k=>delete timerState[k]);Object.assign(timerState,data.timerState);}if(data.prevActiveId!==undefined)prevActiveId=data.prevActiveId;if(data.stats?.byDate)stats=data.stats;try{localStorage.setItem(SK,JSON.stringify({blocks,goals,timerState,prevActiveId,stats}));}catch(e){}renderAll();applyingRemoteUpdate=false;}
+function queueCloudPush(){if(!cloudConnected||!cloudDocRef||applyingRemoteUpdate)return;clearTimeout(cloudPushTimer);cloudPushTimer=setTimeout(()=>cloudDocRef.set({schemaVersion:FlowMateCore.SCHEMA_VERSION,blocks,goals,timerState,prevActiveId,stats,updatedAt:Date.now()}).catch(e=>console.error(e)),500);}
+function applyRemoteSnapshot(data){applyingRemoteUpdate=true;try{const migration=FlowMateCore.migrateState(data);blocks=migration.state.blocks.map(migrateBlock);goals=migration.state.goals;timerState=migration.state.timerState;prevActiveId=migration.state.prevActiveId;stats=migration.state.stats;try{localStorage.setItem(SK,JSON.stringify({schemaVersion:FlowMateCore.SCHEMA_VERSION,blocks,goals,timerState,prevActiveId,stats}));}catch(e){}renderAll();}finally{applyingRemoteUpdate=false;}}
 
 // VISIBILITY / FOCUS
-document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){ensureHabitBlocksForToday();tick();maybeCatchOnPhone();}});
-window.addEventListener("focus",()=>{ensureHabitBlocksForToday();tick();maybeCatchOnPhone();});
-window.addEventListener("pageshow",()=>{ensureHabitBlocksForToday();tick();maybeCatchOnPhone();});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){tick();maybeCatchOnPhone();}});
+window.addEventListener("focus",()=>{tick();maybeCatchOnPhone();});
+window.addEventListener("pageshow",()=>{tick();maybeCatchOnPhone();});
 
 // SERVICE WORKER
 if("serviceWorker" in navigator)navigator.serviceWorker.register("service-worker.js").catch(()=>{});
@@ -3015,11 +3262,11 @@ document.getElementById("phoneCatchToggle").checked=pcInit.enabled;
 document.getElementById("phoneCatchLabel").textContent=(pcInit.enabled?"เปิดอยู่":"ปิดอยู่")+" · โทน"+(pcInit.tone==="harsh"?"โหด":"อ่อนโยน");
 checkNotifPerm();
 applyDarkMode();
-ensureHabitBlocksForToday();
 renderAll();
 setInterval(tick,1000);
 tick();
 
+window.addEventListener("DOMContentLoaded",()=>{
 // LOGIN GATE — shown once on first launch, skippable, auto-dismisses if already signed in
 const LGK="tb_login_gate_dismissed";
 function loginGateDismissed(){try{return localStorage.getItem(LGK)==="1";}catch(e){return false;}}
@@ -3061,6 +3308,7 @@ document.getElementById("loginGateSubmitBtn").addEventListener("click",async()=>
   }catch(e){ showLoginGateError(friendlyAuthError(e)); }
 });
 ensureFirebaseInit(activeFirebaseConfig());
+});
 </script>
 <!-- LOGIN GATE (full-screen, shown on first launch) -->
 <div id="loginGate" style="position:fixed;inset:0;z-index:500;background:var(--paper);display:none;align-items:center;justify-content:center;padding:24px;overflow-y:auto;">
