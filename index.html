@@ -35,19 +35,6 @@ body{margin:0;background:var(--bg-page);font-family:-apple-system,"Segoe UI","No
 .goal-fill{height:100%;background:var(--focus);border-radius:3px;transition:width .4s;}
 .add-btn{width:100%;border:none;background:var(--ink);color:var(--paper);border-radius:14px;padding:11px;font-size:14px;font-weight:500;cursor:pointer;margin-bottom:12px;}
 .block-row{display:flex;gap:10px;margin-bottom:8px;}
-.trow{border-radius:10px;background:var(--card);border-left:3px solid var(--line-strong);padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:opacity .15s;}
-.trow.is-habit{border-left-color:#8FBF6E;}
-.trow.is-project{border-left-color:#F5C242;}
-.trow.is-done{opacity:.55;}
-.trow-top{display:flex;align-items:flex-start;gap:10px;}
-.trow-time{font-size:11px;color:var(--ink-muted);font-family:ui-monospace,monospace;white-space:nowrap;padding-top:2px;flex-shrink:0;width:76px;}
-.trow-body{flex:1;min-width:0;}
-.trow-title{font-size:14px;font-weight:500;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.trow-title.strike{text-decoration:line-through;color:var(--ink-muted);}
-.trow-sub{font-size:11.5px;color:var(--ink-muted);margin-top:2px;}
-.trow-check{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line-strong);background:transparent;color:var(--ink-soft);flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;padding:0;}
-.trow-check.is-done{background:var(--focus);border-color:var(--focus);color:#fff;}
-.trow-check.is-notdone{background:var(--danger);border-color:var(--danger);color:#fff;}
 .time-col{width:44px;flex-shrink:0;text-align:right;padding-top:10px;font-family:ui-monospace,monospace;font-size:11px;color:var(--ink-soft);line-height:1.5;}
 .card{flex:1;background:var(--card);border:0.5px solid var(--line);border-radius:16px;padding:11px 12px;}
 .card.done{opacity:.5;}
@@ -61,7 +48,9 @@ body{margin:0;background:var(--bg-page);font-family:-apple-system,"Segoe UI","No
 .tag{font-size:11px;background:var(--paper);color:var(--ink-soft);padding:2px 8px;border-radius:6px;}
 .card.active-block .tag{background:var(--card);}
 .card-details{font-size:12px;color:var(--ink-soft);margin-top:5px;}
-.card2{border-radius:18px;box-shadow:0 1px 2px rgba(28,32,36,.05);}
+.card2{border-radius:18px;box-shadow:0 1px 2px rgba(28,32,36,.05);border-left:3px solid transparent;}
+.card2.src-habit{border-left-color:#8FBF6E;}
+.card2.src-project{border-left-color:#F5C242;}
 .card2-row{display:flex;align-items:center;gap:9px;}
 .card2-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .card2-title{flex:1;font-size:14px;font-weight:500;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;}
@@ -293,6 +282,34 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .proj-win-title{font-size:12px;font-weight:600;color:var(--focus);margin:0 0 2px;}
 .proj-win-sub{font-size:11px;color:var(--focus);margin:0;opacity:.8;}
 .proj-edit-modal-body .field{margin-bottom:10px;}
+.proj-grid{display:grid;grid-template-columns:3fr 1fr;gap:16px;}
+.proj-col-label{font-size:11px;font-weight:700;color:var(--ink-soft);letter-spacing:0.4px;margin:0 0 10px;}
+.proj-card2{background:var(--card);border-radius:16px;padding:18px 20px;margin-bottom:12px;cursor:pointer;transition:opacity .2s;}
+.proj-card2.proj-dimmed{opacity:.5;}
+.proj-card2-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:6px;}
+.proj-card2-name{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--ink);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.proj-card2-pct{font-size:14px;font-weight:700;color:var(--ink);flex-shrink:0;}
+.proj-card2-status{font-size:12px;color:#5B8C6E;margin:0;}
+.proj-card2-hint{font-size:12px;color:#5B8C6E;margin:0 0 12px;}
+.proj-card2-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+.proj-card2-modepill{background:var(--focus-soft);color:#4C9A7A;font-size:11px;padding:4px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:3px;flex-shrink:0;}
+.proj-card2-num{font-size:11px;color:var(--ink-muted);}
+.habit-panel{background:var(--card);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:14px;height:100%;}
+.habit-row-item+.habit-row-item{border-top:0.5px solid var(--line);padding-top:14px;}
+.habit-row-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;gap:6px;}
+.habit-row-name{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ink);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.habit-row-streak{font-size:10px;font-weight:700;color:var(--rest);display:flex;align-items:center;gap:2px;flex-shrink:0;cursor:pointer;}
+.habit-row-strip{display:flex;gap:3px;}
+.habit-row-strip span{flex:1;height:5px;border-radius:3px;background:var(--line);}
+.habit-row-strip span.on{background:#4C9A7A;}
+.gallery-popup-backdrop{position:fixed;inset:0;background:rgba(20,20,18,.45);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:70;padding:20px;}
+.gallery-popup-backdrop.show{display:flex;}
+.gallery-popup{width:100%;max-width:480px;max-height:80vh;overflow-y:auto;background:var(--card);border-radius:20px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.25);}
+.gallery-popup-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+.gallery-popup-title{font-size:17px;font-weight:700;color:var(--ink);}
+.gallery-popup-close{width:28px;height:28px;border-radius:50%;background:var(--paper);border:none;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--ink-soft);cursor:pointer;flex-shrink:0;}
+.gallery-popup-sub{font-size:12px;color:var(--ink-muted);margin:0 0 18px;}
+.gallery-popup-footer{display:flex;gap:10px;margin-top:4px;}
 
 /* Desktop: give the calendar more breathing room */
 @media (min-width: 900px){
@@ -601,10 +618,28 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 <!-- PAGE: Goals -->
 <div class="page" id="page-projects">
   <div class="app-head"><h1>เป้าหมาย</h1><span class="clock" id="clockNow3"></span></div>
+  <p class="section-label" style="margin-top:0">ความคืบหน้าเป้าหมาย</p>
   <div class="proj-dash" id="projDash"></div>
-  <div style="display:flex;gap:8px;">
-    <button class="add-btn" id="openProjAddBtn" style="flex:1">+ เพิ่มเป้าหมาย</button>
-    <button class="btn-secondary" id="openHabitGalleryBtn" style="flex:0 0 auto;padding:0 16px;white-space:nowrap;">🗂 Habit Gallery</button>
+  <div class="proj-grid" style="margin-top:16px;">
+    <button class="add-btn" id="openProjAddBtn" style="margin-bottom:0;">+ เพิ่มเป้าหมาย</button>
+    <button class="btn-secondary" id="openHabitGalleryBtn" style="white-space:nowrap;">🎓 Habit Gallery</button>
+  </div>
+</div>
+
+<!-- HABIT GALLERY POPUP -->
+<div class="gallery-popup-backdrop" id="habitGalleryPopupBackdrop">
+  <div class="gallery-popup" id="habitGalleryPopup">
+    <div class="gallery-popup-head">
+      <div class="gallery-popup-title">🎓 Habit Gallery</div>
+      <button type="button" class="gallery-popup-close" id="habitGalleryPopupCloseBtn">✕</button>
+    </div>
+    <p class="gallery-popup-sub">เลือกนิสัยสำเร็จรูปเพิ่มเข้าเร็วๆ</p>
+    <div id="habitGalleryChips"></div>
+    <div id="habitGalleryConfig" style="display:none;background:var(--paper);border:0.5px solid var(--line);border-radius:16px;padding:14px;margin-top:4px;margin-bottom:16px;"></div>
+    <div class="gallery-popup-footer">
+      <button type="button" class="btn-secondary" id="habitGalleryPopupCancelBtn" style="flex:1;">ยกเลิก</button>
+      <button type="button" class="btn-primary" id="habitGalleryConfirmBtn" style="flex:2;display:none;">เพิ่มนิสัยที่เลือก</button>
+    </div>
   </div>
 </div>
 
@@ -735,17 +770,12 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
       <label style="font-size:12px;color:var(--ink-soft);display:block;margin-bottom:6px;">วัดผลเป้าหมายแบบไหน</label>
       <div class="mode-grid" id="goalModeGrid" style="grid-template-columns:1fr 1fr 1fr;">
         <button type="button" data-mode="time"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:3px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>เวลา</button>
-        <button type="button" data-mode="task"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:3px;"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg>งานเสร็จ</button>
+        <button type="button" data-mode="project"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:3px;"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg>งานเสร็จ</button>
         <button type="button" data-mode="count"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:3px;"><path d="M5 21v-6"/><path d="M12 21V9"/><path d="M19 21V3"/></svg>จำนวน</button>
-        <button type="button" data-mode="habit"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:3px;"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>Habit</button>
-        <button type="button" data-mode="project"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:3px;"><path d="M13 5h8"/><path d="M13 12h8"/><path d="M13 19h8"/><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/></svg>โปรเจกต์</button>
       </div>
       <div id="goalModeTimeFields">
         <div class="field"><label>เป้าหมายชั่วโมงรวม (สำหรับคำนวณ %)</label><input type="number" id="g_targetHours" min="1" step="1" value="20" placeholder="เช่น 40 ชม."></div>
         <p style="font-size:11px;color:var(--ink-soft);margin:-6px 0 10px">% จะคำนวณอัตโนมัติจากชั่วโมง time block ที่ผูกไว้</p>
-      </div>
-      <div id="goalModeTaskFields">
-        <p style="font-size:11px;color:var(--ink-soft);margin:0 0 10px">% จะคำนวณจากจำนวนงานที่กด ✓ ทำเสร็จ เทียบกับที่ผูกไว้ทั้งหมด</p>
       </div>
       <div id="goalModeCountFields" style="display:none;">
         <div class="field"><label>เป้าหมายจำนวนรวม</label>
@@ -765,25 +795,6 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
         <div class="field" id="g_unitCustomField" style="display:none;"><label>หน่วย (กำหนดเอง)</label><input type="text" id="g_unitCustom" placeholder="เช่น หน้า, บท, ตอน"></div>
         <p style="font-size:11px;color:var(--ink-soft);margin:-6px 0 10px">% จะคำนวณจากจำนวนที่สะสมได้จาก time block ที่ผูกไว้และทำเสร็จแล้ว</p>
       </div>
-      <div id="goalModeHabitFields" style="display:none;">
-        <p style="font-size:11px;color:var(--ink-soft);margin:0 0 10px">ไม่มี deadline — วัดผลจาก streak (จำนวนวันติดกันที่กด ✓) ระบบจะสร้าง time block ให้อัตโนมัติทุกวันตามความถี่ที่ตั้ง</p>
-        <div class="field"><label>ความถี่</label>
-          <div class="mode-grid" id="habitFreqGrid" style="grid-template-columns:1fr 1fr 1fr 1fr;">
-            <button type="button" data-freq="daily">ทุกวัน</button>
-            <button type="button" data-freq="weekdays">วันธรรมดา</button>
-            <button type="button" data-freq="weekends">วันหยุด</button>
-            <button type="button" data-freq="custom">กำหนดเอง</button>
-          </div>
-        </div>
-        <div id="habitDaysRow" style="display:none;gap:6px;margin-bottom:11px;flex-wrap:wrap">
-          <button type="button" class="day-chip habit-day-chip" data-day="1">จ</button><button type="button" class="day-chip habit-day-chip" data-day="2">อ</button><button type="button" class="day-chip habit-day-chip" data-day="3">พ</button><button type="button" class="day-chip habit-day-chip" data-day="4">พฤ</button><button type="button" class="day-chip habit-day-chip" data-day="5">ศ</button><button type="button" class="day-chip habit-day-chip" data-day="6">ส</button><button type="button" class="day-chip habit-day-chip" data-day="0">อา</button>
-        </div>
-        <div class="row2">
-          <div class="field"><label>เวลา (ไม่บังคับ)</label><input type="time" id="g_habitTime"></div>
-          <div class="field"><label>ระยะเวลา (นาที)</label><input type="number" id="g_habitDuration" min="5" step="5" value="15"></div>
-        </div>
-        <div class="checkrow"><span>สร้าง time block อัตโนมัติทุกวัน</span><input type="checkbox" id="g_habitAutoBlock" checked></div>
-      </div>
       <div id="goalModeProjectFields" style="display:none;">
         <p style="font-size:11px;color:var(--ink-soft);margin:0 0 10px">% จะคำนวณจากจำนวน milestone ที่ติ๊กเสร็จ เทียบกับทั้งหมด</p>
         <div id="projectSubtaskList" style="margin-bottom:8px;"></div>
@@ -791,20 +802,6 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
       </div>
     </div>
     <div class="modal-foot"><div class="modal-actions"><button class="btn-secondary" id="goalDeleteBtn" style="display:none;color:var(--danger)">ลบ</button><button class="btn-primary" id="goalSaveBtn" style="flex:2">บันทึก</button></div></div>
-  </div>
-</div>
-
-<!-- HABIT GALLERY MODAL -->
-<div class="overlay" id="habitGalleryOverlay">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-head"><h2>เลือกนิสัยที่อยากสร้าง</h2><button class="modal-close" onclick="document.getElementById('habitGalleryOverlay').classList.remove('show')">✕</button></div>
-    <div class="modal-body">
-      <p style="font-size:12px;color:var(--ink-soft);margin:0 0 14px">แตะเพื่อเลือก แล้วปรับความถี่/เวลาได้ทีหลัง</p>
-      <div id="habitGalleryChips"></div>
-      <div id="habitGalleryConfig" style="display:none;background:var(--card);border:0.5px solid var(--line);border-radius:16px;padding:14px;margin-top:12px;"></div>
-      <button class="btn-primary" id="habitGalleryConfirmBtn" style="width:100%;margin-top:14px;display:none;">เพิ่มนิสัยที่เลือก</button>
-    </div>
   </div>
 </div>
 
@@ -923,6 +920,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
           <h3 style="font-size:20px;font-weight:800;margin:0 0 8px;color:var(--ink);">ยินดีต้อนรับกลับ</h3>
           <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin:0;">เข้าสู่ระบบเพื่อซิงค์ time block เป้าหมาย<br>และตัวละครของคุณข้ามอุปกรณ์</p>
         </div>
+        <p id="syncEnvWarning" style="display:none;font-size:11.5px;color:var(--rest);background:var(--rest-soft);border-radius:10px;padding:8px 12px;margin:0 0 14px;line-height:1.5;">⚠️ หน้าพรีวิวนี้ยังล็อกอินไม่ได้ (ต้องเปิดผ่าน http/https จริง) — Publish/Deploy แอปก่อนแล้วค่อยล็อกอิน หรือใช้แบบไม่ล็อกอินไปก่อนได้</p>
         <button class="btn-primary" id="googleSignInBtn" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;background:var(--card);color:var(--ink);border:0.5px solid var(--line);">
           <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62Z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.97 10.72A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.18.29-1.72V4.95H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.05l3.01-2.33Z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58Z"/></svg>
           เข้าสู่ระบบด้วย Google
@@ -1521,28 +1519,25 @@ function renderToday(){
       }
     }
     const badges=[];
-    if(b.rescheduledFrom) badges.push(`↻ เลื่อนมาจาก ${b.rescheduledFrom.slice(5)}`);
-    if(b.continuesToNextDay) badges.push(`→ มีต่อวันถัดไป`);
-    if(b.completed===false&&b.notDoneReason) badges.push(esc(b.notDoneReason));
-    const isHabitSrc=!!(goal&&goal.mode==="habit");
-    const isProjectSrc=!!(goal&&goal.mode==="project");
-    const sourceClass=isHabitSrc?"is-habit":isProjectSrc?"is-project":"";
-    const subLines=[];
-    if(isProjectSrc)subLines.push(esc(goal.title));
-    if(mm)subLines.push(modeLabel(b));
-    badges.forEach(t=>subLines.push(t));
-    return`<div class="trow ${sourceClass} ${st==="done"||b.completed===true?"is-done":""}" data-id="${b.id}">
-      <div class="trow-top">
-        <div class="trow-time">${b.start}–${b.end}</div>
-        <div class="trow-body">
-          <div class="trow-title ${st==="done"||b.completed===true?"strike":""}" data-action="edit" data-id="${b.id}">${esc(b.title)}</div>
-          ${subLines.length?`<div class="trow-sub">${subLines.join(" · ")}</div>`:""}
-          ${b.details?`<p class="card-details">${esc(b.details)}</p>`:""}
-          ${inlinePomo}
-        </div>
-        <button type="button" class="trow-check ${b.completed===true?"is-done":""} ${b.completed===false?"is-notdone":""}" data-action="mark-done" data-id="${b.id}" title="ทำเสร็จแล้ว">${b.completed===true?"✓":""}</button>
+    if(goal) badges.push(`<span class="card2-badge card2-badge-goal">${esc(goal.title)}</span>`);
+    if(mm) badges.push(`<span class="card2-badge card2-badge-goal">${modeLabel(b)}</span>`);
+    if(b.rescheduledFrom) badges.push(`<span class="card2-badge">↻ เลื่อนมาจาก ${b.rescheduledFrom.slice(5)}</span>`);
+    if(b.continuesToNextDay) badges.push(`<span class="card2-badge card2-badge-continues">→ มีต่อวันถัดไป</span>`);
+    if(b.completed===false&&b.notDoneReason) badges.push(`<span class="card2-badge card2-badge-continues">${esc(b.notDoneReason)}</span>`);
+    const badgeRow=badges.length?`<div class="card2-badges">${badges.join("")}</div>`:"";
+    const dotColor=goal?goalColor(goal.id):"#9BA0A6";
+    const sourceClass=goal?.mode==="habit"?"src-habit":goal?.mode==="project"?"src-project":"";
+    return`<div class="block-row"><div class="time-col">${b.start}<br>${b.end}</div><div class="card card2 ${sourceClass} ${st==="done"?"done":st==="active"?"active-block":""}" data-id="${b.id}">
+      <div class="card2-row">
+        <span class="card2-dot" style="background:${dotColor}"></span>
+        <span class="card2-title ${st==="done"||b.completed===true?"strike":""}" data-action="edit" data-id="${b.id}">${esc(b.title)}</span>
+        <button type="button" class="circle-btn circle-check ${b.completed===true?"is-done":""}" data-action="mark-done" data-id="${b.id}" title="ทำเสร็จแล้ว">✓</button>
+        <button type="button" class="circle-btn circle-x ${b.completed===false?"is-notdone":""}" data-action="mark-notdone" data-id="${b.id}" title="ยังไม่เสร็จ">✕</button>
       </div>
-    </div>`;
+      ${badgeRow}
+      ${b.details?`<p class="card-details">${esc(b.details)}</p>`:""}
+      ${inlinePomo}
+    </div></div>`;
   }).join("");
 }
 function renderWeekInToday(){
@@ -2184,29 +2179,13 @@ const pickedHabitDays=new Set();
 function updateGoalModeGrid(){
   document.querySelectorAll("#goalModeGrid button").forEach(b=>b.classList.toggle("picked",b.dataset.mode===pickedGoalMode));
   document.getElementById("goalModeTimeFields").style.display=pickedGoalMode==="time"?"block":"none";
-  document.getElementById("goalModeTaskFields").style.display=pickedGoalMode==="task"?"block":"none";
   document.getElementById("goalModeCountFields").style.display=pickedGoalMode==="count"?"block":"none";
-  document.getElementById("goalModeHabitFields").style.display=pickedGoalMode==="habit"?"block":"none";
   document.getElementById("goalModeProjectFields").style.display=pickedGoalMode==="project"?"block":"none";
-  document.getElementById("g_deadlineField").style.display=pickedGoalMode==="habit"?"none":"block";
+  document.getElementById("g_deadlineField").style.display="block";
 }
 document.getElementById("goalModeGrid").addEventListener("click",e=>{
   const b=e.target.closest("button");if(!b)return;
   pickedGoalMode=b.dataset.mode;updateGoalModeGrid();
-});
-function updateHabitFreqGrid(){
-  document.querySelectorAll("#habitFreqGrid button").forEach(b=>b.classList.toggle("picked",b.dataset.freq===pickedHabitFreq));
-  document.getElementById("habitDaysRow").style.display=pickedHabitFreq==="custom"?"flex":"none";
-}
-document.getElementById("habitFreqGrid").addEventListener("click",e=>{
-  const b=e.target.closest("button");if(!b)return;
-  pickedHabitFreq=b.dataset.freq;updateHabitFreqGrid();
-});
-document.getElementById("habitDaysRow").addEventListener("click",e=>{
-  const b=e.target.closest(".habit-day-chip");if(!b)return;
-  const day=Number(b.dataset.day);
-  if(pickedHabitDays.has(day))pickedHabitDays.delete(day);else pickedHabitDays.add(day);
-  document.querySelectorAll(".habit-day-chip").forEach(b=>b.classList.toggle("picked",pickedHabitDays.has(Number(b.dataset.day))));
 });
 function openGoalModal(goal){
   editingGoalId=goal?goal.id:null;
@@ -2224,18 +2203,13 @@ function openGoalModal(goal){
   else{document.getElementById("g_unitPreset").value="__custom";document.getElementById("g_unitCustom").value=savedUnit;}
   document.getElementById("g_unitCustomField").style.display=document.getElementById("g_unitPreset").value==="__custom"?"block":"none";
   document.getElementById("g_targetCount").value=goal?.targetCount||"";
-  document.getElementById("g_habitTime").value=goal?.habitTime||"";
-  document.getElementById("g_habitDuration").value=goal?.habitDuration||15;
-  document.getElementById("g_habitAutoBlock").checked=goal?.habitAutoBlock!==false;
-  pickedHabitFreq=goal?.habitFreq||"daily";
-  pickedHabitDays.clear();(goal?.habitDays||[]).forEach(d=>pickedHabitDays.add(d));
-  document.querySelectorAll(".habit-day-chip").forEach(b=>b.classList.toggle("picked",pickedHabitDays.has(Number(b.dataset.day))));
-  updateHabitFreqGrid();
   currentSubtasks=(goal?.subtasks||[]).map(s=>({due:"",weight:0,...s}));
   if(currentSubtasks.length&&currentSubtasks.some(s=>!s.weight))rebalanceSubtaskWeights();
   renderSubtaskList();
-  // infer mode for goals saved before the mode selector existed
-  pickedGoalMode=goal?.mode||(goal?.targetHours>0?"time":goal?"task":"time");
+  // infer mode for goals saved before the mode selector existed; legacy "task" goals map to project (milestone) mode
+  pickedGoalMode=goal?.mode||(goal?.targetHours>0?"time":goal?"project":"time");
+  if(pickedGoalMode==="task")pickedGoalMode="project";
+  if(pickedGoalMode==="habit")pickedGoalMode="time";
   updateGoalModeGrid();
   document.getElementById("goalDeleteBtn").style.display=goal?"block":"none";
   goalOverlay.classList.add("show");
@@ -2252,29 +2226,22 @@ document.getElementById("goalSaveBtn").addEventListener("click",()=>{
     if(!unit){alert("กรอกหน่วยด้วยครับ เช่น กม., เซ็ต");return;}
     if(!targetCount||targetCount<=0){alert("กรอกเป้าหมายจำนวนด้วยครับ");return;}
   }
-  if(pickedGoalMode==="habit"&&pickedHabitFreq==="custom"&&pickedHabitDays.size===0){alert("เลือกวันในสัปดาห์อย่างน้อย 1 วัน");return;}
   const data={
     title,
     emoji:document.getElementById("g_emoji").value.trim()||"📌",
     icon:pickedIconId||"",
     category:document.getElementById("g_category").value||"work",
-    deadline:pickedGoalMode==="habit"?"":(document.getElementById("g_deadline").value||""),
+    deadline:document.getElementById("g_deadline").value||"",
     mode:pickedGoalMode,
     targetHours:pickedGoalMode==="time"?(parseFloat(document.getElementById("g_targetHours").value)||0):0,
     unit:pickedGoalMode==="count"?currentUnitValue():"",
     targetCount:pickedGoalMode==="count"?(parseFloat(document.getElementById("g_targetCount").value)||0):0,
-    habitFreq:pickedGoalMode==="habit"?pickedHabitFreq:undefined,
-    habitDays:pickedGoalMode==="habit"?Array.from(pickedHabitDays):undefined,
-    habitTime:pickedGoalMode==="habit"?document.getElementById("g_habitTime").value:undefined,
-    habitDuration:pickedGoalMode==="habit"?(parseInt(document.getElementById("g_habitDuration").value)||15):undefined,
-    habitAutoBlock:pickedGoalMode==="habit"?document.getElementById("g_habitAutoBlock").checked:undefined,
     subtasks:pickedGoalMode==="project"?currentSubtasks.filter(s=>s.title.trim()).map(s=>({id:s.id,title:s.title.trim(),done:!!s.done,due:s.due||"",weight:Number(s.weight)||0})):undefined,
     _isProject:true,
   };
   if(editingGoalId){Object.assign(goals.find(g=>g.id===editingGoalId),data);}
   else goals.push({id:uid(),...data});
   saveState();goalOverlay.classList.remove("show");
-  if(pickedGoalMode==="habit")ensureHabitBlocksForToday();
   renderAll();
 });
 document.getElementById("goalDeleteBtn").addEventListener("click",()=>{if(!confirm("ลบโปรเจกต์นี้ใช่ไหม?"))return;goals=goals.filter(g=>g.id!==editingGoalId);blocks.forEach(b=>{if(b.goalId===editingGoalId)b.goalId="";});saveState();goalOverlay.classList.remove("show");renderAll();});
@@ -2341,8 +2308,11 @@ function renderHabitGalleryConfig(){
 document.getElementById("openHabitGalleryBtn").addEventListener("click",()=>{
   habitGalleryPicked={};
   renderHabitGalleryChips();
-  document.getElementById("habitGalleryOverlay").classList.add("show");
+  document.getElementById("habitGalleryPopupBackdrop").classList.add("show");
 });
+document.getElementById("habitGalleryPopupCloseBtn").addEventListener("click",()=>document.getElementById("habitGalleryPopupBackdrop").classList.remove("show"));
+document.getElementById("habitGalleryPopupCancelBtn").addEventListener("click",()=>document.getElementById("habitGalleryPopupBackdrop").classList.remove("show"));
+document.getElementById("habitGalleryPopupBackdrop").addEventListener("click",e=>{if(e.target.id==="habitGalleryPopupBackdrop")document.getElementById("habitGalleryPopupBackdrop").classList.remove("show");});
 document.getElementById("habitGalleryChips").addEventListener("click",e=>{
   const b=e.target.closest(".habit-gallery-chip");if(!b)return;
   const k=b.dataset.key;
@@ -2378,7 +2348,7 @@ document.getElementById("habitGalleryConfirmBtn").addEventListener("click",()=>{
   });
   saveState();
   ensureHabitBlocksForToday();
-  document.getElementById("habitGalleryOverlay").classList.remove("show");
+  document.getElementById("habitGalleryPopupBackdrop").classList.remove("show");
   renderAll();
 });
 
@@ -2504,34 +2474,92 @@ function disciplineChartHtml(rangeDays){
 
 
 function staircaseHtml(g){
-  const subtasks=g.subtasks||[];
-  const n=subtasks.length;
-  if(!n)return"";
-  const doneCount=subtasks.filter(s=>s.done).length;
+  const p=goalProgress(g.id);
+  const STEPS=5;
   const maxH=64,minH=18;
-  const bars=subtasks.map((s,i)=>{
-    const h=Math.round(minH+(maxH-minH)*(i+1)/n);
-    const isLast=i===n-1;
-    const isCurrent=!s.done&&i===doneCount;
-    return`<div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:1;height:${maxH+22}px;position:relative;">
-      ${isLast?'<span style="position:absolute;top:-2px;font-size:14px;">🏆</span>':''}
-      <span style="width:${isCurrent?9:6}px;height:${isCurrent?9:6}px;border-radius:50%;background:${isCurrent?"#F5C242":"var(--line-strong)"};${isCurrent?"box-shadow:0 0 8px 2px #F5C24299;":""}margin-bottom:5px;flex-shrink:0;"></span>
-      <div style="width:100%;height:${h}px;border-radius:5px 5px 0 0;background:${s.done?"#2f6b52":"var(--staircase-undone)"};"></div>
-    </div>`;
-  }).join("");
-  return`<div style="display:flex;align-items:flex-end;gap:5px;padding:6px 2px 2px;">${bars}</div>`;
+  let stepDone=[]; // boolean array of length STEPS, in order
+  let curStep=-1; // index of the "current" (in-progress, not yet done) step
+
+  if(g.mode==="project"){
+    const subtasks=g.subtasks||[];
+    const n=subtasks.length;
+    if(!n)return staircasePlaceholder();
+    const doneCount=subtasks.filter(s=>s.done).length;
+    stepDone=subtasks.map(s=>!!s.done);
+    curStep=stepDone.findIndex(d=>!d);
+    return staircaseBars(stepDone,curStep);
+  }
+  if(g.mode==="count"){
+    const target=p.target||0;
+    if(!target||!p.logged)return staircasePlaceholder();
+    const pct=Math.min(100,p.target>0?(p.logged/p.target*100):0);
+    return staircaseFromPct(pct);
+  }
+  // time mode (default)
+  const target=p.target||0;
+  if(!target||!p.logged)return staircasePlaceholder();
+  const pct=Math.min(100,p.target>0?(p.logged/p.target*100):0);
+  return staircaseFromPct(pct);
+
+  function staircaseFromPct(pct){
+    const stepsFilled=Math.floor(pct/(100/STEPS)+1e-9);
+    const arr=[];
+    for(let i=0;i<STEPS;i++)arr.push(i<stepsFilled);
+    const cur=arr.findIndex(d=>!d);
+    return staircaseBars(arr,pct>=100?-1:cur);
+  }
+  function staircaseBars(arr,cur){
+    const n=arr.length;
+    const bars=arr.map((done,i)=>{
+      const h=Math.round(minH+(maxH-minH)*(i+1)/n);
+      const isLast=i===n-1;
+      const isCurrent=i===cur;
+      return`<div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:1;height:${maxH+22}px;position:relative;">
+        ${isLast?'<span style="position:absolute;top:-2px;font-size:14px;">🏆</span>':''}
+        <span style="width:${isCurrent?9:6}px;height:${isCurrent?9:6}px;border-radius:50%;background:${isCurrent?"#F5C242":"var(--line-strong)"};${isCurrent?"box-shadow:0 0 8px 2px #F5C24299;":""}margin-bottom:5px;flex-shrink:0;"></span>
+        <div style="width:100%;height:${h}px;border-radius:3px 3px 0 0;background:${done?"#2f6b52":"var(--staircase-undone)"};"></div>
+      </div>`;
+    }).join("");
+    return`<div style="display:flex;align-items:flex-end;gap:6px;padding:14px 2px 12px;">${bars}</div>`;
+  }
+  function staircasePlaceholder(){
+    const bars=Array.from({length:STEPS}).map((_,i)=>{
+      const h=Math.round(minH+(maxH-minH)*(i+1)/STEPS);
+      const isLast=i===STEPS-1;
+      return`<div style="flex:1;height:${h}px;border-radius:3px 3px 0 0;background:var(--staircase-undone);position:relative;">${isLast?'<span style="position:absolute;top:-18px;font-size:13px;left:50%;transform:translateX(-50%);">🏆</span>':''}</div>`;
+    }).join("");
+    return`<div style="display:flex;align-items:flex-end;gap:6px;height:${maxH}px;padding-top:14px;margin-bottom:0;opacity:.55;">${bars}</div><p style="font-size:11px;color:var(--ink-soft);margin:8px 0 0;">พร้อมเริ่มเมื่อไหร่ก็ได้เลย</p>`;
+  }
+}
+function goalStepStatusLine(g){
+  const p=goalProgress(g.id);
+  const STEPS=5;
+  if(g.mode==="project"){
+    const n=(g.subtasks||[]).length;
+    if(!n)return"ยังไม่เริ่มทำ";
+    const done=p.subtasksDone;
+    if(done===0)return"ยังไม่เริ่มทำ";
+    if(done>=n)return"เสร็จแล้ว 🎉";
+    return`กำลังทำ · ขั้นที่ ${done+1} จาก ${n}`;
+  }
+  if(!p.logged)return"ยังไม่เริ่มทำ";
+  const pct=Math.min(100,p.target>0?(p.logged/p.target*100):0);
+  const step=Math.min(STEPS,Math.floor(pct/(100/STEPS)+1e-9)+1);
+  if(pct>=100)return"เสร็จแล้ว 🎉";
+  return`กำลังทำ · ขั้นที่ ${step} จาก ${STEPS}`;
 }
 function renderProjects(){
   const el=document.getElementById("projDash");
   if(!el)return;
 
-  // project cards from goals
-  let html=`<p class="section-label" style="margin-top:0">ความคืบหน้าเป้าหมาย</p>`;
-  const nonHabitGoals=goals.filter(g=>g.mode!=="habit");
-  if(!nonHabitGoals.length){html+='<p class="empty">ยังไม่มีเป้าหมาย — กด + เพื่อเพิ่ม</p>';}
+  const projectGoals=goals.filter(g=>g.mode!=="habit");
+  const habitGoals=goals.filter(g=>g.mode==="habit");
+
+  let leftHtml=`<div class="proj-col-label">โปรเจกต์</div>`;
+  if(!projectGoals.length){leftHtml+='<p class="empty">ยังไม่มีเป้าหมาย — กด + เพื่อเพิ่ม</p>';}
   else{
     const catOrder={work:0,main:0,body:1,mind:2,learn:3,skill:3,money:4,income:4,home:5,social:6,hold:7};
-    const sorted=[...nonHabitGoals].sort((a,b)=>{
+    const sorted=[...projectGoals].sort((a,b)=>{
       const da=daysUntilGoal(a.deadline),db=daysUntilGoal(b.deadline);
       if(da!==null&&db!==null) return da-db;
       if(da!==null) return -1;
@@ -2540,40 +2568,49 @@ function renderProjects(){
     });
     sorted.forEach(g=>{
       const p=goalProgress(g.id);
-      const cat=PJ_CATS[g.category||"main"]||PJ_CATS.main;
       const isHold=g.category==="hold";
-      const du=daysUntilGoal(g.deadline);
-      let dlBadge="";
-      if(du!==null){const urg=du<=3,warn=du<=10;const bc=urg?"var(--danger)":warn?"var(--rest)":"var(--focus)";const bbg=urg?"#fcebeb":warn?"#fbeedd":"var(--focus-soft)";dlBadge=`<span class="proj-chip" style="background:${bbg};color:${bc};font-size:10px;padding:2px 7px;border-radius:20px">⏰${du<=0?"หมด!":du+"วัน"}</span>`;}
-      const barColor=isHold?"var(--line-strong)":cat.color;
-      const metaRight=p.mode==="count"?`${p.logged}/${p.target} ${p.unit||""}`:p.mode==="time"?`${p.logged}/${p.target} ชม.`:p.mode==="project"?`${p.subtasksDone}/${p.subtasksTotal} milestone`:`${p.blocksDone}/${p.blocksTotal} งานเสร็จ`;
-      const streak=goalStreak(g.id);
-      const lastWorked=goalLastWorked(g.id);
-      const streakLine=streak>0?`🔥 ทำต่อเนื่อง ${streak} วัน${lastWorked?" · ล่าสุด "+lastWorked:""}`:(lastWorked?`ล่าสุด ${lastWorked}`:"ยังไม่เริ่มทำ");
-      const spark=sparklineSvg(goalSparklineData(g.id,14));
-      html+=`<div class="proj-card${isHold?" proj-dimmed":""}" onclick="openGoalModal(goals.find(g=>g.id==='${g.id}'))">
-        <div class="proj-card-top">
-          <div class="proj-card-name">${goalIconHtml(g,16)} ${esc(g.title)}</div>
-          <div class="proj-card-pct" style="color:${cat.color}">${p.pct}%</div>
+      const modeLabel=p.mode==="count"?"📊 จำนวน":p.mode==="project"?"☑ งานเสร็จ":"⏱ เวลา";
+      const metaRight=p.mode==="count"?`${p.logged}/${p.target||0} ${p.unit||""}`:p.mode==="project"?`${p.subtasksDone}/${p.subtasksTotal} milestone`:`${p.logged}/${p.target||0} ชม.`;
+      leftHtml+=`<div class="proj-card2${isHold?" proj-dimmed":""}" onclick="openGoalModal(goals.find(g=>g.id==='${g.id}'))">
+        <div class="proj-card2-top">
+          <div class="proj-card2-name">${goalIconHtml(g,16)} ${esc(g.title)}</div>
+          <div class="proj-card2-pct">${p.pct}%</div>
         </div>
-        ${(g.mode==="project"&&(g.subtasks||[]).length)?staircaseHtml(g):`<div class="proj-bar-wrap"><div class="proj-bar-fill" style="width:${p.pct}%;background:${barColor}"></div></div>`}
-        <p class="proj-card-streak">${streakLine}</p>
-        <p class="proj-card-motivation">${goalMotivation(p.pct)}</p>
-        <div class="proj-card-bottom-row">
-          <div class="proj-sparkline">${spark}</div>
-          <div class="proj-card-meta">
-            <div class="proj-tags">
-              <span class="proj-chip" style="background:${cat.bg};color:${cat.color};border:0.5px solid ${cat.border};font-size:10px;padding:2px 7px;border-radius:20px;display:inline-flex;align-items:center;gap:3px;">${lucideIcon(cat.icon,11)}${cat.label}</span>
-              ${dlBadge}
-            </div>
-            <span class="proj-days-label">${metaRight}</span>
-          </div>
+        ${staircaseHtml(g)}
+        <p class="proj-card2-status">${goalStepStatusLine(g)}</p>
+        <p class="proj-card2-hint">${goalMotivation(p.pct)}</p>
+        <div class="proj-card2-bottom">
+          <span class="proj-card2-modepill">${modeLabel}</span>
+          <span class="proj-card2-num">${metaRight}</span>
         </div>
       </div>`;
     });
   }
 
-  el.innerHTML=html;
+  const td=todayStr();
+  let rightHtml=`<div class="proj-col-label">นิสัย</div><div class="habit-panel">`;
+  if(!habitGoals.length){
+    rightHtml+='<p class="empty" style="padding:8px 0;">ยังไม่มีนิสัย</p>';
+  }else{
+    habitGoals.forEach(g=>{
+      const streak=habitStreak(g.id);
+      const days7=habitLast21Days(g.id).slice(-7);
+      const strip=days7.map(d=>`<span class="${d?"on":""}"></span>`).join("");
+      rightHtml+=`<div class="habit-row-item" onclick="openGoalModal(goals.find(g=>g.id==='${g.id}'))">
+        <div class="habit-row-top">
+          <div class="habit-row-name">${goalIconHtml(g,13)} ${esc(g.title)}</div>
+          <span class="habit-row-streak">🔥 ${streak}</span>
+        </div>
+        <div class="habit-row-strip">${strip}</div>
+      </div>`;
+    });
+  }
+  rightHtml+=`</div>`;
+
+  el.innerHTML=`<div class="proj-grid">
+    <div>${leftHtml}</div>
+    <div>${rightHtml}</div>
+  </div>`;
 }
 
 function totalFocusSessions(){
@@ -2835,12 +2872,32 @@ document.getElementById("syncConnectBtn").addEventListener("click",()=>{
   if(ensureFirebaseInit(fc)) showToast("บันทึกค่า Firebase แล้ว กดเข้าสู่ระบบด้วย Google ต่อได้เลย");
 });
 
+function authEnvUnsupported(){
+  const p=(window.location&&window.location.protocol)||"";
+  return !(p==="http:"||p==="https:"||p==="chrome-extension:");
+}
+if(authEnvUnsupported()){
+  const w1=document.getElementById("syncEnvWarning");if(w1)w1.style.display="block";
+  const w2=document.getElementById("loginGateEnvWarning");if(w2)w2.style.display="block";
+}
+function friendlyAuthError(e){
+  const code=e?.code||"";
+  if(code==="auth/operation-not-supported-in-this-environment"||/location\.protocol/.test(e?.message||"")){
+    return "ล็อกอินใช้ไม่ได้ในหน้าพรีวิวนี้ (ต้องเปิดผ่าน http/https จริง) — ลอง Publish/Deploy แอปนี้ไปที่โฮสต์จริงก่อนแล้วค่อยล็อกอิน หรือใช้แบบไม่ล็อกอินไปก่อนได้เลย";
+  }
+  if(code==="auth/popup-blocked")return "เบราว์เซอร์บล็อก popup — อนุญาต popup แล้วลองใหม่";
+  if(code==="auth/wrong-password"||code==="auth/invalid-credential")return "อีเมลหรือรหัสผ่านไม่ถูกต้อง";
+  if(code==="auth/user-not-found")return "ไม่พบบัญชีนี้ — ลองสมัครสมาชิกก่อน";
+  if(code==="auth/email-already-in-use")return "อีเมลนี้มีบัญชีอยู่แล้ว — ลองเข้าสู่ระบบแทน";
+  if(code==="auth/invalid-email")return "รูปแบบอีเมลไม่ถูกต้อง";
+  return e?.message||"เกิดข้อผิดพลาด ลองใหม่อีกครั้ง";
+}
 document.getElementById("googleSignInBtn").addEventListener("click",async()=>{
   if(!ensureFirebaseInit(activeFirebaseConfig())) return;
   try{
     await firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider());
     syncOverlay.classList.remove("show");
-  }catch(e){ showToast("เข้าสู่ระบบไม่สำเร็จ: "+e.message); }
+  }catch(e){ showToast(friendlyAuthError(e)); }
 });
 function showEmailAuthError(msg){const el=document.getElementById("emailAuthError");el.textContent=msg;el.style.display=msg?"block":"none";}
 let emailAuthMode="signin";
@@ -2866,7 +2923,7 @@ document.getElementById("emailAuthSubmitBtn").addEventListener("click",async()=>
     if(emailAuthMode==="signin")await firebase.auth().signInWithEmailAndPassword(email,pass);
     else await firebase.auth().createUserWithEmailAndPassword(email,pass);
     syncOverlay.classList.remove("show");
-  }catch(e){ showEmailAuthError((emailAuthMode==="signin"?"เข้าสู่ระบบไม่สำเร็จ: ":"สมัครสมาชิกไม่สำเร็จ: ")+e.message); }
+  }catch(e){ showEmailAuthError(friendlyAuthError(e)); }
 });
 document.getElementById("syncSignOutBtn").addEventListener("click",async()=>{
   await firebase.auth().signOut();
@@ -2946,7 +3003,7 @@ document.getElementById("loginGateSkipBtn").addEventListener("click",()=>dismiss
 document.getElementById("loginGateGoogleBtn").addEventListener("click",async()=>{
   if(!ensureFirebaseInit(activeFirebaseConfig()))return;
   try{ await firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()); dismissLoginGate(); }
-  catch(e){ showLoginGateError("เข้าสู่ระบบไม่สำเร็จ: "+e.message); }
+  catch(e){ showLoginGateError(friendlyAuthError(e)); }
 });
 document.getElementById("loginGateSubmitBtn").addEventListener("click",async()=>{
   if(!ensureFirebaseInit(activeFirebaseConfig()))return;
@@ -2958,7 +3015,7 @@ document.getElementById("loginGateSubmitBtn").addEventListener("click",async()=>
     if(loginGateMode==="signin")await firebase.auth().signInWithEmailAndPassword(email,pass);
     else await firebase.auth().createUserWithEmailAndPassword(email,pass);
     dismissLoginGate();
-  }catch(e){ showLoginGateError((loginGateMode==="signin"?"เข้าสู่ระบบไม่สำเร็จ: ":"สมัครสมาชิกไม่สำเร็จ: ")+e.message); }
+  }catch(e){ showLoginGateError(friendlyAuthError(e)); }
 });
 ensureFirebaseInit(activeFirebaseConfig());
 </script>
@@ -2968,6 +3025,7 @@ ensureFirebaseInit(activeFirebaseConfig());
     <svg width="56" height="56" viewBox="0 0 56 56" style="margin:0 auto 18px;display:block;"><path d="M8 40 Q 16 16 28 28 Q 40 40 48 16" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/><circle cx="48" cy="16" r="7" fill="var(--focus)"/></svg>
     <h1 style="font-size:26px;font-weight:800;margin:0 0 10px;color:var(--ink);">ยินดีต้อนรับสู่ FlowMate</h1>
     <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 26px;">เข้าสู่ระบบเพื่อซิงค์ time block เป้าหมาย<br>และตัวละครของคุณข้ามอุปกรณ์</p>
+    <p id="loginGateEnvWarning" style="display:none;text-align:left;font-size:11.5px;color:var(--rest);background:var(--rest-soft);border-radius:10px;padding:8px 12px;margin:0 0 16px;line-height:1.5;">⚠️ หน้าพรีวิวนี้ยังล็อกอินไม่ได้ (ต้องเปิดผ่าน http/https จริง) — Publish/Deploy แอปก่อนแล้วค่อยล็อกอิน หรือกด "ข้ามไปก่อน" ด้านล่างได้เลย</p>
     <button id="loginGateGoogleBtn" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--card);color:var(--ink);border:0.5px solid var(--line);border-radius:12px;padding:13px 16px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:18px;">
       <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62Z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.97 10.72A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.18.29-1.72V4.95H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.05l3.01-2.33Z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58Z"/></svg>
       เข้าสู่ระบบด้วย Google
