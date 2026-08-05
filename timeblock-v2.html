@@ -310,6 +310,17 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .gallery-popup-close{width:28px;height:28px;border-radius:50%;background:var(--paper);border:none;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--ink-soft);cursor:pointer;flex-shrink:0;}
 .gallery-popup-sub{font-size:12px;color:var(--ink-muted);margin:0 0 18px;}
 .gallery-popup-footer{display:flex;gap:10px;margin-top:4px;}
+.confirm-popup-backdrop{position:fixed;inset:0;background:rgba(20,20,18,.45);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;z-index:200;padding:20px;opacity:0;pointer-events:none;transition:opacity .15s;}
+.confirm-popup-backdrop.show{opacity:1;pointer-events:auto;}
+.confirm-popup{width:100%;max-width:340px;background:var(--card);border-radius:20px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.25);transform:scale(.96);transition:transform .15s;}
+.confirm-popup-backdrop.show .confirm-popup{transform:scale(1);}
+.confirm-popup-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px;}
+.confirm-popup-title{font-size:15px;font-weight:700;color:var(--ink);margin:0 0 6px;}
+.confirm-popup-msg{font-size:12.5px;color:#9299A3;line-height:1.5;margin:0 0 20px;}
+.confirm-popup-actions{display:flex;gap:10px;}
+.confirm-popup-btn{flex:1;border-radius:12px;padding:12px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;border:none;}
+.confirm-popup-btn-cancel{background:var(--card);color:var(--ink);border:1px solid #EFEFEC;}
+.confirm-popup-btn-confirm{color:#fff;}
 
 /* Desktop: give the calendar more breathing room */
 @media (min-width: 900px){
@@ -1019,6 +1030,36 @@ function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt
 function pick(arr){return arr[Math.floor(Math.random()*arr.length)];}
 function showToast(msg){const el=document.getElementById("ttsToast");el.textContent=msg;el.style.display="block";clearTimeout(el._t);el._t=setTimeout(()=>el.style.display="none",4500);}
 
+// CONFIRM POPUP — reusable styled replacement for native confirm()
+const CONFIRM_VARIANTS={
+  destructive:{iconBg:"#FCEBEB",icon:"🗑️",confirmBg:"#D64545"},
+  neutral:{iconBg:"#E9F3EC",icon:"📥",confirmBg:"#1A1D21"},
+};
+function showConfirmPopup({title,message,variant="neutral",confirmLabel="ยืนยัน",cancelLabel="ยกเลิก",onConfirm}){
+  const v=CONFIRM_VARIANTS[variant]||CONFIRM_VARIANTS.neutral;
+  const backdrop=document.createElement("div");
+  backdrop.className="confirm-popup-backdrop";
+  backdrop.innerHTML=`<div class="confirm-popup">
+    <div class="confirm-popup-icon" style="background:${v.iconBg}">${v.icon}</div>
+    <p class="confirm-popup-title">${esc(title||"")}</p>
+    ${message?`<p class="confirm-popup-msg">${esc(message)}</p>`:'<div style="margin-bottom:20px"></div>'}
+    <div class="confirm-popup-actions">
+      <button type="button" class="confirm-popup-btn confirm-popup-btn-cancel" data-act="cancel">${esc(cancelLabel)}</button>
+      <button type="button" class="confirm-popup-btn confirm-popup-btn-confirm" data-act="confirm" style="background:${v.confirmBg}">${esc(confirmLabel)}</button>
+    </div>
+  </div>`;
+  document.body.appendChild(backdrop);
+  return new Promise(resolve=>{
+    function close(result){backdrop.classList.remove("show");setTimeout(()=>backdrop.remove(),150);resolve(result);if(result&&onConfirm)onConfirm();}
+    backdrop.addEventListener("click",e=>{
+      if(e.target===backdrop){close(false);return;}
+      const btn=e.target.closest("[data-act]");if(!btn)return;
+      close(btn.dataset.act==="confirm");
+    });
+    requestAnimationFrame(()=>backdrop.classList.add("show"));
+  });
+}
+
 // PERSISTENCE
 function saveState(){try{localStorage.setItem(SK,JSON.stringify({blocks,goals,timerState,prevActiveId,stats}));}catch(e){}queueCloudPush();}
 function loadState(){try{const r=localStorage.getItem(SK);if(!r)return false;const d=JSON.parse(r);if(Array.isArray(d.blocks)&&d.blocks.length){blocks=d.blocks;blocks.forEach(b=>{if(!b.date)b.date=todayStr();});if(Array.isArray(d.goals))goals=d.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;});if(d.timerState)Object.assign(timerState,d.timerState);if(d.prevActiveId)prevActiveId=d.prevActiveId;if(d.stats?.byDate)stats=d.stats;return true;}}catch(e){}return false;}
@@ -1557,7 +1598,9 @@ document.getElementById("blocksList").addEventListener("click",e=>{
   const btn=e.target.closest("[data-action]");if(!btn)return;
   const id=btn.dataset.id,action=btn.dataset.action,block=blocks.find(b=>b.id===id);
   if(action==="edit")openModal(block);
-  if(action==="delete"&&confirm(`ลบ "${block.title}" ใช่ไหม?`)){blocks=blocks.filter(b=>b.id!==id);delete timerState[id];saveState();renderAll();}
+  if(action==="delete"){
+    showConfirmPopup({title:`ลบ "${block.title}" ใช่ไหม?`,message:"ลบแล้วกู้คืนไม่ได้ — time block และประวัติที่เกี่ยวข้องจะหายไปด้วย",variant:"destructive",confirmLabel:"ลบเลย",onConfirm:()=>{blocks=blocks.filter(b=>b.id!==id);delete timerState[id];saveState();renderAll();}});
+  }
   if(action==="pomo-pause"){togglePomoPause();renderToday();}
   if(action==="pomo-skip"){skipPomoPhase();renderToday();}
   if(action==="pomo-full"){
@@ -2022,10 +2065,10 @@ document.getElementById("cancelBtn").addEventListener("click",()=>blockOverlay.c
 document.getElementById("deleteBtnInModal").addEventListener("click",()=>{
   if(!editingId)return;
   const b=blocks.find(b=>b.id===editingId);if(!b)return;
-  if(confirm(`ลบ "${b.title}" ใช่ไหม?`)){
+  showConfirmPopup({title:`ลบ "${b.title}" ใช่ไหม?`,message:"ลบแล้วกู้คืนไม่ได้ — time block และประวัติที่เกี่ยวข้องจะหายไปด้วย",variant:"destructive",confirmLabel:"ลบเลย",onConfirm:()=>{
     blocks=blocks.filter(b=>b.id!==editingId);delete timerState[editingId];
     saveState();blockOverlay.classList.remove("show");renderAll();
-  }
+  }});
 });
 const repeatEnabledEl=document.getElementById("f_repeatEnabled");
 if(repeatEnabledEl) repeatEnabledEl.addEventListener("change",e=>{document.getElementById("repeatOptions").style.display=e.target.checked?"block":"none";});
@@ -2244,7 +2287,11 @@ document.getElementById("goalSaveBtn").addEventListener("click",()=>{
   saveState();goalOverlay.classList.remove("show");
   renderAll();
 });
-document.getElementById("goalDeleteBtn").addEventListener("click",()=>{if(!confirm("ลบโปรเจกต์นี้ใช่ไหม?"))return;goals=goals.filter(g=>g.id!==editingGoalId);blocks.forEach(b=>{if(b.goalId===editingGoalId)b.goalId="";});saveState();goalOverlay.classList.remove("show");renderAll();});
+document.getElementById("goalDeleteBtn").addEventListener("click",()=>{
+  showConfirmPopup({title:"ลบโปรเจกต์นี้ใช่ไหม?",message:"ลบแล้วกู้คืนไม่ได้ — milestone และ time block ที่ผูกไว้กับโปรเจกต์นี้จะหายไปด้วย",variant:"destructive",confirmLabel:"ลบเลย",onConfirm:()=>{
+    goals=goals.filter(g=>g.id!==editingGoalId);blocks.forEach(b=>{if(b.goalId===editingGoalId)b.goalId="";});saveState();goalOverlay.classList.remove("show");renderAll();
+  }});
+});
 
 // HABIT SYSTEM — auto-generate today's block from habit goals + streak calc
 function habitAppliesToDate(goal,dateStr){
@@ -2446,7 +2493,11 @@ document.getElementById("profileCharGrid").addEventListener("click",e=>{const b=
 document.getElementById("styleCloseBtn").addEventListener("click",()=>styleOverlay.classList.remove("show"));
 
 // SETTINGS MISC
-document.getElementById("resetDataBtn").addEventListener("click",()=>{if(!confirm("ล้างข้อมูลทั้งหมดใช่ไหม?"))return;blocks=[];goals=[];Object.keys(timerState).forEach(k=>delete timerState[k]);stats={byDate:{}};saveState();renderAll();});
+document.getElementById("resetDataBtn").addEventListener("click",()=>{
+  showConfirmPopup({title:"ล้างข้อมูลทั้งหมดใช่ไหม?",message:"ข้อมูลทั้งหมดจะหายถาวร ไม่สามารถกู้คืนได้ — time block, เป้าหมาย, และประวัติทั้งหมดจะถูกลบ",variant:"destructive",confirmLabel:"ล้างข้อมูลเลย",onConfirm:()=>{
+    blocks=[];goals=[];Object.keys(timerState).forEach(k=>delete timerState[k]);stats={byDate:{}};saveState();renderAll();
+  }});
+});
 
 // PROJECTS TAB — ดึงข้อมูลจาก goals ตรงๆ ไม่มี projects array แยก
 function weekDates(){const td=todayStr();const dow=new Date(td+"T00:00:00").getDay();const sun=addDays(td,-dow);return Array.from({length:7},(_,i)=>addDays(sun,i));}
@@ -2756,15 +2807,16 @@ document.getElementById("importConfirmBtn").addEventListener("click",()=>{
   if(parsed.error){alert("❌ "+parsed.error);return;}
   if(!parsed.projects.length&&!parsed.goals.length&&!parsed.blocks.length){alert("ไม่มีข้อมูลใหม่ที่จะเพิ่ม");return;}
   const total=parsed.projects.length+parsed.goals.length+parsed.blocks.length;
-  if(!confirm(`จะเพิ่มข้อมูล ${total} รายการเข้าแอป ข้อมูลเดิมจะไม่ถูกแตะต้อง ยืนยันไหม?`))return;
-  const ok=applyImport(parsed);
-  if(ok){
-    document.getElementById("importOverlay").classList.remove("show");
-    document.getElementById("importJson").value="";
-    document.getElementById("importFile").value="";
-    document.getElementById("importPreview").style.display="none";
-    showToast(`✅ Import สำเร็จ! เพิ่ม ${total} รายการ`);
-  }
+  showConfirmPopup({title:`เพิ่มข้อมูล ${total} รายการ?`,message:"ข้อมูลเดิมในแอปจะไม่ถูกแตะต้อง — รายการใหม่จะถูกเพิ่มเข้าไปเท่านั้น",variant:"neutral",confirmLabel:"ยืนยัน",onConfirm:()=>{
+    const ok=applyImport(parsed);
+    if(ok){
+      document.getElementById("importOverlay").classList.remove("show");
+      document.getElementById("importJson").value="";
+      document.getElementById("importFile").value="";
+      document.getElementById("importPreview").style.display="none";
+      showToast(`✅ Import สำเร็จ! เพิ่ม ${total} รายการ`);
+    }
+  }});
 });
 
 document.getElementById("importCancelBtn").addEventListener("click",()=>{
