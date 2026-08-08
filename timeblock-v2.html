@@ -13,6 +13,8 @@
 html[data-theme="dark"]{--ink:#EDEDE9;--ink-soft:#B7BEC4;--ink-muted:#9BA1A8;--paper:#1A1C1F;--card:#1F2226;--line:#2C2F34;--line-strong:#3A3F45;--focus:#4A9B78;--focus-soft:#1F2A25;--focus-border:#4A9B7844;--rest:#E08C2B;--rest-soft:#3A2D18;--danger:#E05C5C;--bg-page:#15171A;--icon-filter:invert(1) brightness(1.5);--staircase-undone:#3A3F45;}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{margin:0;background:var(--bg-page);font-family:-apple-system,"Segoe UI","Noto Sans Thai",system-ui,sans-serif;color:var(--ink);padding-bottom:calc(var(--tab-h) + env(safe-area-inset-bottom));transition:background .2s,color .2s;}
+button{transition:opacity .1s ease-out;}
+button:active{opacity:.8;}
 .page{display:none;max-width:440px;margin:0 auto;padding:16px 16px 8px;}
 .page.active{display:block;}
 .tab-bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:0.5px solid var(--line);display:flex;z-index:40;height:var(--tab-h);padding-bottom:env(safe-area-inset-bottom);}
@@ -65,6 +67,8 @@ body{margin:0;background:var(--bg-page);font-family:-apple-system,"Segoe UI","No
 .card2-badge-continues{background:var(--paper);color:var(--ink-soft);}
 .card2-pomo-compact{display:flex;align-items:center;gap:10px;margin-top:11px;padding-top:11px;border-top:0.5px solid var(--focus-border);cursor:pointer;}
 .card2-pomo-ring-sm{position:relative;width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+#pomoFullRing{transition:stroke-dashoffset 1s linear,stroke .25s ease;}
+.card2-pomo-ring-sm svg circle{transition:stroke-dashoffset 1s linear;}
 .card2-pomo-time-lg{font-family:ui-monospace,monospace;font-size:16px;font-weight:600;}
 .card2-pomo-label{font-size:13px;color:var(--ink-soft);}
 .card2-start-focus{margin-top:11px;padding-top:11px;border-top:0.5px solid var(--focus-border);display:flex;justify-content:center;}
@@ -112,9 +116,10 @@ body{margin:0;background:var(--bg-page);font-family:-apple-system,"Segoe UI","No
 .toggle-wrap input:checked~.toggle-track{background:var(--focus);}
 .toggle-thumb{position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .2s;pointer-events:none;}
 .toggle-wrap input:checked~.toggle-track .toggle-thumb{transform:translateX(18px);}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:50;padding:20px;}
-.overlay.show{display:flex;}
-.modal{width:100%;max-width:440px;background:var(--card);border-radius:20px;display:flex;flex-direction:column;max-height:85dvh;}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:20px;opacity:0;pointer-events:none;transition:opacity .18s ease-in;}
+.overlay.show{opacity:1;pointer-events:auto;transition:opacity .25s ease-out;}
+.modal{width:100%;max-width:440px;background:var(--card);border-radius:20px;display:flex;flex-direction:column;max-height:85dvh;transform:translateY(28px);transition:transform .18s ease-in;}
+.overlay.show .modal{transform:translateY(0);transition:transform .25s ease-out;}
 .modal-handle{display:none;}
 .modal-head{padding:12px 18px 10px;border-bottom:0.5px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
 .modal-head h2{font-size:15px;font-weight:600;margin:0;}
@@ -252,9 +257,10 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .seg-mini-btn{border:none;background:none;font-size:10px;padding:3px 8px;border-radius:6px;cursor:pointer;color:var(--ink-soft);}
 .seg-mini-active{background:var(--card);color:var(--ink);font-weight:500;}
 .light-week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
-.light-day{background:var(--card);border:0.5px solid var(--line);border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;position:relative;}
+.light-day{background:var(--card);border:1.5px solid transparent;border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;position:relative;}
+.light-day.is-selected{border-color:var(--line-strong);}
 .light-day-pending{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--rest);}
-.light-day-count{font-size:10px;color:var(--ink-soft);margin:0;}
+.light-day-dot{width:5px;height:5px;border-radius:50%;background:var(--focus);margin:0 auto;}
 .light-day.is-today{border:1.5px solid var(--focus);}
 .light-day-name{font-size:10px;color:var(--ink-muted);margin:0 0 3px;}
 .light-day.is-today .light-day-name{color:var(--focus);font-weight:600;}
@@ -265,11 +271,15 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .light-day-dots{display:flex;gap:2px;justify-content:center;flex-wrap:wrap;min-height:6px;}
 .light-day-dots span{width:5px;height:5px;border-radius:50%;}
 .light-day-empty{opacity:.4;}
+.light-week-agenda-title{font-size:14px;font-weight:600;color:var(--ink);margin:16px 0 10px;}
+.light-week-agenda-row{background:var(--card);border:0.5px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--ink);cursor:pointer;}
+.light-week-agenda-time{font-family:ui-monospace,monospace;color:var(--ink-soft);font-size:12px;flex-shrink:0;margin-left:10px;}
+.light-week-agenda-empty{font-size:12px;color:var(--ink-muted);padding:4px 2px;}
 /* ── Project Progress Dashboard ── */
 .proj-dash{padding:4px 0 12px;}
 .progress-banner{background:linear-gradient(135deg,#1F6F5C,#164F42);border-radius:18px;padding:16px 18px;margin-bottom:16px;color:#fff;font-size:14px;font-weight:600;}
 .proj-summary-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
-@keyframes streakPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.82;transform:scale(1.04);}}
+@keyframes streakPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
 .streak-pulse{display:inline-block;animation:streakPulse 1.6s ease-in-out infinite;}
 .proj-mini-stats-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
 .proj-mini-stat{background:var(--card);border-radius:14px;padding:12px;text-align:center;}
@@ -297,6 +307,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .proj-win-sub{font-size:11px;color:var(--focus);margin:0;opacity:.8;}
 .proj-edit-modal-body .field{margin-bottom:10px;}
 .proj-grid{display:grid;grid-template-columns:3fr 1fr;gap:16px;}
+.proj-top-btn-row{display:grid;grid-template-columns:1.6fr 1fr;gap:10px;margin-bottom:16px;}
 .proj-col-label{font-size:11px;font-weight:700;color:var(--ink-soft);letter-spacing:0.4px;margin:0 0 10px;}
 .proj-card2{background:var(--card);border-radius:16px;padding:18px 20px;margin-bottom:12px;cursor:pointer;transition:opacity .2s;}
 .proj-card2.proj-dimmed{opacity:.5;}
@@ -308,14 +319,12 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .proj-card2-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
 .proj-card2-modepill{background:var(--focus-soft);color:#4C9A7A;font-size:11px;padding:4px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:3px;flex-shrink:0;}
 .proj-card2-num{font-size:11px;color:var(--ink-muted);}
-.habit-panel{background:var(--card);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:14px;height:100%;}
-.habit-row-item+.habit-row-item{border-top:0.5px solid var(--line);padding-top:14px;}
-.habit-row-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;gap:6px;}
-.habit-row-name{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ink);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.habit-row-streak{font-size:10px;font-weight:700;color:var(--rest);display:flex;align-items:center;gap:2px;flex-shrink:0;cursor:pointer;}
-.habit-row-strip{display:flex;gap:3px;}
-.habit-row-strip span{flex:1;height:5px;border-radius:3px;background:var(--line);}
-.habit-row-strip span.on{background:#4C9A7A;}
+.habit-panel{display:flex;flex-direction:column;gap:8px;}
+.habit-box-card{background:var(--card);border:0.5px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center;cursor:pointer;}
+.habit-box-ring{width:32px;height:32px;border-radius:50%;border:2px solid var(--line-strong);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;}
+.habit-box-ring.is-done-today{border-color:var(--focus);background:var(--focus-soft);color:var(--focus);}
+.habit-box-name{font-size:11px;color:var(--ink);margin:0 0 4px;line-height:1.3;}
+.habit-box-streak{font-size:11px;font-weight:700;color:var(--focus);}
 .gallery-popup-backdrop{position:fixed;inset:0;background:rgba(20,20,18,.45);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:70;padding:20px;}
 .gallery-popup-backdrop.show{display:flex;}
 .gallery-popup{width:100%;max-width:480px;max-height:80vh;overflow-y:auto;background:var(--card);border-radius:20px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.25);}
@@ -343,8 +352,11 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .journal-note{width:100%;border:0.5px solid var(--line);border-radius:10px;padding:9px 11px;font-size:12.5px;font-family:inherit;color:var(--ink);background:var(--paper);resize:vertical;min-height:52px;}
 .journal-saved-hint{font-size:10.5px;color:var(--ink-muted);margin:6px 0 0;text-align:right;opacity:0;transition:opacity .3s;}
 .journal-saved-hint.show{opacity:1;}
-.mood-strip{display:flex;gap:3px;}
-.mood-strip span{flex:1;height:20px;border-radius:4px;background:var(--line);display:flex;align-items:center;justify-content:center;font-size:11px;}
+.mood-strip{display:flex;align-items:flex-end;gap:3px;height:48px;background:var(--card);border:0.5px solid var(--line);border-radius:12px;padding:10px 8px;}
+.mood-strip span{flex:1;border-radius:3px;background:var(--line);min-height:4px;}
+.habit-grid-21{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:8px;max-width:130px;}
+.habit-grid-21 span{aspect-ratio:1;border-radius:3px;background:var(--line);}
+.habit-grid-21 span.on{background:var(--focus);}
 .expense-total-hero{background:var(--card);border-radius:16px;padding:16px;margin-bottom:16px;text-align:center;}
 .expense-total-hero-lbl{font-size:12px;color:var(--ink-soft);margin:0;}
 .expense-total-hero-val{font-family:ui-monospace,monospace;font-size:26px;font-weight:700;color:var(--ink);margin:4px 0 0;}
@@ -425,7 +437,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
   .plan-view-tabs .plan-view-tab,.tab-btn span{font-size:11px;}
   .mode-grid button{font-size:11px;padding:8px 2px;}
   .proj-grid{gap:10px;}
-  .habit-panel{padding:12px;}
+  .habit-box-card{padding:10px 6px;}
   .journal-mood-btn{font-size:17px;padding:7px 0;}
 }
 </style>
@@ -434,7 +446,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 
 <!-- PAGE: Today -->
 <div class="page active" id="page-today">
-  <div class="app-head"><div style="display:flex;align-items:center;gap:7px;"><svg width="20" height="20" viewBox="0 0 56 56" style="flex-shrink:0"><path d="M8 40 Q 16 16 28 28 Q 40 40 48 16" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/><circle cx="48" cy="16" r="7" fill="var(--focus)"/></svg><h1>time block</h1></div><div style="display:flex;align-items:center;gap:10px;"><span class="clock" id="clockNow">--:--:--</span><button id="openProfileBtn" style="width:28px;height:28px;border-radius:50%;border:0.5px solid var(--line);background:var(--paper);padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></button></div></div>
+  <div class="app-head"><div style="display:flex;align-items:center;gap:7px;"><svg width="20" height="20" viewBox="0 0 56 56" style="flex-shrink:0"><path d="M8 40 Q 16 16 28 28 Q 40 40 48 16" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/><circle cx="48" cy="16" r="7" fill="var(--focus)"/></svg><h1>วันนี้</h1></div><div style="display:flex;align-items:center;gap:10px;"><span class="clock" id="clockNow">--:--:--</span><button id="openProfileBtn" style="width:28px;height:28px;border-radius:50%;border:0.5px solid var(--line);background:var(--paper);padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></button></div></div>
   <div class="day-nav">
     <button class="day-nav-btn" id="prevDayBtn">‹</button>
     <span class="day-nav-label" id="dateLabel">วันนี้</span>
@@ -491,6 +503,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
         <span class="event-legend-item"><span class="event-diamond"></span>เหตุการณ์สำคัญ</span>
       </div>
       <div id="lightWeekGrid" class="light-week-grid"></div>
+      <div id="lightWeekAgenda"></div>
       <div id="timelineWeekWrap" style="display:none;overflow-y:auto;max-height:calc(100dvh - 320px);-webkit-overflow-scrolling:touch;">
         <div id="timelineWeekGrid"></div>
       </div>
@@ -746,12 +759,11 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 <!-- PAGE: Goals -->
 <div class="page" id="page-projects">
   <div class="app-head"><h1>เป้าหมาย</h1><span class="clock" id="clockNow3"></span></div>
-  <p class="section-label" style="margin-top:0">ความคืบหน้าเป้าหมาย</p>
-  <div class="proj-dash" id="projDash"></div>
-  <div class="proj-grid" style="margin-top:16px;">
+  <div class="proj-top-btn-row">
     <button class="add-btn" id="openProjAddBtn" style="margin-bottom:0;">+ เพิ่มเป้าหมาย</button>
-    <button class="btn-secondary" id="openHabitGalleryBtn" style="white-space:nowrap;">🎓 Habit Gallery</button>
+    <button class="btn-secondary" id="openHabitGalleryBtn" style="white-space:nowrap;">Habit Gallery</button>
   </div>
+  <div class="proj-dash" id="projDash"></div>
 </div>
 
 <!-- HABIT GALLERY POPUP -->
@@ -1140,6 +1152,14 @@ let sharedAudioCtx=null;
 function getAudioCtx(){if(!sharedAudioCtx)sharedAudioCtx=new(window.AudioContext||window.webkitAudioContext)();return sharedAudioCtx;}
 function primeAudio(){try{getAudioCtx().resume();}catch(e){}}
 document.addEventListener("click",primeAudio,{capture:true});
+
+// micro-interaction: one-off scale bounce on the checkbox, triggered imperatively at click time
+// (a CSS class-based animation would replay every second since renderToday() rebuilds the block list on each tick)
+function bounceCheckButton(blockId){
+  const el=document.querySelector(`.circle-check[data-id="${blockId}"]`);
+  if(!el||!el.animate)return;
+  el.animate([{transform:"scale(0.9)"},{transform:"scale(1.05)"},{transform:"scale(1)"}],{duration:200,easing:"ease-out"});
+}
 
 async function playBeep(){
   try{
@@ -1767,7 +1787,10 @@ document.getElementById("blocksList").addEventListener("click",e=>{
       const g=goals.find(x=>x.id===block.goalId);
       const isCount=g&&(g.mode||(g.targetHours>0?"time":"project"))==="count";
       if(isCount){ openCountConfirmModal(block,g); }
-      else { block.completed=true; saveState(); renderToday(); }
+      else {
+        block.completed=true; saveState(); renderToday();
+        bounceCheckButton(block.id);
+      }
     }
   }
   if(action==="mark-notdone"){
@@ -1994,22 +2017,36 @@ document.getElementById("lightYearGrid").addEventListener("click",e=>{
   if(mb){ planDate=mb.dataset.yrMonth; setPlanViewMode("mo"); }
 });
 
+let selectedWeekDate="";
 function renderLightWeek(ws){
   const days=[0,1,2,3,4,5,6].map(i=>addDays(ws,i)), today=todayStr();
   const dayNames=["อา","จ","อ","พ","พฤ","ศ","ส"];
+  if(!selectedWeekDate||!days.includes(selectedWeekDate))selectedWeekDate=days.includes(today)?today:days[0];
   document.getElementById("lightWeekGrid").innerHTML=days.map((d,i)=>{
     const dayBlocks=blocks.filter(b=>b.date===d);
-    const isToday=d===today;
+    const isToday=d===today,isSelected=d===selectedWeekDate;
     const hasPending=d<today&&dayBlocks.some(b=>b.completed!==true&&b.completed!==false);
     const pendingDot=hasPending?`<span class="light-day-pending"></span>`:"";
-    if(!dayBlocks.length){
-      return`<div class="light-day light-day-empty ${isToday?"is-today":""}" data-date="${d}">${pendingDot}<p class="light-day-name">${dayNames[i]}</p><p class="light-day-num">${new Date(d+"T00:00:00").getDate()}</p></div>`;
-    }
-    const totalMin=dayBlocks.reduce((s,b)=>s+(toMinutes(b.end)-toMinutes(b.start)),0);
-    const busyPct=Math.min(100,Math.round(totalMin/(12*60)*100));
-    const barColor=dayBlocks.length?goalColor(dayBlocks[0].goalId):"#9BA0A6";
-    return`<div class="light-day ${isToday?"is-today":""}" data-date="${d}">${pendingDot}<p class="light-day-name">${dayNames[i]}</p><p class="light-day-num">${new Date(d+"T00:00:00").getDate()}</p><div class="light-day-bar"><div class="light-day-bar-fill" style="width:${busyPct}%;background:${barColor}"></div></div><p class="light-day-count">${dayBlocks.length} งาน</p></div>`;
+    const dot=dayBlocks.length?`<span class="light-day-dot"></span>`:"";
+    return`<div class="light-day ${isToday?"is-today":""} ${isSelected?"is-selected":""}" data-date="${d}">${pendingDot}<p class="light-day-name">${dayNames[i]}</p><p class="light-day-num">${new Date(d+"T00:00:00").getDate()}</p>${dot}</div>`;
   }).join("");
+  renderLightWeekAgenda();
+}
+function renderLightWeekAgenda(){
+  const el=document.getElementById("lightWeekAgenda");
+  if(!el||!selectedWeekDate)return;
+  const d=new Date(selectedWeekDate+"T00:00:00");
+  const dayBlocks=blocks.filter(b=>b.date===selectedWeekDate).sort((a,b)=>toMinutes(a.start)-toMinutes(b.start));
+  const label=d.toLocaleDateString("th-TH",{weekday:"long"});
+  let html=`<p class="light-week-agenda-title">${label} — ${dayBlocks.length} กิจกรรม</p>`;
+  if(!dayBlocks.length){
+    html+=`<p class="light-week-agenda-empty">ไม่มีงานวันนี้</p>`;
+  }else{
+    dayBlocks.forEach(b=>{
+      html+=`<div class="light-week-agenda-row" data-id="${b.id}"><span>${esc(b.title)}</span><span class="light-week-agenda-time">${b.start}</span></div>`;
+    });
+  }
+  el.innerHTML=html;
 }
 
 // ── Timeline week view: pixel-positioned blocks with drag-to-move / drag-to-resize ──
@@ -2135,7 +2172,15 @@ document.getElementById("timelineWeekGrid").addEventListener("click",e=>{
 
 document.getElementById("lightWeekGrid").addEventListener("click",e=>{
   const cell=e.target.closest("[data-date]");
-  if(cell) openDayModal(cell.dataset.date);
+  if(!cell)return;
+  selectedWeekDate=cell.dataset.date;
+  renderLightWeek(startOfWeek(selectedWeekDate));
+});
+document.getElementById("lightWeekAgenda").addEventListener("click",e=>{
+  const row=e.target.closest("[data-id]");
+  if(!row)return;
+  const b=blocks.find(x=>x.id===row.dataset.id);
+  if(b)openModal(b);
 });
 
 let dayModalDate="";
@@ -2842,14 +2887,11 @@ function renderProjects(){
   }else{
     habitGoals.forEach(g=>{
       const streak=habitStreak(g.id);
-      const days7=habitLast21Days(g.id).slice(-7);
-      const strip=days7.map(d=>`<span class="${d?"on":""}"></span>`).join("");
-      rightHtml+=`<div class="habit-row-item" onclick="openGoalModal(goals.find(g=>g.id==='${g.id}'))">
-        <div class="habit-row-top">
-          <div class="habit-row-name">${goalIconHtml(g,13)} ${esc(g.title)}</div>
-          <span class="habit-row-streak">🔥 ${streak}</span>
-        </div>
-        <div class="habit-row-strip">${strip}</div>
+      const doneToday=blocks.some(b=>b.goalId===g.id&&b.date===td&&b.completed===true);
+      rightHtml+=`<div class="habit-box-card" onclick="openGoalModal(goals.find(g=>g.id==='${g.id}'))">
+        <div class="habit-box-ring${doneToday?" is-done-today":""}">${doneToday?"✓":""}</div>
+        <p class="habit-box-name">${esc(g.title)}</p>
+        <p class="habit-box-streak">${streak}วัน</p>
       </div>`;
     });
   }
@@ -2926,14 +2968,14 @@ function progressHabitHtml(){
     const streak=habitStreak(g.id);
     const days21=habitLast21Days(g.id);
     const doneToday=blocks.some(b=>b.goalId===g.id&&b.date===td&&b.completed===true);
-    const grid=days21.map(d=>`<span style="width:10px;height:10px;border-radius:3px;display:inline-block;background:${d?"var(--focus)":"var(--line)"}"></span>`).join("");
+    const grid=days21.map(d=>`<span class="${d?"on":""}"></span>`).join("");
     html+=`<div class="goal-card" style="margin-bottom:8px;">
       <div class="goal-card-top">
         <div class="goal-card-title">${goalIconHtml(g,16)} ${esc(g.title)}</div>
         <button type="button" class="circle-btn circle-check${doneToday?" is-done":""}" onclick="toggleHabitToday('${g.id}')" style="width:30px;height:30px;">${doneToday?"✓":""}</button>
       </div>
       <div class="goal-meta">🔥 streak ${streak} วัน</div>
-      <div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:8px;">${grid}</div>
+      <div class="habit-grid-21">${grid}</div>
     </div>`;
   });
   return html;
@@ -2948,7 +2990,9 @@ function progressMindHtml(){
     html+=`<p class="section-label" style="margin-top:0">อารมณ์ 14 วันล่าสุด</p><div class="mood-strip" style="margin-bottom:14px;">`;
     last14.forEach(d=>{
       const m=journal[d]?.mood;
-      html+=`<span title="${d}" style="background:${m?"var(--focus-soft)":"var(--line)"}">${m?moodEmoji[m]:""}</span>`;
+      const h=m?Math.max(8,Math.round(m/5*38)):4;
+      const color=m?(m>=4?"var(--focus)":m===3?"var(--rest)":"var(--danger)"):"var(--line)";
+      html+=`<span title="${d}: ${m?moodEmoji[m]:"ไม่มีข้อมูล"}" style="height:${h}px;background:${color};"></span>`;
     });
     html+="</div>";
   }else{
