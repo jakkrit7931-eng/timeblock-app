@@ -148,6 +148,23 @@ body{margin:0;background:var(--bg-page);font-family:-apple-system,"Segoe UI","No
 .speech-bubble.show{opacity:1;transform:translateY(0);}
 .mascot-eyebrow{font-size:10px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin:0 0 5px;}
 .mascot-msg{font-size:14px;font-weight:500;margin:0 0 10px;line-height:1.5;}
+.mf-card{background:var(--card);border:0.5px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px;}
+.mf-idle{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.mf-idle-text p{margin:0;font-size:14px;font-weight:600;}
+.mf-idle-text small{color:var(--ink-soft);font-size:12px;}
+.mf-start-btn{background:var(--focus-soft);color:var(--focus);border:none;border-radius:20px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.mf-run{text-align:center;}
+.mf-run-label{font-size:14px;font-weight:600;margin-bottom:2px;}
+.mf-run-sub{font-size:12px;color:var(--ink-soft);margin-bottom:14px;}
+.mf-ring-wrap{position:relative;width:120px;height:120px;margin:0 auto 14px;}
+.mf-ring-time{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:22px;font-weight:700;}
+.mf-stop-btn{width:100%;background:transparent;border:0.5px solid var(--line-strong);border-radius:10px;padding:11px;font-size:13px;font-weight:600;color:var(--ink-soft);cursor:pointer;margin-bottom:16px;}
+.mf-suggest-label{font-size:13px;font-weight:600;text-align:left;margin-bottom:8px;}
+.mf-suggest-row{display:flex;align-items:center;gap:10px;background:var(--paper);border-radius:14px;padding:11px 12px;margin-bottom:6px;text-align:left;}
+.mf-suggest-row svg{color:var(--focus);flex-shrink:0;}
+.mf-suggest-row span{font-size:13px;}
+.mf-done{display:flex;align-items:center;gap:10px;}
+.mf-done-icon{width:32px;height:32px;border-radius:50%;background:var(--focus);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .mascot-actions{display:flex;gap:7px;}
 .mascot-actions button{flex:1;border-radius:10px;padding:7px;font-size:12px;cursor:pointer;}
 .sprite-wrap{position:relative;width:168px;height:226px;}
@@ -255,20 +272,26 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 @keyframes streakPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.82;transform:scale(1.04);}}
 .streak-pulse{display:inline-block;animation:streakPulse 1.6s ease-in-out infinite;}
 .proj-mini-stats-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
-.proj-mini-stat{background:var(--paper);border-radius:14px;padding:12px;text-align:center;}
+.proj-mini-stat{background:var(--card);border-radius:14px;padding:12px;text-align:center;}
 .proj-mini-stat-lbl{font-size:11px;color:var(--ink-soft);display:block;margin-bottom:2px;}
 .proj-mini-stat-val{font-family:ui-monospace,monospace;font-size:18px;font-weight:700;color:var(--ink);}
 .proj-sum-box{background:var(--card);border:0.5px solid var(--line);border-radius:12px;padding:10px 12px;text-align:center;}
 .proj-sum-box-highlight{background:var(--focus-soft);border-color:var(--focus-border);}
 .proj-sum-val{font-size:20px;font-weight:600;display:block;}
 .proj-sum-lbl{font-size:11px;color:var(--ink-soft);}
-.proj-week-dots{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:16px;}
-.proj-day-col{display:flex;flex-direction:column;align-items:center;gap:3px;}
-.proj-day-name{font-size:10px;color:var(--ink-muted);}
-.proj-day-dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;background:var(--paper);border:0.5px solid var(--line);color:var(--ink-muted);}
-.proj-day-dot.dot-done{background:var(--focus-soft);border-color:var(--focus-border);color:var(--focus);}
-.proj-day-dot.dot-today{background:var(--focus);border-color:var(--focus);color:#fff;}
+.proj-week-dots{display:flex;gap:6px;margin-bottom:16px;}
+.proj-day-col{flex:1;text-align:center;}
+.proj-day-name{font-size:10px;color:var(--ink-muted);margin-top:4px;}
+.proj-day-dot{width:100%;aspect-ratio:1;border-radius:10px;background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--ink-muted);}
+.proj-day-dot.dot-done{background:var(--focus-soft);color:var(--focus);}
+.proj-day-dot.dot-today{background:var(--focus);color:#fff;}
 .proj-day-dot.dot-skip{opacity:.3;}
+.progress-underline-tabs{display:flex;gap:16px;margin-bottom:18px;font-size:13px;font-weight:600;}
+.progress-underline-tab{color:var(--ink-muted);cursor:pointer;padding-bottom:6px;border-bottom:2px solid transparent;background:none;border-left:none;border-right:none;border-top:none;font-family:inherit;font-size:13px;font-weight:600;}
+.progress-underline-tab.active{color:var(--ink);border-bottom-color:var(--ink);}
+.progress-streak-hero{background:var(--card);border-radius:16px;padding:18px;margin-bottom:14px;text-align:center;}
+.progress-streak-hero-label{font-size:12px;color:var(--ink-soft);margin-bottom:4px;}
+.progress-streak-hero-val{font-family:ui-monospace,monospace;font-size:32px;font-weight:700;color:var(--focus);}
 .proj-win-banner{background:var(--focus-soft);border:0.5px solid var(--focus-border);border-radius:12px;padding:10px 14px;margin-top:4px;}
 .proj-win-title{font-size:12px;font-weight:600;color:var(--focus);margin:0 0 2px;}
 .proj-win-sub{font-size:11px;color:var(--focus);margin:0;opacity:.8;}
@@ -416,6 +439,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
     <button class="day-nav-btn" id="nextDayBtn">›</button>
   </div>
   <button class="add-btn" id="openAddBtn">+ เพิ่ม time block</button>
+  <div class="mf-card" id="mfCard"></div>
   <div class="journal-card" id="journalCard">
     <p class="journal-card-title">มองย้อนวันนี้ — รู้สึกยังไงบ้าง</p>
     <div class="journal-mood-row" id="journalMoodRow">
@@ -449,7 +473,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 
   <div class="plan-highlight-card" id="planHighlightCard"></div>
   <div id="upcomingEventsCard"></div>
-  <button type="button" class="btn-secondary" id="openEventAddBtn" style="width:100%;margin-bottom:12px;">+ เพิ่มเหตุการณ์สำคัญ</button>
+  <button type="button" class="btn-secondary" id="openEventAddBtn" style="width:100%;margin-bottom:12px;display:none;">+ เพิ่มเหตุการณ์สำคัญ</button>
 
   <div class="plan-grid">
     <!-- Lightweight week/month/year calendar -->
@@ -459,6 +483,10 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
           <button id="wkSubLightBtn" class="seg-mini-btn seg-mini-active" onclick="setPlanWkSubView('light')">แบบเบา</button>
           <button id="wkSubTimelineBtn" class="seg-mini-btn" onclick="setPlanWkSubView('timeline')">Timeline</button>
         </div>
+      </div>
+      <div class="event-legend" id="monthEventLegend" style="display:none;">
+        <span class="event-legend-item"><span class="event-legend-dot"></span>time block</span>
+        <span class="event-legend-item"><span class="event-diamond"></span>เหตุการณ์สำคัญ</span>
       </div>
       <div id="lightWeekGrid" class="light-week-grid"></div>
       <div id="timelineWeekWrap" style="display:none;overflow-y:auto;max-height:calc(100dvh - 320px);-webkit-overflow-scrolling:touch;">
@@ -575,10 +603,6 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 <div class="page" id="page-settings">
   <div class="app-head"><h1>ตั้งค่า</h1></div>
   <p class="sync-status" id="syncStatus">ใช้ข้อมูลแค่เครื่องนี้</p>
-  <div id="notifBanner" class="notif-banner" style="display:none">
-    <span>อนุญาตการแจ้งเตือนเพื่อรับสัญญาณตอนย่อหน้าต่าง</span>
-    <button id="notifBtn">เปิด</button>
-  </div>
   <p class="section-label" style="margin-top:0">การแสดงผล</p>
   <div class="settings-group">
     <div class="settings-row">
@@ -589,26 +613,30 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
       <label class="toggle-wrap"><input type="checkbox" id="darkModeToggle"><span class="toggle-track"><span class="toggle-thumb"></span></span></label>
     </div>
   </div>
-  <p class="section-label">แจ้งเตือนและตัวละคร</p>
+  <p class="section-label">โฟกัสเช้า</p>
+  <div class="settings-group">
+    <div class="settings-row">
+      <div class="settings-row-left">
+        <svg class="settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div class="settings-row-text"><p>โฟกัสเช้า</p><small>แจ้งเตือนวันละ 1 ครั้ง</small></div>
+      </div>
+      <label class="toggle-wrap"><input type="checkbox" id="mfEnabledToggle" checked><span class="toggle-track"><span class="toggle-thumb"></span></span></label>
+    </div>
+    <div class="settings-row">
+      <div class="settings-row-left">
+        <svg class="settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div class="settings-row-text"><p>เวลาแจ้งเตือน</p></div>
+      </div>
+      <input type="time" id="mfTimeInput" value="07:00" style="border:0.5px solid var(--line);border-radius:8px;padding:6px 10px;font-family:ui-monospace,monospace;font-size:14px;background:var(--paper);color:var(--ink)">
+    </div>
+  </div>
+  <p style="font-size:11px;color:var(--ink-muted);margin:-4px 0 10px;padding:0 2px">แจ้งเตือนแบบเว็บแอปขึ้นอยู่กับเครื่องและเบราว์เซอร์ — บนไอโฟนต้อง Add to Home Screen ก่อนถึงจะได้รับแจ้งเตือน</p>
+  <p class="section-label">แจ้งเตือน</p>
   <div class="settings-group">
     <div class="settings-row" id="openVoiceBtn">
       <div class="settings-row-left">
         <svg class="settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
         <div class="settings-row-text"><p>เสียงแจ้งเตือน</p><small id="voiceProviderLabel">อัตโนมัติ</small></div>
-      </div>
-      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-    </div>
-    <div class="settings-row" id="openPhoneCatchBtn">
-      <div class="settings-row-left">
-        <svg class="settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--danger)"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        <div class="settings-row-text"><p>ด่าตอนจับได้ว่าเล่นมือถือ</p><small id="phoneCatchLabel">เปิดอยู่ · โทนโหด</small></div>
-      </div>
-      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-    </div>
-    <div class="settings-row" id="openStyleBtn">
-      <div class="settings-row-left">
-        <svg class="settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M12 12v4m0 4h.01M8 16l-2 2m12-2l2 2"/></svg>
-        <div class="settings-row-text"><p>สไตล์ตัวละคร</p><small id="styleLabel">นาฬิกาปลุก</small></div>
       </div>
       <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
     </div>
@@ -627,13 +655,6 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
         <div class="settings-row-text"><p>พูดด้วยเสียงตอนแจ้งเตือน</p></div>
       </div>
       <label class="toggle-wrap"><input type="checkbox" id="voiceToggle" checked><span class="toggle-track"><span class="toggle-thumb"></span></span></label>
-    </div>
-    <div class="settings-row">
-      <div class="settings-row-left">
-        <svg class="settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-        <div class="settings-row-text"><p>ด่าเมื่อเปิดแอปในเวลางาน</p></div>
-      </div>
-      <label class="toggle-wrap"><input type="checkbox" id="phoneCatchToggle" checked><span class="toggle-track"><span class="toggle-thumb"></span></span></label>
     </div>
   </div>
 
@@ -748,11 +769,11 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 <!-- PAGE: Progress -->
 <div class="page" id="page-progress">
   <div class="app-head"><h1>พัฒนาการ</h1><span class="clock" id="clockNow4"></span></div>
-  <div class="plan-view-tabs">
-    <button id="progViewOverviewBtn" class="plan-view-tab plan-view-tab-active" onclick="setProgressViewMode('overview')">ภาพรวม</button>
-    <button id="progViewHabitBtn" class="plan-view-tab" onclick="setProgressViewMode('habit')">นิสัย</button>
-    <button id="progViewFinanceBtn" class="plan-view-tab" onclick="setProgressViewMode('finance')">การเงิน</button>
-    <button id="progViewMindBtn" class="plan-view-tab" onclick="setProgressViewMode('mind')">ใจ</button>
+  <div class="progress-underline-tabs">
+    <button id="progViewOverviewBtn" class="progress-underline-tab active" onclick="setProgressViewMode('overview')">ภาพรวม</button>
+    <button id="progViewHabitBtn" class="progress-underline-tab" onclick="setProgressViewMode('habit')">นิสัย</button>
+    <button id="progViewFinanceBtn" class="progress-underline-tab" onclick="setProgressViewMode('finance')">การเงิน</button>
+    <button id="progViewMindBtn" class="progress-underline-tab" onclick="setProgressViewMode('mind')">ใจ</button>
   </div>
   <div id="progressDash"></div>
 </div>
@@ -781,26 +802,6 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
   </button>
 </nav>
 
-<!-- MASCOT -->
-<div class="mascot-walker" id="mascotWalker">
-  <div class="mascot-inner" id="mascotInner">
-    <div class="speech-bubble" id="speechBubble">
-      <p class="mascot-eyebrow" id="mascotEyebrow">แจ้งเตือน</p>
-      <p class="mascot-msg" id="mascotMsg">...</p>
-      <div class="mascot-actions">
-        <button class="btn-secondary" id="snoozeBtn">เลื่อน 5 นาที</button>
-        <button class="btn-primary" id="mascotOkBtn">รับทราบ</button>
-      </div>
-    </div>
-    <div class="sprite-wrap">
-      <div class="mascot-accessory" id="mascotAccessory"></div>
-      <svg class="mascot-sprite" id="mascotSvg" viewBox="0 0 64 86"><g class="mascot-body" id="mascotBodyGroup"></g></svg>
-      <video class="mascot-sprite" id="mascotVideo" style="display:none;object-fit:contain;border-radius:10px;visibility:hidden;position:absolute;pointer-events:none;" autoplay loop muted playsinline></video>
-      <canvas class="mascot-sprite" id="mascotCanvas" style="display:none;"></canvas>
-    </div>
-  </div>
-</div>
-
 <!-- BLOCK MODAL -->
 <div class="overlay" id="blockOverlay">
   <div class="modal">
@@ -825,7 +826,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
         <div class="field"><label>พัก (นาที)</label><input type="number" id="f_customBreak" value="5" min="1"></div>
       </div>
       <div class="field"><label>รายละเอียด</label><textarea id="f_details" rows="2" placeholder="สรุปสิ่งที่ต้องทำ"></textarea></div>
-      <div class="checkrow"><span>แจ้งเตือนด้วยเสียง + ตัวละคร</span><input type="checkbox" id="f_notify" checked></div>
+      <div class="checkrow"><span>แจ้งเตือนด้วยเสียง</span><input type="checkbox" id="f_notify" checked></div>
       <div class="checkrow" id="repeatToggleRow"><span>ทำซ้ำหลายวัน</span><input type="checkbox" id="f_repeatEnabled"></div>
       <div id="repeatOptions" style="display:none">
         <label style="font-size:12px;color:var(--ink-soft);display:block;margin-bottom:6px">ทำซ้ำแบบ</label>
@@ -932,13 +933,12 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
     <div class="modal-head"><h2>โปรไฟล์</h2><button class="modal-close" onclick="document.getElementById('profileOverlay').classList.remove('show')">✕</button></div>
     <div class="modal-body">
       <div class="proj-summary-row" id="profileStatsRow"></div>
-      <p class="section-label" style="margin-top:14px">เลือกตัวละคร</p>
-      <div id="profileCharGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;"></div>
     </div>
   </div>
 </div>
 
 <!-- VOICE MODAL -->
+<!-- VOICE SETTINGS MODAL -->
 <div class="overlay" id="voiceOverlay">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -982,39 +982,6 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
   </div>
 </div>
 
-<!-- PHONE-CATCH MODAL -->
-<div class="overlay" id="phoneCatchOverlay">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-head"><h2>ตั้งค่า "ด่าตอนเล่นมือถือ"</h2><button class="modal-close" onclick="document.getElementById('phoneCatchOverlay').classList.remove('show')">✕</button></div>
-    <div class="modal-body">
-      <label style="font-size:12px;color:var(--ink-soft);display:block;margin-bottom:6px">โทน</label>
-      <div class="mode-grid" id="toneGrid" style="margin-bottom:14px">
-        <button type="button" data-tone="gentle">🟢 อ่อนโยน</button>
-        <button type="button" data-tone="harsh">🔴 โหด/กระตุ้น</button>
-      </div>
-      <div class="field"><label>เว้นระยะก่อนเตือนซ้ำ (นาที)</label><input type="number" id="cooldownInput" min="1" max="60" value="5"></div>
-      <div id="harshPhrasesSection">
-        <label style="font-size:12px;color:var(--ink-soft);display:block;margin-bottom:6px">ประโยคโทนโหด (ใช้ {title} แทนชื่องาน)</label>
-        <div id="harshPhraseList" style="display:flex;flex-direction:column;gap:5px;margin-bottom:8px"></div>
-        <div style="display:flex;gap:6px;margin-bottom:6px"><input type="text" id="newHarshPhrase" placeholder="เช่น ไปทำ {title} เดี๋ยวนี้" style="flex:1;border:0.5px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13px;background:var(--paper)"></div>
-        <button class="add-goal-btn" id="addHarshPhraseBtn">+ เพิ่มประโยค</button>
-        <button class="add-goal-btn" id="resetHarshPhrasesBtn" style="color:var(--ink-soft)">รีเซ็ตเป็นค่าเริ่มต้น</button>
-      </div>
-    </div>
-    <div class="modal-foot"><div class="modal-actions"><button class="btn-secondary" id="phoneCatchTestBtn">ทดสอบ</button><button class="btn-primary" id="phoneCatchSaveBtn">บันทึก</button></div></div>
-  </div>
-</div>
-
-<!-- STYLE PICKER -->
-<div class="overlay" id="styleOverlay">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-head"><h2>เลือกสไตล์ตัวละคร</h2><button class="modal-close" id="styleCloseBtn">✕</button></div>
-    <div class="modal-body"><div id="styleGrid" style="display:flex;gap:10px"></div></div>
-  </div>
-</div>
-
 <!-- SYNC MODAL -->
 <div class="overlay" id="syncOverlay">
   <div class="modal">
@@ -1026,7 +993,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
         <div style="text-align:center;padding:6px 0 18px;">
           <svg width="48" height="48" viewBox="0 0 56 56" style="margin:0 auto 14px;display:block;"><path d="M8 40 Q 16 16 28 28 Q 40 40 48 16" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/><circle cx="48" cy="16" r="7" fill="var(--focus)"/></svg>
           <h3 style="font-size:20px;font-weight:800;margin:0 0 8px;color:var(--ink);">ยินดีต้อนรับกลับ</h3>
-          <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin:0;">เข้าสู่ระบบเพื่อซิงค์ time block เป้าหมาย<br>และตัวละครของคุณข้ามอุปกรณ์</p>
+          <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin:0;">เข้าสู่ระบบเพื่อซิงค์ time block เป้าหมาย<br>และข้อมูลทั้งหมดของคุณข้ามอุปกรณ์</p>
         </div>
         <p id="syncEnvWarning" style="display:none;font-size:11.5px;color:var(--rest);background:var(--rest-soft);border-radius:10px;padding:8px 12px;margin:0 0 14px;line-height:1.5;">⚠️ หน้าพรีวิวนี้ยังล็อกอินไม่ได้ (ต้องเปิดผ่าน http/https จริง) — Publish/Deploy แอปก่อนแล้วค่อยล็อกอิน หรือใช้แบบไม่ล็อกอินไปก่อนได้</p>
         <button class="btn-primary" id="googleSignInBtn" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;background:var(--card);color:var(--ink);border:0.5px solid var(--line);">
@@ -1084,7 +1051,7 @@ const SK="tbv3_state",CK="tbv3_cloud",VK="tbv3_voice",MK="tbv3_mascot",PK="tbv3_
 const MODES={classic:{focus:25,break:5},deep:{focus:50,break:10},long:{focus:90,break:15}};
 let goals=[{id:"g1",title:"ปิดโปรเจกต์ Q3",_isProject:true}],blocks=[],stats={byDate:{}},timerState={},journal={},expenses=[],events=[];
 let prevActiveId=null,voiceEnabled=true,viewDate=todayStr(),viewMode="day";
-let snoozeUntil=0,lastPhoneCatchAt=0,currentTab="today";
+let snoozeUntil=0,lastPhoneCatchAt=0,currentTab="today",lastCountdownKey=null;
 let cloudDb=null,cloudDocRef=null,cloudUnsub=null,cloudConnected=false,cloudPushTimer=null,applyingRemoteUpdate=false;
 
 function dateStrFromDate(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
@@ -1179,9 +1146,17 @@ async function playBeep(){
     osc.start(ctx.currentTime);osc.stop(ctx.currentTime+.4);
   }catch(e){}
 }
-function sendSysNotif(title,body){if(!window.Notification||Notification.permission!=="granted")return;const reg=navigator.serviceWorker?.controller;if(reg)reg.postMessage({type:"SHOW_NOTIFICATION",title,body});else try{new Notification(title,{body,icon:"icon-192.png"});}catch(e){}}
-function checkNotifPerm(){if(window.Notification&&Notification.permission==="default")document.getElementById("notifBanner").style.display="flex";}
-document.getElementById("notifBtn").addEventListener("click",async()=>{const p=await Notification.requestPermission();if(p==="granted")document.getElementById("notifBanner").style.display="none";});
+// short, quiet tick used for the 5-second countdown before a pomodoro phase ends
+async function playCountdownTick(){
+  try{
+    const ctx=getAudioCtx();if(ctx.state==="suspended")await ctx.resume();
+    const osc=ctx.createOscillator(),gain=ctx.createGain();
+    osc.connect(gain);gain.connect(ctx.destination);
+    osc.frequency.value=660;gain.gain.setValueAtTime(.14,ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.12);
+    osc.start(ctx.currentTime);osc.stop(ctx.currentTime+.12);
+  }catch(e){}
+}
 
 // TTS
 const ttsCache=new Map();
@@ -1227,14 +1202,8 @@ function speak(text){if(!voiceEnabled)return;primeAudio();const p=loadVoicePref(
 
 // MESSAGES
 const MSG={blockStart:["มาเริ่ม {title} กันเลย!","ถึงเวลาของ {title} แล้ว ลุยกันเถอะ","{title} กำลังจะเริ่มนะ เตรียมตัวให้พร้อม"],focusEnd:["เก่งมาก ทำ {title} มาสักพักแล้ว พักก่อนนะ","หมดรอบโฟกัสแล้ว ยืดเส้นยืดสายหน่อยไหม","พักสมองก่อนนะ แล้วค่อยมาต่อ {title}"],breakEnd:["พักพอแล้ว ไปโฟกัสกันต่อ","หมดเวลาพักแล้ว กลับมาลุยกันต่อ","พร้อมยัง? ไปต่อกันเลย"],allDone:["จบงานนี้แล้ว เก่งมาก!","ทำสำเร็จแล้วนะ ไปต่องานถัดไปกันเลย"]};
-const GENTLE=["แอบมาเล่นมือถือเหรอ ตอนนี้ถึงเวลา {title} อยู่นะ","จับได้แล้วนะ ตอนนี้เวลาทำ {title} อยู่"];
-const HARSH=["ไอ่สัส กลับไปทำ {title} เดี๋ยวนี้","หยิบมือถือมาทำไม กลับไปทำ {title} ก่อน","เวลา {title} อยู่นะเว้ย อย่ามาเล่นมือถือ","วางมือถือซะ แล้วไปทำ {title} ให้เสร็จ"];
-function loadPCS(){try{const r=localStorage.getItem(PK);return r?JSON.parse(r):{enabled:true,tone:"harsh",cooldownMin:5,customHarsh:[...HARSH]};}catch(e){return{enabled:true,tone:"harsh",cooldownMin:5,customHarsh:[...HARSH]};}}
-function savePCS(s){try{localStorage.setItem(PK,JSON.stringify(s));}catch(e){}}
-function maybeCatchOnPhone(){const s=loadPCS();if(!s.enabled)return;const nm=currentNowMin(),today=todayStr(),active=blocks.find(b=>b.date===today&&statusOf(b,nm)==="active");if(!active)return;const cd=(s.cooldownMin||5)*60000;if(Date.now()-lastPhoneCatchAt<cd)return;lastPhoneCatchAt=Date.now();const ts=timerState[active.id];if(ts&&ts.phase==="focus")ts.distractionsThisPhase=(ts.distractionsThisPhase||0)+1;const bank=s.tone==="harsh"?(s.customHarsh?.length?s.customHarsh:HARSH):GENTLE;notify("จับได้คาหนังคาเขา",pick(bank).replace("{title}",active.title));}
 
 // GAMIFICATION
-const MS={clock:`<rect id="legR" x="32" y="62" width="9" height="18" rx="4" fill="#C97A1B"/><rect id="legL" x="23" y="62" width="9" height="18" rx="4" fill="#C97A1B"/><rect id="armL" x="4" y="38" width="9" height="15" rx="4.5" fill="#F2A623"/><rect id="armR" x="51" y="34" width="9" height="15" rx="4.5" fill="#F2A623"/><circle cx="32" cy="42" r="22" fill="#FFFBF2" stroke="#F2A623" stroke-width="4"/><line x1="32" y1="22" x2="32" y2="26" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><line x1="50" y1="42" x2="46" y2="42" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><line x1="32" y1="62" x2="32" y2="58" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><line x1="14" y1="42" x2="18" y2="42" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="18" r="8" fill="#F2A623"/><circle cx="48" cy="18" r="8" fill="#F2A623"/><circle cx="16" cy="9" r="2.5" fill="#C97A1B"/><circle cx="48" cy="9" r="2.5" fill="#C97A1B"/><circle cx="24" cy="40" r="5" fill="#2C2C2A"/><circle cx="40" cy="40" r="5" fill="#2C2C2A"/><circle cx="22.3" cy="38.3" r="1.3" fill="#FFF"/><circle cx="38.3" cy="38.3" r="1.3" fill="#FFF"/><ellipse cx="18" cy="48" rx="4" ry="2.5" fill="#F4A89A" opacity=".7"/><ellipse cx="46" cy="48" rx="4" ry="2.5" fill="#F4A89A" opacity=".7"/><path d="M22 50Q32 58 42 50" stroke="#2C2C2A" stroke-width="3" stroke-linecap="round" fill="none"/>`,robot:`<rect id="legR" x="32" y="62" width="9" height="18" rx="3" fill="#7A8B99"/><rect id="legL" x="23" y="62" width="9" height="18" rx="3" fill="#7A8B99"/><rect id="armL" x="4" y="38" width="9" height="15" rx="3" fill="#9FB4C2"/><rect id="armR" x="51" y="34" width="9" height="15" rx="3" fill="#9FB4C2"/><rect x="10" y="20" width="44" height="42" rx="10" fill="#C9D6DD" stroke="#7A8B99" stroke-width="3"/><line x1="32" y1="20" x2="32" y2="10" stroke="#7A8B99" stroke-width="2"/><circle cx="32" cy="8" r="3" fill="#F2A623"/><rect x="20" y="34" width="9" height="9" rx="2" fill="#2C2C2A"/><rect x="35" y="34" width="9" height="9" rx="2" fill="#2C2C2A"/><line x1="22" y1="52" x2="42" y2="52" stroke="#2C2C2A" stroke-width="2" stroke-linecap="round"/>`,cat:`<rect id="legR" x="32" y="62" width="9" height="16" rx="4" fill="#D98B3F"/><rect id="legL" x="23" y="62" width="9" height="16" rx="4" fill="#D98B3F"/><ellipse id="armL" cx="9" cy="46" rx="5" ry="8" fill="#F2A623"/><ellipse id="armR" cx="55" cy="42" rx="5" ry="8" fill="#F2A623"/><polygon points="14,18 22,2 28,20" fill="#F2A623"/><polygon points="50,18 42,2 36,20" fill="#F2A623"/><circle cx="32" cy="40" r="22" fill="#F2A623"/><path d="M22 36Q24 32 27 36" stroke="#2C2C2A" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M42 36Q39 32 37 36" stroke="#2C2C2A" stroke-width="2.5" fill="none" stroke-linecap="round"/><polygon points="29,44 35,44 32,48" fill="#C97A1B"/><path d="M24 52Q32 58 40 52" stroke="#2C2C2A" stroke-width="2.5" stroke-linecap="round" fill="none"/>`};
 const LUCIDE={
   house:`<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" /><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />`,
   calendar_days:`<path d="M8 2v3" /><path d="M16 2v3" /><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18" /><path d="M8 13h.01" /><path d="M12 13h.01" /><path d="M16 13h.01" /><path d="M8 17h.01" /><path d="M12 17h.01" /><path d="M16 17h.01" />`,
@@ -1298,104 +1267,14 @@ const ICON_LIB={
   "warning":{cat:"work",label:"แจ้งเตือน/ระวัง",emoji:"⚠️",svg:`<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /><path d="M12 9v4" /><path d="M12 17h.01" />`},
   "bell":{cat:"work",label:"แจ้งเตือน",emoji:"🔔",svg:`<path d="M10.268 21a2 2 0 0 0 3.464 0" /><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />`},
 };
-const MSN={clock:"นาฬิกาปลุก",robot:"หุ่นยนต์",cat:"แมวส้ม",char0:"ตัวละคร 1",char1:"ตัวละคร 2",char2:"ตัวละคร 3",char3:"ตัวละคร 4"};
-const CHARACTER_VIDEOS={char0:"char0.mp4",char1:"char1.mp4",char2:"char2.mp4",char3:"char3.mp4"};
-const CHARACTER_CHROMA={char2:true,char3:true}; // only these were shot on a green-screen background
-function loadMascotStyle(){try{return localStorage.getItem(MK)||"clock";}catch(e){return"clock";}}
-// chroma-key: these mascot videos are shot on a solid green background — key it out live so
-// only the character shows through, blending with the app's UI instead of a green box.
-let chromaKeyRAF=null,chromaKeyFailed=false;
-function stopChromaKey(){if(chromaKeyRAF){cancelAnimationFrame(chromaKeyRAF);chromaKeyRAF=null;}}
-function startChromaKey(videoEl,canvasEl){
-  stopChromaKey();
-  chromaKeyFailed=false;
-  const ctx=canvasEl.getContext("2d",{willReadFrequently:true});
-  const W=260,H=Math.round(W*(videoEl.videoHeight||1280)/(videoEl.videoWidth||720));
-  canvasEl.width=W;canvasEl.height=H;
-  function frame(){
-    try{
-      if(videoEl.readyState>=2){
-        ctx.drawImage(videoEl,0,0,W,H);
-        const img=ctx.getImageData(0,0,W,H),d=img.data;
-        for(let i=0;i<d.length;i+=4){
-          const r=d[i],g=d[i+1],b=d[i+2];
-          const greenness=g-Math.max(r,b);
-          if(greenness>18)d[i+3]=0;
-          else if(greenness>-6)d[i+3]=Math.max(0,Math.min(255,(18-greenness)/24*255));
-        }
-        ctx.putImageData(img,0,0);
-      }
-      chromaKeyRAF=requestAnimationFrame(frame);
-    }catch(e){
-      // canvas read failed (e.g. tainted canvas) — fall back to showing the plain video instead of a blank frame
-      chromaKeyFailed=true;
-      canvasEl.style.display="none";
-      videoEl.style.cssText="display:block;object-fit:contain;border-radius:10px;";
-    }
-  }
-  frame();
-}
-function setMascotStyle(k){
-  const svgEl=document.getElementById("mascotSvg"),videoEl=document.getElementById("mascotVideo"),canvasEl=document.getElementById("mascotCanvas");
-  const vidSrc=CHARACTER_VIDEOS[k];
-  if(vidSrc&&CHARACTER_CHROMA[k]){
-    svgEl.style.display="none";
-    videoEl.style.cssText="visibility:hidden;position:fixed;left:-9999px;top:0;width:260px;height:462px;pointer-events:none;";
-    canvasEl.style.display="block";
-    videoEl.src=vidSrc;
-    videoEl.onloadeddata=()=>{startChromaKey(videoEl,canvasEl);videoEl.play().catch(()=>{});};
-  }else if(vidSrc){
-    stopChromaKey();
-    svgEl.style.display="none";
-    canvasEl.style.display="none";
-    videoEl.onloadeddata=null;
-    videoEl.src=vidSrc;
-    videoEl.style.cssText="display:block;object-fit:contain;border-radius:10px;";
-    videoEl.play().catch(()=>{});
-  }else{
-    document.getElementById("mascotBodyGroup").innerHTML=MS[k]||MS.clock;
-    stopChromaKey();
-    videoEl.pause();videoEl.removeAttribute("src");videoEl.onloadeddata=null;
-    videoEl.style.cssText="display:none;object-fit:contain;border-radius:10px;visibility:hidden;position:absolute;pointer-events:none;";
-    canvasEl.style.display="none";svgEl.style.display="block";
-  }
-  try{localStorage.setItem(MK,k);}catch(e){}
-  document.getElementById("styleLabel").textContent=MSN[k]||"นาฬิกาปลุก";
-}
 function accessoryMarkup(tier){if(tier===3)return'<svg viewBox="0 0 24 24"><polygon points="2,9 6,5 9,9 12,3 15,9 18,5 22,9 19,19 5,19" fill="#F2A623" stroke="#C97A1B" stroke-width="1"/></svg>';if(tier===2)return'<svg viewBox="0 0 24 24"><polygon points="12,2 20,20 4,20" fill="#1F6F5C"/><circle cx="12" cy="2" r="2.2" fill="#F2A623"/></svg>';if(tier===1)return'<svg viewBox="0 0 24 24"><polygon points="12,1 15,9 23,9 16,14 19,22 12,17 5,22 8,14 1,9 9,9" fill="#F2A623"/></svg>';return"";}
 function computeStreak(){let s=0,d=todayStr();while(stats.byDate[d]?.focusRounds>0){s++;d=addDays(d,-1);}if(!s){d=addDays(todayStr(),-1);while(stats.byDate[d]?.focusRounds>0){s++;d=addDays(d,-1);}}return s;}
 function recordFocusCompletions(n){const d=todayStr();if(!stats.byDate[d])stats.byDate[d]={focusRounds:0};stats.byDate[d].focusRounds+=n;saveState();refreshGamification();}
 function recordDisciplineScore(score){const d=todayStr();if(!stats.byDate[d])stats.byDate[d]={focusRounds:0};if(!Array.isArray(stats.byDate[d].disciplineScores))stats.byDate[d].disciplineScores=[];stats.byDate[d].disciplineScores.push(score);}
 function refreshGamification(){const streak=computeStreak(),tier=streak>=14?3:streak>=7?2:streak>=3?1:0;const acc=document.getElementById("mascotAccessory");if(acc)acc.innerHTML=accessoryMarkup(tier);if(currentTab==="projects")renderProjects();if(currentTab==="progress")renderProgress();}
 
-// NOTIFY
-function notify(eyebrow,msg){document.getElementById("mascotEyebrow").textContent=eyebrow;document.getElementById("mascotMsg").textContent=msg;mascotWalkIn(msg);playBeep();sendSysNotif(eyebrow,msg);}
-
-// MASCOT
-const mascotInner=document.getElementById("mascotInner"),speechBubble=document.getElementById("speechBubble");
-let mascotTimer=null;
-function setMascotPos(state,anim){if(!anim)mascotInner.classList.add("no-anim");mascotInner.classList.remove("pos-onstage","pos-exit-left");if(state==="onstage")mascotInner.classList.add("pos-onstage");else if(state==="exit")mascotInner.classList.add("pos-exit-left");if(!anim){void mascotInner.offsetWidth;mascotInner.classList.remove("no-anim");}}
-function mascotShow(){ // brings the mascot on stage (used when it has something to say)
-  mascotInner.classList.add("is-idle");
-  setMascotPos("onstage",true);
-}
-function mascotWalkIn(msg){
-  clearTimeout(mascotTimer);
-  mascotShow();
-  mascotInner.classList.add("is-talking");
-  speechBubble.classList.add("show");
-  if(voiceEnabled)speak(msg);
-  mascotTimer=setTimeout(mascotWalkOut,15000);
-}
-function mascotWalkOut(){
-  clearTimeout(mascotTimer);
-  speechBubble.classList.remove("show");
-  mascotInner.classList.remove("is-talking");
-  window.speechSynthesis?.cancel();
-  setMascotPos("exit",true); // fades the character itself back out
-}
-document.getElementById("mascotOkBtn").addEventListener("click",mascotWalkOut);
-document.getElementById("snoozeBtn").addEventListener("click",()=>{snoozeUntil=Date.now()+5*60000;mascotWalkOut();});
+// NOTIFY — sound-only alert (no character popup, no push notification)
+function notify(eyebrow,msg){playBeep();if(voiceEnabled)speak(msg);}
 
 // TICK
 function tick(){
@@ -1420,6 +1299,11 @@ function tick(){
         saveState();
       }
     } else if(mm&&ts&&!ts.paused){
+      const remainSec=Math.max(0,Math.round((ts.phaseEndsAt-Date.now())/1000));
+      if(remainSec>=1&&remainSec<=5&&active.notify){
+        const key=active.id+":"+ts.phase+":"+ts.phaseEndsAt+":"+remainSec;
+        if(lastCountdownKey!==key){lastCountdownKey=key;playCountdownTick();}
+      }
       let transitions=0,focusCompletions=0;
       while(Date.now()>=ts.phaseEndsAt&&transitions<500){
         if(ts.phase==="focus"){
@@ -1492,6 +1376,80 @@ function skipPomoPhase(){const b=getActiveBlock();if(!b)return;const ts=timerSta
 document.getElementById("pomoFullClose").addEventListener("click",()=>document.getElementById("pomoFullOverlay").classList.remove("show"));
 document.getElementById("pomoFullPause").addEventListener("click",togglePomoPause);
 document.getElementById("pomoFullSkip").addEventListener("click",skipPomoPhase);
+
+// MORNING FOCUS
+const MFK="tb_morning_focus";
+const MF_DURATION=30*60;
+function loadMF(){try{const r=localStorage.getItem(MFK);return r?JSON.parse(r):{enabled:true,time:"07:00",lastCompletedDate:null,lastNotifiedDate:null,sessionStart:null};}catch(e){return{enabled:true,time:"07:00",lastCompletedDate:null,lastNotifiedDate:null,sessionStart:null};}}
+function saveMF(s){try{localStorage.setItem(MFK,JSON.stringify(s));}catch(e){}}
+let mfState=loadMF();
+function mfRequestPermission(){if("Notification"in window&&Notification.permission==="default")Notification.requestPermission();}
+function mfCheckSchedule(){
+  if(!mfState.enabled)return;
+  const now=new Date();
+  const hhmm=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
+  const today=todayStr();
+  if(hhmm===mfState.time&&mfState.lastNotifiedDate!==today){
+    mfState.lastNotifiedDate=today;saveMF(mfState);
+    if("Notification"in window&&Notification.permission==="granted"){
+      new Notification("โฟกัสเช้า",{body:"ถึงเวลาโฟกัสเช้า 30 นาทีแล้ว",icon:"icon-192.png"});
+    }
+  }
+}
+function mfStart(){mfState.sessionStart=Date.now();mfState.lastCompletedDate=null;saveMF(mfState);renderMF();}
+function mfStop(){mfState.sessionStart=null;saveMF(mfState);renderMF();}
+function mfComplete(){mfState.sessionStart=null;mfState.lastCompletedDate=todayStr();saveMF(mfState);renderMF();notify("โฟกัสเช้า","ทำได้เยี่ยม! เริ่มวันได้เลย");}
+function mfFmtTime(sec){const m=Math.floor(sec/60),s=sec%60;return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");}
+function renderMF(){
+  const el=document.getElementById("mfCard");if(!el)return;
+  const today=todayStr();
+  if(mfState.sessionStart){
+    const elapsed=Math.floor((Date.now()-mfState.sessionStart)/1000);
+    const remain=MF_DURATION-elapsed;
+    if(remain<=0){mfComplete();return;}
+    const pct=elapsed/MF_DURATION;
+    const circumference=2*Math.PI*52;
+    const offset=circumference*(1-pct);
+    el.innerHTML=`
+      <div class="mf-run">
+        <div class="mf-run-label">โฟกัสเช้า</div>
+        <div class="mf-run-sub">30 นาทีก่อนเริ่มวัน</div>
+        <div class="mf-ring-wrap">
+          <svg width="120" height="120" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="52" fill="none" stroke="var(--paper)" stroke-width="7"/>
+            <circle cx="60" cy="60" r="52" fill="none" stroke="var(--focus)" stroke-width="7" stroke-linecap="round" stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" transform="rotate(-90 60 60)"/>
+          </svg>
+          <div class="mf-ring-time">${mfFmtTime(remain)}</div>
+        </div>
+        <button class="mf-stop-btn" onclick="mfStop()">หยุดพัก</button>
+        <div class="mf-suggest-label">ลองทำระหว่างนี้ (ไม่บังคับ)</div>
+        <div class="mf-suggest-row"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="15" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/></svg><span>วางแผนวันนี้</span></div>
+        <div class="mf-suggest-row"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg><span>นั่งสมาธิ</span></div>
+        <div class="mf-suggest-row"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 20l3-7-2-5 4 1 3-4 3 4 4-1-2 5 3 7"/></svg><span>ยืดเส้น</span></div>
+      </div>`;
+  } else if(mfState.lastCompletedDate===today){
+    el.innerHTML=`
+      <div class="mf-done">
+        <div class="mf-done-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg></div>
+        <div><p style="margin:0;font-size:13px;font-weight:600;">โฟกัสเช้าเสร็จแล้ว</p><small style="color:var(--ink-soft);font-size:11px;">เยี่ยมมาก ไปเริ่มวันกันต่อ</small></div>
+      </div>`;
+  } else {
+    const supportsNotif="Notification"in window;
+    const note=supportsNotif?`แจ้งเตือนทุกวัน ${mfState.time} น.`:"แจ้งเตือนอัตโนมัติใช้ไม่ได้บนเครื่องนี้ — เริ่มเองได้ทุกเมื่อ";
+    el.innerHTML=`
+      <div class="mf-idle">
+        <div class="mf-idle-text"><p>โฟกัสเช้า 30 นาที</p><small>${note}</small></div>
+        <button class="mf-start-btn" onclick="mfStart()">เริ่มเลย</button>
+      </div>`;
+  }
+}
+const mfEnabledToggle=document.getElementById("mfEnabledToggle");
+const mfTimeInput=document.getElementById("mfTimeInput");
+if(mfEnabledToggle){mfEnabledToggle.checked=mfState.enabled;mfEnabledToggle.addEventListener("change",()=>{mfState.enabled=mfEnabledToggle.checked;saveMF(mfState);});}
+if(mfTimeInput){mfTimeInput.value=mfState.time;mfTimeInput.addEventListener("change",()=>{mfState.time=mfTimeInput.value;mfState.lastNotifiedDate=null;saveMF(mfState);});}
+mfRequestPermission();
+renderMF();
+setInterval(()=>{mfCheckSchedule();renderMF();},1000);
 
 // TABS
 document.querySelectorAll(".tab-btn").forEach(btn=>{
@@ -1844,6 +1802,8 @@ function setPlanViewMode(m){
   document.getElementById("timelineWeekWrap").style.display = (m==="wk"&&planWkSubView==="timeline") ? "block" : "none";
   document.getElementById("lightMonthGrid").style.display = m==="mo" ? "grid" : "none";
   document.getElementById("lightYearGrid").style.display = m==="yr" ? "grid" : "none";
+  document.getElementById("monthEventLegend").style.display = m==="mo" ? "flex" : "none";
+  document.getElementById("openEventAddBtn").style.display = (m==="mo"||m==="yr") ? "block" : "none";
   renderPlan();
 }
 
@@ -2710,22 +2670,8 @@ document.getElementById("voiceSaveBtn").addEventListener("click",()=>{saveVoiceP
 document.getElementById("voiceToggle").addEventListener("change",e=>voiceEnabled=e.target.checked);
 
 // PHONE CATCH
-const pcOverlay=document.getElementById("phoneCatchOverlay");let pickedTone="harsh",workingPhrases=[];
-function renderHarshList(){const list=document.getElementById("harshPhraseList");if(!workingPhrases.length){list.innerHTML='<p style="font-size:12px;color:var(--ink-soft)">ยังไม่มีประโยค ใช้ค่าเริ่มต้นแทน</p>';return;}list.innerHTML=workingPhrases.map((p,i)=>`<div style="display:flex;align-items:center;gap:6px;background:var(--paper);border-radius:8px;padding:6px 10px"><span style="flex:1;font-size:12px">${esc(p)}</span><button type="button" data-idx="${i}" class="icon-btn">✕</button></div>`).join("");}
-function updateToneGrid(){document.querySelectorAll("#toneGrid button").forEach(b=>b.classList.toggle("picked",b.dataset.tone===pickedTone));document.getElementById("harshPhrasesSection").style.display=pickedTone==="harsh"?"block":"none";}
-document.getElementById("toneGrid").addEventListener("click",e=>{const b=e.target.closest("button");if(b){pickedTone=b.dataset.tone;updateToneGrid();}});
-document.getElementById("harshPhraseList").addEventListener("click",e=>{const b=e.target.closest("button[data-idx]");if(!b)return;workingPhrases.splice(Number(b.dataset.idx),1);renderHarshList();});
-document.getElementById("addHarshPhraseBtn").addEventListener("click",()=>{const inp=document.getElementById("newHarshPhrase"),v=inp.value.trim();if(!v)return;workingPhrases.push(v);inp.value="";renderHarshList();});
-document.getElementById("resetHarshPhrasesBtn").addEventListener("click",()=>{workingPhrases=[...HARSH];renderHarshList();});
-document.getElementById("openPhoneCatchBtn").addEventListener("click",()=>{const s=loadPCS();pickedTone=s.tone||"harsh";workingPhrases=s.customHarsh?.length?[...s.customHarsh]:[...HARSH];document.getElementById("cooldownInput").value=s.cooldownMin||5;updateToneGrid();renderHarshList();pcOverlay.classList.add("show");});
-document.getElementById("phoneCatchToggle").addEventListener("change",e=>{const s=loadPCS();s.enabled=e.target.checked;savePCS(s);document.getElementById("phoneCatchLabel").textContent=(e.target.checked?"เปิดอยู่":"ปิดอยู่")+" · โทน"+(s.tone==="harsh"?"โหด":"อ่อนโยน");});
-document.getElementById("phoneCatchTestBtn").addEventListener("click",()=>{const s={enabled:true,tone:pickedTone,cooldownMin:Number(document.getElementById("cooldownInput").value)||5,customHarsh:workingPhrases};savePCS(s);const bank=s.tone==="harsh"?(s.customHarsh.length?s.customHarsh:HARSH):GENTLE;notify("ทดสอบ",pick(bank).replace("{title}","งานตัวอย่าง"));});
-document.getElementById("phoneCatchSaveBtn").addEventListener("click",()=>{savePCS({enabled:document.getElementById("phoneCatchToggle").checked,tone:pickedTone,cooldownMin:Number(document.getElementById("cooldownInput").value)||5,customHarsh:workingPhrases});pcOverlay.classList.remove("show");});
 
 // MASCOT STYLE PICKER
-const styleOverlay=document.getElementById("styleOverlay");
-document.getElementById("openStyleBtn").addEventListener("click",()=>{const cur=loadMascotStyle();const keys=[...Object.keys(MS),...Object.keys(CHARACTER_VIDEOS)];document.getElementById("styleGrid").innerHTML=keys.map(k=>`<button data-style="${k}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;border:2px solid ${k===cur?"var(--focus)":"var(--line)"};background:var(--paper);border-radius:12px;padding:8px;cursor:pointer">${CHARACTER_VIDEOS[k]?`<video src="${CHARACTER_VIDEOS[k]}" style="width:48px;height:65px;object-fit:cover;border-radius:8px" autoplay loop muted playsinline></video>`:`<svg viewBox="0 0 64 86" style="width:48px;height:65px"><g>${MS[k].replace(/\sid="[^"]*"/g,"")}</g></svg>`}<span style="font-size:11px">${MSN[k]}</span></button>`).join("");styleOverlay.classList.add("show");});
-document.getElementById("styleGrid").addEventListener("click",e=>{const b=e.target.closest("button[data-style]");if(!b)return;setMascotStyle(b.dataset.style);document.getElementById("openStyleBtn").click();});
 
 // PROFILE
 document.getElementById("openProfileBtn").addEventListener("click",()=>{
@@ -2736,13 +2682,8 @@ document.getElementById("openProfileBtn").addEventListener("click",()=>{
     <div class="proj-sum-box"><span class="proj-sum-val">${streak}</span><span class="proj-sum-lbl">วัน streak</span></div>
     <div class="proj-sum-box proj-sum-box-highlight"><span class="proj-sum-val" style="color:var(--focus)">${totalSessions}</span><span class="proj-sum-lbl" style="color:var(--focus)">รอบโฟกัสสำเร็จ</span></div>
     <div class="proj-sum-box"><span class="proj-sum-val">${goalsAchieved}</span><span class="proj-sum-lbl">เป้าหมายสำเร็จ</span></div>`;
-  const cur=loadMascotStyle();
-  const profKeys=[...Object.keys(MS),...Object.keys(CHARACTER_VIDEOS)];
-  document.getElementById("profileCharGrid").innerHTML=profKeys.map(k=>`<button data-style="${k}" style="display:flex;flex-direction:column;align-items:center;gap:6px;border:2px solid ${k===cur?"var(--focus)":"var(--line)"};background:var(--paper);border-radius:12px;padding:8px;cursor:pointer">${CHARACTER_VIDEOS[k]?`<video src="${CHARACTER_VIDEOS[k]}" style="width:44px;height:60px;object-fit:cover;border-radius:8px" autoplay loop muted playsinline></video>`:`<svg viewBox="0 0 64 86" style="width:44px;height:60px"><g>${MS[k].replace(/\sid="[^"]*"/g,"")}</g></svg>`}<span style="font-size:11px">${MSN[k]}</span></button>`).join("");
   document.getElementById("profileOverlay").classList.add("show");
 });
-document.getElementById("profileCharGrid").addEventListener("click",e=>{const b=e.target.closest("button[data-style]");if(!b)return;setMascotStyle(b.dataset.style);document.getElementById("openProfileBtn").click();});
-document.getElementById("styleCloseBtn").addEventListener("click",()=>styleOverlay.classList.remove("show"));
 
 // SETTINGS MISC
 document.getElementById("resetDataBtn").addEventListener("click",()=>{
@@ -2831,7 +2772,7 @@ function staircaseHtml(g){
       const isLast=i===STEPS-1;
       return`<div style="flex:1;height:${h}px;border-radius:3px 3px 0 0;background:var(--staircase-undone);position:relative;">${isLast?'<span style="position:absolute;top:-18px;font-size:13px;left:50%;transform:translateX(-50%);">🏆</span>':''}</div>`;
     }).join("");
-    return`<div style="display:flex;align-items:flex-end;gap:6px;height:${maxH}px;padding-top:14px;margin-bottom:0;opacity:.55;">${bars}</div><p style="font-size:11px;color:var(--ink-soft);margin:8px 0 0;">พร้อมเริ่มเมื่อไหร่ก็ได้เลย</p>`;
+    return`<div style="display:flex;align-items:flex-end;gap:6px;height:${maxH}px;padding-top:14px;margin-bottom:0;opacity:.55;">${bars}</div>`;
   }
 }
 function goalStepStatusLine(g){
@@ -2929,8 +2870,8 @@ function celebrationHeadline(streak){
 let progressViewMode="overview";
 function setProgressViewMode(mode){
   progressViewMode=mode;
-  document.querySelectorAll("#page-progress .plan-view-tab").forEach(b=>b.classList.remove("plan-view-tab-active"));
-  document.getElementById("progView"+mode.charAt(0).toUpperCase()+mode.slice(1)+"Btn").classList.add("plan-view-tab-active");
+  document.querySelectorAll("#page-progress .progress-underline-tab").forEach(b=>b.classList.remove("active"));
+  document.getElementById("progView"+mode.charAt(0).toUpperCase()+mode.slice(1)+"Btn").classList.add("active");
   renderProgress();
 }
 function progressOverviewHtml(){
@@ -2938,8 +2879,6 @@ function progressOverviewHtml(){
   const wd=weekDates();
   const dayNames=["อา","จ","อ","พ","พฤ","ศ","ส"];
   const streak=streakCount();
-  const totalSessions=totalFocusSessions();
-  const w8h=(()=>{const days=[];for(let i=0;i<56;i++)days.push(addDays(td,-i));return periodTotalHours(days).toFixed(1);})();
 
   // this-week tasks done / total, and average mood over the last 14 days
   const weekBlocks=wd.flatMap(d=>blocks.filter(b=>b.date===d));
@@ -2950,14 +2889,13 @@ function progressOverviewHtml(){
   const avgMood=moodVals.length?(moodVals.reduce((s,v)=>s+v,0)/moodVals.length).toFixed(1):null;
 
   let html=`<div class="progress-banner">${celebrationHeadline(streak)}</div>`;
-  html+=`<div class="proj-summary-row">
-    <div class="proj-sum-box"><span class="proj-sum-val${streak>0?" streak-pulse":""}">${streak}</span><span class="proj-sum-lbl">วัน streak</span></div>
-    <div class="proj-sum-box proj-sum-box-highlight"><span class="proj-sum-val" style="color:var(--focus)">${totalSessions}</span><span class="proj-sum-lbl" style="color:var(--focus)">รอบโฟกัสสำเร็จ</span></div>
-    <div class="proj-sum-box"><span class="proj-sum-val">${w8h}h</span><span class="proj-sum-lbl">8 สัปดาห์</span></div>
+  html+=`<div class="progress-streak-hero">
+    <div class="progress-streak-hero-label">สตรีคปัจจุบัน</div>
+    <div class="progress-streak-hero-val${streak>0?" streak-pulse":""}">${streak} วัน</div>
   </div>`;
   html+=`<div class="proj-mini-stats-row">
-    <div class="proj-mini-stat"><span class="proj-mini-stat-lbl">งานเสร็จสัปดาห์นี้</span><span class="proj-mini-stat-val">${weekDone}/${weekTotal}</span></div>
-    <div class="proj-mini-stat"><span class="proj-mini-stat-lbl">อารมณ์เฉลี่ย (14 วัน)</span><span class="proj-mini-stat-val">${avgMood??"–"}</span></div>
+    <div class="proj-mini-stat"><span class="proj-mini-stat-lbl">งานเสร็จ</span><span class="proj-mini-stat-val">${weekDone}/${weekTotal}</span></div>
+    <div class="proj-mini-stat"><span class="proj-mini-stat-lbl">อารมณ์เฉลี่ย</span><span class="proj-mini-stat-val">${avgMood??"–"}</span></div>
   </div>`;
 
   html+=`<p class="section-label" style="margin-top:0">สัปดาห์นี้</p><div class="proj-week-dots">`;
@@ -2967,7 +2905,7 @@ function progressOverviewHtml(){
     const hasDone=d<td?dayBlocks.length>0:(d===td&&dayBlocks.some(b=>statusOf(b,nm)!=="upcoming"));
     const isToday=d===td;
     let cls="proj-day-dot"+(isToday?" dot-today":hasDone?" dot-done":d>td?" dot-skip":"");
-    html+=`<div class="proj-day-col"><div class="proj-day-name">${dayNames[dow2]}</div><div class="${cls}">${isToday?"วันนี้":hasDone?"✓":"–"}</div></div>`;
+    html+=`<div class="proj-day-col"><div class="${cls}">${isToday?"วันนี้":hasDone?"✓":""}</div><div class="proj-day-name">${dayNames[dow2]}</div></div>`;
   });
   html+="</div>";
 
@@ -3281,9 +3219,9 @@ function queueCloudPush(){if(!cloudConnected||!cloudDocRef||applyingRemoteUpdate
 function applyRemoteSnapshot(data){applyingRemoteUpdate=true;if(Array.isArray(data.blocks)){blocks=data.blocks;blocks.forEach(b=>{if(!b.date)b.date=todayStr();});}if(Array.isArray(data.goals))goals=data.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;});if(data.timerState){Object.keys(timerState).forEach(k=>delete timerState[k]);Object.assign(timerState,data.timerState);}if(data.prevActiveId!==undefined)prevActiveId=data.prevActiveId;if(data.stats?.byDate)stats=data.stats;if(data.journal&&typeof data.journal==="object")journal=data.journal;if(Array.isArray(data.expenses))expenses=data.expenses;if(Array.isArray(data.events))events=data.events;try{localStorage.setItem(SK,JSON.stringify({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events}));}catch(e){}renderAll();applyingRemoteUpdate=false;}
 
 // VISIBILITY / FOCUS
-document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){ensureHabitBlocksForToday();tick();maybeCatchOnPhone();}});
-window.addEventListener("focus",()=>{ensureHabitBlocksForToday();tick();maybeCatchOnPhone();});
-window.addEventListener("pageshow",()=>{ensureHabitBlocksForToday();tick();maybeCatchOnPhone();});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){ensureHabitBlocksForToday();tick();}});
+window.addEventListener("focus",()=>{ensureHabitBlocksForToday();tick();});
+window.addEventListener("pageshow",()=>{ensureHabitBlocksForToday();tick();});
 
 // SERVICE WORKER
 if("serviceWorker" in navigator)navigator.serviceWorker.register("service-worker.js").catch(()=>{});
@@ -3312,12 +3250,7 @@ if(window.matchMedia)window.matchMedia("(prefers-color-scheme: dark)").addEventL
 // BOOT
 const hasData=loadState();
 if(!hasData)seedBlocks();
-setMascotStyle(loadMascotStyle());
 document.getElementById("voiceToggle").checked=true;
-const pcInit=loadPCS();
-document.getElementById("phoneCatchToggle").checked=pcInit.enabled;
-document.getElementById("phoneCatchLabel").textContent=(pcInit.enabled?"เปิดอยู่":"ปิดอยู่")+" · โทน"+(pcInit.tone==="harsh"?"โหด":"อ่อนโยน");
-checkNotifPerm();
 applyDarkMode();
 ensureHabitBlocksForToday();
 renderAll();
@@ -3425,7 +3358,7 @@ ensureFirebaseInit(activeFirebaseConfig());
     <div id="loginGateStepAuth" style="display:none;">
     <svg width="56" height="56" viewBox="0 0 56 56" style="margin:0 auto 18px;display:block;"><path d="M8 40 Q 16 16 28 28 Q 40 40 48 16" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/><circle cx="48" cy="16" r="7" fill="var(--focus)"/></svg>
     <h1 style="font-size:26px;font-weight:800;margin:0 0 10px;color:var(--ink);">ยินดีต้อนรับกลับ</h1>
-    <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 26px;">เข้าสู่ระบบเพื่อซิงค์ time block เป้าหมาย<br>และตัวละครของคุณข้ามอุปกรณ์</p>
+    <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 26px;">เข้าสู่ระบบเพื่อซิงค์ time block เป้าหมาย<br>และข้อมูลทั้งหมดของคุณข้ามอุปกรณ์</p>
     <p id="loginGateEnvWarning" style="display:none;text-align:left;font-size:11.5px;color:var(--rest);background:var(--rest-soft);border-radius:10px;padding:8px 12px;margin:0 0 16px;line-height:1.5;">⚠️ หน้าพรีวิวนี้ยังล็อกอินไม่ได้ (ต้องเปิดผ่าน http/https จริง) — Publish/Deploy แอปก่อนแล้วค่อยล็อกอิน หรือกด "ข้ามไปก่อน" ด้านล่างได้เลย</p>
     <button id="loginGateGoogleBtn" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--card);color:var(--ink);border:0.5px solid var(--line);border-radius:12px;padding:13px 16px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:18px;">
       <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62Z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.97 10.72A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.18.29-1.72V4.95H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.05l3.01-2.33Z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58Z"/></svg>
