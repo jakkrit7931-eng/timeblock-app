@@ -345,20 +345,22 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .journal-saved-hint.show{opacity:1;}
 .mood-strip{display:flex;gap:3px;}
 .mood-strip span{flex:1;height:20px;border-radius:4px;background:var(--line);display:flex;align-items:center;justify-content:center;font-size:11px;}
-.expense-card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:14px;}
-.expense-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.expense-card-title{font-size:13px;font-weight:700;color:var(--ink);}
+.expense-total-hero{background:var(--card);border-radius:16px;padding:16px;margin-bottom:16px;text-align:center;}
+.expense-total-hero-lbl{font-size:12px;color:var(--ink-soft);margin:0;}
+.expense-total-hero-val{font-family:ui-monospace,monospace;font-size:26px;font-weight:700;color:var(--ink);margin:4px 0 0;}
 .expense-add-btn{border:none;background:var(--ink);color:#fff;font-size:11px;font-weight:600;padding:6px 12px;border-radius:20px;cursor:pointer;}
-.expense-total{font-size:24px;font-weight:700;color:var(--ink);margin:0 0 12px;}
-.expense-cat-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:12px;}
-.expense-cat-name{width:74px;flex-shrink:0;color:var(--ink-soft);}
-.expense-cat-bar-wrap{flex:1;height:8px;background:var(--paper);border-radius:4px;overflow:hidden;}
-.expense-cat-bar{height:100%;border-radius:4px;background:var(--focus);}
-.expense-cat-amt{width:64px;flex-shrink:0;text-align:right;color:var(--ink);font-weight:600;}
-.expense-recent-item{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-top:0.5px solid var(--line);font-size:12px;}
+.expense-recent-card{background:var(--card);border-radius:16px;padding:4px 16px;}
+.expense-recent-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-top:0.5px solid var(--line);font-size:12px;}
 .expense-recent-item:first-child{border-top:none;}
-.expense-cat-chip{background:var(--paper);border:1.5px solid transparent;border-radius:20px;padding:7px 4px;font-size:11px;cursor:pointer;text-align:center;}
-.expense-cat-chip.picked{border-color:var(--focus);background:var(--focus-soft);}
+.expense-cat-row{margin-bottom:12px;font-size:13px;}
+.expense-cat-row-top{display:flex;justify-content:space-between;margin-bottom:5px;}
+.expense-cat-name{color:var(--ink);}
+.expense-cat-bar-wrap{height:8px;background:var(--paper);border-radius:4px;overflow:hidden;}
+.expense-cat-bar{height:100%;border-radius:4px;background:var(--rest);}
+.expense-cat-amt{font-family:ui-monospace,monospace;color:var(--ink-soft);}
+.expense-cat-dot-chip{background:var(--paper);border:1.5px solid transparent;border-radius:12px;padding:10px 4px;font-size:10px;cursor:pointer;text-align:center;color:var(--ink);font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.expense-cat-dot-chip.picked{border-color:var(--focus);background:var(--focus-soft);}
+.expense-cat-dot{width:20px;height:20px;border-radius:50%;flex-shrink:0;}
 .expense-cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px;}
 .event-diamond{width:5px;height:5px;background:var(--rest);transform:rotate(45deg);flex-shrink:0;}
 .event-legend{display:flex;gap:12px;font-size:11px;color:var(--ink-soft);margin-bottom:10px;}
@@ -419,7 +421,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
   .proj-sum-val{font-size:16px;}
   .proj-sum-lbl{font-size:10px;}
   .expense-cat-grid{grid-template-columns:repeat(3,1fr);}
-  .expense-cat-chip{font-size:10px;padding:6px 3px;}
+  .expense-cat-dot-chip{font-size:9px;padding:8px 2px;}
   .plan-view-tabs .plan-view-tab,.tab-btn span{font-size:11px;}
   .mode-grid button{font-size:11px;padding:8px 2px;}
   .proj-grid{gap:10px;}
@@ -714,27 +716,30 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 </div>
 
 <!-- EXPENSE QUICK-ADD MODAL -->
-<div class="overlay" id="expenseOverlay">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-head"><h2>เพิ่มรายจ่าย</h2><button class="modal-close" onclick="document.getElementById('expenseOverlay').classList.remove('show')">✕</button></div>
-    <div class="modal-body">
-      <div class="field"><label>จำนวนเงิน (บาท)</label><input type="number" id="exp_amount" min="0" step="1" placeholder="เช่น 120" inputmode="decimal"></div>
-      <div class="field"><label>หมวดหมู่</label>
-        <div class="expense-cat-grid" id="expCatGrid">
-          <button type="button" class="expense-cat-chip" data-cat="food">🍜 อาหาร</button>
-          <button type="button" class="expense-cat-chip" data-cat="transport">🚗 เดินทาง</button>
-          <button type="button" class="expense-cat-chip" data-cat="shopping">🛍 ช้อปปิ้ง</button>
-          <button type="button" class="expense-cat-chip" data-cat="bills">🏠 บิล/ที่พัก</button>
-          <button type="button" class="expense-cat-chip" data-cat="health">💊 สุขภาพ</button>
-          <button type="button" class="expense-cat-chip" data-cat="fun">🎬 บันเทิง</button>
-          <button type="button" class="expense-cat-chip" data-cat="other">📦 อื่นๆ</button>
-        </div>
-      </div>
-      <div class="field"><label>วันที่</label><input type="date" id="exp_date"></div>
-      <div class="field"><label>โน้ต (ไม่บังคับ)</label><input type="text" id="exp_note" placeholder="เช่น ข้าวกลางวันกับเพื่อน"></div>
-      <button class="btn-primary" id="expenseSaveBtn" style="width:100%;">บันทึกรายจ่าย</button>
+<div class="confirm-popup-backdrop" id="expenseOverlay">
+  <div class="confirm-popup" style="max-width:340px;text-align:left;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <span style="font-size:16px;font-weight:700;color:var(--ink);">เพิ่มรายจ่าย</span>
+      <button type="button" class="gallery-popup-close" onclick="document.getElementById('expenseOverlay').classList.remove('show')">✕</button>
     </div>
+    <input type="number" id="exp_amount" min="0" step="1" placeholder="0" inputmode="decimal" style="width:100%;border:none;background:none;text-align:center;font-family:ui-monospace,monospace;font-size:34px;font-weight:700;color:var(--ink);margin-bottom:16px;">
+    <div class="expense-cat-grid" id="expCatGrid">
+      <button type="button" class="expense-cat-dot-chip" data-cat="food"><span class="expense-cat-dot" style="background:#E08C2B"></span>อาหาร</button>
+      <button type="button" class="expense-cat-dot-chip" data-cat="transport"><span class="expense-cat-dot" style="background:#1a6ecc"></span>เดินทาง</button>
+      <button type="button" class="expense-cat-dot-chip" data-cat="shopping"><span class="expense-cat-dot" style="background:#b2557a"></span>ช้อปปิ้ง</button>
+      <button type="button" class="expense-cat-dot-chip" data-cat="bills"><span class="expense-cat-dot" style="background:#8a6d3b"></span>บิล/ที่พัก</button>
+      <button type="button" class="expense-cat-dot-chip" data-cat="health"><span class="expense-cat-dot" style="background:#1a9c6e"></span>สุขภาพ</button>
+      <button type="button" class="expense-cat-dot-chip" data-cat="fun"><span class="expense-cat-dot" style="background:#7a4fa3"></span>บันเทิง</button>
+      <button type="button" class="expense-cat-dot-chip" data-cat="other"><span class="expense-cat-dot" style="background:#9BA0A6"></span>อื่นๆ</button>
+    </div>
+    <details style="margin-bottom:16px;">
+      <summary style="font-size:12px;color:var(--ink-soft);cursor:pointer;">เพิ่มวันที่/โน้ต (ไม่บังคับ)</summary>
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;">
+        <input type="date" id="exp_date" style="width:100%;border:0.5px solid var(--line);border-radius:10px;padding:9px 11px;font-size:13px;background:var(--paper);color:var(--ink);">
+        <input type="text" id="exp_note" placeholder="เช่น ข้าวกลางวันกับเพื่อน" style="width:100%;border:0.5px solid var(--line);border-radius:10px;padding:9px 11px;font-size:13px;background:var(--paper);color:var(--ink);">
+      </div>
+    </details>
+    <button type="button" id="expenseSaveBtn" class="confirm-popup-btn confirm-popup-btn-confirm" style="width:100%;background:var(--ink);">บันทึก</button>
   </div>
 </div>
 
@@ -1603,20 +1608,21 @@ document.getElementById("journalNote").addEventListener("input",e=>{
 });
 
 // EXPENSE TRACKING
-const EXP_CATS={food:{label:"อาหาร",emoji:"🍜"},transport:{label:"เดินทาง",emoji:"🚗"},shopping:{label:"ช้อปปิ้ง",emoji:"🛍"},bills:{label:"บิล/ที่พัก",emoji:"🏠"},health:{label:"สุขภาพ",emoji:"💊"},fun:{label:"บันเทิง",emoji:"🎬"},other:{label:"อื่นๆ",emoji:"📦"}};
+const EXP_CATS={food:{label:"อาหาร",emoji:"🍜",dot:"#E08C2B"},transport:{label:"เดินทาง",emoji:"🚗",dot:"#1a6ecc"},shopping:{label:"ช้อปปิ้ง",emoji:"🛍",dot:"#b2557a"},bills:{label:"บิล/ที่พัก",emoji:"🏠",dot:"#8a6d3b"},health:{label:"สุขภาพ",emoji:"💊",dot:"#1a9c6e"},fun:{label:"บันเทิง",emoji:"🎬",dot:"#7a4fa3"},other:{label:"อื่นๆ",emoji:"📦",dot:"#9BA0A6"}};
 let pickedExpenseCat="food";
 function openExpenseModal(){
   document.getElementById("exp_amount").value="";
   document.getElementById("exp_note").value="";
   document.getElementById("exp_date").value=todayStr();
   pickedExpenseCat="food";
-  document.querySelectorAll(".expense-cat-chip").forEach(b=>b.classList.toggle("picked",b.dataset.cat===pickedExpenseCat));
+  document.querySelectorAll(".expense-cat-dot-chip").forEach(b=>b.classList.toggle("picked",b.dataset.cat===pickedExpenseCat));
   document.getElementById("expenseOverlay").classList.add("show");
 }
+document.getElementById("expenseOverlay").addEventListener("click",e=>{if(e.target.id==="expenseOverlay")document.getElementById("expenseOverlay").classList.remove("show");});
 document.getElementById("expCatGrid").addEventListener("click",e=>{
-  const b=e.target.closest(".expense-cat-chip");if(!b)return;
+  const b=e.target.closest(".expense-cat-dot-chip");if(!b)return;
   pickedExpenseCat=b.dataset.cat;
-  document.querySelectorAll(".expense-cat-chip").forEach(x=>x.classList.toggle("picked",x.dataset.cat===pickedExpenseCat));
+  document.querySelectorAll(".expense-cat-dot-chip").forEach(x=>x.classList.toggle("picked",x.dataset.cat===pickedExpenseCat));
 });
 document.getElementById("expenseSaveBtn").addEventListener("click",()=>{
   const amount=parseFloat(document.getElementById("exp_amount").value);
@@ -1633,28 +1639,26 @@ function expenseCardHtml(){
   const mk=monthKey(todayStr());
   const thisMonth=expenses.filter(e=>monthKey(e.date)===mk);
   const total=thisMonth.reduce((s,e)=>s+e.amount,0);
-  let html=`<div class="expense-card">
-    <div class="expense-card-top"><span class="expense-card-title">💰 การเงินเดือนนี้</span><button type="button" class="expense-add-btn" id="expenseAddBtn">+ เพิ่มรายจ่าย</button></div>`;
+  let html=`<div style="display:flex;justify-content:flex-end;margin-bottom:4px;"><button type="button" class="expense-add-btn" id="expenseAddBtn">+ เพิ่มรายจ่าย</button></div>`;
+  html+=`<div class="expense-total-hero"><p class="expense-total-hero-lbl">รายจ่ายเดือนนี้</p><p class="expense-total-hero-val">฿${total.toLocaleString()}</p></div>`;
   if(!thisMonth.length){
     html+=`<p class="empty" style="padding:4px 0 0;">ยังไม่มีรายจ่ายเดือนนี้</p>`;
   }else{
-    html+=`<p class="expense-total">฿${total.toLocaleString()}</p>`;
     const byCat={};
     thisMonth.forEach(e=>{byCat[e.category]=(byCat[e.category]||0)+e.amount;});
     const maxCat=Math.max(...Object.values(byCat));
     Object.entries(byCat).sort((a,b)=>b[1]-a[1]).forEach(([cat,amt])=>{
       const c=EXP_CATS[cat]||EXP_CATS.other;
-      html+=`<div class="expense-cat-row"><span class="expense-cat-name">${c.emoji} ${c.label}</span><div class="expense-cat-bar-wrap"><div class="expense-cat-bar" style="width:${Math.round(amt/maxCat*100)}%"></div></div><span class="expense-cat-amt">฿${amt.toLocaleString()}</span></div>`;
+      html+=`<div class="expense-cat-row"><div class="expense-cat-row-top"><span class="expense-cat-name">${c.emoji} ${c.label}</span><span class="expense-cat-amt">฿${amt.toLocaleString()}</span></div><div class="expense-cat-bar-wrap"><div class="expense-cat-bar" style="width:${Math.round(amt/maxCat*100)}%"></div></div></div>`;
     });
     const recent=[...thisMonth].sort((a,b)=>b.date.localeCompare(a.date)||0).slice(0,5);
-    html+=`<div style="margin-top:10px;">`;
+    html+=`<p class="section-label" style="margin-top:18px;">รายการล่าสุด</p><div class="expense-recent-card">`;
     recent.forEach(e=>{
       const c=EXP_CATS[e.category]||EXP_CATS.other;
       html+=`<div class="expense-recent-item"><span>${c.emoji} ${esc(e.note||c.label)}</span><span>฿${e.amount.toLocaleString()}</span></div>`;
     });
     html+=`</div>`;
   }
-  html+=`</div>`;
   return html;
 }
 document.getElementById("progressDash").addEventListener("click",e=>{
