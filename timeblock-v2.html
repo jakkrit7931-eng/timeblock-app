@@ -153,6 +153,10 @@ button:active{opacity:.8;}
 .speech-bubble.show{opacity:1;transform:translateY(0);}
 .mascot-eyebrow{font-size:10px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin:0 0 5px;}
 .mascot-msg{font-size:14px;font-weight:500;margin:0 0 10px;line-height:1.5;}
+.today-shortcut-row{display:flex;gap:8px;margin-bottom:14px;}
+.today-shortcut-btn{flex:1;background:var(--card);border:none;border-radius:14px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;font-family:inherit;}
+.today-shortcut-icon{width:34px;height:34px;border-radius:10px;background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:16px;}
+.today-shortcut-label{font-size:10px;font-weight:600;color:var(--ink);}
 .mf-card{background:var(--card);border:0.5px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px;}
 .mf-idle{display:flex;align-items:center;justify-content:space-between;gap:12px;}
 .mf-idle-text p{margin:0;font-size:14px;font-weight:600;}
@@ -314,6 +318,11 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .proj-card2-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:6px;}
 .proj-card2-name{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--ink);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .proj-card2-pct{font-size:14px;font-weight:700;color:var(--ink);flex-shrink:0;}
+.proj-finance-badge{background:var(--focus-soft);color:var(--focus);font-size:10px;font-weight:700;border-radius:8px;padding:2px 7px;flex-shrink:0;margin-left:6px;}
+.proj-card2-celebrate{text-align:center;padding:20px;}
+.proj-celebrate-check{width:52px;height:52px;border-radius:50%;background:var(--focus);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
+.proj-celebrate-title{font-size:15px;font-weight:700;color:var(--ink);margin:0 0 8px;}
+.proj-celebrate-sub{font-size:12px;color:var(--ink-soft);margin:8px 0 0;}
 .proj-card2-status{font-size:12px;color:#5B8C6E;margin:0;}
 .proj-card2-hint{font-size:12px;color:#5B8C6E;margin:0 0 12px;}
 .proj-card2-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
@@ -486,6 +495,11 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
     <button class="day-nav-btn" id="prevDayBtn">‹</button>
     <span class="day-nav-label" id="dateLabel">วันนี้</span>
     <button class="day-nav-btn" id="nextDayBtn">›</button>
+  </div>
+  <div class="today-shortcut-row">
+    <button type="button" class="today-shortcut-btn" id="shortcutFinanceBtn"><span class="today-shortcut-icon">💰</span><span class="today-shortcut-label">การเงิน</span></button>
+    <button type="button" class="today-shortcut-btn" id="shortcutGoalsBtn"><span class="today-shortcut-icon">🎯</span><span class="today-shortcut-label">เป้าหมาย</span></button>
+    <button type="button" class="today-shortcut-btn" id="shortcutEventsBtn"><span class="today-shortcut-icon">📅</span><span class="today-shortcut-label">เหตุการณ์</span></button>
   </div>
   <button class="add-btn" id="openAddBtn">+ เพิ่ม time block</button>
   <div class="mf-card" id="mfCard"></div>
@@ -683,28 +697,12 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
   <p style="font-size:11px;color:var(--ink-muted);margin:-4px 0 10px;padding:0 2px">แจ้งเตือนแบบเว็บแอปขึ้นอยู่กับเครื่องและเบราว์เซอร์ — บนไอโฟนต้อง Add to Home Screen ก่อนถึงจะได้รับแจ้งเตือน</p>
   <p class="section-label">แจ้งเตือน</p>
   <div class="settings-group">
-    <div class="settings-row" id="openVoiceBtn">
-      <div class="settings-row-left">
-        <svg class="settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-        <div class="settings-row-text"><p>เสียงแจ้งเตือน</p><small id="voiceProviderLabel">อัตโนมัติ</small></div>
-      </div>
-      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-    </div>
     <div class="settings-row" id="openSyncBtn">
       <div class="settings-row-left">
         <svg class="settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
         <div class="settings-row-text"><p>ซิงค์ข้ามอุปกรณ์</p><small>Firebase</small></div>
       </div>
       <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-    </div>
-  </div>
-  <div class="settings-group">
-    <div class="settings-row">
-      <div class="settings-row-left">
-        <svg class="settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-        <div class="settings-row-text"><p>พูดด้วยเสียงตอนแจ้งเตือน</p></div>
-      </div>
-      <label class="toggle-wrap"><input type="checkbox" id="voiceToggle" checked><span class="toggle-track"><span class="toggle-thumb"></span></span></label>
     </div>
   </div>
 
@@ -1006,8 +1004,16 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
         <button type="button" data-mode="count"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:3px;"><path d="M5 21v-6"/><path d="M12 21V9"/><path d="M19 21V3"/></svg>จำนวน</button>
       </div>
       <div id="goalModeTimeFields">
-        <div class="field"><label>เป้าหมายชั่วโมงรวม (สำหรับคำนวณ %)</label><input type="number" id="g_targetHours" min="1" step="1" value="20" placeholder="เช่น 40 ชม."></div>
-        <p style="font-size:11px;color:var(--ink-soft);margin:-6px 0 10px">% จะคำนวณอัตโนมัติจากชั่วโมง time block ที่ผูกไว้</p>
+        <div style="background:var(--paper);border-radius:12px;padding:14px;margin-bottom:8px;text-align:center;">
+          <p style="font-size:12px;color:var(--ink-soft);margin:0 0 6px;">เป้าหมายชั่วโมงรวม</p>
+          <div style="display:flex;align-items:center;justify-content:center;gap:14px;">
+            <button type="button" id="g_targetHoursMinus" style="width:32px;height:32px;border-radius:50%;border:none;background:var(--card);color:var(--ink);font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;">−</button>
+            <span id="g_targetHoursVal" style="font-family:ui-monospace,monospace;font-size:22px;font-weight:700;color:var(--ink);min-width:80px;">20 ชม.</span>
+            <button type="button" id="g_targetHoursPlus" style="width:32px;height:32px;border-radius:50%;border:none;background:var(--card);color:var(--ink);font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;">+</button>
+          </div>
+          <input type="hidden" id="g_targetHours" value="20">
+        </div>
+        <p style="font-size:11px;color:var(--ink-soft);margin:-2px 0 10px">% จะคำนวณอัตโนมัติจากชั่วโมง time block ที่ผูกไว้</p>
       </div>
       <div id="goalModeCountFields" style="display:none;">
         <div class="field"><label>เป้าหมายจำนวนรวม</label>
@@ -1026,11 +1032,35 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
         </div>
         <div class="field" id="g_unitCustomField" style="display:none;"><label>หน่วย (กำหนดเอง)</label><input type="text" id="g_unitCustom" placeholder="เช่น หน้า, บท, ตอน"></div>
         <p style="font-size:11px;color:var(--ink-soft);margin:-6px 0 10px">% จะคำนวณจากจำนวนที่สะสมได้จาก time block ที่ผูกไว้และทำเสร็จแล้ว</p>
+        <div id="g_financeLinkSection" style="display:none;">
+          <div style="display:flex;align-items:center;justify-content:space-between;background:var(--paper);border-radius:12px;padding:12px 14px;margin-bottom:10px;">
+            <div>
+              <div style="font-size:13px;font-weight:600;color:var(--ink);">คำนวณอัตโนมัติจากยอดออม</div>
+              <div style="font-size:11px;color:var(--ink-soft);margin-top:2px;">ดึง % จากธุรกรรมจริง ไม่ต้องกรอกเอง</div>
+            </div>
+            <label class="toggle-wrap"><input type="checkbox" id="g_financeLinked"><span class="toggle-track"><span class="toggle-thumb"></span></span></label>
+          </div>
+          <div id="g_financeSourceFields" style="display:none;">
+            <p style="font-size:12px;font-weight:600;color:var(--ink-soft);margin:0 0 8px;">อ้างอิงจาก</p>
+            <label id="g_sourceNetRow" style="display:flex;align-items:center;gap:10px;border:1.5px solid var(--focus);background:var(--focus-soft);border-radius:12px;padding:11px 14px;margin-bottom:8px;cursor:pointer;">
+              <input type="radio" name="g_financeSource" value="net" checked style="width:16px;height:16px;accent-color:var(--focus);flex-shrink:0;margin:0;">
+              <span style="font-size:13px;font-weight:600;color:var(--ink);">ยอดสุทธิสะสมตั้งแต่สร้างเป้าหมาย</span>
+            </label>
+            <label id="g_sourceAccountRow" style="display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:11px 14px;margin-bottom:12px;cursor:pointer;">
+              <input type="radio" name="g_financeSource" value="account" style="width:16px;height:16px;accent-color:var(--focus);flex-shrink:0;margin:0;">
+              <span id="g_sourceAccountLabel" style="font-size:13px;color:var(--ink-soft);">ยอดคงเหลือบัญชี "เงินสด"</span>
+            </label>
+          </div>
+        </div>
       </div>
       <div id="goalModeProjectFields" style="display:none;">
-        <p style="font-size:11px;color:var(--ink-soft);margin:0 0 10px">% จะคำนวณจากจำนวน milestone ที่ติ๊กเสร็จ เทียบกับทั้งหมด</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <span style="font-size:12px;font-weight:600;color:var(--ink-soft);">Milestone (แบ่ง % ให้อัตโนมัติ)</span>
+          <span id="subtaskWeightSum" style="font-family:ui-monospace,monospace;font-size:12px;font-weight:700;color:var(--focus);">รวม 100%</span>
+        </div>
         <div id="projectSubtaskList" style="margin-bottom:8px;"></div>
-        <button type="button" id="addSubtaskBtn" class="btn-secondary" style="width:100%;">+ เพิ่ม milestone</button>
+        <button type="button" id="addSubtaskBtn" style="width:100%;background:none;border:1px dashed var(--line-strong);color:var(--ink-soft);border-radius:10px;padding:11px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:12px;">+ เพิ่ม milestone</button>
+        <p style="font-size:11px;color:var(--ink-muted);margin:0 0 10px;line-height:1.6;">เพิ่ม/ลบ milestone แล้ว % จะแบ่งเท่าๆ กันให้อัตโนมัติ — ปรับสัดส่วนทีหลังได้ในหน้ารายละเอียด</p>
       </div>
     </div>
     <div class="modal-foot"><div class="modal-actions"><button class="btn-secondary" id="goalDeleteBtn" style="display:none;color:var(--danger)">ลบ</button><button class="btn-primary" id="goalSaveBtn" style="flex:2">บันทึก</button></div></div>
@@ -1062,49 +1092,6 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 
 <!-- VOICE MODAL -->
 <!-- VOICE SETTINGS MODAL -->
-<div class="overlay" id="voiceOverlay">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-head"><h2>ตั้งค่าเสียง</h2><button class="modal-close" onclick="document.getElementById('voiceOverlay').classList.remove('show')">✕</button></div>
-    <div class="modal-body">
-      <label style="font-size:12px;color:var(--ink-soft);display:block;margin-bottom:6px">ระบบเสียง</label>
-      <div class="mode-grid" id="ttsProviderGrid" style="margin-bottom:14px;grid-template-columns:1fr 1fr 1fr;">
-        <button type="button" data-provider="webspeech">เสียงเครื่อง (ฟรี)</button>
-        <button type="button" data-provider="elevenlabs">ElevenLabs</button>
-        <button type="button" data-provider="openai">OpenAI TTS</button>
-        <button type="button" data-provider="googlecloud">Google Cloud TTS</button>
-        <button type="button" data-provider="auto">อัตโนมัติ</button>
-      </div>
-      <div id="webspeechSettings">
-        <div class="field"><label>เสียง</label><select id="voiceSelect"></select></div>
-        <div class="field"><label>ความเร็ว: <span id="rateVal">1.0</span></label><input type="range" id="voiceRate" min="0.5" max="1.6" step="0.05" value="1"></div>
-        <div class="field"><label>Pitch: <span id="pitchVal">1.0</span></label><input type="range" id="voicePitch" min="0.5" max="1.6" step="0.05" value="1"></div>
-        <button class="add-goal-btn" id="presetUncleBtn">ลองโทน "น้า/ลุง อบอุ่น"</button>
-      </div>
-      <div id="elevenlabsSettings" style="display:none">
-        <div class="field"><label>API Key</label><input type="password" id="elevenlabsKey" placeholder="sk_..."></div>
-        <div class="field"><label>Voice ID (เสียงในบัญชีคุณ ไม่ใช่ Library)</label><input type="text" id="elevenlabsVoiceId" placeholder=""></div>
-        <p style="font-size:11px;color:var(--ink-soft)">ต้องใส่ Voice ID จากบัญชีของคุณเอง (Voices → คลิกเสียง → คัดลอก ID) เสียงจาก Voice Library ไม่รองรับในบัญชีฟรี</p>
-      </div>
-      <div id="openaiSettings" style="display:none">
-        <div class="field"><label>API Key</label><input type="password" id="openaiKey" placeholder="sk-..."></div>
-        <div class="field"><label>เสียง</label><select id="openaiVoice"><option value="alloy">Alloy</option><option value="echo">Echo</option><option value="fable">Fable</option><option value="onyx" selected>Onyx</option><option value="nova">Nova</option><option value="shimmer">Shimmer</option></select></div>
-        <p style="font-size:11px;color:var(--ink-soft)">~$0.23/เดือน สำหรับการใช้งานปกติ</p>
-      </div>
-      <div id="googlecloudSettings" style="display:none">
-        <div class="field"><label>API Key</label><input type="password" id="googlecloudKey" placeholder="AIza..."></div>
-        <div class="field"><label>ชื่อเสียง (Voice name)</label><input type="text" id="googlecloudVoice" placeholder="th-TH-Standard-A" value="th-TH-Standard-A"></div>
-        <p style="font-size:11px;color:var(--ink-soft)">ดูรายชื่อเสียงทั้งหมดที่ cloud.google.com/text-to-speech/docs/voices — โควตาฟรี 4 ล้านตัวอักษร/เดือนสำหรับเสียง Standard ⚠️ ต้องจำกัด API key ที่ Google Cloud Console ให้ใช้ได้เฉพาะ Text-to-Speech API เท่านั้น กันคนอื่นเอาไปใช้</p>
-      </div>
-      <div id="autoSettings" style="display:none">
-        <p style="font-size:12px;color:var(--ink-soft);margin-bottom:10px">เช็คก่อนว่าเครื่องมีเสียงไทยไหม ถ้ามีใช้ฟรี ถ้าไม่มีใช้ ElevenLabs สำรอง</p>
-        <div class="field"><label>ElevenLabs API Key (สำรอง)</label><input type="password" id="autoElevenlabsKey" placeholder="sk_..."></div>
-      </div>
-    </div>
-    <div class="modal-foot"><div class="modal-actions"><button class="btn-secondary" id="voiceTestBtn">ทดสอบ</button><button class="btn-primary" id="voiceSaveBtn">บันทึก</button></div></div>
-  </div>
-</div>
-
 <!-- SYNC MODAL -->
 <div class="overlay" id="syncOverlay">
   <div class="modal">
@@ -1173,7 +1160,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 const SK="tbv3_state",CK="tbv3_cloud",VK="tbv3_voice",MK="tbv3_mascot",PK="tbv3_phonecatch";
 const MODES={classic:{focus:25,break:5},deep:{focus:50,break:10},long:{focus:90,break:15}};
 let goals=[{id:"g1",title:"ปิดโปรเจกต์ Q3",_isProject:true}],blocks=[],stats={byDate:{}},timerState={},journal={},expenses=[],events=[],accounts=[{id:"acc_cash",name:"เงินสด",color:"#2f6b52",startingBalance:0}],budgets={};
-let prevActiveId=null,voiceEnabled=true,viewDate=todayStr(),viewMode="day";
+let prevActiveId=null,viewDate=todayStr(),viewMode="day";
 let snoozeUntil=0,lastPhoneCatchAt=0,currentTab="today",lastCountdownKey=null;
 let cloudDb=null,cloudDocRef=null,cloudUnsub=null,cloudConnected=false,cloudPushTimer=null,applyingRemoteUpdate=false;
 
@@ -1290,47 +1277,6 @@ async function playCountdownTick(){
 }
 
 // TTS
-const ttsCache=new Map();
-function loadVoicePref(){try{const r=localStorage.getItem(VK);return r?JSON.parse(r):{provider:"webspeech",voiceURI:"",rate:1,pitch:1,elevenlabsKey:"",elevenlabsVoiceId:"",openaiKey:"",openaiVoice:"onyx",autoElevenlabsKey:"",googlecloudKey:"",googlecloudVoice:"th-TH-Standard-A"};}catch(e){return{provider:"webspeech",rate:1,pitch:1};}}
-function saveVoicePref(p){try{localStorage.setItem(VK,JSON.stringify(p));}catch(e){}}
-function hasThaiVoice(){return!!(window.speechSynthesis&&window.speechSynthesis.getVoices().some(v=>v.lang?.startsWith("th")));}
-function speakWS(text,pref){
-  if(!window.speechSynthesis){showToast("เบราว์เซอร์นี้ไม่รองรับ Web Speech");return;}
-  const vs=window.speechSynthesis.getVoices();
-  if(!vs.length){showToast("ไม่มีเสียงพูดในเครื่อง — ลองใช้ ElevenLabs หรือ OpenAI TTS แทน");return;}
-  window.speechSynthesis.cancel();
-  const chosen=vs.find(v=>v.voiceURI===pref.voiceURI)||vs.find(v=>v.lang?.startsWith("th"));
-  const u=new SpeechSynthesisUtterance(text);
-  if(chosen)u.voice=chosen;
-  u.lang=chosen?.lang||"th-TH";u.rate=pref.rate||1;u.pitch=pref.pitch||1;
-  u.onerror=ev=>showToast("พูดไม่สำเร็จ: "+(ev.error||"ไม่ทราบ"));
-  window.speechSynthesis.speak(u);
-}
-async function speakAPI(text,url,headers,bodyFn,key){let buf=ttsCache.get(key);if(!buf){const res=await fetch(url,{method:"POST",headers,body:JSON.stringify(bodyFn())});if(!res.ok){const b=await res.text().catch(()=>"");showToast("TTS ผิดพลาด ("+res.status+"): "+b.slice(0,100));speakWS(text,loadVoicePref());return;}buf=await res.arrayBuffer();ttsCache.set(key,buf);}try{const ctx=getAudioCtx();if(ctx.state==="suspended")await ctx.resume();const src=ctx.createBufferSource();src.buffer=await ctx.decodeAudioData(buf.slice(0));src.connect(ctx.destination);src.start();}catch(e){showToast("เล่นเสียงไม่ได้: "+e.message);}}
-async function speakEL(text,key,vid){await speakAPI(text,"https://api.elevenlabs.io/v1/text-to-speech/"+(vid||"21m00Tcm4TlvDq8ikWAM"),{"Content-Type":"application/json","xi-api-key":key},()=>({text,model_id:"eleven_multilingual_v2",voice_settings:{stability:.5,similarity_boost:.75}}),"el:"+text);}
-async function speakOAI(text,key,voice){await speakAPI(text,"https://api.openai.com/v1/audio/speech",{"Content-Type":"application/json","Authorization":"Bearer "+key},()=>({model:"tts-1",input:text,voice:voice||"onyx"}),"oai:"+voice+":"+text);}
-async function speakGCTTS(text,key,voiceName){
-  const cacheKey="gc:"+voiceName+":"+text;
-  let buf=ttsCache.get(cacheKey);
-  if(!buf){
-    const langCode=(voiceName||"th-TH").split("-").slice(0,2).join("-");
-    const res=await fetch("https://texttospeech.googleapis.com/v1/text:synthesize?key="+encodeURIComponent(key),{
-      method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({input:{text},voice:{languageCode:langCode,name:voiceName||"th-TH-Standard-A"},audioConfig:{audioEncoding:"MP3"}})
-    });
-    if(!res.ok){const b=await res.text().catch(()=>"");showToast("Google TTS ผิดพลาด ("+res.status+"): "+b.slice(0,100));speakWS(text,loadVoicePref());return;}
-    const data=await res.json();
-    if(!data.audioContent){showToast("Google TTS ไม่ส่งเสียงกลับมา");speakWS(text,loadVoicePref());return;}
-    const bin=atob(data.audioContent);
-    const arr=new Uint8Array(bin.length);
-    for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
-    buf=arr.buffer;
-    ttsCache.set(cacheKey,buf);
-  }
-  try{const ctx=getAudioCtx();if(ctx.state==="suspended")await ctx.resume();const src=ctx.createBufferSource();src.buffer=await ctx.decodeAudioData(buf.slice(0));src.connect(ctx.destination);src.start();}catch(e){showToast("เล่นเสียงไม่ได้: "+e.message);}
-}
-function speak(text){if(!voiceEnabled)return;primeAudio();const p=loadVoicePref(),prov=p.provider||"auto";if(prov==="elevenlabs"&&p.elevenlabsKey)speakEL(text,p.elevenlabsKey,p.elevenlabsVoiceId);else if(prov==="openai"&&p.openaiKey)speakOAI(text,p.openaiKey,p.openaiVoice);else if(prov==="googlecloud"&&p.googlecloudKey)speakGCTTS(text,p.googlecloudKey,p.googlecloudVoice);else if(prov==="auto"){if(hasThaiVoice())speakWS(text,p);else if(p.autoElevenlabsKey)speakEL(text,p.autoElevenlabsKey,"");else{showToast("ไม่มีเสียงไทย และยังไม่ได้กรอก ElevenLabs key สำรอง");speakWS(text,p);}}else speakWS(text,p);}
-
 // MESSAGES
 const MSG={blockStart:["มาเริ่ม {title} กันเลย!","ถึงเวลาของ {title} แล้ว ลุยกันเถอะ","{title} กำลังจะเริ่มนะ เตรียมตัวให้พร้อม"],focusEnd:["เก่งมาก ทำ {title} มาสักพักแล้ว พักก่อนนะ","หมดรอบโฟกัสแล้ว ยืดเส้นยืดสายหน่อยไหม","พักสมองก่อนนะ แล้วค่อยมาต่อ {title}"],breakEnd:["พักพอแล้ว ไปโฟกัสกันต่อ","หมดเวลาพักแล้ว กลับมาลุยกันต่อ","พร้อมยัง? ไปต่อกันเลย"],allDone:["จบงานนี้แล้ว เก่งมาก!","ทำสำเร็จแล้วนะ ไปต่องานถัดไปกันเลย"]};
 
@@ -1405,7 +1351,7 @@ function recordDisciplineScore(score){const d=todayStr();if(!stats.byDate[d])sta
 function refreshGamification(){const streak=computeStreak(),tier=streak>=14?3:streak>=7?2:streak>=3?1:0;const acc=document.getElementById("mascotAccessory");if(acc)acc.innerHTML=accessoryMarkup(tier);if(currentTab==="projects")renderProjects();if(currentTab==="progress")renderProgress();}
 
 // NOTIFY — sound-only alert (no character popup, no push notification)
-function notify(eyebrow,msg){playBeep();if(voiceEnabled)speak(msg);}
+function notify(eyebrow,msg){playBeep();}
 
 // TICK
 function tick(){
@@ -1630,9 +1576,20 @@ function goalProgress(goalId){
   }
   if(mode==="count"){
     const target=g?.targetCount||0;
-    const logged=blocks.filter(b=>b.goalId===goalId&&b.completed===true).reduce((s,b)=>s+(Number(b.countAchieved??b.countAmount)||0),0);
+    let logged;
+    if(g?.financeLinked){
+      if(g.financeSource==="account"&&g.financeAccountId){
+        logged=accountBalance(g.financeAccountId);
+      }else{
+        const since=g.createdAt||"1970-01-01";
+        logged=expenses.filter(e=>e.date>=since).reduce((s,e)=>s+(e.type==="income"?e.amount:-e.amount),0);
+      }
+      logged=Math.max(0,logged);
+    }else{
+      logged=blocks.filter(b=>b.goalId===goalId&&b.completed===true).reduce((s,b)=>s+(Number(b.countAchieved??b.countAmount)||0),0);
+    }
     const pct=target>0?Math.min(100,Math.round(logged/target*100)):0;
-    return{pct,logged:+logged.toFixed(1),target,unit:g?.unit||"",blocksDone,blocksTotal,mode};
+    return{pct,logged:+logged.toFixed(1),target,unit:g?.unit||"",blocksDone,blocksTotal,mode,financeLinked:!!g?.financeLinked};
   }
   if(mode==="time"){
     const logged=goalHoursLogged(goalId);
@@ -2627,6 +2584,15 @@ if(repeatDaysRowEl) repeatDaysRowEl.addEventListener("click",e=>{
   document.querySelectorAll(".day-chip").forEach(b=>b.classList.toggle("picked",pickedRepeatDays.has(Number(b.dataset.day))));
 });
 document.getElementById("openAddBtn").addEventListener("click",()=>openModal(null));
+document.getElementById("shortcutFinanceBtn").addEventListener("click",()=>{
+  switchTabById("progress");
+  setProgressViewMode("finance");
+});
+document.getElementById("shortcutGoalsBtn").addEventListener("click",()=>switchTabById("projects"));
+document.getElementById("shortcutEventsBtn").addEventListener("click",()=>{
+  switchTabById("plan");
+  setPlanViewMode("mo");
+});
 
 document.getElementById("saveBtn").addEventListener("click",()=>{
   const title=document.getElementById("f_title").value.trim(),start=document.getElementById("f_start").value,end=document.getElementById("f_end").value;
@@ -2708,25 +2674,17 @@ function rebalanceSubtaskWeights(){
 function subtaskWeightSum(){return currentSubtasks.reduce((a,s)=>a+(Number(s.weight)||0),0);}
 function renderSubtaskList(){
   const el=document.getElementById("projectSubtaskList");
-  if(!currentSubtasks.length){el.innerHTML=`<p style="font-size:12px;color:var(--ink-muted);margin:0 0 8px">ยังไม่มี milestone — กด "+ เพิ่ม milestone" ด้านล่าง</p>`;return;}
   const sum=subtaskWeightSum();
+  document.getElementById("subtaskWeightSum").textContent="รวม "+sum+"%";
+  document.getElementById("subtaskWeightSum").style.color=sum===100?"var(--focus)":"var(--danger)";
+  if(!currentSubtasks.length){el.innerHTML=`<p style="font-size:12px;color:var(--ink-muted);margin:0 0 8px">ยังไม่มี milestone — กด "+ เพิ่ม milestone" ด้านล่าง</p>`;return;}
   el.innerHTML=currentSubtasks.map((s,i)=>`
-    <div style="display:flex;align-items:flex-start;gap:8px;padding:9px 0;border-bottom:0.5px solid var(--line);">
-      <div style="width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--paper);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">${i+1}</div>
-      <div style="flex:1;min-width:0;">
-        <input type="text" class="subtask-title" data-idx="${i}" value="${esc(s.title)}" placeholder="ชื่อ milestone" style="width:100%;border:none;background:transparent;font-size:13px;font-family:inherit;color:var(--ink);margin-bottom:4px;${s.done?"text-decoration:line-through;color:var(--ink-muted);":""}">
-        <div style="display:flex;align-items:center;gap:8px;">
-          <input type="checkbox" class="subtask-done" data-idx="${i}" ${s.done?"checked":""}>
-          <input type="date" class="subtask-due" data-idx="${i}" value="${s.due||""}" style="border:none;background:transparent;font-size:11px;color:var(--ink-soft);font-family:inherit;padding:0;">
-          <button type="button" class="subtask-schedule" data-idx="${i}" title="สร้าง time block วันนี้" style="border:none;background:none;color:var(--focus);font-size:14px;cursor:pointer;line-height:1;margin-left:auto;">📅</button>
-        </div>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;">
-        <input type="number" class="subtask-weight" data-idx="${i}" value="${s.weight??0}" min="0" max="100" style="width:52px;text-align:center;border:0.5px solid var(--focus-border);background:var(--focus-soft);color:var(--focus);border-radius:20px;padding:3px 4px;font-size:12px;font-family:inherit;">
-        <button type="button" class="subtask-remove" data-idx="${i}" style="border:none;background:none;color:var(--ink-muted);font-size:12px;cursor:pointer;">✕</button>
-      </div>
-    </div>`).join("")+
-    `<p style="font-size:11px;color:${sum===100?"var(--ink-muted)":"var(--danger)"};margin:8px 0 0;">รวม ${sum}% ${sum===100?"":"(ต้องเท่ากับ 100% — ปรับตัวเลขด้านบนเอง หรือลบ/เพิ่มให้ auto rebalance)"}</p>`;
+    <div style="display:flex;align-items:center;gap:10px;background:var(--paper);border-radius:12px;padding:10px 12px;margin-bottom:8px;">
+      <input type="checkbox" class="subtask-done" data-idx="${i}" ${s.done?"checked":""} style="width:20px;height:20px;border-radius:6px;accent-color:var(--focus);flex-shrink:0;margin:0;">
+      <input type="text" class="subtask-title" data-idx="${i}" value="${esc(s.title)}" placeholder="ชื่อ milestone" style="flex:1;min-width:0;border:none;background:transparent;font-size:13px;font-family:inherit;color:var(--ink);${s.done?"text-decoration:line-through;color:var(--ink-muted);":""}">
+      <span style="font-family:ui-monospace,monospace;font-size:12px;font-weight:600;color:var(--ink-soft);flex-shrink:0;">${s.weight??0}%</span>
+      <button type="button" class="subtask-remove" data-idx="${i}" style="border:none;background:none;color:var(--ink-muted);font-size:13px;cursor:pointer;flex-shrink:0;padding:0;">✕</button>
+    </div>`).join("");
 }
 document.getElementById("addSubtaskBtn").addEventListener("click",()=>{
   currentSubtasks.push({id:uid(),title:"",done:false,due:"",weight:0});
@@ -2738,24 +2696,25 @@ document.getElementById("addSubtaskBtn").addEventListener("click",()=>{
 document.getElementById("projectSubtaskList").addEventListener("click",e=>{
   const rm=e.target.closest(".subtask-remove");
   if(rm){currentSubtasks.splice(Number(rm.dataset.idx),1);rebalanceSubtaskWeights();renderSubtaskList();return;}
-  const sc=e.target.closest(".subtask-schedule");
-  if(sc){
-    const s=currentSubtasks[Number(sc.dataset.idx)];
-    if(!s.title.trim()){showToast("ตั้งชื่อ milestone ก่อนนะ");return;}
-    createBlockFromMilestone(s.title.trim(),editingGoalId||"");
-  }
 });
 document.getElementById("projectSubtaskList").addEventListener("change",e=>{
   const cb=e.target.closest(".subtask-done");
   if(cb){currentSubtasks[Number(cb.dataset.idx)].done=cb.checked;renderSubtaskList();return;}
-  const due=e.target.closest(".subtask-due");
-  if(due){currentSubtasks[Number(due.dataset.idx)].due=due.value;return;}
-  const w=e.target.closest(".subtask-weight");
-  if(w){currentSubtasks[Number(w.dataset.idx)].weight=Math.max(0,Math.min(100,Number(w.value)||0));renderSubtaskList();}
 });
 document.getElementById("projectSubtaskList").addEventListener("input",e=>{
   const ti=e.target.closest(".subtask-title");
   if(ti)currentSubtasks[Number(ti.dataset.idx)].title=ti.value;
+});
+function syncTargetHoursDisplay(){document.getElementById("g_targetHoursVal").textContent=document.getElementById("g_targetHours").value+" ชม.";}
+document.getElementById("g_targetHoursMinus").addEventListener("click",()=>{
+  const inp=document.getElementById("g_targetHours");
+  inp.value=Math.max(1,(Number(inp.value)||20)-5);
+  syncTargetHoursDisplay();
+});
+document.getElementById("g_targetHoursPlus").addEventListener("click",()=>{
+  const inp=document.getElementById("g_targetHours");
+  inp.value=(Number(inp.value)||20)+5;
+  syncTargetHoursDisplay();
 });
 function updateGoalModeGrid(){
   document.querySelectorAll("#goalModeGrid button").forEach(b=>b.classList.toggle("picked",b.dataset.mode===pickedGoalMode));
@@ -2778,11 +2737,17 @@ function openGoalModal(goal){
   document.getElementById("g_category").value=goal?.category||"work";
   document.getElementById("g_deadline").value=goal?.deadline||"";
   document.getElementById("g_targetHours").value=goal?.targetHours||20;
+  syncTargetHoursDisplay();
   const presetUnits=["กม.","นาที","เซ็ต","แก้ว","บาท","ครั้ง"];
   const savedUnit=goal?.unit||"";
   if(presetUnits.includes(savedUnit)){document.getElementById("g_unitPreset").value=savedUnit;document.getElementById("g_unitCustom").value="";}
   else{document.getElementById("g_unitPreset").value="__custom";document.getElementById("g_unitCustom").value=savedUnit;}
   document.getElementById("g_unitCustomField").style.display=document.getElementById("g_unitPreset").value==="__custom"?"block":"none";
+  document.getElementById("g_financeLinked").checked=!!goal?.financeLinked;
+  document.querySelector(`input[name="g_financeSource"][value="${goal?.financeSource||"net"}"]`).checked=true;
+  document.getElementById("g_financeSourceFields").style.display=goal?.financeLinked?"block":"none";
+  updateFinanceLinkVisibility();
+  updateFinanceSourceRows();
   document.getElementById("g_targetCount").value=goal?.targetCount||"";
   currentSubtasks=(goal?.subtasks||[]).map(s=>({due:"",weight:0,...s}));
   if(currentSubtasks.length&&currentSubtasks.some(s=>!s.weight))rebalanceSubtaskWeights();
@@ -2795,7 +2760,27 @@ function openGoalModal(goal){
   document.getElementById("goalDeleteBtn").style.display=goal?"block":"none";
   goalOverlay.classList.add("show");
 }
-document.getElementById("g_unitPreset").addEventListener("change",()=>{document.getElementById("g_unitCustomField").style.display=document.getElementById("g_unitPreset").value==="__custom"?"block":"none";});
+function updateFinanceLinkVisibility(){
+  const isMoney=currentUnitValue()==="บาท";
+  document.getElementById("g_financeLinkSection").style.display=isMoney?"block":"none";
+  if(!isMoney)document.getElementById("g_financeLinked").checked=false;
+}
+document.getElementById("g_unitPreset").addEventListener("change",()=>{document.getElementById("g_unitCustomField").style.display=document.getElementById("g_unitPreset").value==="__custom"?"block":"none";updateFinanceLinkVisibility();});
+document.getElementById("g_unitCustom").addEventListener("input",updateFinanceLinkVisibility);
+document.getElementById("g_financeLinked").addEventListener("change",e=>{
+  document.getElementById("g_financeSourceFields").style.display=e.target.checked?"block":"none";
+});
+function updateFinanceSourceRows(){
+  const val=document.querySelector('input[name="g_financeSource"]:checked')?.value||"net";
+  const netRow=document.getElementById("g_sourceNetRow"),accRow=document.getElementById("g_sourceAccountRow");
+  netRow.style.border=val==="net"?"1.5px solid var(--focus)":"1px solid var(--line)";
+  netRow.style.background=val==="net"?"var(--focus-soft)":"none";
+  accRow.style.border=val==="account"?"1.5px solid var(--focus)":"1px solid var(--line)";
+  accRow.style.background=val==="account"?"var(--focus-soft)":"none";
+  const acc=accountById(defaultAccountId());
+  document.getElementById("g_sourceAccountLabel").textContent=`ยอดคงเหลือบัญชี "${acc?.name||""}"`;
+}
+document.querySelectorAll('input[name="g_financeSource"]').forEach(r=>r.addEventListener("change",updateFinanceSourceRows));
 function currentUnitValue(){const p=document.getElementById("g_unitPreset").value;return p==="__custom"?document.getElementById("g_unitCustom").value.trim():p;}
 document.getElementById("goalCancelBtn").addEventListener("click",()=>goalOverlay.classList.remove("show"));
 document.getElementById("goalSaveBtn").addEventListener("click",()=>{
@@ -2818,10 +2803,13 @@ document.getElementById("goalSaveBtn").addEventListener("click",()=>{
     unit:pickedGoalMode==="count"?currentUnitValue():"",
     targetCount:pickedGoalMode==="count"?(parseFloat(document.getElementById("g_targetCount").value)||0):0,
     subtasks:pickedGoalMode==="project"?currentSubtasks.filter(s=>s.title.trim()).map(s=>({id:s.id,title:s.title.trim(),done:!!s.done,due:s.due||"",weight:Number(s.weight)||0})):undefined,
+    financeLinked:pickedGoalMode==="count"&&currentUnitValue()==="บาท"?document.getElementById("g_financeLinked").checked:false,
+    financeSource:document.querySelector('input[name="g_financeSource"]:checked')?.value||"net",
+    financeAccountId:defaultAccountId(),
     _isProject:true,
   };
   if(editingGoalId){Object.assign(goals.find(g=>g.id===editingGoalId),data);}
-  else goals.push({id:uid(),...data});
+  else goals.push({id:uid(),createdAt:todayStr(),...data});
   saveState();goalOverlay.classList.remove("show");
   renderAll();
 });
@@ -2980,21 +2968,6 @@ function toggleHabitToday(goalId){
   saveState();renderAll();
 }
 
-// VOICE SETTINGS
-const voiceOverlay=document.getElementById("voiceOverlay");let pickedProvider="auto";
-function populateVoiceSelect(){const vs=window.speechSynthesis?.getVoices()||[],pref=loadVoicePref(),sel=document.getElementById("voiceSelect");if(!vs.length){sel.innerHTML='<option value="">(ยังไม่โหลดรายชื่อเสียง)</option>';return;}sel.innerHTML=vs.map(v=>`<option value="${v.voiceURI}">${esc(v.name)} (${v.lang})</option>`).join("");if(pref.voiceURI)sel.value=pref.voiceURI;}
-if("speechSynthesis" in window)window.speechSynthesis.addEventListener("voiceschanged",populateVoiceSelect);
-function updateProviderGrid(){document.querySelectorAll("#ttsProviderGrid button").forEach(b=>b.classList.toggle("picked",b.dataset.provider===pickedProvider));["webspeechSettings","elevenlabsSettings","openaiSettings","googlecloudSettings","autoSettings"].forEach(id=>document.getElementById(id).style.display=id===pickedProvider+"Settings"?"block":"none");document.getElementById("voiceProviderLabel").textContent={webspeech:"เสียงเครื่อง (ฟรี)",elevenlabs:"ElevenLabs",openai:"OpenAI TTS",googlecloud:"Google Cloud TTS",auto:"อัตโนมัติ"}[pickedProvider]||"อัตโนมัติ";}
-document.getElementById("ttsProviderGrid").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;pickedProvider=b.dataset.provider;updateProviderGrid();});
-document.getElementById("openVoiceBtn").addEventListener("click",()=>{const p=loadVoicePref();populateVoiceSelect();document.getElementById("voiceRate").value=p.rate||1;document.getElementById("rateVal").textContent=(p.rate||1).toFixed(2);document.getElementById("voicePitch").value=p.pitch||1;document.getElementById("pitchVal").textContent=(p.pitch||1).toFixed(2);document.getElementById("elevenlabsKey").value=p.elevenlabsKey||"";document.getElementById("elevenlabsVoiceId").value=p.elevenlabsVoiceId||"";document.getElementById("openaiKey").value=p.openaiKey||"";document.getElementById("openaiVoice").value=p.openaiVoice||"onyx";document.getElementById("autoElevenlabsKey").value=p.autoElevenlabsKey||"";document.getElementById("googlecloudKey").value=p.googlecloudKey||"";document.getElementById("googlecloudVoice").value=p.googlecloudVoice||"th-TH-Standard-A";pickedProvider=p.provider||"auto";updateProviderGrid();voiceOverlay.classList.add("show");});
-document.getElementById("voiceRate").addEventListener("input",e=>document.getElementById("rateVal").textContent=Number(e.target.value).toFixed(2));
-document.getElementById("voicePitch").addEventListener("input",e=>document.getElementById("pitchVal").textContent=Number(e.target.value).toFixed(2));
-document.getElementById("presetUncleBtn").addEventListener("click",()=>{document.getElementById("voiceRate").value=.85;document.getElementById("rateVal").textContent="0.85";document.getElementById("voicePitch").value=.75;document.getElementById("pitchVal").textContent="0.75";});
-function collectVoicePref(){return{provider:pickedProvider,voiceURI:document.getElementById("voiceSelect").value,rate:Number(document.getElementById("voiceRate").value),pitch:Number(document.getElementById("voicePitch").value),elevenlabsKey:document.getElementById("elevenlabsKey").value.trim(),elevenlabsVoiceId:document.getElementById("elevenlabsVoiceId").value.trim(),openaiKey:document.getElementById("openaiKey").value.trim(),openaiVoice:document.getElementById("openaiVoice").value,autoElevenlabsKey:document.getElementById("autoElevenlabsKey").value.trim(),googlecloudKey:document.getElementById("googlecloudKey").value.trim(),googlecloudVoice:document.getElementById("googlecloudVoice").value.trim()||"th-TH-Standard-A"};}
-document.getElementById("voiceTestBtn").addEventListener("click",()=>{const p=collectVoicePref();if(p.provider==="elevenlabs"&&!p.elevenlabsKey){alert("กรอก API key ก่อน");return;}if(p.provider==="openai"&&!p.openaiKey){alert("กรอก API key ก่อน");return;}saveVoicePref(p);speak("สวัสดีครับ นี่คือเสียงทดสอบ");});
-document.getElementById("voiceSaveBtn").addEventListener("click",()=>{saveVoicePref(collectVoicePref());voiceOverlay.classList.remove("show");});
-document.getElementById("voiceToggle").addEventListener("change",e=>voiceEnabled=e.target.checked);
-
 // PHONE CATCH
 
 // MASCOT STYLE PICKER
@@ -3095,10 +3068,9 @@ function staircaseHtml(g){
   function staircasePlaceholder(){
     const bars=Array.from({length:STEPS}).map((_,i)=>{
       const h=Math.round(minH+(maxH-minH)*(i+1)/STEPS);
-      const isLast=i===STEPS-1;
-      return`<div style="flex:1;height:${h}px;border-radius:3px 3px 0 0;background:var(--staircase-undone);position:relative;">${isLast?'<span style="position:absolute;top:-18px;font-size:13px;left:50%;transform:translateX(-50%);">🏆</span>':''}</div>`;
+      return`<div style="flex:1;height:${h}px;border-radius:3px 3px 0 0;background:var(--staircase-undone);"></div>`;
     }).join("");
-    return`<div style="display:flex;align-items:flex-end;gap:6px;height:${maxH}px;padding-top:24px;margin-bottom:0;opacity:.55;">${bars}</div>`;
+    return`<div style="opacity:.55;"><div style="text-align:right;font-size:13px;line-height:1;margin-bottom:6px;">🏆</div><div style="display:flex;align-items:flex-end;gap:6px;height:${maxH}px;margin-bottom:0;">${bars}</div></div>`;
   }
 }
 function goalStepStatusLine(g){
@@ -3141,9 +3113,21 @@ function renderProjects(){
       const isHold=g.category==="hold";
       const modeLabel=p.mode==="count"?"📊 จำนวน":p.mode==="project"?"☑ งานเสร็จ":"⏱ เวลา";
       const metaRight=p.mode==="count"?`${p.logged}/${p.target||0} ${p.unit||""}`:p.mode==="project"?`${p.subtasksDone}/${p.subtasksTotal} milestone`:`${p.logged}/${p.target||0} ชม.`;
+      const financeBadge=p.financeLinked?`<span class="proj-finance-badge">⚡ อัตโนมัติจากการเงิน</span>`:"";
+      if(p.financeLinked&&p.pct>=100){
+        leftHtml+=`<div class="proj-card2 proj-card2-celebrate" onclick="openGoalModal(goals.find(g=>g.id==='${g.id}'))">
+          <div class="proj-celebrate-check">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-10" stroke="var(--card)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p class="proj-celebrate-title">${esc(g.title)} — สำเร็จแล้ว!</p>
+          ${financeBadge}
+          <p class="proj-celebrate-sub">เก็บครบ ${p.target?.toLocaleString?.()||p.target} ตามเป้า 🎉</p>
+        </div>`;
+        return;
+      }
       leftHtml+=`<div class="proj-card2${isHold?" proj-dimmed":""}" onclick="openGoalModal(goals.find(g=>g.id==='${g.id}'))">
         <div class="proj-card2-top">
-          <div class="proj-card2-name">${goalIconHtml(g,16)} ${esc(g.title)}</div>
+          <div class="proj-card2-name">${goalIconHtml(g,16)} ${esc(g.title)}${financeBadge}</div>
           <div class="proj-card2-pct">${p.pct}%</div>
         </div>
         ${staircaseHtml(g)}
@@ -3575,7 +3559,6 @@ if(window.matchMedia)window.matchMedia("(prefers-color-scheme: dark)").addEventL
 // BOOT
 const hasData=loadState();
 if(!hasData)seedBlocks();
-document.getElementById("voiceToggle").checked=true;
 applyDarkMode();
 ensureHabitBlocksForToday();
 renderAll();
