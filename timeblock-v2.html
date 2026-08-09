@@ -118,7 +118,7 @@ button:active{opacity:.8;}
 .toggle-wrap input:checked~.toggle-track .toggle-thumb{transform:translateX(18px);}
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:20px;opacity:0;pointer-events:none;transition:opacity .18s ease-in;}
 .overlay.show{opacity:1;pointer-events:auto;transition:opacity .25s ease-out;}
-.modal{width:100%;max-width:440px;background:var(--card);border-radius:20px;display:flex;flex-direction:column;max-height:85dvh;transform:translateY(28px);transition:transform .18s ease-in;}
+.modal{width:100%;max-width:440px;background:var(--card);border-radius:20px;display:flex;flex-direction:column;max-height:85dvh;overflow:hidden;transform:translateY(28px);transition:transform .18s ease-in;}
 .overlay.show .modal{transform:translateY(0);transition:transform .25s ease-out;}
 .modal-handle{display:none;}
 .modal-head{padding:12px 18px 10px;border-bottom:0.5px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
@@ -373,7 +373,42 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .expense-cat-dot-chip{background:var(--paper);border:1.5px solid transparent;border-radius:12px;padding:10px 4px;font-size:10px;cursor:pointer;text-align:center;color:var(--ink);font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:6px;}
 .expense-cat-dot-chip.picked{border-color:var(--focus);background:var(--focus-soft);}
 .expense-cat-dot{width:20px;height:20px;border-radius:50%;flex-shrink:0;}
-.expense-cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px;}
+.acct-filter-row{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px;padding-bottom:2px;}
+.acct-filter-chip{flex-shrink:0;border:none;background:var(--card);color:var(--ink-soft);font-size:12px;font-weight:500;padding:7px 14px;border-radius:20px;cursor:pointer;white-space:nowrap;font-family:inherit;}
+.acct-filter-chip.active{background:var(--ink);color:var(--card);font-weight:600;}
+.fin-net-hero{background:var(--card);border-radius:16px;padding:18px;margin-bottom:14px;}
+.fin-net-hero-lbl{font-size:12px;color:var(--ink-soft);margin:0 0 4px;}
+.fin-net-hero-val{font-family:ui-monospace,monospace;font-size:28px;font-weight:700;margin:0 0 14px;}
+.fin-net-hero-val.pos{color:var(--focus);}
+.fin-net-hero-val.neg{color:var(--danger);}
+.fin-net-split{display:flex;gap:16px;}
+.fin-net-split-item{flex:1;}
+.fin-net-split-lbl{font-size:11px;color:var(--ink-muted);display:block;margin-bottom:2px;}
+.fin-net-split-val{font-family:ui-monospace,monospace;font-size:15px;font-weight:600;}
+.fin-btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+.fin-btn-expense{border:none;background:var(--ink);color:var(--card);border-radius:10px;padding:11px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
+.fin-btn-income{border:1px solid var(--focus);background:none;color:var(--focus);border-radius:10px;padding:11px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
+.fin-txn-item{background:var(--card);border-radius:14px;padding:12px 14px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;}
+.fin-txn-title{font-size:13px;color:var(--ink);margin:0;}
+.fin-txn-meta{font-size:11px;color:var(--ink-muted);margin:2px 0 0;}
+.fin-txn-amt{font-family:ui-monospace,monospace;font-size:13px;font-weight:600;flex-shrink:0;}
+.fin-txn-amt.pos{color:var(--focus);}
+.fin-txn-amt.neg{color:var(--danger);}
+.acct-manage-link{font-size:11px;color:var(--ink-soft);text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit;padding:0 0 12px;display:block;margin-left:auto;}
+.acct-row{display:flex;align-items:center;gap:12px;background:var(--paper);border-radius:12px;padding:11px 14px;margin-bottom:8px;}
+.acct-row-dot{width:32px;height:32px;border-radius:50%;flex-shrink:0;}
+.acct-row-name{font-size:13px;font-weight:600;color:var(--ink);margin:0;}
+.acct-row-bal{font-family:ui-monospace,monospace;font-size:11px;color:var(--ink-muted);margin:0;}
+.acct-row-del{margin-left:auto;background:none;border:none;color:var(--ink-muted);cursor:pointer;font-size:15px;padding:4px 6px;}
+.acct-add-btn{width:100%;background:none;border:1px dashed var(--line-strong);color:var(--ink-soft);border-radius:10px;padding:12px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
+.budget-row{background:var(--card);border-radius:14px;padding:12px 14px;margin-bottom:10px;}
+.budget-row-top{display:flex;justify-content:space-between;margin-bottom:6px;}
+.budget-row-name{font-size:13px;font-weight:600;color:var(--ink);}
+.budget-row-amt{font-family:ui-monospace,monospace;font-size:12px;color:var(--ink-soft);}
+.budget-bar-wrap{height:7px;background:var(--paper);border-radius:4px;overflow:hidden;margin-bottom:4px;}
+.budget-bar-fill{height:100%;border-radius:4px;}
+.budget-row-warn{font-size:11px;font-weight:600;}
+.expense-cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
 .event-diamond{width:5px;height:5px;background:var(--rest);transform:rotate(45deg);flex-shrink:0;}
 .event-legend{display:flex;gap:12px;font-size:11px;color:var(--ink-soft);margin-bottom:10px;}
 .event-legend-item{display:flex;align-items:center;gap:4px;}
@@ -752,7 +787,78 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
         <input type="text" id="exp_note" placeholder="เช่น ข้าวกลางวันกับเพื่อน" style="width:100%;border:0.5px solid var(--line);border-radius:10px;padding:9px 11px;font-size:13px;background:var(--paper);color:var(--ink);">
       </div>
     </details>
+    <div id="expAccountRow" style="display:flex;align-items:center;justify-content:space-between;background:var(--paper);border-radius:10px;padding:11px 14px;margin-bottom:16px;font-size:13px;color:var(--ink-soft);cursor:pointer;">
+      <span>จ่ายจากบัญชี</span><span id="exp_accountLabel" style="color:var(--ink);font-weight:600;"></span>
+    </div>
     <button type="button" id="expenseSaveBtn" class="confirm-popup-btn confirm-popup-btn-confirm" style="width:100%;background:var(--ink);">บันทึก</button>
+  </div>
+</div>
+
+<!-- INCOME MODAL -->
+<div class="confirm-popup-backdrop" id="incomeOverlay">
+  <div class="confirm-popup" style="max-width:340px;text-align:left;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <span style="font-size:16px;font-weight:700;color:var(--ink);">เพิ่มรายรับ</span>
+      <button type="button" class="gallery-popup-close" onclick="document.getElementById('incomeOverlay').classList.remove('show')">✕</button>
+    </div>
+    <input type="number" id="inc_amount" min="0" step="1" placeholder="0" inputmode="decimal" style="width:100%;border:none;background:none;text-align:center;font-family:ui-monospace,monospace;font-size:34px;font-weight:700;color:var(--focus);margin-bottom:16px;">
+    <div class="expense-cat-grid" id="incCatGrid" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px;">
+      <button type="button" class="expense-cat-dot-chip" data-cat="salary"><span class="expense-cat-dot" style="background:#2f6b52"></span>เงินเดือน</button>
+      <button type="button" class="expense-cat-dot-chip" data-cat="freelance"><span class="expense-cat-dot" style="background:#4A9B78"></span>ฟรีแลนซ์</button>
+      <button type="button" class="expense-cat-dot-chip" data-cat="other"><span class="expense-cat-dot" style="background:var(--line-strong)"></span>อื่นๆ</button>
+    </div>
+    <div id="incAccountRow" style="display:flex;align-items:center;justify-content:space-between;background:var(--paper);border-radius:10px;padding:11px 14px;margin-bottom:16px;font-size:13px;color:var(--ink-soft);cursor:pointer;">
+      <span>เข้าบัญชี</span><span id="inc_accountLabel" style="color:var(--ink);font-weight:600;"></span>
+    </div>
+    <button type="button" id="incomeSaveBtn" class="confirm-popup-btn confirm-popup-btn-confirm" style="width:100%;background:var(--ink);">บันทึก</button>
+  </div>
+</div>
+
+<!-- ACCOUNT PICKER MODAL -->
+<div class="confirm-popup-backdrop" id="accountPickOverlay">
+  <div class="confirm-popup" style="max-width:320px;text-align:left;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+      <span style="font-size:15px;font-weight:700;color:var(--ink);">เลือกบัญชี</span>
+      <button type="button" class="gallery-popup-close" onclick="document.getElementById('accountPickOverlay').classList.remove('show')">✕</button>
+    </div>
+    <div id="accountPickList"></div>
+  </div>
+</div>
+
+<!-- MANAGE ACCOUNTS MODAL -->
+<div class="confirm-popup-backdrop" id="accountsOverlay">
+  <div class="confirm-popup" style="max-width:340px;text-align:left;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+      <span style="font-size:16px;font-weight:700;color:var(--ink);">จัดการบัญชี</span>
+      <button type="button" class="gallery-popup-close" onclick="document.getElementById('accountsOverlay').classList.remove('show')">✕</button>
+    </div>
+    <div id="accountsList" style="margin-bottom:12px;"></div>
+    <div id="newAccountForm" style="display:none;flex-direction:column;gap:8px;margin-bottom:10px;">
+      <input type="text" id="newAcct_name" placeholder="ชื่อบัญชี เช่น บัญชีออมทรัพย์" style="width:100%;border:0.5px solid var(--line);border-radius:10px;padding:9px 11px;font-size:13px;background:var(--paper);color:var(--ink);">
+      <div class="expense-cat-grid" id="newAcctColorGrid" style="grid-template-columns:repeat(6,1fr);">
+        <button type="button" class="expense-cat-dot-chip" data-color="#2f6b52" style="padding:6px 2px;"><span class="expense-cat-dot" style="background:#2f6b52;width:16px;height:16px;"></span></button>
+        <button type="button" class="expense-cat-dot-chip" data-color="#E08C2B" style="padding:6px 2px;"><span class="expense-cat-dot" style="background:#E08C2B;width:16px;height:16px;"></span></button>
+        <button type="button" class="expense-cat-dot-chip" data-color="#B23B3B" style="padding:6px 2px;"><span class="expense-cat-dot" style="background:#B23B3B;width:16px;height:16px;"></span></button>
+        <button type="button" class="expense-cat-dot-chip" data-color="#1a6ecc" style="padding:6px 2px;"><span class="expense-cat-dot" style="background:#1a6ecc;width:16px;height:16px;"></span></button>
+        <button type="button" class="expense-cat-dot-chip" data-color="#7a4fa3" style="padding:6px 2px;"><span class="expense-cat-dot" style="background:#7a4fa3;width:16px;height:16px;"></span></button>
+        <button type="button" class="expense-cat-dot-chip" data-color="#9BA0A6" style="padding:6px 2px;"><span class="expense-cat-dot" style="background:#9BA0A6;width:16px;height:16px;"></span></button>
+      </div>
+      <button type="button" id="newAccountSaveBtn" class="confirm-popup-btn confirm-popup-btn-confirm" style="width:100%;background:var(--ink);">บันทึกบัญชี</button>
+    </div>
+    <button type="button" class="acct-add-btn" id="newAccountBtn">+ เพิ่มบัญชีใหม่</button>
+  </div>
+</div>
+
+<!-- SET BUDGET MODAL -->
+<div class="confirm-popup-backdrop" id="budgetOverlay">
+  <div class="confirm-popup" style="max-width:340px;text-align:left;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <span style="font-size:16px;font-weight:700;color:var(--ink);">ตั้งงบหมวดใหม่</span>
+      <button type="button" class="gallery-popup-close" onclick="document.getElementById('budgetOverlay').classList.remove('show')">✕</button>
+    </div>
+    <div class="expense-cat-grid" id="budgetCatGrid" style="margin-bottom:14px;"></div>
+    <input type="number" id="budget_amount" min="0" step="1" placeholder="วงเงิน/เดือน (บาท)" style="width:100%;border:0.5px solid var(--line);border-radius:10px;padding:11px 13px;font-size:14px;background:var(--paper);color:var(--ink);margin-bottom:16px;font-family:ui-monospace,monospace;">
+    <button type="button" id="budgetSaveBtn" class="confirm-popup-btn confirm-popup-btn-confirm" style="width:100%;background:var(--ink);">บันทึกงบ</button>
   </div>
 </div>
 
@@ -1066,7 +1172,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 <script>
 const SK="tbv3_state",CK="tbv3_cloud",VK="tbv3_voice",MK="tbv3_mascot",PK="tbv3_phonecatch";
 const MODES={classic:{focus:25,break:5},deep:{focus:50,break:10},long:{focus:90,break:15}};
-let goals=[{id:"g1",title:"ปิดโปรเจกต์ Q3",_isProject:true}],blocks=[],stats={byDate:{}},timerState={},journal={},expenses=[],events=[];
+let goals=[{id:"g1",title:"ปิดโปรเจกต์ Q3",_isProject:true}],blocks=[],stats={byDate:{}},timerState={},journal={},expenses=[],events=[],accounts=[{id:"acc_cash",name:"เงินสด",color:"#2f6b52",startingBalance:0}],budgets={};
 let prevActiveId=null,voiceEnabled=true,viewDate=todayStr(),viewMode="day";
 let snoozeUntil=0,lastPhoneCatchAt=0,currentTab="today",lastCountdownKey=null;
 let cloudDb=null,cloudDocRef=null,cloudUnsub=null,cloudConnected=false,cloudPushTimer=null,applyingRemoteUpdate=false;
@@ -1143,8 +1249,8 @@ function showConfirmPopup({title,message,variant="neutral",confirmLabel="ยื�
 }
 
 // PERSISTENCE
-function saveState(){try{localStorage.setItem(SK,JSON.stringify({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events}));}catch(e){}queueCloudPush();}
-function loadState(){try{const r=localStorage.getItem(SK);if(!r)return false;const d=JSON.parse(r);if(Array.isArray(d.blocks)&&d.blocks.length){blocks=d.blocks;blocks.forEach(b=>{if(!b.date)b.date=todayStr();});if(Array.isArray(d.goals))goals=d.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;});if(d.timerState)Object.assign(timerState,d.timerState);if(d.prevActiveId)prevActiveId=d.prevActiveId;if(d.stats?.byDate)stats=d.stats;if(d.journal&&typeof d.journal==="object")journal=d.journal;if(Array.isArray(d.expenses))expenses=d.expenses;if(Array.isArray(d.events))events=d.events;return true;}}catch(e){}return false;}
+function saveState(){try{localStorage.setItem(SK,JSON.stringify({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,accounts,budgets}));}catch(e){}queueCloudPush();}
+function loadState(){try{const r=localStorage.getItem(SK);if(!r)return false;const d=JSON.parse(r);if(Array.isArray(d.blocks)&&d.blocks.length){blocks=d.blocks;blocks.forEach(b=>{if(!b.date)b.date=todayStr();});if(Array.isArray(d.goals))goals=d.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;});if(d.timerState)Object.assign(timerState,d.timerState);if(d.prevActiveId)prevActiveId=d.prevActiveId;if(d.stats?.byDate)stats=d.stats;if(d.journal&&typeof d.journal==="object")journal=d.journal;if(Array.isArray(d.expenses))expenses=d.expenses;if(Array.isArray(d.events))events=d.events;if(Array.isArray(d.accounts)&&d.accounts.length)accounts=d.accounts;if(d.budgets&&typeof d.budgets==="object")budgets=d.budgets;return true;}}catch(e){}return false;}
 function seedBlocks(){function mk(t,s,e,g,m){return{id:uid(),title:t,start:s,end:e,goalId:g||"",mode:m,customFocus:25,customBreak:5,details:"",notify:true,date:todayStr()};}blocks=[mk("ออกกำลังกาย","08:00","09:00","","none"),mk("เขียนรายงาน Q3",nowPlus(0),nowPlus(120),"g1","deep"),mk("ประชุมทีม",nowPlus(125),nowPlus(155),"","none"),mk("ออกแบบ ui",nowPlus(170),nowPlus(290),"g1","classic")];}
 
 // AUDIO / NOTIFICATIONS
@@ -1629,60 +1735,231 @@ document.getElementById("journalNote").addEventListener("input",e=>{
 
 // EXPENSE TRACKING
 const EXP_CATS={food:{label:"อาหาร",emoji:"🍜",dot:"#E08C2B"},transport:{label:"เดินทาง",emoji:"🚗",dot:"#1a6ecc"},shopping:{label:"ช้อปปิ้ง",emoji:"🛍",dot:"#b2557a"},bills:{label:"บิล/ที่พัก",emoji:"🏠",dot:"#8a6d3b"},health:{label:"สุขภาพ",emoji:"💊",dot:"#1a9c6e"},fun:{label:"บันเทิง",emoji:"🎬",dot:"#7a4fa3"},other:{label:"อื่นๆ",emoji:"📦",dot:"#9BA0A6"}};
-let pickedExpenseCat="food";
+const INC_CATS={salary:{label:"เงินเดือน",dot:"#2f6b52"},freelance:{label:"ฟรีแลนซ์",dot:"#4A9B78"},other:{label:"อื่นๆ",dot:"#C8C7BF"}};
+let pickedExpenseCat="food",pickedIncomeCat="salary",pickedExpenseAccount="",pickedIncomeAccount="",pickedNewAcctColor="#2f6b52",accountFilter="all",accountPickTarget="";
+
+function defaultAccountId(){return accounts[0]?.id||"";}
+function accountById(id){return accounts.find(a=>a.id===id);}
+function accountBalance(id){
+  const acc=accountById(id);if(!acc)return 0;
+  let bal=acc.startingBalance||0;
+  expenses.forEach(e=>{if(e.accountId===id)bal+=(e.type==="income"?e.amount:-e.amount);});
+  return bal;
+}
+
 function openExpenseModal(){
   document.getElementById("exp_amount").value="";
   document.getElementById("exp_note").value="";
   document.getElementById("exp_date").value=todayStr();
   pickedExpenseCat="food";
-  document.querySelectorAll(".expense-cat-dot-chip").forEach(b=>b.classList.toggle("picked",b.dataset.cat===pickedExpenseCat));
+  pickedExpenseAccount=defaultAccountId();
+  document.querySelectorAll("#expCatGrid .expense-cat-dot-chip").forEach(b=>b.classList.toggle("picked",b.dataset.cat===pickedExpenseCat));
+  document.getElementById("exp_accountLabel").textContent=accountById(pickedExpenseAccount)?.name||"";
   document.getElementById("expenseOverlay").classList.add("show");
 }
 document.getElementById("expenseOverlay").addEventListener("click",e=>{if(e.target.id==="expenseOverlay")document.getElementById("expenseOverlay").classList.remove("show");});
 document.getElementById("expCatGrid").addEventListener("click",e=>{
   const b=e.target.closest(".expense-cat-dot-chip");if(!b)return;
   pickedExpenseCat=b.dataset.cat;
-  document.querySelectorAll(".expense-cat-dot-chip").forEach(x=>x.classList.toggle("picked",x.dataset.cat===pickedExpenseCat));
+  document.querySelectorAll("#expCatGrid .expense-cat-dot-chip").forEach(x=>x.classList.toggle("picked",x.dataset.cat===pickedExpenseCat));
 });
+document.getElementById("expAccountRow").addEventListener("click",()=>openAccountPicker("exp"));
 document.getElementById("expenseSaveBtn").addEventListener("click",()=>{
   const amount=parseFloat(document.getElementById("exp_amount").value);
   if(!amount||amount<=0){alert("กรอกจำนวนเงินด้วยครับ");return;}
   const date=document.getElementById("exp_date").value||todayStr();
   const note=document.getElementById("exp_note").value.trim();
-  expenses.push({id:uid(),date,amount,category:pickedExpenseCat,note});
+  expenses.push({id:uid(),date,amount,category:pickedExpenseCat,note,type:"expense",accountId:pickedExpenseAccount||defaultAccountId()});
   saveState();
   document.getElementById("expenseOverlay").classList.remove("show");
   renderProgress();
 });
-function monthKey(d){return d.slice(0,7);}
-function expenseCardHtml(){
-  const mk=monthKey(todayStr());
-  const thisMonth=expenses.filter(e=>monthKey(e.date)===mk);
-  const total=thisMonth.reduce((s,e)=>s+e.amount,0);
-  let html=`<div style="display:flex;justify-content:flex-end;margin-bottom:4px;"><button type="button" class="expense-add-btn" id="expenseAddBtn">+ เพิ่มรายจ่าย</button></div>`;
-  html+=`<div class="expense-total-hero"><p class="expense-total-hero-lbl">รายจ่ายเดือนนี้</p><p class="expense-total-hero-val">฿${total.toLocaleString()}</p></div>`;
-  if(!thisMonth.length){
-    html+=`<p class="empty" style="padding:4px 0 0;">ยังไม่มีรายจ่ายเดือนนี้</p>`;
-  }else{
-    const byCat={};
-    thisMonth.forEach(e=>{byCat[e.category]=(byCat[e.category]||0)+e.amount;});
-    const maxCat=Math.max(...Object.values(byCat));
-    Object.entries(byCat).sort((a,b)=>b[1]-a[1]).forEach(([cat,amt])=>{
-      const c=EXP_CATS[cat]||EXP_CATS.other;
-      html+=`<div class="expense-cat-row"><div class="expense-cat-row-top"><span class="expense-cat-name">${c.emoji} ${c.label}</span><span class="expense-cat-amt">฿${amt.toLocaleString()}</span></div><div class="expense-cat-bar-wrap"><div class="expense-cat-bar" style="width:${Math.round(amt/maxCat*100)}%"></div></div></div>`;
-    });
-    const recent=[...thisMonth].sort((a,b)=>b.date.localeCompare(a.date)||0).slice(0,5);
-    html+=`<p class="section-label" style="margin-top:18px;">รายการล่าสุด</p><div class="expense-recent-card">`;
-    recent.forEach(e=>{
-      const c=EXP_CATS[e.category]||EXP_CATS.other;
-      html+=`<div class="expense-recent-item"><span>${c.emoji} ${esc(e.note||c.label)}</span><span>฿${e.amount.toLocaleString()}</span></div>`;
-    });
-    html+=`</div>`;
+
+function openIncomeModal(){
+  document.getElementById("inc_amount").value="";
+  pickedIncomeCat="salary";
+  pickedIncomeAccount=defaultAccountId();
+  document.querySelectorAll("#incCatGrid .expense-cat-dot-chip").forEach(b=>b.classList.toggle("picked",b.dataset.cat===pickedIncomeCat));
+  document.getElementById("inc_accountLabel").textContent=accountById(pickedIncomeAccount)?.name||"";
+  document.getElementById("incomeOverlay").classList.add("show");
+}
+document.getElementById("incomeOverlay").addEventListener("click",e=>{if(e.target.id==="incomeOverlay")document.getElementById("incomeOverlay").classList.remove("show");});
+document.getElementById("incCatGrid").addEventListener("click",e=>{
+  const b=e.target.closest(".expense-cat-dot-chip");if(!b)return;
+  pickedIncomeCat=b.dataset.cat;
+  document.querySelectorAll("#incCatGrid .expense-cat-dot-chip").forEach(x=>x.classList.toggle("picked",x.dataset.cat===pickedIncomeCat));
+});
+document.getElementById("incAccountRow").addEventListener("click",()=>openAccountPicker("inc"));
+document.getElementById("incomeSaveBtn").addEventListener("click",()=>{
+  const amount=parseFloat(document.getElementById("inc_amount").value);
+  if(!amount||amount<=0){alert("กรอกจำนวนเงินด้วยครับ");return;}
+  expenses.push({id:uid(),date:todayStr(),amount,category:pickedIncomeCat,note:"",type:"income",accountId:pickedIncomeAccount||defaultAccountId()});
+  saveState();
+  document.getElementById("incomeOverlay").classList.remove("show");
+  renderProgress();
+});
+
+// shared account picker, used by both expense and income modals
+function openAccountPicker(target){
+  accountPickTarget=target;
+  const list=document.getElementById("accountPickList");
+  const current=target==="exp"?pickedExpenseAccount:pickedIncomeAccount;
+  list.innerHTML=accounts.map(a=>`<div class="acct-row" data-id="${a.id}" style="cursor:pointer;${a.id===current?"background:var(--focus-soft);border-radius:10px;padding-left:6px;padding-right:6px;":""}">
+    <span class="acct-row-dot" style="background:${a.color}"></span>
+    <p class="acct-row-name" style="margin:0;">${esc(a.name)}</p>
+  </div>`).join("");
+  document.getElementById("accountPickOverlay").classList.add("show");
+}
+document.getElementById("accountPickOverlay").addEventListener("click",e=>{
+  if(e.target.id==="accountPickOverlay"){document.getElementById("accountPickOverlay").classList.remove("show");return;}
+  const row=e.target.closest("[data-id]");if(!row)return;
+  if(accountPickTarget==="exp"){pickedExpenseAccount=row.dataset.id;document.getElementById("exp_accountLabel").textContent=accountById(pickedExpenseAccount)?.name||"";}
+  else{pickedIncomeAccount=row.dataset.id;document.getElementById("inc_accountLabel").textContent=accountById(pickedIncomeAccount)?.name||"";}
+  document.getElementById("accountPickOverlay").classList.remove("show");
+});
+
+// manage accounts modal
+function openAccountsModal(){
+  renderAccountsList();
+  document.getElementById("newAccountForm").style.display="none";
+  document.getElementById("accountsOverlay").classList.add("show");
+}
+function renderAccountsList(){
+  document.getElementById("accountsList").innerHTML=accounts.map(a=>`<div class="acct-row">
+    <span class="acct-row-dot" style="background:${a.color}"></span>
+    <div><p class="acct-row-name">${esc(a.name)}</p><p class="acct-row-bal">฿${accountBalance(a.id).toLocaleString()}</p></div>
+    <button type="button" class="acct-row-del" data-del-acct="${a.id}">✕</button>
+  </div>`).join("");
+}
+document.getElementById("accountsOverlay").addEventListener("click",e=>{
+  if(e.target.id==="accountsOverlay"){document.getElementById("accountsOverlay").classList.remove("show");return;}
+  const del=e.target.closest("[data-del-acct]");
+  if(del){
+    if(accounts.length<=1){alert("ต้องมีอย่างน้อย 1 บัญชี");return;}
+    accounts=accounts.filter(a=>a.id!==del.dataset.delAcct);
+    saveState();renderAccountsList();renderProgress();
   }
+});
+document.getElementById("newAccountBtn").addEventListener("click",()=>{
+  document.getElementById("newAcct_name").value="";
+  pickedNewAcctColor="#2f6b52";
+  document.querySelectorAll("#newAcctColorGrid .expense-cat-dot-chip").forEach(b=>b.classList.toggle("picked",b.dataset.color===pickedNewAcctColor));
+  document.getElementById("newAccountForm").style.display="flex";
+});
+document.getElementById("newAcctColorGrid").addEventListener("click",e=>{
+  const b=e.target.closest(".expense-cat-dot-chip");if(!b)return;
+  pickedNewAcctColor=b.dataset.color;
+  document.querySelectorAll("#newAcctColorGrid .expense-cat-dot-chip").forEach(x=>x.classList.toggle("picked",x.dataset.color===pickedNewAcctColor));
+});
+document.getElementById("newAccountSaveBtn").addEventListener("click",()=>{
+  const name=document.getElementById("newAcct_name").value.trim();
+  if(!name){alert("ตั้งชื่อบัญชีด้วยครับ");return;}
+  accounts.push({id:uid(),name,color:pickedNewAcctColor,startingBalance:0});
+  saveState();
+  document.getElementById("newAccountForm").style.display="none";
+  renderAccountsList();renderProgress();
+});
+
+// budget modal
+function openBudgetModal(){
+  document.getElementById("budget_amount").value="";
+  const grid=document.getElementById("budgetCatGrid");
+  grid.innerHTML=Object.entries(EXP_CATS).map(([k,c])=>`<button type="button" class="expense-cat-dot-chip" data-cat="${k}"><span class="expense-cat-dot" style="background:${c.dot}"></span>${c.label}</button>`).join("");
+  let pickedBudgetCat=Object.keys(EXP_CATS)[0];
+  grid.querySelectorAll(".expense-cat-dot-chip")[0].classList.add("picked");
+  grid.onclick=e=>{
+    const b=e.target.closest(".expense-cat-dot-chip");if(!b)return;
+    pickedBudgetCat=b.dataset.cat;
+    grid.querySelectorAll(".expense-cat-dot-chip").forEach(x=>x.classList.toggle("picked",x.dataset.cat===pickedBudgetCat));
+  };
+  document.getElementById("budgetSaveBtn").onclick=()=>{
+    const amt=parseFloat(document.getElementById("budget_amount").value);
+    if(!amt||amt<=0){alert("กรอกวงเงินด้วยครับ");return;}
+    budgets[pickedBudgetCat]=amt;
+    saveState();
+    document.getElementById("budgetOverlay").classList.remove("show");
+    renderProgress();
+  };
+  document.getElementById("budgetOverlay").classList.add("show");
+}
+document.getElementById("budgetOverlay").addEventListener("click",e=>{if(e.target.id==="budgetOverlay")document.getElementById("budgetOverlay").classList.remove("show");});
+
+function monthKey(d){return d.slice(0,7);}
+function budgetSectionHtml(){
+  const cats=Object.keys(budgets);
+  let html=`<p class="section-label" style="margin-top:22px;">งบประมาณรายเดือน</p>`;
+  if(!cats.length){
+    html+=`<p class="empty" style="padding:4px 0 12px;">ยังไม่ได้ตั้งงบ</p>`;
+  }else{
+    const mk=monthKey(todayStr());
+    const thisMonth=expenses.filter(e=>e.type!=="income"&&monthKey(e.date)===mk);
+    cats.forEach(cat=>{
+      const c=EXP_CATS[cat]||EXP_CATS.other;
+      const limit=budgets[cat];
+      const spent=thisMonth.filter(e=>e.category===cat).reduce((s,e)=>s+e.amount,0);
+      const pct=Math.min(100,Math.round(spent/limit*100));
+      const over=spent>limit;
+      const near=!over&&pct>=80;
+      const barColor=over?"var(--danger)":near?"var(--rest)":"var(--focus)";
+      let warn="";
+      if(over)warn=`<p class="budget-row-warn" style="color:var(--danger)">เกินงบ ฿${(spent-limit).toLocaleString()}</p>`;
+      else if(near)warn=`<p class="budget-row-warn" style="color:var(--rest)">ใกล้เต็มงบแล้ว</p>`;
+      html+=`<div class="budget-row"><div class="budget-row-top"><span class="budget-row-name">${c.label}</span><span class="budget-row-amt">฿${spent.toLocaleString()} / ฿${limit.toLocaleString()}</span></div><div class="budget-bar-wrap"><div class="budget-bar-fill" style="width:${pct}%;background:${barColor}"></div></div>${warn}</div>`;
+    });
+  }
+  html+=`<button type="button" class="acct-add-btn" id="openBudgetBtn">+ ตั้งงบหมวดใหม่</button>`;
+  return html;
+}
+
+function financeTabHtml(){
+  const mk=monthKey(todayStr());
+  let thisMonth=expenses.filter(e=>monthKey(e.date)===mk);
+  if(accountFilter!=="all")thisMonth=thisMonth.filter(e=>e.accountId===accountFilter);
+  const totalIncome=thisMonth.filter(e=>e.type==="income").reduce((s,e)=>s+e.amount,0);
+  const totalExpense=thisMonth.filter(e=>e.type!=="income").reduce((s,e)=>s+e.amount,0);
+  const net=totalIncome-totalExpense;
+
+  let html=`<div class="acct-filter-row">
+    <button type="button" class="acct-filter-chip${accountFilter==="all"?" active":""}" data-acct-filter="all">ทุกบัญชี</button>
+    ${accounts.map(a=>`<button type="button" class="acct-filter-chip${accountFilter===a.id?" active":""}" data-acct-filter="${a.id}">${esc(a.name)}</button>`).join("")}
+  </div>`;
+  html+=`<button type="button" class="acct-manage-link" id="manageAccountsLink">จัดการบัญชี</button>`;
+  html+=`<div class="fin-net-hero">
+    <p class="fin-net-hero-lbl">ยอดสุทธิเดือนนี้</p>
+    <p class="fin-net-hero-val ${net>=0?"pos":"neg"}">${net>=0?"+":"-"}฿${Math.abs(net).toLocaleString()}</p>
+    <div class="fin-net-split">
+      <div class="fin-net-split-item"><span class="fin-net-split-lbl">รายรับ</span><span class="fin-net-split-val" style="color:var(--focus)">฿${totalIncome.toLocaleString()}</span></div>
+      <div class="fin-net-split-item"><span class="fin-net-split-lbl">รายจ่าย</span><span class="fin-net-split-val" style="color:var(--danger)">฿${totalExpense.toLocaleString()}</span></div>
+    </div>
+  </div>`;
+  html+=`<div class="fin-btn-row">
+    <button type="button" class="fin-btn-expense" id="expenseAddBtn">+ รายจ่าย</button>
+    <button type="button" class="fin-btn-income" id="incomeAddBtn">+ รายรับ</button>
+  </div>`;
+
+  if(!thisMonth.length){
+    html+=`<p class="empty" style="padding:4px 0 0;">ยังไม่มีรายการเดือนนี้</p>`;
+  }else{
+    const recent=[...thisMonth].sort((a,b)=>b.date.localeCompare(a.date)||0).slice(0,8);
+    html+=`<p class="section-label" style="margin-top:0;">รายการล่าสุด</p>`;
+    recent.forEach(e=>{
+      const isIncome=e.type==="income";
+      const c=(isIncome?INC_CATS:EXP_CATS)[e.category]||EXP_CATS.other;
+      const acc=accountById(e.accountId);
+      html+=`<div class="fin-txn-item"><div><p class="fin-txn-title">${esc(e.note||c.label)}</p><p class="fin-txn-meta">${acc?esc(acc.name)+" · ":""}${formatShortDate(e.date)}</p></div><span class="fin-txn-amt ${isIncome?"pos":"neg"}">${isIncome?"+":"-"}฿${e.amount.toLocaleString()}</span></div>`;
+    });
+  }
+
+  html+=budgetSectionHtml();
   return html;
 }
 document.getElementById("progressDash").addEventListener("click",e=>{
   if(e.target.closest("#expenseAddBtn"))openExpenseModal();
+  if(e.target.closest("#incomeAddBtn"))openIncomeModal();
+  if(e.target.closest("#manageAccountsLink"))openAccountsModal();
+  if(e.target.closest("#openBudgetBtn"))openBudgetModal();
+  const filterBtn=e.target.closest("[data-acct-filter]");
+  if(filterBtn){accountFilter=filterBtn.dataset.acctFilter;renderProgress();}
 });
 
 
@@ -2737,7 +3014,7 @@ document.getElementById("openProfileBtn").addEventListener("click",()=>{
 // SETTINGS MISC
 document.getElementById("resetDataBtn").addEventListener("click",()=>{
   showConfirmPopup({title:"ล้างข้อมูลทั้งหมดใช่ไหม?",message:"ข้อมูลทั้งหมดจะหายถาวร ไม่สามารถกู้คืนได้ — time block, เป้าหมาย, และประวัติทั้งหมดจะถูกลบ",variant:"destructive",confirmLabel:"ล้างข้อมูลเลย",onConfirm:()=>{
-    blocks=[];goals=[];Object.keys(timerState).forEach(k=>delete timerState[k]);stats={byDate:{}};journal={};expenses=[];events=[];saveState();renderAll();
+    blocks=[];goals=[];Object.keys(timerState).forEach(k=>delete timerState[k]);stats={byDate:{}};journal={};expenses=[];events=[];accounts=[{id:"acc_cash",name:"เงินสด",color:"#2f6b52",startingBalance:0}];budgets={};saveState();renderAll();
   }});
 });
 
@@ -2821,7 +3098,7 @@ function staircaseHtml(g){
       const isLast=i===STEPS-1;
       return`<div style="flex:1;height:${h}px;border-radius:3px 3px 0 0;background:var(--staircase-undone);position:relative;">${isLast?'<span style="position:absolute;top:-18px;font-size:13px;left:50%;transform:translateX(-50%);">🏆</span>':''}</div>`;
     }).join("");
-    return`<div style="display:flex;align-items:flex-end;gap:6px;height:${maxH}px;padding-top:14px;margin-bottom:0;opacity:.55;">${bars}</div>`;
+    return`<div style="display:flex;align-items:flex-end;gap:6px;height:${maxH}px;padding-top:24px;margin-bottom:0;opacity:.55;">${bars}</div>`;
   }
 }
 function goalStepStatusLine(g){
@@ -3006,7 +3283,7 @@ function renderProgress(){
   if(!el)return;
   if(progressViewMode==="overview")el.innerHTML=progressOverviewHtml();
   else if(progressViewMode==="habit")el.innerHTML=progressHabitHtml();
-  else if(progressViewMode==="finance")el.innerHTML=expenseCardHtml();
+  else if(progressViewMode==="finance")el.innerHTML=financeTabHtml();
   else if(progressViewMode==="mind")el.innerHTML=progressMindHtml();
 }
 
@@ -3263,8 +3540,8 @@ document.getElementById("syncSignOutBtn").addEventListener("click",async()=>{
   syncOverlay.classList.remove("show");
 });
 
-function queueCloudPush(){if(!cloudConnected||!cloudDocRef||applyingRemoteUpdate)return;clearTimeout(cloudPushTimer);cloudPushTimer=setTimeout(()=>cloudDocRef.set({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,updatedAt:Date.now()}).catch(e=>console.error(e)),500);}
-function applyRemoteSnapshot(data){applyingRemoteUpdate=true;if(Array.isArray(data.blocks)){blocks=data.blocks;blocks.forEach(b=>{if(!b.date)b.date=todayStr();});}if(Array.isArray(data.goals))goals=data.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;});if(data.timerState){Object.keys(timerState).forEach(k=>delete timerState[k]);Object.assign(timerState,data.timerState);}if(data.prevActiveId!==undefined)prevActiveId=data.prevActiveId;if(data.stats?.byDate)stats=data.stats;if(data.journal&&typeof data.journal==="object")journal=data.journal;if(Array.isArray(data.expenses))expenses=data.expenses;if(Array.isArray(data.events))events=data.events;try{localStorage.setItem(SK,JSON.stringify({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events}));}catch(e){}renderAll();applyingRemoteUpdate=false;}
+function queueCloudPush(){if(!cloudConnected||!cloudDocRef||applyingRemoteUpdate)return;clearTimeout(cloudPushTimer);cloudPushTimer=setTimeout(()=>cloudDocRef.set({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,accounts,budgets,updatedAt:Date.now()}).catch(e=>console.error(e)),500);}
+function applyRemoteSnapshot(data){applyingRemoteUpdate=true;if(Array.isArray(data.blocks)){blocks=data.blocks;blocks.forEach(b=>{if(!b.date)b.date=todayStr();});}if(Array.isArray(data.goals))goals=data.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;});if(data.timerState){Object.keys(timerState).forEach(k=>delete timerState[k]);Object.assign(timerState,data.timerState);}if(data.prevActiveId!==undefined)prevActiveId=data.prevActiveId;if(data.stats?.byDate)stats=data.stats;if(data.journal&&typeof data.journal==="object")journal=data.journal;if(Array.isArray(data.expenses))expenses=data.expenses;if(Array.isArray(data.events))events=data.events;if(Array.isArray(data.accounts)&&data.accounts.length)accounts=data.accounts;if(data.budgets&&typeof data.budgets==="object")budgets=data.budgets;try{localStorage.setItem(SK,JSON.stringify({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,accounts,budgets}));}catch(e){}renderAll();applyingRemoteUpdate=false;}
 
 // VISIBILITY / FOCUS
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){ensureHabitBlocksForToday();tick();}});
