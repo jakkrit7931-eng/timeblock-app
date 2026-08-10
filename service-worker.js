@@ -1,4 +1,4 @@
-const CACHE_NAME = "flowmate-pomodoro-v44";
+const CACHE_NAME = "flowmate-pomodoro-v45";
 const ASSETS = [
   "./index.html",
   "./timeblock-v2.html",

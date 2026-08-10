@@ -1162,7 +1162,7 @@ const MODES={classic:{focus:25,break:5},deep:{focus:50,break:10},long:{focus:90,
 let goals=[{id:"g1",title:"ปิดโปรเจกต์ Q3",_isProject:true}],blocks=[],stats={byDate:{}},timerState={},journal={},expenses=[],events=[],accounts=[{id:"acc_cash",name:"เงินสด",color:"#2f6b52",startingBalance:0}],budgets={};
 let prevActiveId=null,viewDate=todayStr(),viewMode="day";
 let snoozeUntil=0,lastPhoneCatchAt=0,currentTab="today",lastCountdownKey=null;
-let cloudDb=null,cloudDocRef=null,cloudUnsub=null,cloudConnected=false,cloudPushTimer=null,applyingRemoteUpdate=false;
+let cloudDb=null,cloudDocRef=null,cloudUnsub=null,cloudConnected=false,cloudPushTimer=null,applyingRemoteUpdate=false,pendingLocalChange=false;
 
 function dateStrFromDate(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
 function todayStr(){return dateStrFromDate(new Date());}
@@ -3524,8 +3524,10 @@ document.getElementById("syncSignOutBtn").addEventListener("click",async()=>{
   syncOverlay.classList.remove("show");
 });
 
-function queueCloudPush(){if(!cloudConnected||!cloudDocRef||applyingRemoteUpdate)return;clearTimeout(cloudPushTimer);cloudPushTimer=setTimeout(()=>cloudDocRef.set({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,accounts,budgets,updatedAt:Date.now()}).catch(e=>console.error(e)),500);}
-function applyRemoteSnapshot(data){applyingRemoteUpdate=true;if(Array.isArray(data.blocks)){blocks=data.blocks;blocks.forEach(b=>{if(!b.date)b.date=todayStr();});}if(Array.isArray(data.goals))goals=data.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;});if(data.timerState){Object.keys(timerState).forEach(k=>delete timerState[k]);Object.assign(timerState,data.timerState);}if(data.prevActiveId!==undefined)prevActiveId=data.prevActiveId;if(data.stats?.byDate)stats=data.stats;if(data.journal&&typeof data.journal==="object")journal=data.journal;if(Array.isArray(data.expenses))expenses=data.expenses;if(Array.isArray(data.events))events=data.events;if(Array.isArray(data.accounts)&&data.accounts.length)accounts=data.accounts;if(data.budgets&&typeof data.budgets==="object")budgets=data.budgets;try{localStorage.setItem(SK,JSON.stringify({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,accounts,budgets}));}catch(e){}renderAll();applyingRemoteUpdate=false;}
+function queueCloudPush(){if(!cloudConnected||!cloudDocRef||applyingRemoteUpdate){pendingLocalChange=true;return;}pendingLocalChange=false;clearTimeout(cloudPushTimer);cloudPushTimer=setTimeout(()=>cloudDocRef.set({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,accounts,budgets,updatedAt:Date.now()}).catch(e=>console.error(e)),500);}
+function applyRemoteSnapshot(data){
+  if(pendingLocalChange){ pendingLocalChange=false; queueCloudPush(); return; } // local changes happened before the cloud connected — push ours instead of overwriting with stale server data
+  applyingRemoteUpdate=true;if(Array.isArray(data.blocks)){blocks=data.blocks;blocks.forEach(b=>{if(!b.date)b.date=todayStr();});}if(Array.isArray(data.goals))goals=data.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;});if(data.timerState){Object.keys(timerState).forEach(k=>delete timerState[k]);Object.assign(timerState,data.timerState);}if(data.prevActiveId!==undefined)prevActiveId=data.prevActiveId;if(data.stats?.byDate)stats=data.stats;if(data.journal&&typeof data.journal==="object")journal=data.journal;if(Array.isArray(data.expenses))expenses=data.expenses;if(Array.isArray(data.events))events=data.events;if(Array.isArray(data.accounts)&&data.accounts.length)accounts=data.accounts;if(data.budgets&&typeof data.budgets==="object")budgets=data.budgets;try{localStorage.setItem(SK,JSON.stringify({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,accounts,budgets}));}catch(e){}renderAll();applyingRemoteUpdate=false;}
 
 // VISIBILITY / FOCUS
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){ensureHabitBlocksForToday();tick();}});
