@@ -2,12 +2,15 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#1C2024">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
+<meta name="theme-color" content="#00545F">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>FlowMate + Pomodoro</title>
+<title>Productive Time</title>
 <style>
 :root{--ink:#1C2024;--ink-soft:#5B6168;--ink-muted:#9BA0A6;--paper:#F1F1ED;--card:#FFFFFF;--line:#E4E3DC;--line-strong:#C8C7BF;--focus:#2f6b52;--focus-soft:#E4EFEC;--focus-border:#2f6b5244;--rest:#E08C2B;--rest-soft:#FBEEDD;--danger:#B23B3B;--tab-h:64px;--bg-page:#E9E9E4;--icon-filter:none;--staircase-undone:#EDEBE2;}
 html[data-theme="dark"]{--ink:#EDEDE9;--ink-soft:#B7BEC4;--ink-muted:#9BA1A8;--paper:#1A1C1F;--card:#1F2226;--line:#2C2F34;--line-strong:#3A3F45;--focus:#4A9B78;--focus-soft:#1F2A25;--focus-border:#4A9B7844;--rest:#E08C2B;--rest-soft:#3A2D18;--danger:#E05C5C;--bg-page:#15171A;--icon-filter:invert(1) brightness(1.5);--staircase-undone:#3A3F45;}
@@ -29,12 +32,12 @@ button:active{opacity:.8;}
 .day-nav-btn{background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink-soft);padding:0 4px;line-height:1;}
 .day-nav-label{font-size:13px;font-weight:500;}
 .view-toggle{font-size:11px;border:0.5px solid var(--line);background:var(--paper);border-radius:8px;padding:4px 10px;cursor:pointer;color:var(--ink-soft);}
-.goal-strip{background:var(--card);border:0.5px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;cursor:pointer;}
-.goal-strip-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;}
-.goal-strip-title{font-size:12px;color:var(--ink-soft);}
-.goal-strip-pct{font-size:12px;font-weight:600;color:var(--focus);}
-.goal-track{height:5px;background:var(--paper);border-radius:3px;overflow:hidden;}
-.goal-fill{height:100%;background:var(--focus);border-radius:3px;transition:width .4s;}
+
+
+
+
+
+
 .add-btn{width:100%;border:none;background:var(--ink);color:var(--paper);border-radius:14px;padding:11px;font-size:14px;font-weight:500;cursor:pointer;margin-bottom:12px;}
 .block-row{display:flex;gap:10px;margin-bottom:8px;}
 .time-col{width:44px;flex-shrink:0;text-align:right;padding-top:10px;font-family:ui-monospace,monospace;font-size:11px;color:var(--ink-soft);line-height:1.5;}
@@ -44,9 +47,9 @@ button:active{opacity:.8;}
 .card-top{display:flex;align-items:center;justify-content:space-between;gap:6px;}
 .card-title{font-size:14px;font-weight:500;}
 .card-title.strike{text-decoration:line-through;}
-.card-icon-btns{display:flex;gap:4px;}
+
 .icon-btn{background:none;border:none;cursor:pointer;color:var(--ink-soft);font-size:13px;padding:2px 4px;}
-.tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap;}
+
 .tag{font-size:11px;background:var(--paper);color:var(--ink-soft);padding:2px 8px;border-radius:6px;}
 .card.active-block .tag{background:var(--card);}
 .card-details{font-size:12px;color:var(--ink-soft);margin-top:5px;}
@@ -75,13 +78,13 @@ button:active{opacity:.8;}
 .start-focus-btn{background:var(--focus-soft);color:var(--focus);border:none;border-radius:20px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;}
 .start-focus-btn:active{opacity:.8;}
 .inline-pomo{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;margin-top:11px;padding-top:12px;border-top:0.5px solid var(--focus-border);}
-.inline-pomo-ring{position:relative;width:56px;height:56px;flex-shrink:0;}
+
 .inline-pomo-ready{display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--rest-soft);border:3px solid var(--rest);animation:readyPulse 1s ease-in-out infinite;}
 @keyframes readyPulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.08);opacity:.85;}}
-.inline-pomo-time{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:13px;font-weight:600;}
-.inline-pomo-phase{font-size:12px;color:var(--ink-soft);}
-.inline-pomo-btns{display:flex;gap:6px;}
-.inline-pomo-btns .icon-btn{font-size:15px;padding:5px 9px;background:var(--card);border:0.5px solid var(--line);border-radius:8px;}
+
+
+
+
 .empty{text-align:center;color:var(--ink-soft);font-size:13px;padding:20px 0;}
 .section-label{font-size:12px;color:var(--ink-soft);margin:14px 0 6px;font-weight:500;}
 .week-day{margin-bottom:12px;}
@@ -95,10 +98,10 @@ button:active{opacity:.8;}
 .goal-card{background:var(--card);border:0.5px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px;cursor:pointer;}
 .goal-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
 .goal-card-title{font-size:14px;font-weight:500;}
-.goal-pct{font-size:14px;font-weight:600;color:var(--focus);}
+
 .goal-meta{font-size:11px;color:var(--ink-soft);margin-top:5px;}
-.stat-row{display:flex;gap:8px;margin-bottom:10px;}
-.stat-box{flex:1;background:var(--card);border:0.5px solid var(--line);border-radius:12px;padding:10px;text-align:center;}
+
+
 .stat-val{font-size:20px;font-weight:600;display:block;}
 .stat-lbl{font-size:11px;color:var(--ink-soft);}
 #statsChart{display:flex;align-items:flex-end;gap:5px;height:72px;margin-bottom:10px;}
@@ -142,17 +145,16 @@ button:active{opacity:.8;}
 .add-goal-btn{width:100%;border:0.5px dashed var(--line);background:none;color:var(--ink-soft);border-radius:11px;padding:8px;font-size:12px;cursor:pointer;margin-bottom:8px;}
 .day-chip{border:0.5px solid var(--line);background:var(--paper);border-radius:8px;width:36px;height:30px;font-size:12px;cursor:pointer;color:var(--ink);}
 .day-chip.picked{background:var(--ink);color:var(--paper);border-color:var(--ink);}
-.notif-banner{display:flex;align-items:center;gap:8px;background:var(--focus-soft);border:0.5px solid var(--focus-border);border-radius:12px;padding:10px 12px;margin-bottom:10px;font-size:12px;}
-.notif-banner button{margin-left:auto;font-size:11px;border:0.5px solid var(--focus);background:none;color:var(--focus);border-radius:7px;padding:3px 10px;cursor:pointer;}
-.mascot-walker{position:fixed;left:14px;right:auto;bottom:calc(var(--tab-h) + 16px);display:flex;justify-content:flex-start;pointer-events:none;z-index:60;}
-.mascot-inner{display:flex;flex-direction:column;align-items:flex-start;opacity:0;transform:translateY(14px) scale(.92);transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.3,1);pointer-events:auto;}
-.mascot-inner.no-anim{transition:none;}
-.mascot-inner.pos-onstage{opacity:1;transform:translateY(0) scale(1);}
-.mascot-inner.pos-exit-left{opacity:0;transform:translateY(14px) scale(.92);transition-timing-function:ease-in;}
-.speech-bubble{width:220px;background:var(--card);border:0.5px solid var(--line);border-radius:16px;border-bottom-left-radius:4px;padding:12px 14px;margin-bottom:6px;text-align:left;opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s;}
-.speech-bubble.show{opacity:1;transform:translateY(0);}
-.mascot-eyebrow{font-size:10px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin:0 0 5px;}
-.mascot-msg{font-size:14px;font-weight:500;margin:0 0 10px;line-height:1.5;}
+
+
+
+
+
+
+
+
+
+
 .today-shortcut-row{display:flex;gap:8px;margin-bottom:14px;}
 .today-shortcut-btn{flex:1;background:var(--card);border:none;border-radius:14px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;font-family:inherit;}
 .today-shortcut-icon{width:34px;height:34px;border-radius:10px;background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:16px;}
@@ -174,19 +176,19 @@ button:active{opacity:.8;}
 .mf-suggest-row span{font-size:13px;}
 .mf-done{display:flex;align-items:center;gap:10px;}
 .mf-done-icon{width:32px;height:32px;border-radius:50%;background:var(--focus);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.mascot-actions{display:flex;gap:7px;}
-.mascot-actions button{flex:1;border-radius:10px;padding:7px;font-size:12px;cursor:pointer;}
-.sprite-wrap{position:relative;width:168px;height:226px;}
-.mascot-accessory{position:absolute;top:-4px;left:4px;width:26px;height:26px;z-index:2;}
-.mascot-accessory svg{width:100%;height:100%;}
-.mascot-sprite{width:168px;height:226px;}
-video.mascot-sprite{border-radius:14px;}
-canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
-.mascot-sprite .mascot-body{transform-origin:center;}
-.is-idle .mascot-body{animation:idleSway 2.4s ease-in-out infinite;}
-.is-walking .mascot-body{animation:idleSway 2.4s ease-in-out infinite;}
-.is-talking .mascot-body{animation:talkBounce 0.55s ease-in-out infinite;}
-.is-talking .sprite-wrap{animation:talkBounce 0.55s ease-in-out infinite;}
+
+
+
+
+
+
+
+
+
+
+
+
+
 @keyframes idleSway{0%,100%{transform:rotate(0deg) translateY(0)}50%{transform:rotate(1.5deg) translateY(-2px)}}
 @keyframes talkBounce{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-5px) rotate(-2deg)}}
 @keyframes idleBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
@@ -225,28 +227,28 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .cal-block:active{opacity:.8;}
 .cal-block-title{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;}
 .cal-block-time{opacity:.8;white-space:nowrap;font-size:9px;}
-.cal-now-line{position:absolute;left:0;right:0;pointer-events:none;z-index:4;display:flex;align-items:center;}
+
 .cal-now-dot{width:8px;height:8px;border-radius:50%;background:var(--danger);flex-shrink:0;margin-left:-4px;}
 .cal-now-bar{flex:1;height:0;border-top:1.5px solid var(--danger);}
 /* plan view tabs + month + year */
-.plan-tab-btn{border:none;background:none;font-size:11px;font-weight:500;padding:4px 10px;border-radius:8px;cursor:pointer;color:var(--ink-soft);}
-.plan-tab-active{background:var(--ink);color:var(--paper);}
-.mn-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:0;border-left:0.5px solid var(--line);border-top:0.5px solid var(--line);}
-.mn-head{text-align:center;font-size:10px;color:var(--ink-soft);padding:4px 0;border-right:0.5px solid var(--line);border-bottom:0.5px solid var(--line);background:var(--card);}
-.mn-cell{border-right:0.5px solid var(--line);border-bottom:0.5px solid var(--line);padding:3px;min-height:52px;cursor:pointer;position:relative;}
-.mn-cell:active{background:var(--focus-soft);}
-.mn-cell.other-month .mn-day-num{opacity:.3;}
-.mn-cell.is-today .mn-day-num{background:var(--focus);color:var(--card);border-radius:50%;}
-.mn-day-num{font-size:11px;color:var(--ink-soft);width:18px;height:18px;display:flex;align-items:center;justify-content:center;margin-bottom:2px;font-weight:500;}
-.mn-block-pill{font-size:9px;border-radius:3px;padding:1px 3px;margin-bottom:1px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-weight:500;}
-.mn-more{font-size:9px;color:var(--ink-soft);padding:1px 3px;}
+
+
+
+
+
+
+
+
+
+
+
 .day-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:center;justify-content:center;z-index:55;padding:20px;}
 .day-modal-overlay.show{display:flex;}
 .day-modal{width:100%;max-width:440px;background:var(--card);border-radius:20px;padding:0;max-height:75dvh;display:flex;flex-direction:column;}
-.yr-wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:2px 0;}
-.yr-month-box{background:var(--card);border:0.5px solid var(--line);border-radius:10px;padding:6px;}
-.yr-month-name{font-size:9px;color:var(--ink-soft);margin-bottom:4px;font-weight:500;}
-.yr-month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1.5px;}
+
+
+
+
 /* ── Plan page: lightweight calendar ── */
 .plan-view-tabs{display:flex;gap:6px;background:var(--paper);border-radius:11px;padding:4px;margin-bottom:14px;}
 .plan-view-tab{flex:1;border:none;background:none;border-radius:8px;padding:8px 0;font-size:13px;font-weight:500;color:var(--ink-soft);cursor:pointer;}
@@ -256,6 +258,51 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .plan-highlight-value{font-size:22px;font-weight:700;}
 .plan-highlight-delta{font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;}
 .plan-grid{display:flex;flex-direction:column;gap:18px;}
+.pm-dashboard{background:var(--card);border:0.5px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px;}
+.pm-dashboard-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px;}
+.pm-dashboard-title{font-size:14px;font-weight:700;margin:0;color:var(--ink);}
+.pm-dashboard-note{font-size:10px;color:var(--ink-muted);margin:3px 0 0;}
+.pm-dashboard-link{border:0;background:none;color:var(--focus);font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;padding:4px;white-space:nowrap;}
+.pm-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+.pm-metric{background:var(--paper);border-radius:11px;padding:10px;min-width:0;}
+.pm-metric-label{display:block;font-size:10px;color:var(--ink-soft);margin-bottom:3px;}
+.pm-metric-value{display:block;font-size:17px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pm-metric-value.pos{color:var(--focus);}.pm-metric-value.neg{color:var(--danger);}
+.pm-task-toolbar{display:flex;gap:8px;margin:12px 0 10px;}
+.pm-task-search{flex:1;min-width:0;border:0.5px solid var(--line);border-radius:10px;padding:9px 10px;background:var(--paper);color:var(--ink);font-family:inherit;font-size:12px;}
+.pm-task-filter{min-width:0;min-height:42px;border:0.5px solid var(--line);border-radius:10px;padding:8px;background:var(--paper);color:var(--ink);font-family:inherit;font-size:12px;}
+.pm-task-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;background:var(--paper);border-radius:11px;padding:4px;margin:12px 0;}
+.pm-task-tab{min-height:40px;border:0;background:none;border-radius:8px;padding:8px 3px;color:var(--ink-soft);font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;}
+.pm-task-tab.active{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(28,32,36,.08);}
+.pm-task-count{font-size:9px;opacity:.72;margin-left:2px;}
+.pm-task-add{width:100%;border:0;background:var(--ink);color:var(--paper);border-radius:11px;padding:11px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:8px;}
+.pm-task-row{display:flex;align-items:flex-start;gap:9px;background:var(--card);border:0.5px solid var(--line);border-radius:13px;padding:11px;margin-bottom:7px;}
+.pm-task-check{width:38px;height:38px;flex:0 0 38px;border:1px solid var(--line-strong);border-radius:50%;background:transparent;color:transparent;cursor:pointer;padding:0;}
+.pm-task-check:hover,.pm-task-check:focus-visible{border-color:var(--focus);outline:2px solid var(--focus-soft);}
+.pm-task-row.is-done .pm-task-check{background:var(--focus);color:#fff;border-color:var(--focus);}
+.pm-task-main{min-width:0;flex:1;}
+.pm-task-title{font-size:13px;font-weight:600;line-height:1.4;overflow-wrap:anywhere;margin:1px 0 5px;}
+.pm-task-row.is-done .pm-task-title{text-decoration:line-through;color:var(--ink-muted);}
+.pm-task-meta{display:flex;flex-wrap:wrap;gap:5px;align-items:center;font-size:10px;color:var(--ink-soft);}
+.pm-task-chip{border-radius:20px;padding:3px 7px;background:var(--paper);}
+.pm-task-chip.priority-high{color:var(--danger);background:var(--danger-soft,var(--paper));}
+.pm-task-chip.priority-low{color:var(--ink-muted);}
+.pm-task-chip.overdue{color:var(--danger);}
+.pm-task-actions{display:flex;gap:2px;flex-shrink:0;}
+.pm-task-actions button{border:0;background:transparent;color:var(--ink-soft);font-size:15px;min-width:38px;min-height:38px;border-radius:8px;cursor:pointer;}
+.pm-task-actions button:hover{background:var(--paper);color:var(--ink);}
+.pm-task-empty{padding:20px 12px;text-align:center;color:var(--ink-muted);font-size:12px;background:var(--card);border:0.5px dashed var(--line);border-radius:13px;}
+.today-overview{background:var(--card);border:0.5px solid var(--line);border-radius:16px;padding:13px;margin:0 0 12px;}
+.today-overview-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
+.today-overview-head p{margin:0;font-size:13px;font-weight:700;}
+.today-overview-head button{border:0;background:none;color:var(--focus);font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;}
+.today-overview-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;}
+.today-overview-metric{background:var(--paper);border-radius:10px;padding:8px 7px;min-width:0;}
+.today-overview-metric span{display:block;font-size:9px;color:var(--ink-soft);line-height:1.35;}
+.today-overview-metric strong{display:block;font-size:14px;color:var(--ink);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.today-overview-foot{font-size:9px;color:var(--ink-muted);margin:8px 0 0;}
+.pm-task-overlay .modal{max-height:88dvh;}
+.pm-task-overlay .field input,.pm-task-overlay .field select{min-height:42px;}
 .plan-week{}
 .seg-mini{display:flex;gap:2px;background:var(--paper);border:0.5px solid var(--line);border-radius:8px;padding:2px;}
 .seg-mini-btn{border:none;background:none;font-size:10px;padding:3px 8px;border-radius:6px;cursor:pointer;color:var(--ink-soft);}
@@ -270,11 +317,11 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .light-day.is-today .light-day-name{color:var(--focus);font-weight:600;}
 .light-day-num{font-size:13px;margin:0 0 6px;}
 .light-day.is-today .light-day-num{color:var(--focus);font-weight:600;}
-.light-day-bar{height:3px;background:var(--paper);border-radius:2px;overflow:hidden;margin-bottom:5px;}
-.light-day-bar-fill{height:100%;border-radius:2px;}
-.light-day-dots{display:flex;gap:2px;justify-content:center;flex-wrap:wrap;min-height:6px;}
-.light-day-dots span{width:5px;height:5px;border-radius:50%;}
-.light-day-empty{opacity:.4;}
+
+
+
+
+
 .light-week-agenda-title{font-size:14px;font-weight:600;color:var(--ink);margin:16px 0 10px;}
 .light-week-agenda-row{background:var(--card);border:0.5px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--ink);cursor:pointer;}
 .light-week-agenda-time{font-family:ui-monospace,monospace;color:var(--ink-soft);font-size:12px;flex-shrink:0;margin-left:10px;}
@@ -366,19 +413,19 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .habit-grid-21{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:8px;max-width:130px;}
 .habit-grid-21 span{aspect-ratio:1;border-radius:3px;background:var(--line);}
 .habit-grid-21 span.on{background:var(--focus);}
-.expense-total-hero{background:var(--card);border-radius:16px;padding:16px;margin-bottom:16px;text-align:center;}
-.expense-total-hero-lbl{font-size:12px;color:var(--ink-soft);margin:0;}
-.expense-total-hero-val{font-family:ui-monospace,monospace;font-size:26px;font-weight:700;color:var(--ink);margin:4px 0 0;}
-.expense-add-btn{border:none;background:var(--ink);color:#fff;font-size:11px;font-weight:600;padding:6px 12px;border-radius:20px;cursor:pointer;}
-.expense-recent-card{background:var(--card);border-radius:16px;padding:4px 16px;}
-.expense-recent-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-top:0.5px solid var(--line);font-size:12px;}
-.expense-recent-item:first-child{border-top:none;}
-.expense-cat-row{margin-bottom:12px;font-size:13px;}
-.expense-cat-row-top{display:flex;justify-content:space-between;margin-bottom:5px;}
-.expense-cat-name{color:var(--ink);}
-.expense-cat-bar-wrap{height:8px;background:var(--paper);border-radius:4px;overflow:hidden;}
-.expense-cat-bar{height:100%;border-radius:4px;background:var(--rest);}
-.expense-cat-amt{font-family:ui-monospace,monospace;color:var(--ink-soft);}
+
+
+
+
+
+
+
+
+
+
+
+
+
 .expense-cat-dot-chip{background:var(--paper);border:1.5px solid transparent;border-radius:12px;padding:10px 4px;font-size:10px;cursor:pointer;text-align:center;color:var(--ink);font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:6px;}
 .expense-cat-dot-chip.picked{border-color:var(--focus);background:var(--focus-soft);}
 .expense-cat-dot{width:20px;height:20px;border-radius:50%;flex-shrink:0;}
@@ -403,6 +450,26 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 .fin-txn-amt{font-family:ui-monospace,monospace;font-size:13px;font-weight:600;flex-shrink:0;}
 .fin-txn-amt.pos{color:var(--focus);}
 .fin-txn-amt.neg{color:var(--danger);}
+.fin-month-nav{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;gap:8px;margin:0 0 12px;}
+.fin-month-nav button{min-width:44px;min-height:44px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font-size:20px;cursor:pointer;}
+.fin-month-copy{text-align:center;min-width:0;}
+.fin-month-label{font-size:14px;font-weight:700;color:var(--ink);margin:0;}
+.fin-month-reset{min-height:44px;margin-top:2px;padding:2px 8px;border:0;background:none;color:var(--focus);font-size:11px;font-weight:600;cursor:pointer;}
+.fin-plan-card{background:var(--focus-soft);border:1px solid var(--focus-border);border-radius:16px;padding:14px;margin-bottom:14px;}
+.fin-plan-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;}
+.fin-plan-title{font-size:13px;font-weight:700;color:var(--ink);margin:0;}
+.fin-plan-note{font-size:10px;color:var(--ink-muted);margin:0;}
+.fin-plan-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+.fin-plan-metric{min-width:0;background:var(--card);border-radius:11px;padding:10px 11px;}
+.fin-plan-metric-label{display:block;font-size:10px;color:var(--ink-muted);margin-bottom:4px;}
+.fin-plan-metric-value{display:block;font-family:ui-monospace,monospace;font-size:14px;font-weight:700;color:var(--ink);overflow-wrap:anywhere;}
+.fin-plan-metric-value.negative{color:var(--danger);}
+.fin-plan-meter{height:7px;border-radius:5px;background:var(--card);overflow:hidden;margin:10px 0 5px;}
+.fin-plan-meter-fill{height:100%;border-radius:inherit;background:var(--focus);transition:width 180ms ease,background-color 180ms ease;}
+.fin-plan-status{font-size:11px;color:var(--ink-soft);margin:0;}
+.fin-month-nav button:focus-visible,.fin-month-reset:focus-visible{outline:3px solid var(--focus);outline-offset:2px;}
+.fin-btn-row button{min-height:44px;}
+@media (prefers-reduced-motion: reduce){.fin-plan-meter-fill{transition:none;}}
 .acct-manage-link{font-size:11px;color:var(--ink-soft);text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit;padding:0 0 12px;display:block;margin-left:auto;}
 .acct-row{display:flex;align-items:center;gap:12px;background:var(--paper);border-radius:12px;padding:11px 14px;margin-bottom:8px;}
 .acct-row-dot{width:32px;height:32px;border-radius:50%;flex-shrink:0;}
@@ -484,27 +551,111 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
   .habit-box-card{padding:10px 6px;}
   .journal-mood-btn{font-size:17px;padding:7px 0;}
 }
+
+/* Planning-first hierarchy, shared control states, and adaptive workspace */
+button:focus-visible,[role="button"]:focus-visible,a:focus-visible,summary:focus-visible,
+input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid var(--focus);outline-offset:2px;box-shadow:0 0 0 3px var(--focus-soft);
+}
+button{touch-action:manipulation;}
+.day-nav-btn{min-width:44px;min-height:44px;}
+.plan-view-tab{min-height:44px;padding:8px 6px;}
+.today-layout{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"priorities" "schedule" "focus" "links" "journal";gap:0;}
+.today-overview{grid-area:priorities;margin:0 0 12px;padding:15px;}
+.today-schedule{grid-area:schedule;min-width:0;}
+.today-schedule .day-nav{margin-bottom:10px;}
+.today-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.today-add-task,.today-actions .add-btn{min-height:46px;width:100%;margin:0;border:0;border-radius:13px;padding:11px 8px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;}
+.today-add-task{background:var(--focus);color:#fff;}
+.today-actions .add-btn{background:var(--ink);color:var(--paper);}
+.today-view-control{display:flex;justify-content:flex-end;margin:0 0 10px;}
+.today-view-control .view-toggle{min-height:40px;padding:7px 12px;}
+.mf-card{grid-area:focus;margin:0 0 12px;}
+.today-secondary-links{grid-area:links;display:flex;gap:8px;margin-bottom:12px;}
+.today-secondary-links button{flex:1;min-height:44px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink-soft);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;}
+.today-secondary-links button span{color:var(--focus);margin-left:5px;}
+.journal-card{grid-area:journal;margin:0 0 14px;}
+.journal-card>summary{min-height:44px;display:flex;align-items:center;cursor:pointer;list-style-position:inside;}
+.journal-card-prompt{font-size:12px;line-height:1.5;color:var(--ink-soft);margin:0 0 10px;}
+.today-overview-head{gap:8px;align-items:flex-start;}
+.today-overview-title{font-size:15px;font-weight:700;line-height:1.35;margin:0;}
+.today-overview-subtitle{font-size:12px;line-height:1.5;color:var(--ink-soft);margin:3px 0 0;}
+.today-overview-head button{min-height:44px;padding:6px 4px;}
+.today-priority-list{display:grid;gap:6px;margin-top:11px;}
+.today-priority-row{display:flex;align-items:center;gap:9px;min-width:0;padding:8px 9px;border-radius:11px;background:var(--paper);}
+.today-priority-row .pm-task-check{width:36px;height:36px;flex-basis:36px;}
+.today-priority-title{min-width:0;flex:1;margin:0;color:var(--ink);font-size:13px;font-weight:600;line-height:1.45;overflow-wrap:anywhere;}
+.today-priority-empty{font-size:12px;line-height:1.5;color:var(--ink-soft);padding:10px 0 4px;}
+.today-money-snapshot{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;margin-top:11px;padding:9px 10px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);text-align:left;cursor:pointer;width:100%;}
+.today-money-copy{display:grid;gap:2px;}
+.today-money-label{font-size:11px;color:var(--ink-soft);}
+.today-money-value{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;}
+.today-money-arrow{font-size:14px;color:var(--focus);}
+.task-link-info{padding:8px 10px;border-radius:10px;background:var(--focus-soft);color:var(--focus);font-size:12px;line-height:1.5;margin:0 0 10px;}
+.pm-task-actions button,.pm-task-check{min-width:44px;min-height:44px;}
+.pm-task-check{width:44px;height:44px;flex-basis:44px;}
+.pm-task-actions button[data-task-action="schedule"]{color:var(--focus);font-size:12px;font-weight:600;padding:0 8px;}
+.pm-task-goal-chip{color:var(--focus);}
+.pm-task-row{gap:8px;align-items:center;}
+.pm-task-title{font-size:14px;}
+.pm-task-tab{min-height:44px;font-size:12px;}
+.pm-task-search,.pm-task-filter,.pm-task-overlay .field input,.pm-task-overlay .field select{min-height:44px;font-size:14px;}
+.finance-budget-scope{font-size:12px;line-height:1.5;color:var(--ink-soft);margin:4px 0 10px;}
+.sync-data-disclosure{font-size:12px;line-height:1.65;color:var(--ink);background:var(--focus-soft);border:1px solid var(--focus-border);border-radius:12px;padding:11px 12px;margin:0 0 14px;}
+.budget-row-warn{font-size:12px;font-weight:600;}
+.progress-underline-tabs button{min-height:44px;}
+.tab-btn{min-height:44px;}
+.tab-btn span{font-size:11px;}
+@media (min-width:900px){
+  .page{max-width:1080px;}
+  .today-layout{grid-template-columns:minmax(0,1.35fr) minmax(300px,.8fr);grid-template-areas:"schedule priorities" "schedule focus" "schedule links" "schedule journal";column-gap:24px;align-items:start;}
+  .today-schedule .day-nav{margin-bottom:14px;}
+  .today-overview{position:static;}
+  #planMoneyContent{max-width:1040px;margin:0 auto;}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;}
+}
 </style>
+<link rel="stylesheet" href="workspace-ui.css?v=20261021b">
+<link rel="stylesheet" href="sage-workspace.css?v=20261026-lime-teal">
 </head>
 <body>
 
 <!-- PAGE: Today -->
 <div class="page active" id="page-today">
-  <div class="app-head"><div style="display:flex;align-items:center;gap:7px;"><svg width="20" height="20" viewBox="0 0 56 56" style="flex-shrink:0"><path d="M8 40 Q 16 16 28 28 Q 40 40 48 16" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/><circle cx="48" cy="16" r="7" fill="var(--focus)"/></svg><h1>วันนี้</h1></div><div style="display:flex;align-items:center;gap:10px;"><span class="clock" id="clockNow">--:--:--</span><button id="openProfileBtn" style="width:28px;height:28px;border-radius:50%;border:0.5px solid var(--line);background:var(--paper);padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></button></div></div>
-  <div class="day-nav">
-    <button class="day-nav-btn" id="prevDayBtn">‹</button>
-    <span class="day-nav-label" id="dateLabel">วันนี้</span>
-    <button class="day-nav-btn" id="nextDayBtn">›</button>
-  </div>
-  <div class="today-shortcut-row">
-    <button type="button" class="today-shortcut-btn" id="shortcutFinanceBtn"><span class="today-shortcut-icon">💰</span><span class="today-shortcut-label">การเงิน</span></button>
-    <button type="button" class="today-shortcut-btn" id="shortcutGoalsBtn"><span class="today-shortcut-icon">🎯</span><span class="today-shortcut-label">เป้าหมาย</span></button>
-    <button type="button" class="today-shortcut-btn" id="shortcutEventsBtn"><span class="today-shortcut-icon">📅</span><span class="today-shortcut-label">เหตุการณ์</span></button>
-  </div>
-  <button class="add-btn" id="openAddBtn">+ เพิ่ม time block</button>
-  <div class="mf-card" id="mfCard"></div>
-  <div class="journal-card" id="journalCard">
-    <p class="journal-card-title">มองย้อนวันนี้ — รู้สึกยังไงบ้าง</p>
+  <div class="workspace-breadcrumb"><span>Productive Time</span><span aria-hidden="true">/</span><strong>วันนี้</strong></div>
+  <header class="workspace-intro"><h1>ภาพรวมวันนี้</h1><p>งานสำคัญและเวลาของคุณ รวมไว้ในที่เดียว</p></header>
+  <nav class="workspace-route-strip" aria-label="ไปยังพื้นที่หลัก">
+    <button type="button" class="workspace-route-btn is-active" data-workspace-route="today" aria-current="page"><strong>วันนี้</strong><span>โฟกัสและตาราง</span></button>
+    <button type="button" class="workspace-route-btn" data-workspace-route="tasks"><strong>งาน</strong><span>งานเข้าและกำหนดส่ง</span></button>
+    <button type="button" class="workspace-route-btn" data-workspace-route="calendar"><strong>ปฏิทิน</strong><span>จัดช่วงเวลา</span></button>
+    <button type="button" class="workspace-route-btn" data-workspace-route="money"><strong>การเงิน</strong><span>เงินส่วนตัว</span></button>
+  </nav>
+  <div class="app-head app-head-tools" aria-label="การควบคุมวันนี้"><div style="display:flex;align-items:center;gap:10px;"><span class="clock" id="clockNow">--:--:--</span><button id="openProfileBtn" aria-label="เปิดโปรไฟล์" style="width:28px;height:28px;border-radius:50%;border:0.5px solid var(--line);background:var(--paper);padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></button></div></div>
+  <div class="today-layout">
+    <section class="today-overview" id="todayOverview" aria-label="งานที่วางแผนไว้และภาพรวมการเงิน"></section>
+    <main class="today-schedule">
+      <div class="day-nav">
+        <button class="day-nav-btn" id="prevDayBtn" aria-label="วันก่อนหน้า">‹</button>
+        <span class="day-nav-label" id="dateLabel" aria-live="polite">วันนี้</span>
+        <button class="day-nav-btn" id="nextDayBtn" aria-label="วันถัดไป">›</button>
+      </div>
+      <div class="today-actions">
+        <button type="button" class="today-add-task" id="todayAddTaskBtn">＋ เพิ่มงาน</button>
+        <button class="add-btn" id="openAddBtn">＋ จัดช่วงเวลา</button>
+      </div>
+      <div class="today-view-control"><button class="view-toggle" id="viewModeToggle">ดูสัปดาห์</button></div>
+      <div id="blocksList"></div>
+    </main>
+    <div class="mf-card" id="mfCard"></div>
+    <div class="today-secondary-links" aria-label="ทางลัดเพิ่มเติม">
+      <button type="button" id="shortcutGoalsBtn">เป้าหมาย <span aria-hidden="true">→</span></button>
+      <button type="button" id="shortcutEventsBtn">เหตุการณ์ <span aria-hidden="true">→</span></button>
+    </div>
+    <details class="journal-card" id="journalCard">
+    <summary class="journal-card-title">ปิดวัน · มองย้อนวันนี้</summary>
+    <p class="journal-card-prompt">บันทึกอารมณ์และโน้ตไว้ทบทวนภายหลัง</p>
     <div class="journal-mood-row" id="journalMoodRow">
       <button type="button" class="journal-mood-btn" data-mood="1">😞</button>
       <button type="button" class="journal-mood-btn" data-mood="2">😐</button>
@@ -514,24 +665,34 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
     </div>
     <textarea class="journal-note" id="journalNote" placeholder="จดสั้นๆ เผื่ออยากย้อนดูทีหลัง (ไม่บังคับ)"></textarea>
     <p class="journal-saved-hint" id="journalSavedHint">บันทึกแล้ว ✓</p>
+    </details>
   </div>
-  <div style="margin-bottom:10px"><button class="view-toggle" id="viewModeToggle">ดูแบบสัปดาห์</button></div>
-  <div id="blocksList"></div>
 </div>
 
 <!-- PAGE: Plan — lightweight week/month/year calendar + popup detail -->
 <div class="page" id="page-plan">
-  <div class="app-head"><h1>แผน</h1><span class="clock" id="clockNow2"></span></div>
+  <div class="workspace-breadcrumb"><span>Productive Time</span><span aria-hidden="true">/</span><strong>แผน</strong></div>
+  <header class="workspace-intro"><h1>พื้นที่วางแผน</h1><p>ดูตาราง จัดงาน และวางแผนการเงินส่วนตัว</p></header>
+  <div class="app-head app-head-tools" aria-label="เวลาปัจจุบัน"><span class="clock" id="clockNow2"></span></div>
+
+  <div class="plan-view-tabs" role="tablist" aria-label="ส่วนของแผน">
+    <button type="button" id="planSectionCalendarBtn" class="plan-view-tab plan-view-tab-active" role="tab" aria-controls="planCalendarSection" aria-selected="true" onclick="setPlanSection('calendar')">ปฏิทิน</button>
+    <button type="button" id="planSectionTasksBtn" class="plan-view-tab" role="tab" aria-controls="planTasksSection" aria-selected="false" onclick="setPlanSection('tasks')">งาน</button>
+    <button type="button" id="planSectionMoneyBtn" class="plan-view-tab" role="tab" aria-controls="planMoneySection" aria-selected="false" onclick="setPlanSection('money')">การเงิน</button>
+  </div>
+  <section class="plan-section-context" id="planSectionContext" aria-live="polite"></section>
+
+  <div id="planCalendarSection">
 
   <div class="day-nav" style="margin-bottom:10px;">
     <button class="day-nav-btn" id="prevPlanBtn">‹</button>
     <span class="day-nav-label" id="planRangeLabel"></span>
     <button class="day-nav-btn" id="nextPlanBtn">›</button>
   </div>
-  <div class="plan-view-tabs">
-    <button id="planViewWkBtn" class="plan-view-tab plan-view-tab-active" onclick="setPlanViewMode('wk')">สัปดาห์</button>
-    <button id="planViewMoBtn" class="plan-view-tab" onclick="setPlanViewMode('mo')">เดือน</button>
-    <button id="planViewYrBtn" class="plan-view-tab" onclick="setPlanViewMode('yr')">ปี</button>
+  <div class="plan-view-tabs" role="tablist" aria-label="ช่วงปฏิทิน">
+    <button id="planViewWkBtn" role="tab" aria-selected="true" class="plan-view-tab plan-view-tab-active" onclick="setPlanViewMode('wk')">สัปดาห์</button>
+    <button id="planViewMoBtn" role="tab" aria-selected="false" class="plan-view-tab" onclick="setPlanViewMode('mo')">เดือน</button>
+    <button id="planViewYrBtn" role="tab" aria-selected="false" class="plan-view-tab" onclick="setPlanViewMode('yr')">ปี</button>
   </div>
 
   <div class="plan-highlight-card" id="planHighlightCard"></div>
@@ -543,12 +704,12 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
     <div class="plan-week">
       <div id="wkSubToggleRow" style="display:flex;justify-content:flex-end;margin-bottom:8px;">
         <div class="seg-mini">
-          <button id="wkSubLightBtn" class="seg-mini-btn seg-mini-active" onclick="setPlanWkSubView('light')">แบบเบา</button>
-          <button id="wkSubTimelineBtn" class="seg-mini-btn" onclick="setPlanWkSubView('timeline')">Timeline</button>
+          <button id="wkSubLightBtn" class="seg-mini-btn seg-mini-active" aria-pressed="true" onclick="setPlanWkSubView('light')">แบบเบา</button>
+          <button id="wkSubTimelineBtn" class="seg-mini-btn" aria-pressed="false" onclick="setPlanWkSubView('timeline')">เส้นเวลา</button>
         </div>
       </div>
       <div class="event-legend" id="monthEventLegend" style="display:none;">
-        <span class="event-legend-item"><span class="event-legend-dot"></span>time block</span>
+        <span class="event-legend-item"><span class="event-legend-dot"></span>ช่วงเวลา</span>
         <span class="event-legend-item"><span class="event-diamond"></span>เหตุการณ์สำคัญ</span>
       </div>
       <div id="lightWeekGrid" class="light-week-grid"></div>
@@ -559,6 +720,51 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
       <div id="lightMonthGrid" class="light-month-grid" style="display:none;"></div>
       <div id="lightYearGrid" class="light-year-grid" style="display:none;"></div>
     </div>
+  </div>
+  </div>
+
+  <section id="planTasksSection" style="display:none" aria-label="จัดการงาน">
+    <section class="pm-dashboard" id="pmDashboard" aria-label="ภาพรวมงาน"></section>
+    <div class="pm-task-tabs" role="tablist" aria-label="สถานะงาน">
+    <button type="button" class="pm-task-tab active" data-task-view="inbox" role="tab" aria-selected="true">งานเข้า <span class="pm-task-count" data-task-count="inbox">0</span></button>
+      <button type="button" class="pm-task-tab" data-task-view="today" role="tab" aria-selected="false">วันนี้ <span class="pm-task-count" data-task-count="today">0</span></button>
+      <button type="button" class="pm-task-tab" data-task-view="upcoming" role="tab" aria-selected="false">ถัดไป <span class="pm-task-count" data-task-count="upcoming">0</span></button>
+      <button type="button" class="pm-task-tab" data-task-view="done" role="tab" aria-selected="false">เสร็จแล้ว <span class="pm-task-count" data-task-count="done">0</span></button>
+    </div>
+    <button type="button" class="pm-task-add" id="openTaskAddBtn">+ เพิ่มงาน</button>
+    <div class="pm-task-toolbar">
+      <input class="pm-task-search" type="search" id="taskSearch" placeholder="ค้นหางาน" aria-label="ค้นหางาน">
+      <select class="pm-task-filter" id="taskPriorityFilter" aria-label="กรองตามความสำคัญ">
+        <option value="all">ทุกระดับ</option><option value="high">สูง</option><option value="normal">ปกติ</option><option value="low">ต่ำ</option>
+      </select>
+    </div>
+    <div class="pm-task-toolbar" style="margin-top:0">
+      <select class="pm-task-filter" id="taskDueFilter" aria-label="กรองตามกำหนดส่ง" style="width:100%">
+        <option value="all">ทุกกำหนดส่ง</option><option value="overdue">เลยกำหนด</option><option value="today">ครบกำหนดวันนี้</option><option value="week">7 วันข้างหน้า</option><option value="none">ไม่มีกำหนดส่ง</option>
+      </select>
+    </div>
+    <div id="taskList" aria-live="polite"></div>
+  </section>
+  <section id="planMoneySection" style="display:none" aria-label="การเงินส่วนตัว">
+    <div id="planMoneyContent"></div>
+  </section>
+</div>
+
+<!-- TASK EDITOR -->
+<div class="overlay pm-task-overlay" id="taskOverlay">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-head"><h2 id="taskModalTitle">เพิ่มงาน</h2><button type="button" class="modal-close" id="taskCloseBtn" aria-label="ปิด">✕</button></div>
+    <div class="modal-body">
+      <div class="field"><label for="taskTitleInput">ชื่องาน</label><input type="text" id="taskTitleInput" maxlength="180" placeholder="เช่น วางแผนงานประจำสัปดาห์" autocomplete="off"></div>
+      <div class="row2">
+        <div class="field"><label for="taskScheduleInput">วางแผนทำวันที่</label><input type="date" id="taskScheduleInput"></div>
+        <div class="field"><label for="taskDueInput">กำหนดส่ง</label><input type="date" id="taskDueInput"></div>
+      </div>
+      <div class="field"><label for="taskPriorityInput">ความสำคัญ</label><select id="taskPriorityInput"><option value="high">สูง</option><option value="normal" selected>ปกติ</option><option value="low">ต่ำ</option></select></div>
+      <div class="field"><label for="taskGoalInput">เป้าหมายที่เกี่ยวข้อง (ไม่บังคับ)</label><select id="taskGoalInput"><option value="">ไม่ผูกเป้าหมาย</option></select></div>
+    </div>
+    <div class="modal-foot"><button type="button" class="btn-primary" id="taskSaveBtn">บันทึกงาน</button></div>
   </div>
 </div>
 
@@ -586,7 +792,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
     </div>
     <div class="modal-body" id="dayModalBody"></div>
     <div class="modal-foot">
-      <button class="btn-primary" id="dayModalAddBtn" style="width:100%">+ เพิ่ม time block ในวันนี้</button>
+      <button class="btn-primary" id="dayModalAddBtn" style="width:100%">+ เพิ่มช่วงเวลาในวันนี้</button>
     </div>
   </div>
 </div>
@@ -665,8 +871,9 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 </div>
 <!-- PAGE: Settings -->
 <div class="page" id="page-settings">
-  <div class="app-head"><h1>ตั้งค่า</h1></div>
-  <p class="sync-status" id="syncStatus">ใช้ข้อมูลแค่เครื่องนี้</p>
+  <div class="workspace-breadcrumb"><span>Productive Time</span><span aria-hidden="true">/</span><strong>ตั้งค่า</strong></div>
+  <header class="workspace-intro"><h1>ตั้งค่าพื้นที่ทำงาน</h1><p>รูปแบบหน้าจอ การแจ้งเตือน และการจัดการข้อมูลของคุณ</p></header>
+  <p class="sync-status" id="syncStatus">ใช้ข้อมูลเฉพาะบนเครื่องนี้</p>
   <p class="section-label" style="margin-top:0">การแสดงผล</p>
   <div class="settings-group">
     <div class="settings-row">
@@ -695,12 +902,26 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
     </div>
   </div>
   <p style="font-size:11px;color:var(--ink-muted);margin:-4px 0 10px;padding:0 2px">แจ้งเตือนแบบเว็บแอปขึ้นอยู่กับเครื่องและเบราว์เซอร์ — บนไอโฟนต้อง Add to Home Screen ก่อนถึงจะได้รับแจ้งเตือน</p>
+  <p class="section-label">Pomodoro</p>
+  <section class="pomo-settings-card" aria-label="ตั้งค่า Pomodoro">
+    <div class="pomo-settings-head"><div><h3>โหมดโฟกัสและเสียง</h3><p>เลือกเสียงตอนเริ่ม จบช่วง หรือใกล้หมดเวลา</p></div><span class="pomo-settings-badge">ปรับได้เอง</span></div>
+    <div class="pomo-settings-controls">
+      <label class="pomo-setting-field"><span>เสียงแจ้งเตือน</span><select id="pomoSoundSelect" aria-label="เลือกเสียง Pomodoro"><option value="chime">ระฆังใส</option><option value="soft">นุ่ม</option><option value="pulse">สองจังหวะ</option><option value="digital">ดิจิทัล</option><option value="silent">ปิดเสียง</option></select></label>
+      <button type="button" class="pomo-preview-btn" id="pomoPreviewSoundBtn">ฟังตัวอย่าง</button>
+      <label class="pomo-setting-toggle"><span><strong>นับถอยหลัง 5 วินาที</strong><small>มีเสียงเตือนเบาก่อนเปลี่ยนช่วง</small></span><span class="toggle-wrap"><input type="checkbox" id="pomoCountdownToggle" checked><span class="toggle-track"><span class="toggle-thumb"></span></span></span></label>
+    </div>
+    <div class="pomo-preset-editor">
+      <div><h4>บันทึกโหมดของคุณ</h4><p>สร้างรูปแบบ เช่น อ่านหนังสือ 40/10 แล้วเลือกใช้ตอนจัดช่วงเวลา</p></div>
+      <div class="pomo-preset-fields"><input type="text" id="pomoPresetName" maxlength="40" placeholder="ชื่อโหมด เช่น อ่านหนังสือ"><label><span>โฟกัส</span><input type="number" id="pomoPresetFocus" min="1" max="240" value="25"></label><label><span>พัก</span><input type="number" id="pomoPresetBreak" min="1" max="120" value="5"></label><button type="button" class="btn-primary" id="pomoSavePresetBtn">บันทึกโหมด</button></div>
+      <div class="pomo-preset-list" id="pomoPresetList" aria-live="polite"></div>
+    </div>
+  </section>
   <p class="section-label">แจ้งเตือน</p>
   <div class="settings-group">
     <div class="settings-row" id="openSyncBtn">
       <div class="settings-row-left">
         <svg class="settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-        <div class="settings-row-text"><p>ซิงค์ข้ามอุปกรณ์</p><small>Firebase</small></div>
+        <div class="settings-row-text"><p>ซิงค์ข้ามอุปกรณ์</p><small>เชื่อมต่อบัญชีเพื่อใช้ข้อมูลหลายเครื่อง</small></div>
       </div>
       <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
     </div>
@@ -711,14 +932,14 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
     <div class="settings-row" id="openImportBtn">
       <div class="settings-row-left">
         <svg class="settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        <div class="settings-row-text"><p>Import แผนงาน (JSON)</p><small>เพิ่ม projects / goals / blocks โดยไม่ทับข้อมูลเดิม</small></div>
+        <div class="settings-row-text"><p>นำเข้าข้อมูลสำรอง (JSON)</p><small>งาน เป้าหมาย ปฏิทิน บันทึก และการเงิน · เพิ่มอย่างเดียว</small></div>
       </div>
       <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
     </div>
     <div class="settings-row" id="openExportBtn">
       <div class="settings-row-left">
         <svg class="settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        <div class="settings-row-text"><p>Export ข้อมูล (JSON)</p><small>บันทึกข้อมูลทั้งหมดออกมาเป็นไฟล์</small></div>
+        <div class="settings-row-text"><p>ส่งออกข้อมูลสำรอง (JSON)</p><small>มีข้อมูลส่วนตัวและการเงิน · ไฟล์ไม่เข้ารหัส</small></div>
       </div>
       <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
     </div>
@@ -736,14 +957,14 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-head">
-      <h2>Import แผนงาน</h2>
+      <h2>นำเข้าข้อมูลสำรอง</h2>
       <button class="modal-close" id="importCancelBtn">✕</button>
     </div>
     <div class="modal-body">
-      <p style="font-size:13px;color:var(--ink-soft);margin:0 0 12px">วาง JSON ที่ได้จาก Claude หรือเลือกไฟล์ .json ด้านล่าง ข้อมูลเดิมจะไม่ถูกลบ — เพิ่มเข้าไปเท่านั้น</p>
+      <p style="font-size:13px;color:var(--ink-soft);margin:0 0 12px">เลือกไฟล์สำรอง JSON ที่เชื่อถือได้ ระบบจะตรวจสอบและแสดงตัวอย่างก่อนเพิ่ม — ข้อมูลเดิมจะไม่ถูกเขียนทับ</p>
       <div class="field">
         <label>วาง JSON ตรงนี้</label>
-        <textarea id="importJson" rows="8" placeholder='{"type":"timeblock_import",'+'"version":1,"projects":[...],"blocks":['+'...]}'style="font-family:ui-monospace,monospace;font-size:11px;resize:vertical"></textarea>
+        <textarea id="importJson" rows="8" placeholder='{"type":"timeblock_import",'+'"version":2,"projects":[...],"blocks":['+'...]}'style="font-family:ui-monospace,monospace;font-size:11px;resize:vertical"></textarea>
       </div>
       <div style="text-align:center;color:var(--ink-muted);font-size:12px;margin:-4px 0 10px">— หรือ —</div>
       <div class="field">
@@ -805,6 +1026,15 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
       <button type="button" class="expense-cat-dot-chip" data-cat="freelance"><span class="expense-cat-dot" style="background:#4A9B78"></span>ฟรีแลนซ์</button>
       <button type="button" class="expense-cat-dot-chip" data-cat="other"><span class="expense-cat-dot" style="background:var(--line-strong)"></span>อื่นๆ</button>
     </div>
+    <details style="margin-bottom:16px;">
+      <summary style="font-size:12px;color:var(--ink-soft);cursor:pointer;">เพิ่มวันที่/โน้ต (ไม่บังคับ)</summary>
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;">
+        <label for="inc_date" style="font-size:11px;color:var(--ink-soft);">วันที่รับเงิน</label>
+        <input type="date" id="inc_date" style="width:100%;border:0.5px solid var(--line);border-radius:10px;padding:9px 11px;font-size:13px;background:var(--paper);color:var(--ink);">
+        <label for="inc_note" style="font-size:11px;color:var(--ink-soft);">รายละเอียด</label>
+        <input type="text" id="inc_note" placeholder="เช่น เงินเดือนเดือนตุลาคม" style="width:100%;border:0.5px solid var(--line);border-radius:10px;padding:9px 11px;font-size:13px;background:var(--paper);color:var(--ink);">
+      </div>
+    </details>
     <div id="incAccountRow" style="display:flex;align-items:center;justify-content:space-between;background:var(--paper);border-radius:10px;padding:11px 14px;margin-bottom:16px;font-size:13px;color:var(--ink-soft);cursor:pointer;">
       <span>เข้าบัญชี</span><span id="inc_accountLabel" style="color:var(--ink);font-weight:600;"></span>
     </div>
@@ -862,10 +1092,12 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 
 <!-- PAGE: Goals -->
 <div class="page" id="page-projects">
-  <div class="app-head"><h1>เป้าหมาย</h1><span class="clock" id="clockNow3"></span></div>
+  <div class="workspace-breadcrumb"><span>Productive Time</span><span aria-hidden="true">/</span><strong>เป้าหมาย</strong></div>
+  <header class="workspace-intro"><h1>เป้าหมายและนิสัย</h1><p>มองภาพใหญ่ แล้วเดินหน้าด้วยสิ่งเล็ก ๆ ที่ทำได้ทุกวัน</p></header>
+  <div class="app-head app-head-tools" aria-label="เวลาปัจจุบัน"><span class="clock" id="clockNow3"></span></div>
   <div class="proj-top-btn-row">
     <button class="add-btn" id="openProjAddBtn" style="margin-bottom:0;">+ เพิ่มเป้าหมาย</button>
-    <button class="btn-secondary" id="openHabitGalleryBtn" style="white-space:nowrap;">Habit Gallery</button>
+    <button class="btn-secondary" id="openHabitGalleryBtn" style="white-space:nowrap;">เลือกนิสัย</button>
   </div>
   <div class="proj-dash" id="projDash"></div>
 </div>
@@ -874,10 +1106,10 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 <div class="gallery-popup-backdrop" id="habitGalleryPopupBackdrop">
   <div class="gallery-popup" id="habitGalleryPopup">
     <div class="gallery-popup-head">
-      <div class="gallery-popup-title">🎓 Habit Gallery</div>
+      <div class="gallery-popup-title">เลือกนิสัยสำเร็จรูป</div>
       <button type="button" class="gallery-popup-close" id="habitGalleryPopupCloseBtn">✕</button>
     </div>
-    <p class="gallery-popup-sub">เลือกนิสัยสำเร็จรูปเพิ่มเข้าเร็วๆ</p>
+    <p class="gallery-popup-sub">เลือกนิสัยที่ต้องการติดตาม แล้วเริ่มได้ทันที</p>
     <div id="habitGalleryChips"></div>
     <div id="habitGalleryConfig" style="display:none;background:var(--paper);border:0.5px solid var(--line);border-radius:16px;padding:14px;margin-top:4px;margin-bottom:16px;"></div>
     <div class="gallery-popup-footer">
@@ -889,12 +1121,13 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 
 <!-- PAGE: Progress -->
 <div class="page" id="page-progress">
-  <div class="app-head"><h1>พัฒนาการ</h1><span class="clock" id="clockNow4"></span></div>
-  <div class="progress-underline-tabs">
-    <button id="progViewOverviewBtn" class="progress-underline-tab active" onclick="setProgressViewMode('overview')">ภาพรวม</button>
-    <button id="progViewHabitBtn" class="progress-underline-tab" onclick="setProgressViewMode('habit')">นิสัย</button>
-    <button id="progViewFinanceBtn" class="progress-underline-tab" onclick="setProgressViewMode('finance')">การเงิน</button>
-    <button id="progViewMindBtn" class="progress-underline-tab" onclick="setProgressViewMode('mind')">ใจ</button>
+  <div class="workspace-breadcrumb"><span>Productive Time</span><span aria-hidden="true">/</span><strong>พัฒนาการ</strong></div>
+  <header class="workspace-intro"><h1>มองเห็นความก้าวหน้า</h1><p>ทบทวนความต่อเนื่อง งานที่ทำ และจังหวะของคุณ</p></header>
+  <div class="app-head app-head-tools" aria-label="เวลาปัจจุบัน"><span class="clock" id="clockNow4"></span></div>
+  <div class="progress-underline-tabs" role="tablist" aria-label="มุมมองพัฒนาการ">
+    <button id="progViewOverviewBtn" role="tab" aria-selected="true" class="progress-underline-tab active" onclick="setProgressViewMode('overview')">ภาพรวม</button>
+    <button id="progViewHabitBtn" role="tab" aria-selected="false" class="progress-underline-tab" onclick="setProgressViewMode('habit')">นิสัย</button>
+    <button id="progViewMindBtn" role="tab" aria-selected="false" class="progress-underline-tab" onclick="setProgressViewMode('mind')">ใจ</button>
   </div>
   <div id="progressDash"></div>
 </div>
@@ -927,21 +1160,26 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 <div class="overlay" id="blockOverlay">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-head"><h2 id="modalTitle">time block ใหม่</h2><button class="modal-close" id="cancelBtn">✕</button></div>
+    <div class="modal-head"><h2 id="modalTitle">ช่วงเวลาใหม่</h2><button class="modal-close" id="cancelBtn" aria-label="ปิดหน้าต่าง">✕</button></div>
     <div class="modal-body">
       <div class="field"><label>ชื่องาน</label><input type="text" id="f_title" placeholder="เช่น เขียนรายงาน Q3"></div>
       <div class="field"><label>วันที่</label><input type="date" id="f_date"></div>
       <div class="row2"><div class="field"><label>เริ่ม</label><input type="time" id="f_start"></div><div class="field"><label>จบ</label><input type="time" id="f_end"></div></div>
       <div class="field"><label>ผูกกับเป้าหมาย</label><select id="f_goalId"></select></div>
+      <input type="hidden" id="f_taskId" value="">
+      <div id="f_taskLinkInfo" class="task-link-info" style="display:none"><span id="f_taskLinkText"></span><button type="button" id="f_taskUnlinkBtn">ยกเลิกการผูก</button></div>
       <div class="field" id="f_countAmountRow" style="display:none;"><label>จำนวนต่อครั้ง (<span id="f_countUnitLabel"></span>)</label><input type="number" id="f_countAmount" min="0" step="0.1" placeholder="เช่น 5"></div>
       <label style="font-size:12px;color:var(--ink-soft);display:block;margin-bottom:6px">โหมด pomodoro</label>
       <div class="mode-grid" id="modeGrid">
         <button type="button" data-mode="none">ไม่ใช้ pomodoro</button>
-        <button type="button" data-mode="classic">classic 25/5</button>
-        <button type="button" data-mode="deep">deep work 50/10</button>
-        <button type="button" data-mode="long">long focus 90/15</button>
+        <button type="button" data-mode="sprint">Sprint 15/3</button>
+        <button type="button" data-mode="classic">Classic 25/5</button>
+        <button type="button" data-mode="flow">Flow 45/10</button>
+        <button type="button" data-mode="deep">Deep work 50/10</button>
+        <button type="button" data-mode="long">Long focus 90/15</button>
         <button type="button" data-mode="custom" style="grid-column:span 2">กำหนดเอง</button>
       </div>
+      <div class="saved-pomo-modes" id="savedPomoModes" aria-label="โหมด Pomodoro ที่บันทึกไว้"></div>
       <div class="row2" id="customRow" style="display:none;margin-bottom:11px">
         <div class="field"><label>โฟกัส (นาที)</label><input type="number" id="f_customFocus" value="25" min="1"></div>
         <div class="field"><label>พัก (นาที)</label><input type="number" id="f_customBreak" value="5" min="1"></div>
@@ -997,6 +1235,16 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
         </div>
         <div class="field" id="g_deadlineField"><label>Deadline</label><input type="date" id="g_deadline"></div>
       </div>
+      <div class="field">
+        <label>รูปแบบภาพความคืบหน้า</label>
+        <select id="g_visualType">
+          <option value="auto">อัตโนมัติตามหมวดหมู่</option>
+          <option value="building">🏗️ ตึกกำลังก่อสร้าง</option>
+          <option value="tree">🌱 ต้นไม้เติบโต</option>
+          <option value="money">💰 เงินกำลังสะสม</option>
+        </select>
+        <p style="font-size:11px;color:var(--ink-muted);margin:5px 0 0;line-height:1.5;">ภาพจะเปลี่ยนตามเปอร์เซ็นต์ของขั้นย่อย และเลือกใหม่ได้ทุกโปรเจกต์</p>
+      </div>
       <label style="font-size:12px;color:var(--ink-soft);display:block;margin-bottom:6px;">วัดผลเป้าหมายแบบไหน</label>
       <div class="mode-grid" id="goalModeGrid" style="grid-template-columns:1fr 1fr 1fr;">
         <button type="button" data-mode="time"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:3px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>เวลา</button>
@@ -1013,7 +1261,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
           </div>
           <input type="hidden" id="g_targetHours" value="20">
         </div>
-        <p style="font-size:11px;color:var(--ink-soft);margin:-2px 0 10px">% จะคำนวณอัตโนมัติจากชั่วโมง time block ที่ผูกไว้</p>
+        <p style="font-size:11px;color:var(--ink-soft);margin:-2px 0 10px">เปอร์เซ็นต์จะคำนวณจากชั่วโมงช่วงเวลาที่ผูกไว้</p>
       </div>
       <div id="goalModeCountFields" style="display:none;">
         <div class="field"><label>เป้าหมายจำนวนรวม</label>
@@ -1031,7 +1279,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
           </div>
         </div>
         <div class="field" id="g_unitCustomField" style="display:none;"><label>หน่วย (กำหนดเอง)</label><input type="text" id="g_unitCustom" placeholder="เช่น หน้า, บท, ตอน"></div>
-        <p style="font-size:11px;color:var(--ink-soft);margin:-6px 0 10px">% จะคำนวณจากจำนวนที่สะสมได้จาก time block ที่ผูกไว้และทำเสร็จแล้ว</p>
+        <p style="font-size:11px;color:var(--ink-soft);margin:-6px 0 10px">เปอร์เซ็นต์จะคำนวณจากจำนวนที่ทำเสร็จในช่วงเวลาที่ผูกไว้</p>
         <div id="g_financeLinkSection" style="display:none;">
           <div style="display:flex;align-items:center;justify-content:space-between;background:var(--paper);border-radius:12px;padding:12px 14px;margin-bottom:10px;">
             <div>
@@ -1059,8 +1307,8 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
           <span id="subtaskWeightSum" style="font-family:ui-monospace,monospace;font-size:12px;font-weight:700;color:var(--focus);">รวม 100%</span>
         </div>
         <div id="projectSubtaskList" style="margin-bottom:8px;"></div>
-        <button type="button" id="addSubtaskBtn" style="width:100%;background:none;border:1px dashed var(--line-strong);color:var(--ink-soft);border-radius:10px;padding:11px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:12px;">+ เพิ่ม milestone</button>
-        <p style="font-size:11px;color:var(--ink-muted);margin:0 0 10px;line-height:1.6;">เพิ่ม/ลบ milestone แล้ว % จะแบ่งเท่าๆ กันให้อัตโนมัติ — ปรับสัดส่วนทีหลังได้ในหน้ารายละเอียด</p>
+        <button type="button" id="addSubtaskBtn" style="width:100%;background:none;border:1px dashed var(--line-strong);color:var(--ink-soft);border-radius:10px;padding:11px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:12px;">+ เพิ่มขั้นย่อย</button>
+        <p style="font-size:11px;color:var(--ink-muted);margin:0 0 10px;line-height:1.6;">เพิ่มหรือลบขั้นย่อย แล้วเปอร์เซ็นต์จะแบ่งให้อัตโนมัติ</p>
       </div>
     </div>
     <div class="modal-foot"><div class="modal-actions"><button class="btn-secondary" id="goalDeleteBtn" style="display:none;color:var(--danger)">ลบ</button><button class="btn-primary" id="goalSaveBtn" style="flex:2">บันทึก</button></div></div>
@@ -1103,8 +1351,9 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
         <div style="text-align:center;padding:6px 0 18px;">
           <svg width="48" height="48" viewBox="0 0 56 56" style="margin:0 auto 14px;display:block;"><path d="M8 40 Q 16 16 28 28 Q 40 40 48 16" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/><circle cx="48" cy="16" r="7" fill="var(--focus)"/></svg>
           <h3 style="font-size:20px;font-weight:800;margin:0 0 8px;color:var(--ink);">ยินดีต้อนรับกลับ</h3>
-          <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin:0;">เข้าสู่ระบบเพื่อซิงค์ time block เป้าหมาย<br>และข้อมูลทั้งหมดของคุณข้ามอุปกรณ์</p>
+          <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin:0;">เข้าสู่ระบบเพื่อซิงค์ข้อมูลข้ามอุปกรณ์</p>
         </div>
+        <p class="sync-data-disclosure"><strong>ก่อนเปิดซิงค์:</strong> Firebase จะรับข้อมูลของแอปนี้ รวมถึงช่วงเวลา เป้าหมาย งาน บันทึกส่วนตัว รายรับ–รายจ่าย บัญชี และงบประมาณ ไม่มีการเชื่อมธนาคาร และไม่รวม P&amp;L เทรด หากไม่ต้องการส่งข้อมูล ให้ปิดหน้าต่างนี้และใช้ข้อมูลในเครื่องต่อได้</p>
         <p id="syncEnvWarning" style="display:none;font-size:11.5px;color:var(--rest);background:var(--rest-soft);border-radius:10px;padding:8px 12px;margin:0 0 14px;line-height:1.5;">⚠️ หน้าพรีวิวนี้ยังล็อกอินไม่ได้ (ต้องเปิดผ่าน http/https จริง) — Publish/Deploy แอปก่อนแล้วค่อยล็อกอิน หรือใช้แบบไม่ล็อกอินไปก่อนได้</p>
         <button class="btn-primary" id="googleSignInBtn" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;background:var(--card);color:var(--ink);border:0.5px solid var(--line);">
           <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62Z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.97 10.72A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.18.29-1.72V4.95H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.05l3.01-2.33Z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58Z"/></svg>
@@ -1144,7 +1393,7 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
             <p id="syncUserEmail" style="font-size:11px;color:var(--ink-soft);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></p>
           </div>
         </div>
-        <p style="font-size:12px;color:var(--ink-soft);margin-bottom:16px">ข้อมูลของคุณจะซิงค์อัตโนมัติทุกเครื่องที่ล็อกอินด้วยบัญชีนี้</p>
+        <p style="font-size:12px;color:var(--ink-soft);margin-bottom:16px">ข้อมูลแอปทั้งหมดที่ระบุไว้ด้านบนจะซิงค์อัตโนมัติทุกเครื่องที่ล็อกอินด้วยบัญชีนี้</p>
         <button class="add-goal-btn" id="syncSignOutBtn" style="color:var(--danger)">ออกจากระบบ</button>
       </div>
 
@@ -1158,10 +1407,14 @@ canvas.mascot-sprite{filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));}
 <script src="https://cdn.jsdelivr.net/npm/firebase@10.14.0/firebase-auth-compat.js"></script>
 <script>
 const SK="tbv3_state",CK="tbv3_cloud",VK="tbv3_voice",MK="tbv3_mascot",PK="tbv3_phonecatch";
-const MODES={classic:{focus:25,break:5},deep:{focus:50,break:10},long:{focus:90,break:15}};
-let goals=[{id:"g1",title:"ปิดโปรเจกต์ Q3",_isProject:true}],blocks=[],stats={byDate:{}},timerState={},journal={},expenses=[],events=[],accounts=[{id:"acc_cash",name:"เงินสด",color:"#2f6b52",startingBalance:0}],budgets={};
+const MODES={sprint:{focus:15,break:3},classic:{focus:25,break:5},flow:{focus:45,break:10},deep:{focus:50,break:10},long:{focus:90,break:15}};
+const MODE_LABELS={sprint:"Sprint",classic:"Classic",flow:"Flow",deep:"Deep work",long:"Long focus"};
+const POMO_SOUND_LABELS={chime:"ระฆังใส",soft:"นุ่ม",pulse:"สองจังหวะ",digital:"ดิจิทัล",silent:"ปิดเสียง"};
+let goals=[{id:"g1",title:"ปิดโปรเจกต์ Q3",_isProject:true}],blocks=[],stats={byDate:{}},timerState={},journal={},expenses=[],events=[],accounts=[{id:"acc_cash",name:"เงินสด",color:"#2f6b52",startingBalance:0}],budgets={},tasks=[];
+let pomoCustomModes=[],pomoSettings={sound:"chime",countdown:true,volume:0.28};
 let prevActiveId=null,viewDate=todayStr(),viewMode="day";
-let snoozeUntil=0,lastPhoneCatchAt=0,currentTab="today",lastCountdownKey=null;
+let currentTab="today",lastCountdownKey=null;
+let planSection="calendar",taskView="inbox",taskPriorityFilter="all",taskDueFilter="all",taskSearchTerm="",editingTaskId=null;
 let cloudDb=null,cloudDocRef=null,cloudUnsub=null,cloudConnected=false,cloudPushTimer=null,applyingRemoteUpdate=false,pendingLocalChange=false;
 
 function dateStrFromDate(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
@@ -1169,28 +1422,6 @@ function todayStr(){return dateStrFromDate(new Date());}
 function addDays(s,n){const d=new Date(s+"T00:00:00");d.setDate(d.getDate()+n);return dateStrFromDate(d);}
 function toMinutes(t){const[h,m]=t.split(":").map(Number);return h*60+m;}
 function minutesToHM(m){m=Math.max(0,Math.min(24*60,m));return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0");}
-function nextFreeSlotToday(durMin){
-  const today=todayStr();
-  let startM=Math.ceil(currentNowMin()/15)*15;
-  const todays=blocks.filter(b=>b.date===today).sort((a,b)=>toMinutes(a.start)-toMinutes(b.start));
-  let moved=true;
-  while(moved){
-    moved=false;
-    for(const b of todays){
-      const bs=toMinutes(b.start),be=toMinutes(b.end);
-      if(startM<be&&startM+durMin>bs){startM=be;moved=true;}
-    }
-  }
-  if(startM+durMin>24*60)startM=24*60-durMin;
-  return{start:minutesToHM(startM),end:minutesToHM(startM+durMin)};
-}
-function createBlockFromMilestone(title,goalId){
-  const slot=nextFreeSlotToday(30);
-  blocks.push({id:uid(),title,date:todayStr(),start:slot.start,end:slot.end,goalId,mode:"none",completed:null});
-  saveState();
-  showToast(`สร้าง time block "${title}" เวลา ${slot.start} แล้ว`);
-  renderAll();
-}
 function nowPlus(m){const d=new Date(Date.now()+m*60000);return d.getHours().toString().padStart(2,"0")+":"+d.getMinutes().toString().padStart(2,"0");}
 function formatViewDate(s){const today=todayStr(),d=new Date(s+"T00:00:00"),lbl=d.toLocaleDateString("th-TH",{weekday:"short",day:"numeric",month:"short"});if(s===today)return"วันนี้ · "+lbl;if(s===addDays(today,1))return"พรุ่งนี้ · "+lbl;if(s===addDays(today,-1))return"เมื่อวาน · "+lbl;return lbl;}
 function formatShortDate(s){const d=new Date(s+"T00:00:00");return d.toLocaleDateString("th-TH",{day:"numeric",month:"short"});}
@@ -1199,8 +1430,9 @@ function formatWeekRange(ws){const e=addDays(ws,6);return new Date(ws+"T00:00:00
 function uid(){return"b"+Math.random().toString(36).slice(2,9);}
 function currentNowMin(){const n=new Date();return n.getHours()*60+n.getMinutes();}
 function statusOf(b,nm){const today=todayStr();if(b.date<today)return"done";if(b.date>today)return"upcoming";const s=toMinutes(b.start),e=toMinutes(b.end);if(nm>=e)return"done";if(nm>=s&&nm<e)return"active";return"upcoming";}
-function modeMinutes(b){if(b.mode==="custom")return{focus:b.customFocus,break:b.customBreak};return MODES[b.mode]||null;}
-function modeLabel(b){if(b.mode==="custom")return"กำหนดเอง "+b.customFocus+"/"+b.customBreak;if(b.mode==="classic")return"classic 25/5";if(b.mode==="deep")return"deep work 50/10";if(b.mode==="long")return"long focus 90/15";return"";}
+function blockDisplayTitle(block){return tasks.find(task=>task.id===block.taskId)?.title||block.title||"";}
+function modeMinutes(b){if(b.mode==="custom")return{focus:Number(b.customFocus)||25,break:Number(b.customBreak)||5};const saved=pomoCustomModes.find(item=>item.id===b.mode);return saved?{focus:Number(saved.focus)||25,break:Number(saved.break)||5}:MODES[b.mode]||null;}
+function modeLabel(b){if(b.mode==="custom")return"กำหนดเอง "+(Number(b.customFocus)||25)+"/"+(Number(b.customBreak)||5);const saved=pomoCustomModes.find(item=>item.id===b.mode);if(saved)return saved.name+" "+saved.focus+"/"+saved.break;return MODE_LABELS[b.mode]?MODE_LABELS[b.mode]+" "+MODES[b.mode].focus+"/"+MODES[b.mode].break:"";}
 function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function pick(arr){return arr[Math.floor(Math.random()*arr.length)];}
 function showToast(msg){const el=document.getElementById("ttsToast");el.textContent=msg;el.style.display="block";clearTimeout(el._t);el._t=setTimeout(()=>el.style.display="none",4500);}
@@ -1236,8 +1468,8 @@ function showConfirmPopup({title,message,variant="neutral",confirmLabel="ยื�
 }
 
 // PERSISTENCE
-function saveState(){try{localStorage.setItem(SK,JSON.stringify({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,accounts,budgets}));}catch(e){}queueCloudPush();}
-function loadState(){try{const r=localStorage.getItem(SK);if(!r)return false;const d=JSON.parse(r);if(Array.isArray(d.blocks)&&d.blocks.length){blocks=d.blocks;blocks.forEach(b=>{if(!b.date)b.date=todayStr();});if(Array.isArray(d.goals))goals=d.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;});if(d.timerState)Object.assign(timerState,d.timerState);if(d.prevActiveId)prevActiveId=d.prevActiveId;if(d.stats?.byDate)stats=d.stats;if(d.journal&&typeof d.journal==="object")journal=d.journal;if(Array.isArray(d.expenses))expenses=d.expenses;if(Array.isArray(d.events))events=d.events;if(Array.isArray(d.accounts)&&d.accounts.length)accounts=d.accounts;if(d.budgets&&typeof d.budgets==="object")budgets=d.budgets;return true;}}catch(e){}return false;}
+function saveState(){try{localStorage.setItem(SK,JSON.stringify({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,accounts,budgets,tasks,pomoCustomModes,pomoSettings}));}catch(e){}queueCloudPush();}
+function loadState(){try{const r=localStorage.getItem(SK);if(!r)return false;const d=JSON.parse(r);if(d&&Array.isArray(d.blocks)){blocks=d.blocks;blocks.forEach(b=>{if(!b.date)b.date=todayStr();});if(Array.isArray(d.goals))goals=d.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;});if(d.timerState)Object.assign(timerState,d.timerState);if(d.prevActiveId)prevActiveId=d.prevActiveId;if(d.stats?.byDate)stats=d.stats;if(d.journal&&typeof d.journal==="object")journal=d.journal;if(Array.isArray(d.expenses))expenses=d.expenses;if(Array.isArray(d.events))events=d.events;if(Array.isArray(d.accounts)&&d.accounts.length)accounts=d.accounts;if(d.budgets&&typeof d.budgets==="object")budgets=d.budgets;if(Array.isArray(d.tasks))tasks=d.tasks;if(Array.isArray(d.pomoCustomModes))pomoCustomModes=d.pomoCustomModes.filter(item=>item&&typeof item.id==="string"&&Number(item.focus)>0&&Number(item.break)>0).map(item=>({id:item.id,name:String(item.name||"กำหนดเอง"),focus:Number(item.focus),break:Number(item.break)}));if(d.pomoSettings&&typeof d.pomoSettings==="object")pomoSettings={...pomoSettings,...d.pomoSettings};return true;}}catch(e){}return false;}
 function seedBlocks(){function mk(t,s,e,g,m){return{id:uid(),title:t,start:s,end:e,goalId:g||"",mode:m,customFocus:25,customBreak:5,details:"",notify:true,date:todayStr()};}blocks=[mk("ออกกำลังกาย","08:00","09:00","","none"),mk("เขียนรายงาน Q3",nowPlus(0),nowPlus(120),"g1","deep"),mk("ประชุมทีม",nowPlus(125),nowPlus(155),"","none"),mk("ออกแบบ ui",nowPlus(170),nowPlus(290),"g1","classic")];}
 
 // AUDIO / NOTIFICATIONS
@@ -1255,26 +1487,62 @@ function bounceCheckButton(blockId){
 }
 
 async function playBeep(){
+  return playPomoSound("complete");
+}
+function schedulePomoTone(ctx,frequency,start,duration,volume,type="sine"){
+  const osc=ctx.createOscillator(),gain=ctx.createGain();
+  osc.type=type;osc.frequency.setValueAtTime(frequency,start);osc.connect(gain);gain.connect(ctx.destination);
+  gain.gain.setValueAtTime(0.0001,start);gain.gain.linearRampToValueAtTime(volume,start+0.02);gain.gain.exponentialRampToValueAtTime(0.0001,start+duration);
+  osc.start(start);osc.stop(start+duration+0.02);
+}
+async function playPomoSound(kind="complete"){
+  if(!pomoSettings||pomoSettings.sound==="silent")return;
   try{
     const ctx=getAudioCtx();if(ctx.state==="suspended")await ctx.resume();
-    const osc=ctx.createOscillator(),gain=ctx.createGain();
-    osc.connect(gain);gain.connect(ctx.destination);
-    osc.frequency.value=880;gain.gain.setValueAtTime(.3,ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.4);
-    osc.start(ctx.currentTime);osc.stop(ctx.currentTime+.4);
+    const patterns={
+      chime:{complete:[[660,.22],[880,.28],[1320,.42]],start:[[520,.18],[780,.3]],countdown:[[560,.1]]},
+      soft:{complete:[[420,.3],[560,.42]],start:[[360,.22],[520,.3]],countdown:[[360,.1]]},
+      pulse:{complete:[[880,.14],[880,.14],[1180,.32]],start:[[660,.12],[660,.12]],countdown:[[700,.08],[700,.08]]},
+      digital:{complete:[[540,.12],[760,.12],[980,.25]],start:[[440,.1],[720,.2]],countdown:[[440,.07],[440,.07],[440,.07]]}
+    };
+    const pattern=patterns[pomoSettings.sound]?.[kind]||patterns.chime.complete;
+    const now=ctx.currentTime,volume=Math.max(.03,Math.min(.5,Number(pomoSettings.volume)||.28));
+    pattern.forEach(([frequency,duration],index)=>schedulePomoTone(ctx,frequency,now+index*(duration+.035),duration,volume,index%2?"triangle":"sine"));
   }catch(e){}
 }
 // short, quiet tick used for the 5-second countdown before a pomodoro phase ends
 async function playCountdownTick(){
-  try{
-    const ctx=getAudioCtx();if(ctx.state==="suspended")await ctx.resume();
-    const osc=ctx.createOscillator(),gain=ctx.createGain();
-    osc.connect(gain);gain.connect(ctx.destination);
-    osc.frequency.value=660;gain.gain.setValueAtTime(.14,ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.12);
-    osc.start(ctx.currentTime);osc.stop(ctx.currentTime+.12);
-  }catch(e){}
+  if(pomoSettings?.countdown!==false)return playPomoSound("countdown");
 }
+
+function renderPomoSoundSettings(){
+  const sound=document.getElementById("pomoSoundSelect"),countdown=document.getElementById("pomoCountdownToggle");
+  if(sound)sound.value=POMO_SOUND_LABELS[pomoSettings.sound]?pomoSettings.sound:"chime";
+  if(countdown)countdown.checked=pomoSettings.countdown!==false;
+}
+function renderPomoPresetList(){
+  const list=document.getElementById("pomoPresetList");if(!list)return;
+  list.innerHTML=pomoCustomModes.length?pomoCustomModes.map(item=>`<div class="pomo-preset-row"><div><strong>${esc(item.name)}</strong><span>${item.focus}/${item.break} นาที</span></div><button type="button" data-pomo-delete="${esc(item.id)}" aria-label="ลบโหมด ${esc(item.name)}">ลบ</button></div>`).join(""):"<p class=\"pomo-preset-empty\">ยังไม่มีโหมดที่บันทึกไว้</p>";
+}
+function renderSavedPomoModes(){
+  const el=document.getElementById("savedPomoModes");if(!el)return;
+  el.innerHTML=pomoCustomModes.length?`<p class="saved-pomo-modes-label">โหมดที่บันทึกไว้</p>${pomoCustomModes.map(item=>`<button type="button" data-mode="${esc(item.id)}">${esc(item.name)} <small>${item.focus}/${item.break}</small></button>`).join("")}`:"";
+  updateModeGrid();
+}
+document.getElementById("pomoSoundSelect")?.addEventListener("change",e=>{pomoSettings.sound=e.target.value;saveState();});
+document.getElementById("pomoCountdownToggle")?.addEventListener("change",e=>{pomoSettings.countdown=e.target.checked;saveState();});
+document.getElementById("pomoPreviewSoundBtn")?.addEventListener("click",()=>playPomoSound("complete"));
+document.getElementById("pomoSavePresetBtn")?.addEventListener("click",()=>{
+  const name=document.getElementById("pomoPresetName").value.trim()||"โหมดของฉัน";
+  const focus=Math.max(1,Math.min(240,Number(document.getElementById("pomoPresetFocus").value)||25));
+  const breakMinutes=Math.max(1,Math.min(120,Number(document.getElementById("pomoPresetBreak").value)||5));
+  pomoCustomModes.push({id:"pm_"+uid(),name,focus,break:breakMinutes});
+  saveState();renderPomoPresetList();renderSavedPomoModes();document.getElementById("pomoPresetName").value="";showToast("บันทึกโหมด Pomodoro แล้ว");
+});
+document.getElementById("pomoPresetList")?.addEventListener("click",e=>{
+  const btn=e.target.closest("[data-pomo-delete]");if(!btn)return;
+  pomoCustomModes=pomoCustomModes.filter(item=>item.id!==btn.dataset.pomoDelete);saveState();renderPomoPresetList();renderSavedPomoModes();
+});
 
 // TTS
 // MESSAGES
@@ -1360,15 +1628,15 @@ function tick(){
   const cl2=document.getElementById("clockNow2");if(cl2)cl2.textContent=ts2;
   const cl3=document.getElementById("clockNow3");if(cl3)cl3.textContent=ts2;
   const cl4=document.getElementById("clockNow4");if(cl4)cl4.textContent=ts2;
-  const frozen=Date.now()<snoozeUntil,nm=currentNowMin(),today=todayStr();
+  const nm=currentNowMin(),today=todayStr();
   const sorted=[...blocks].sort((a,b)=>toMinutes(a.start)-toMinutes(b.start));
   const active=sorted.find(b=>b.date===today&&statusOf(b,nm)==="active");
-  if(!frozen&&active?.id!==prevActiveId){
+  if(active?.id!==prevActiveId){
     if(active){if(active.notify)notify("เปลี่ยนงาน",pick(MSG.blockStart).replace("{title}",active.title));}
     else if(prevActiveId){const pb=blocks.find(b=>b.id===prevActiveId);if(pb?.notify)notify("จบงานนี้แล้ว",pick(MSG.allDone));}
     prevActiveId=active?active.id:null;saveState();
   }
-  if(!frozen&&active){
+  if(document.visibilityState==="visible"&&active){
     const mm=modeMinutes(active),ts=timerState[active.id];
     if(mm&&ts&&ts.phase==="ready"){
       if(Date.now()>=ts.readyUntil){
@@ -1445,6 +1713,7 @@ function startFocus(blockId){
   const mm=modeMinutes(b);if(!mm)return;
   if(timerState[blockId])return; // already running
   timerState[blockId]={phase:"ready",readyUntil:Date.now()+5000,round:1,paused:false,distractionsThisPhase:0};
+  if(b.notify)playPomoSound("start");
   saveState();
   renderToday();
 }
@@ -1536,15 +1805,56 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
     const page=btn.dataset.page;
     document.getElementById("page-"+page).classList.add("active");
     currentTab=page;
-    if(page==="plan") renderPlan();
+    if(page==="plan"){setPlanSection(planSection);renderPlan();}
     else if(page==="projects") renderProjects();
     else if(page==="progress") renderProgress();
+    syncWorkspaceRoute(page,page==="plan"?planSection:"");
   });
 });
 function switchTabById(id){
   const btn=document.querySelector(`.tab-btn[data-page="${id}"]`);
   if(btn) btn.click();
 }
+
+// Shared workspace routes keep Today, planning, tasks and personal finance connected.
+const WORKSPACE_ROUTES={
+  today:{page:"today"},
+  calendar:{page:"plan",section:"calendar"},
+  tasks:{page:"plan",section:"tasks"},
+  money:{page:"plan",section:"money"},
+  goals:{page:"projects"},
+  progress:{page:"progress"},
+  settings:{page:"settings"}
+};
+function routeHash(page,section){
+  if(page!=="plan")return "#"+page;
+  return "#plan/"+(section||"calendar");
+}
+function syncWorkspaceRoute(page=currentTab,section=planSection){
+  const hash=routeHash(page,section);
+  if(window.location.hash!==hash)window.history.replaceState(null,"",hash);
+  document.querySelectorAll("[data-workspace-route]").forEach(btn=>{
+    const active=btn.dataset.workspaceRoute===(page==="plan"?section:page);
+    btn.classList.toggle("is-active",active);
+    if(active)btn.setAttribute("aria-current","page");else btn.removeAttribute("aria-current");
+  });
+}
+function openWorkspaceRoute(route,options={}){
+  const target=WORKSPACE_ROUTES[route]||WORKSPACE_ROUTES.today;
+  const btn=document.querySelector(`.tab-btn[data-page="${target.page}"]`);
+  if(btn&&!btn.classList.contains("active"))btn.click();
+  else currentTab=target.page;
+  if(target.page==="plan")setPlanSection(target.section);
+  if(options.updateHash!==false)syncWorkspaceRoute(target.page,target.section||"");
+}
+function openWorkspaceRouteFromHash(){
+  const raw=String(window.location.hash||"").replace(/^#/ ,"");
+  const [page,section]=raw.split("/");
+  const route=page==="plan"&&["calendar","tasks","money"].includes(section)?section:WORKSPACE_ROUTES[page]?page:"today";
+  openWorkspaceRoute(route,{updateHash:false});
+}
+document.querySelectorAll("[data-workspace-route]").forEach(btn=>btn.addEventListener("click",()=>openWorkspaceRoute(btn.dataset.workspaceRoute)));
+window.addEventListener("hashchange",openWorkspaceRouteFromHash);
 
 
 // RENDER
@@ -1609,15 +1919,6 @@ function goalStreak(goalId){
   while(blocks.some(b=>b.goalId===goalId&&b.date===d&&b.completed===true)){ s++; d=addDays(d,-1); }
   return s;
 }
-function goalLastWorked(goalId){
-  const done=blocks.filter(b=>b.goalId===goalId&&b.completed===true).sort((a,b)=>b.date<a.date?-1:1);
-  if(!done.length) return null;
-  const last=done[0].date, today=todayStr();
-  if(last===today) return "วันนี้";
-  if(last===addDays(today,-1)) return "เมื่อวาน";
-  const diff=Math.round((new Date(today+"T00:00:00")-new Date(last+"T00:00:00"))/86400000);
-  return `${diff} วันก่อน`;
-}
 function goalMotivation(pct){
   if(pct>=100) return "สำเร็จแล้ว! เก่งมาก 🎉";
   if(pct>=75) return "เกือบถึงแล้ว ไปต่ออีกนิด!";
@@ -1625,25 +1926,6 @@ function goalMotivation(pct){
   if(pct>=25) return "เริ่มต้นได้ดี ไปต่อกันเถอะ";
   if(pct>0) return "เริ่มแล้วนะ อย่าเพิ่งหยุด";
   return "พร้อมเริ่มเมื่อไหร่ก็ได้เลย";
-}
-function goalSparklineData(goalId,days){
-  const today=todayStr(),arr=[];
-  for(let i=days-1;i>=0;i--){
-    const d=addDays(today,-i);
-    arr.push(blocks.filter(b=>b.goalId===goalId&&b.date===d&&b.completed===true).length);
-  }
-  return arr;
-}
-function sparklineSvg(values){
-  const w=64,h=20,max=Math.max(1,...values);
-  const barW=w/values.length;
-  const bars=values.map((v,i)=>{
-    const bh=Math.max(1.5,(v/max)*h);
-    const x=i*barW+0.5,y=h-bh;
-    const color=v>0?"var(--focus)":"var(--line)";
-    return `<rect x="${x}" y="${y}" width="${barW-1}" height="${bh}" rx="1" fill="${color}"/>`;
-  }).join("");
-  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${bars}</svg>`;
 }
 
 const PJ_CATS={
@@ -1693,7 +1975,7 @@ document.getElementById("journalNote").addEventListener("input",e=>{
 // EXPENSE TRACKING
 const EXP_CATS={food:{label:"อาหาร",emoji:"🍜",dot:"#E08C2B"},transport:{label:"เดินทาง",emoji:"🚗",dot:"#1a6ecc"},shopping:{label:"ช้อปปิ้ง",emoji:"🛍",dot:"#b2557a"},bills:{label:"บิล/ที่พัก",emoji:"🏠",dot:"#8a6d3b"},health:{label:"สุขภาพ",emoji:"💊",dot:"#1a9c6e"},fun:{label:"บันเทิง",emoji:"🎬",dot:"#7a4fa3"},other:{label:"อื่นๆ",emoji:"📦",dot:"#9BA0A6"}};
 const INC_CATS={salary:{label:"เงินเดือน",dot:"#2f6b52"},freelance:{label:"ฟรีแลนซ์",dot:"#4A9B78"},other:{label:"อื่นๆ",dot:"#C8C7BF"}};
-let pickedExpenseCat="food",pickedIncomeCat="salary",pickedExpenseAccount="",pickedIncomeAccount="",pickedNewAcctColor="#2f6b52",accountFilter="all",accountPickTarget="";
+let pickedExpenseCat="food",pickedIncomeCat="salary",pickedExpenseAccount="",pickedIncomeAccount="",pickedNewAcctColor="#2f6b52",accountFilter="all",accountPickTarget="",financeMonth=monthKey(todayStr());
 
 function defaultAccountId(){return accounts[0]?.id||"";}
 function accountById(id){return accounts.find(a=>a.id===id);}
@@ -1707,7 +1989,7 @@ function accountBalance(id){
 function openExpenseModal(){
   document.getElementById("exp_amount").value="";
   document.getElementById("exp_note").value="";
-  document.getElementById("exp_date").value=todayStr();
+  document.getElementById("exp_date").value=financeDateForMonth();
   pickedExpenseCat="food";
   pickedExpenseAccount=defaultAccountId();
   document.querySelectorAll("#expCatGrid .expense-cat-dot-chip").forEach(b=>b.classList.toggle("picked",b.dataset.cat===pickedExpenseCat));
@@ -1729,11 +2011,13 @@ document.getElementById("expenseSaveBtn").addEventListener("click",()=>{
   expenses.push({id:uid(),date,amount,category:pickedExpenseCat,note,type:"expense",accountId:pickedExpenseAccount||defaultAccountId()});
   saveState();
   document.getElementById("expenseOverlay").classList.remove("show");
-  renderProgress();
+  renderPlanMoney();renderMoneyDashboard();
 });
 
 function openIncomeModal(){
   document.getElementById("inc_amount").value="";
+  document.getElementById("inc_date").value=financeDateForMonth();
+  document.getElementById("inc_note").value="";
   pickedIncomeCat="salary";
   pickedIncomeAccount=defaultAccountId();
   document.querySelectorAll("#incCatGrid .expense-cat-dot-chip").forEach(b=>b.classList.toggle("picked",b.dataset.cat===pickedIncomeCat));
@@ -1750,10 +2034,12 @@ document.getElementById("incAccountRow").addEventListener("click",()=>openAccoun
 document.getElementById("incomeSaveBtn").addEventListener("click",()=>{
   const amount=parseFloat(document.getElementById("inc_amount").value);
   if(!amount||amount<=0){alert("กรอกจำนวนเงินด้วยครับ");return;}
-  expenses.push({id:uid(),date:todayStr(),amount,category:pickedIncomeCat,note:"",type:"income",accountId:pickedIncomeAccount||defaultAccountId()});
+  const date=document.getElementById("inc_date").value||financeDateForMonth();
+  const note=document.getElementById("inc_note").value.trim();
+  expenses.push({id:uid(),date,amount,category:pickedIncomeCat,note,type:"income",accountId:pickedIncomeAccount||defaultAccountId()});
   saveState();
   document.getElementById("incomeOverlay").classList.remove("show");
-  renderProgress();
+  renderPlanMoney();renderMoneyDashboard();
 });
 
 // shared account picker, used by both expense and income modals
@@ -1794,7 +2080,7 @@ document.getElementById("accountsOverlay").addEventListener("click",e=>{
   if(del){
     if(accounts.length<=1){alert("ต้องมีอย่างน้อย 1 บัญชี");return;}
     accounts=accounts.filter(a=>a.id!==del.dataset.delAcct);
-    saveState();renderAccountsList();renderProgress();
+    saveState();renderAccountsList();renderPlanMoney();renderMoneyDashboard();
   }
 });
 document.getElementById("newAccountBtn").addEventListener("click",()=>{
@@ -1814,7 +2100,7 @@ document.getElementById("newAccountSaveBtn").addEventListener("click",()=>{
   accounts.push({id:uid(),name,color:pickedNewAcctColor,startingBalance:0});
   saveState();
   document.getElementById("newAccountForm").style.display="none";
-  renderAccountsList();renderProgress();
+  renderAccountsList();renderPlanMoney();renderMoneyDashboard();
 });
 
 // budget modal
@@ -1835,21 +2121,60 @@ function openBudgetModal(){
     budgets[pickedBudgetCat]=amt;
     saveState();
     document.getElementById("budgetOverlay").classList.remove("show");
-    renderProgress();
+    renderPlanMoney();renderMoneyDashboard();
   };
   document.getElementById("budgetOverlay").classList.add("show");
 }
 document.getElementById("budgetOverlay").addEventListener("click",e=>{if(e.target.id==="budgetOverlay")document.getElementById("budgetOverlay").classList.remove("show");});
 
 function monthKey(d){return d.slice(0,7);}
-function budgetSectionHtml(){
-  const cats=Object.keys(budgets);
-  let html=`<p class="section-label" style="margin-top:22px;">งบประมาณรายเดือน</p>`;
+function financeDateForMonth(){return financeMonth===monthKey(todayStr())?todayStr():`${financeMonth}-01`;}
+function shiftFinanceMonth(month,delta){
+  const [year,monthNumber]=month.split("-").map(Number);
+  const shifted=new Date(year,monthNumber-1+delta,1);
+  return`${shifted.getFullYear()}-${String(shifted.getMonth()+1).padStart(2,"0")}`;
+}
+function formatFinanceMonth(month){
+  const [year,monthNumber]=month.split("-").map(Number);
+  return new Intl.DateTimeFormat("th-TH",{month:"long",year:"numeric"}).format(new Date(year,monthNumber-1,1));
+}
+function financeBudgetPlanHtml(month){
+  const budgetedCats=Object.entries(budgets).filter(([,limit])=>Number(limit)>0);
+  const totalBudget=budgetedCats.reduce((sum,[,limit])=>sum+Number(limit),0);
+  const monthExpenses=expenses.filter(e=>e.type!=="income"&&monthKey(e.date)===month);
+  const plannedSpend=budgetedCats.reduce((sum,[cat])=>sum+monthExpenses.filter(e=>e.category===cat).reduce((total,e)=>total+Number(e.amount||0),0),0);
+  const remaining=totalBudget-plannedSpend;
+  const pct=totalBudget?Math.round(plannedSpend/totalBudget*100):0;
+  const meterPct=Math.max(0,Math.min(100,pct));
+  const meterColor=pct>100?"var(--danger)":pct>=80?"var(--rest)":"var(--focus)";
+  const currentMonth=monthKey(todayStr());
+  const [year,monthNumber]=month.split("-").map(Number);
+  const daysInMonth=new Date(year,monthNumber,0).getDate();
+  const elapsedDays=month===currentMonth?new Date().getDate()-1:month>currentMonth?0:daysInMonth;
+  const daysLeft=daysInMonth-elapsedDays;
+  const dailyAllowance=daysLeft>0?Math.max(0,remaining)/daysLeft:null;
+  const remainingText=remaining>=0?`฿${remaining.toLocaleString()}`:`เกินงบ ฿${Math.abs(remaining).toLocaleString()}`;
+  const dailyText=dailyAllowance===null?"—":`฿${Math.floor(dailyAllowance).toLocaleString()}`;
+  const status=totalBudget?`${pct}% ของงบหมวดที่ตั้งไว้ · รวมทุกบัญชี`:`ตั้งงบหมวดรายเดือนเพื่อดูยอดที่ยังใช้ได้`;
+  return`<section class="fin-plan-card" aria-label="ภาพรวมแผนงบประมาณ">
+    <div class="fin-plan-head"><p class="fin-plan-title">แผนงบประมาณ</p><p class="fin-plan-note">${month===currentMonth?"เดือนนี้":"รายเดือน"}</p></div>
+    ${totalBudget?`<div class="fin-plan-grid">
+      <div class="fin-plan-metric"><span class="fin-plan-metric-label">งบหมวดที่ตั้งไว้</span><span class="fin-plan-metric-value">฿${totalBudget.toLocaleString()}</span></div>
+      <div class="fin-plan-metric"><span class="fin-plan-metric-label">ใช้ในหมวดที่ตั้งงบ</span><span class="fin-plan-metric-value">฿${plannedSpend.toLocaleString()}</span></div>
+      <div class="fin-plan-metric"><span class="fin-plan-metric-label">ยอดคงเหลือ</span><span class="fin-plan-metric-value${remaining<0?" negative":""}">${remainingText}</span></div>
+      <div class="fin-plan-metric"><span class="fin-plan-metric-label">เฉลี่ยใช้ได้ต่อวัน</span><span class="fin-plan-metric-value">${dailyText}</span></div>
+    </div>
+    <div class="fin-plan-meter" role="progressbar" aria-label="สัดส่วนงบหมวดที่ใช้ไป" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${meterPct}" aria-valuetext="ใช้ไป ${pct}% ของงบหมวดที่ตั้งไว้"><div class="fin-plan-meter-fill" style="width:${meterPct}%;background:${meterColor}"></div></div>`:`<p class="fin-plan-status">${status}</p>`}
+    ${totalBudget?`<p class="fin-plan-status">${status}</p>`:""}
+  </section>`;
+}
+function budgetSectionHtml(month){
+  const cats=Object.keys(budgets).filter(cat=>Number(budgets[cat])>0);
+  let html=`<p class="section-label" style="margin-top:22px;">งบประมาณรายเดือน · ทุกบัญชี</p>`;
   if(!cats.length){
     html+=`<p class="empty" style="padding:4px 0 12px;">ยังไม่ได้ตั้งงบ</p>`;
   }else{
-    const mk=monthKey(todayStr());
-    const thisMonth=expenses.filter(e=>e.type!=="income"&&monthKey(e.date)===mk);
+    const thisMonth=expenses.filter(e=>e.type!=="income"&&monthKey(e.date)===month);
     cats.forEach(cat=>{
       const c=EXP_CATS[cat]||EXP_CATS.other;
       const limit=budgets[cat];
@@ -1868,21 +2193,72 @@ function budgetSectionHtml(){
   return html;
 }
 
+function financeCategoryInsightHtml(entries){
+  const rows=Object.entries(EXP_CATS).map(([category,meta])=>{
+    const amount=entries.filter(e=>e.type!=="income"&&e.category===category).reduce((sum,e)=>sum+Number(e.amount||0),0);
+    return{category,meta,amount};
+  }).filter(row=>row.amount>0).sort((a,b)=>b.amount-a.amount);
+  const total=rows.reduce((sum,row)=>sum+row.amount,0);
+  if(!total){
+    return`<section class="fin-insight-card" aria-label="ภาพรวมการใช้จ่าย">
+      <div class="fin-insight-head"><div><p class="fin-insight-title">ภาพรวมการใช้จ่าย</p><p class="fin-insight-sub">ตามหมวดของเดือนนี้</p></div></div>
+      <p class="fin-insight-empty">เพิ่มรายจ่ายเพื่อดูสัดส่วนการใช้เงินของคุณ</p>
+    </section>`;
+  }
+  let cursor=0;
+  const stops=rows.map(row=>{
+    const start=cursor;
+    cursor+=(row.amount/total)*360;
+    return`${row.meta.dot} ${start}deg ${cursor}deg`;
+  });
+  const topRows=rows.slice(0,4);
+  return`<section class="fin-insight-card" aria-label="ภาพรวมการใช้จ่ายตามหมวด">
+    <div class="fin-insight-head">
+      <div><p class="fin-insight-title">ภาพรวมการใช้จ่าย</p><p class="fin-insight-sub">สัดส่วนรายจ่ายตามหมวด</p></div>
+      <span class="fin-insight-total">฿${total.toLocaleString()}</span>
+    </div>
+    <div class="fin-insight-body">
+      <div class="fin-donut" style="background:conic-gradient(${stops.join(",")})" role="img" aria-label="รายจ่ายรวม ฿${total.toLocaleString()}">
+        <div class="fin-donut-hole"><strong>฿${total.toLocaleString()}</strong><span>รายจ่าย</span></div>
+      </div>
+      <div class="fin-insight-legend">
+        ${topRows.map(row=>{
+          const pct=Math.round(row.amount/total*100);
+          return`<div class="fin-legend-row"><span class="fin-legend-label"><i style="background:${row.meta.dot}"></i>${row.meta.emoji} ${row.meta.label}</span><strong>${pct}%</strong></div>`;
+        }).join("")}
+        ${rows.length>4?`<div class="fin-legend-more">+${rows.length-4} หมวดอื่น</div>`:""}
+      </div>
+    </div>
+    <div class="fin-insight-bars">
+      ${topRows.map(row=>{
+        const pct=Math.round(row.amount/total*100);
+        return`<div class="fin-insight-bar-row"><div><span>${row.meta.label}</span><strong>฿${row.amount.toLocaleString()}</strong></div><div class="fin-insight-bar-track"><span style="width:${pct}%;background:${row.meta.dot}"></span></div></div>`;
+      }).join("")}
+    </div>
+  </section>`;
+}
+
 function financeTabHtml(){
-  const mk=monthKey(todayStr());
+  const mk=financeMonth;
+  const currentMonth=monthKey(todayStr());
   let thisMonth=expenses.filter(e=>monthKey(e.date)===mk);
   if(accountFilter!=="all")thisMonth=thisMonth.filter(e=>e.accountId===accountFilter);
   const totalIncome=thisMonth.filter(e=>e.type==="income").reduce((s,e)=>s+e.amount,0);
   const totalExpense=thisMonth.filter(e=>e.type!=="income").reduce((s,e)=>s+e.amount,0);
   const net=totalIncome-totalExpense;
 
-  let html=`<div class="acct-filter-row">
+  let html=`<div class="fin-month-nav" role="group" aria-label="เลือกเดือนการเงิน">
+    <button type="button" data-finance-month-shift="-1" aria-label="ดูเดือนก่อน">‹</button>
+    <div class="fin-month-copy"><p class="fin-month-label" aria-live="polite">${formatFinanceMonth(mk)}</p>${mk!==currentMonth?`<button type="button" class="fin-month-reset" data-finance-current-month>กลับเดือนนี้</button>`:""}</div>
+    <button type="button" data-finance-month-shift="1" aria-label="ดูเดือนถัดไป">›</button>
+  </div>
+  <div class="acct-filter-row">
     <button type="button" class="acct-filter-chip${accountFilter==="all"?" active":""}" data-acct-filter="all">ทุกบัญชี</button>
     ${accounts.map(a=>`<button type="button" class="acct-filter-chip${accountFilter===a.id?" active":""}" data-acct-filter="${a.id}">${esc(a.name)}</button>`).join("")}
   </div>`;
   html+=`<button type="button" class="acct-manage-link" id="manageAccountsLink">จัดการบัญชี</button>`;
   html+=`<div class="fin-net-hero">
-    <p class="fin-net-hero-lbl">ยอดสุทธิเดือนนี้</p>
+    <p class="fin-net-hero-lbl">ยอดสุทธิ · ${formatFinanceMonth(mk)}</p>
     <p class="fin-net-hero-val ${net>=0?"pos":"neg"}">${net>=0?"+":"-"}฿${Math.abs(net).toLocaleString()}</p>
     <div class="fin-net-split">
       <div class="fin-net-split-item"><span class="fin-net-split-lbl">รายรับ</span><span class="fin-net-split-val" style="color:var(--focus)">฿${totalIncome.toLocaleString()}</span></div>
@@ -1894,6 +2270,10 @@ function financeTabHtml(){
     <button type="button" class="fin-btn-income" id="incomeAddBtn">+ รายรับ</button>
   </div>`;
 
+  html+=financeBudgetPlanHtml(mk);
+  html+=financeCategoryInsightHtml(thisMonth);
+  html+=`<p class="finance-budget-scope">งบแต่ละหมวดคำนวณจากทุกบัญชี ไม่เปลี่ยนตามตัวกรองบัญชี และใช้วงเงินเดิมซ้ำในแต่ละเดือน</p>`;
+
   if(!thisMonth.length){
     html+=`<p class="empty" style="padding:4px 0 0;">ยังไม่มีรายการเดือนนี้</p>`;
   }else{
@@ -1903,32 +2283,41 @@ function financeTabHtml(){
       const isIncome=e.type==="income";
       const c=(isIncome?INC_CATS:EXP_CATS)[e.category]||EXP_CATS.other;
       const acc=accountById(e.accountId);
-      html+=`<div class="fin-txn-item"><div><p class="fin-txn-title">${esc(e.note||c.label)}</p><p class="fin-txn-meta">${acc?esc(acc.name)+" · ":""}${formatShortDate(e.date)}</p></div><span class="fin-txn-amt ${isIncome?"pos":"neg"}">${isIncome?"+":"-"}฿${e.amount.toLocaleString()}</span></div>`;
+      html+=`<div class="fin-txn-item"><div><p class="fin-txn-title">${esc(String(e.note||c.label))}</p><p class="fin-txn-meta">${acc?esc(acc.name)+" · ":""}${formatShortDate(e.date)}</p></div><span class="fin-txn-amt ${isIncome?"pos":"neg"}">${isIncome?"+":"-"}฿${e.amount.toLocaleString()}</span></div>`;
     });
   }
 
-  html+=budgetSectionHtml();
+  html+=budgetSectionHtml(mk);
   return html;
 }
-document.getElementById("progressDash").addEventListener("click",e=>{
+function renderPlanMoney(){
+  const content=document.getElementById("planMoneyContent");if(!content)return;
+  content.innerHTML=financeTabHtml();renderMoneyDashboard();
+}
+document.getElementById("planMoneyContent").addEventListener("click",e=>{
   if(e.target.closest("#expenseAddBtn"))openExpenseModal();
   if(e.target.closest("#incomeAddBtn"))openIncomeModal();
   if(e.target.closest("#manageAccountsLink"))openAccountsModal();
   if(e.target.closest("#openBudgetBtn"))openBudgetModal();
+  const monthShift=e.target.closest("[data-finance-month-shift]");
+  if(monthShift){financeMonth=shiftFinanceMonth(financeMonth,Number(monthShift.dataset.financeMonthShift));renderPlanMoney();return;}
+  if(e.target.closest("[data-finance-current-month]")){financeMonth=monthKey(todayStr());renderPlanMoney();return;}
   const filterBtn=e.target.closest("[data-acct-filter]");
-  if(filterBtn){accountFilter=filterBtn.dataset.acctFilter;renderProgress();}
+  if(filterBtn){accountFilter=filterBtn.dataset.acctFilter;renderPlanMoney();}
 });
 
 
 function renderToday(){
+  renderMoneyDashboard();
   const vd=viewDate,nm=currentNowMin();
   document.getElementById("dateLabel").textContent=viewMode==="week"?formatWeekRange(startOfWeek(vd)):formatViewDate(vd);
   document.getElementById("viewModeToggle").textContent=viewMode==="day"?"ดูแบบสัปดาห์":"ดูแบบวัน";
+  document.getElementById("viewModeToggle").setAttribute("aria-pressed",String(viewMode==="week"));
   renderJournalCard(vd);
   if(viewMode==="week"){renderWeekInToday();return;}
   const list=document.getElementById("blocksList");
   const sorted=blocks.filter(b=>b.date===vd).sort((a,b)=>toMinutes(a.start)-toMinutes(b.start));
-  if(!sorted.length){list.innerHTML='<p class="empty">ยังไม่มี time block</p>';return;}
+  if(!sorted.length){list.innerHTML='<p class="empty">ยังไม่มีช่วงเวลาที่จัดไว้</p>';return;}
   list.innerHTML=sorted.map(b=>{
     const st=statusOf(b,nm),mm=modeMinutes(b),goal=goals.find(g=>g.id===b.goalId);
     let inlinePomo="";
@@ -1975,7 +2364,7 @@ function renderToday(){
     return`<div class="block-row"><div class="time-col">${b.start}<br>${b.end}</div><div class="card card2 ${sourceClass} ${st==="done"?"done":st==="active"?"active-block":""}" data-id="${b.id}">
       <div class="card2-row">
         <span class="card2-dot" style="background:${dotColor}"></span>
-        <span class="card2-title ${st==="done"||b.completed===true?"strike":""}" data-action="edit" data-id="${b.id}">${esc(b.title)}</span>
+        <span class="card2-title ${st==="done"||b.completed===true?"strike":""}" data-action="edit" data-id="${b.id}">${esc(blockDisplayTitle(b))}</span>
         <button type="button" class="circle-btn circle-check ${b.completed===true?"is-done":""}" data-action="mark-done" data-id="${b.id}" title="ทำเสร็จแล้ว">✓</button>
         <button type="button" class="circle-btn circle-x ${b.completed===false?"is-notdone":""}" data-action="mark-notdone" data-id="${b.id}" title="ยังไม่เสร็จ">✕</button>
       </div>
@@ -1990,7 +2379,7 @@ function renderWeekInToday(){
   document.getElementById("blocksList").innerHTML=days.map(d=>{
     const dayBlocks=blocks.filter(b=>b.date===d).sort((a,b)=>toMinutes(a.start)-toMinutes(b.start));
     const lbl=new Date(d+"T00:00:00").toLocaleDateString("th-TH",{weekday:"short",day:"numeric",month:"short"}),isToday=d===todayStr();
-    const rows=dayBlocks.length?dayBlocks.map(b=>{const st=statusOf(b,nm),dot=st==="done"?"var(--ink-soft)":st==="active"?"var(--focus)":"var(--rest)";const ts=timerState[b.id],mm2=modeMinutes(b);let live="";if(st==="active"&&mm2&&ts){const sl=ts.paused?Math.max(0,Math.round((ts.remainingMs||0)/1000)):Math.max(0,Math.round((ts.phaseEndsAt-Date.now())/1000));live=`<span class="week-live">${ts.phase==="focus"?"โฟกัส":"พัก"} ${String(Math.floor(sl/60)).padStart(2,"0")}:${String(sl%60).padStart(2,"0")}</span>`;}return`<div class="week-row" data-jump-date="${d}"><span class="week-dot" style="background:${dot}"></span><span class="week-time">${b.start}</span><span>${esc(b.title)}</span>${live}</div>`;}).join(""):`<p class="week-empty">ไม่มี time block</p>`;
+    const rows=dayBlocks.length?dayBlocks.map(b=>{const st=statusOf(b,nm),dot=st==="done"?"var(--ink-soft)":st==="active"?"var(--focus)":"var(--rest)";const ts=timerState[b.id],mm2=modeMinutes(b);let live="";if(st==="active"&&mm2&&ts){const sl=ts.paused?Math.max(0,Math.round((ts.remainingMs||0)/1000)):Math.max(0,Math.round((ts.phaseEndsAt-Date.now())/1000));live=`<span class="week-live">${ts.phase==="focus"?"โฟกัส":"พัก"} ${String(Math.floor(sl/60)).padStart(2,"0")}:${String(sl%60).padStart(2,"0")}</span>`;}return`<div class="week-row" data-jump-date="${d}"><span class="week-dot" style="background:${dot}"></span><span class="week-time">${b.start}</span><span>${esc(blockDisplayTitle(b))}</span>${live}</div>`;}).join(""):`<p class="week-empty">ไม่มีช่วงเวลาที่จัดไว้</p>`;
     return`<div class="week-day ${isToday?"is-today":""}"><div class="week-day-head" data-jump-date="${d}">${esc(lbl)}${isToday?" · วันนี้":""}</div>${rows}</div>`;
   }).join("");
 }
@@ -2003,7 +2392,7 @@ document.getElementById("blocksList").addEventListener("click",e=>{
   const id=btn.dataset.id,action=btn.dataset.action,block=blocks.find(b=>b.id===id);
   if(action==="edit")openModal(block);
   if(action==="delete"){
-    showConfirmPopup({title:`ลบ "${block.title}" ใช่ไหม?`,message:"ลบแล้วกู้คืนไม่ได้ — time block และประวัติที่เกี่ยวข้องจะหายไปด้วย",variant:"destructive",confirmLabel:"ลบเลย",onConfirm:()=>{blocks=blocks.filter(b=>b.id!==id);delete timerState[id];saveState();renderAll();}});
+    showConfirmPopup({title:`ลบ "${block.title}" ใช่ไหม?`,message:"ลบแล้วกู้คืนไม่ได้ — ช่วงเวลาและประวัติที่เกี่ยวข้องจะหายไปด้วย",variant:"destructive",confirmLabel:"ลบช่วงเวลา",onConfirm:()=>{blocks=blocks.filter(b=>b.id!==id);delete timerState[id];saveState();renderAll();}});
   }
   if(action==="pomo-pause"){togglePomoPause();renderToday();}
   if(action==="pomo-skip"){skipPomoPhase();renderToday();}
@@ -2057,7 +2446,7 @@ let planWkSubView = "light"; // "light" | "timeline"
 
 function setPlanViewMode(m){
   planViewMode=m;
-  ["Wk","Mo","Yr"].forEach(k=>document.getElementById("planView"+k+"Btn").classList.toggle("plan-view-tab-active", k.toLowerCase()===m));
+  ["Wk","Mo","Yr"].forEach(k=>{const button=document.getElementById("planView"+k+"Btn"),selected=k.toLowerCase()===m;button.classList.toggle("plan-view-tab-active",selected);button.setAttribute("aria-selected",String(selected));});
   document.getElementById("wkSubToggleRow").style.display = m==="wk" ? "flex" : "none";
   document.getElementById("lightWeekGrid").style.display = (m==="wk"&&planWkSubView==="light") ? "grid" : "none";
   document.getElementById("timelineWeekWrap").style.display = (m==="wk"&&planWkSubView==="timeline") ? "block" : "none";
@@ -2073,6 +2462,8 @@ function setPlanWkSubView(v){
   document.getElementById("wkSubLightBtn").classList.toggle("seg-mini-active", v==="light");
   document.getElementById("wkSubTimelineBtn").classList.toggle("seg-mini-active", v==="timeline");
   document.getElementById("lightWeekGrid").style.display = v==="light" ? "grid" : "none";
+  document.getElementById("wkSubLightBtn").setAttribute("aria-pressed",String(v==="light"));
+  document.getElementById("wkSubTimelineBtn").setAttribute("aria-pressed",String(v==="timeline"));
   document.getElementById("timelineWeekWrap").style.display = v==="timeline" ? "block" : "none";
   renderPlan();
 }
@@ -2084,9 +2475,6 @@ function goalColor(goalId){
   return GOAL_COLORS[idx>=0?idx%GOAL_COLORS.length:0];
 }
 
-function periodTotalHours(days){
-  return days.reduce((sum,d)=>sum+blocks.filter(b=>b.date===d).reduce((s,b)=>s+(toMinutes(b.end)-toMinutes(b.start)),0),0)/60;
-}
 function periodCompletedCount(days){
   return days.reduce((sum,d)=>sum+blocks.filter(b=>b.date===d&&b.completed===true).length,0);
 }
@@ -2130,6 +2518,131 @@ function renderUpcomingEvents(){
     </div>`).join("")}
   </div>`;
 }
+
+// PLAN & MONEY — tasks are independent of time blocks and personal finance is kept separate from trading P&L.
+function taskTargetDate(task){return[task.scheduleDate,task.dueDate].filter(Boolean).sort()[0]||"";}
+function taskBucket(task){if(task.completed)return"done";const target=taskTargetDate(task);if(!target)return"inbox";return target<=todayStr()?"today":"upcoming";}
+function taskCounts(){return tasks.reduce((counts,task)=>{counts[taskBucket(task)]++;return counts;},{inbox:0,today:0,upcoming:0,done:0});}
+function renderMoneyDashboard(){
+  const mk=monthKey(todayStr()),monthly=expenses.filter(item=>monthKey(item.date)===mk);
+  const income=monthly.filter(item=>item.type==="income").reduce((sum,item)=>sum+Number(item.amount||0),0);
+  const spending=monthly.filter(item=>item.type!=="income").reduce((sum,item)=>sum+Number(item.amount||0),0),net=income-spending;
+  const selectedTasks=tasksForDate(tasks,viewDate),openToday=selectedTasks.length,todayTaskCount=tasksForDate(tasks,todayStr()).length;
+  const overdue=tasks.filter(task=>!task.completed&&task.dueDate&&task.dueDate<todayStr()).length;
+  const totalBalance=accounts.reduce((sum,account)=>sum+accountBalance(account.id),0);
+  const plan=document.getElementById("pmDashboard");
+  if(plan)plan.innerHTML=`<div class="pm-dashboard-head"><div><p class="pm-dashboard-title">ภาพรวมงาน</p><p class="pm-dashboard-note">วันนี้ ${todayTaskCount} งาน · เลยกำหนด ${overdue} งาน</p></div><button type="button" class="pm-dashboard-link" data-open-personal-finance>การเงิน →</button></div><p class="pm-dashboard-note">เงินคงเหลือทุกบัญชี ฿${totalBalance.toLocaleString()} · เงินส่วนตัวแยกจาก P&amp;L เทรด</p>`;
+  const today=document.getElementById("todayOverview");
+  if(today){
+    const completedTasks=tasks.filter(task=>task.completed&&(task.scheduleDate||task.dueDate)===viewDate).length;
+    const metrics=`<div class="workspace-metrics" aria-label="ภาพรวมงานวันที่เลือก"><div class="workspace-metric"><strong>${openToday}</strong><span>งานที่เหลือ</span></div><div class="workspace-metric"><strong>${completedTasks}</strong><span>เสร็จแล้ว</span></div><div class="workspace-metric"><strong>${blocks.filter(block=>block.date===viewDate).length}</strong><span>ช่วงเวลาที่จัดไว้</span></div></div>`;
+    const dateTasks=selectedTasks.slice(0,3);
+    const taskRows=dateTasks.map(task=>`<div class="today-priority-row"><button type="button" class="pm-task-check" data-task-action="toggle" data-task-id="${esc(String(task.id||""))}" aria-label="ทำ ${esc(String(task.title||""))} เสร็จแล้ว" aria-pressed="false">✓</button><p class="today-priority-title">${esc(String(task.title||""))}</p></div>`).join("");
+    const remainder=selectedTasks.length>3?`<p class="today-overview-subtitle">ยังมีอีก ${selectedTasks.length-3} งานในวันนี้</p>`:"";
+    today.innerHTML=`<div class="today-overview-head"><div><p class="today-overview-title">${viewMode==="week"?"งานของวันเลือก":"งาน"} · ${esc(formatViewDate(viewDate))}</p><p class="today-overview-subtitle">${openToday?`${openToday} งานที่ยังไม่เสร็จ`:`ยังไม่มีงานที่วางแผนไว้สำหรับวันนี้`}</p></div><button type="button" data-open-plan-tasks>ดูงานทั้งหมด →</button></div>
+      ${metrics}${taskRows?`<div class="today-priority-list" aria-label="งานของวันที่เลือก">${taskRows}</div>`:`<p class="today-priority-empty">เริ่มจากงานเล็ก ๆ หนึ่งอย่าง<br>กด “เพิ่มงาน” แล้วเลือกเวลาที่เหมาะกับคุณ</p>`}${remainder}
+      <button type="button" class="today-money-snapshot" data-open-personal-finance aria-label="เปิดการเงินส่วนตัวทุกบัญชี เดือนนี้ยอดสุทธิ ${net>=0?"บวก":"ลบ"} ${Math.abs(net).toLocaleString()} บาท"><span class="today-money-copy"><span class="today-money-label">ยอดสุทธิทุกบัญชี · ${formatFinanceMonth(mk)}</span><strong class="today-money-value ${net>=0?"pos":"neg"}">${net>=0?"+":"−"}฿${Math.abs(net).toLocaleString()}</strong><span class="today-money-label">เงินส่วนตัว · ไม่รวม P&amp;L เทรด</span></span><span class="today-money-arrow" aria-hidden="true">→</span></button>`;
+  }
+}
+function renderTasks(){
+  const list=document.getElementById("taskList");if(!list)return;
+  const counts=taskCounts();
+  document.querySelectorAll("[data-task-count]").forEach(el=>el.textContent=counts[el.dataset.taskCount]||0);
+  document.querySelectorAll(".pm-task-tab").forEach(btn=>{const active=btn.dataset.taskView===taskView;btn.classList.toggle("active",active);btn.setAttribute("aria-selected",String(active));});
+  const today=todayStr(),weekEnd=addDays(today,7);let visible=tasks.filter(task=>taskBucket(task)===taskView);
+  if(taskPriorityFilter!=="all")visible=visible.filter(task=>(task.priority||"normal")===taskPriorityFilter);
+  if(taskSearchTerm)visible=visible.filter(task=>String(task.title||"").toLocaleLowerCase().includes(taskSearchTerm.toLocaleLowerCase()));
+  if(taskDueFilter==="overdue")visible=visible.filter(task=>task.dueDate&&task.dueDate<today);
+  else if(taskDueFilter==="today")visible=visible.filter(task=>task.dueDate===today);
+  else if(taskDueFilter==="week")visible=visible.filter(task=>task.dueDate&&task.dueDate>=today&&task.dueDate<=weekEnd);
+  else if(taskDueFilter==="none")visible=visible.filter(task=>!task.dueDate);
+  visible.sort((a,b)=>{
+    if(taskView==="done")return String(b.completedAt||"").localeCompare(String(a.completedAt||""));
+    const byDate=taskTargetDate(a).localeCompare(taskTargetDate(b));if(byDate)return byDate;
+    const rank={high:0,normal:1,low:2};return(rank[a.priority||"normal"]??1)-(rank[b.priority||"normal"]??1)||String(a.createdAt||"").localeCompare(String(b.createdAt||""));
+  });
+  if(!visible.length){const msg={inbox:"งานเข้าว่างแล้ว — เพิ่มงานที่ยังไม่ได้จัดวันได้เลย",today:"ไม่มีงานที่ต้องทำวันนี้",upcoming:"ยังไม่มีงานที่วางแผนไว้ถัดไป",done:"ยังไม่มีงานที่เสร็จแล้ว"};list.innerHTML=`<div class="pm-task-empty">${msg[taskView]}</div>`;return;}
+  const priorityLabel={high:"สูง",normal:"ปกติ",low:"ต่ำ"};
+  list.innerHTML=visible.map(task=>{
+    const priority=["high","normal","low"].includes(task.priority)?task.priority:"normal",late=task.dueDate&&task.dueDate<today&&!task.completed,meta=[];
+    if(task.scheduleDate)meta.push(`<span class="pm-task-chip">ทำ ${formatShortDate(task.scheduleDate)}</span>`);
+    if(task.dueDate)meta.push(`<span class="pm-task-chip${late?" overdue":""}">${late?"เลยกำหนด · ":"ส่ง "}${formatShortDate(task.dueDate)}</span>`);
+    meta.push(`<span class="pm-task-chip priority-${priority}">สำคัญ${priorityLabel[priority]||"ปกติ"}</span>`);
+    const goal=goals.find(item=>item.id===task.goalId);if(goal)meta.push(`<span class="pm-task-chip pm-task-goal-chip">เป้าหมาย · ${esc(goal.title)}</span>`);
+    const sessions=blocks.filter(block=>block.taskId===task.id).length;if(sessions)meta.push(`<span class="pm-task-chip">โฟกัส ${sessions} รอบ</span>`);
+    const taskId=esc(String(task.id||""));
+    return`<article class="pm-task-row${task.completed?" is-done":""}"><button type="button" class="pm-task-check" data-task-action="toggle" data-task-id="${taskId}" aria-label="${task.completed?"ทำเครื่องหมายว่ายังไม่เสร็จ":"ทำเสร็จแล้ว"}" aria-pressed="${!!task.completed}">✓</button><div class="pm-task-main"><p class="pm-task-title">${esc(String(task.title||""))}</p><div class="pm-task-meta">${meta.join("")}</div></div><div class="pm-task-actions">${task.completed?"":`<button type="button" data-task-action="schedule" data-task-id="${taskId}" aria-label="จัดเวลาให้ ${esc(String(task.title||""))}">จัดเวลา</button>`}<button type="button" data-task-action="edit" data-task-id="${taskId}" aria-label="แก้ไขงาน">แก้ไข</button><button type="button" data-task-action="delete" data-task-id="${taskId}" aria-label="ลบงาน">×</button></div></article>`;
+  }).join("");
+}
+function setPlanSection(section){
+  planSection=["tasks","money"].includes(section)?section:"calendar";
+  const active={calendar:planSection==="calendar",tasks:planSection==="tasks",money:planSection==="money"};
+  document.getElementById("planCalendarSection").style.display=active.calendar?"block":"none";
+  document.getElementById("planTasksSection").style.display=active.tasks?"block":"none";
+  document.getElementById("planMoneySection").style.display=active.money?"block":"none";
+  ["Calendar","Tasks","Money"].forEach(key=>{const btn=document.getElementById("planSection"+key+"Btn"),selected=active[key.toLowerCase()];btn.classList.toggle("plan-view-tab-active",selected);btn.setAttribute("aria-selected",String(selected));});
+  const context=document.getElementById("planSectionContext");
+  const copy={
+    calendar:{kicker:"จัดวันให้ชัด",title:"ปฏิทินของคุณ",description:"เลือกวัน ดูช่วงเวลาที่ว่าง แล้วเปลี่ยนงานให้เป็นเวลาที่ทำได้จริง",action:"กลับไปวันนี้",route:"today"},
+    tasks:{kicker:"จัดสิ่งที่ต้องทำ",title:"งานทั้งหมด",description:"เริ่มจากงานเข้า แล้วกำหนดวันส่งและผูกงานเข้ากับช่วงเวลาบนปฏิทิน",action:"เปิดปฏิทิน",route:"calendar"},
+    money:{kicker:"ดูภาพรวมส่วนตัว",title:"การเงิน",description:"รายรับ รายจ่าย และงบประมาณอยู่ในพื้นที่ส่วนตัว แยกจากข้อมูลเทรดโดยสิ้นเชิง",action:"ดูงานวันนี้",route:"today"}
+  }[planSection];
+  if(context)context.innerHTML=`<div><p class="plan-section-kicker">${copy.kicker}</p><h3>${copy.title}</h3><p>${copy.description}</p></div><button type="button" class="plan-context-link" data-workspace-route="${copy.route}">${copy.action} <span aria-hidden="true">→</span></button>`;
+  if(context)context.querySelector("[data-workspace-route]")?.addEventListener("click",e=>openWorkspaceRoute(e.currentTarget.dataset.workspaceRoute));
+  syncWorkspaceRoute("plan",planSection);
+  if(active.tasks){renderMoneyDashboard();renderTasks();}
+  if(active.money)renderPlanMoney();
+}
+function openTaskEditor(task=null,defaultDate=""){
+  editingTaskId=task?.id||null;
+  document.getElementById("taskModalTitle").textContent=task?"แก้ไขงาน":"เพิ่มงาน";
+  document.getElementById("taskTitleInput").value=task?.title||"";
+  document.getElementById("taskScheduleInput").value=task?.scheduleDate||defaultDate||(!task&&taskView==="today"?todayStr():!task&&taskView==="upcoming"?addDays(todayStr(),1):"");
+  document.getElementById("taskDueInput").value=task?.dueDate||"";
+  document.getElementById("taskPriorityInput").value=task?.priority||"normal";
+  const goalSelect=document.getElementById("taskGoalInput");goalSelect.innerHTML='<option value="">ไม่ผูกเป้าหมาย</option>'+goals.map(goal=>`<option value="${esc(String(goal.id))}">${esc(goal.title)}</option>`).join("");goalSelect.value=task?.goalId||"";
+  document.getElementById("taskOverlay").classList.add("show");
+  setTimeout(()=>document.getElementById("taskTitleInput").focus(),50);
+}
+function closeTaskEditor(){document.getElementById("taskOverlay").classList.remove("show");editingTaskId=null;}
+document.getElementById("openTaskAddBtn").addEventListener("click",()=>openTaskEditor());
+document.getElementById("todayAddTaskBtn").addEventListener("click",()=>openTaskEditor(null,viewDate));
+document.getElementById("taskCloseBtn").addEventListener("click",closeTaskEditor);
+document.getElementById("taskOverlay").addEventListener("click",e=>{if(e.target.id==="taskOverlay")closeTaskEditor();});
+document.getElementById("taskSaveBtn").addEventListener("click",()=>{
+  const title=document.getElementById("taskTitleInput").value.trim();
+  if(!title){document.getElementById("taskTitleInput").focus();showToast("ใส่ชื่องานก่อนบันทึก");return;}
+  const data={title,scheduleDate:document.getElementById("taskScheduleInput").value,dueDate:document.getElementById("taskDueInput").value,priority:document.getElementById("taskPriorityInput").value,goalId:document.getElementById("taskGoalInput").value||""};
+  const existing=tasks.find(task=>task.id===editingTaskId);
+  if(existing)Object.assign(existing,data);
+  else tasks.unshift({id:uid(),...data,completed:false,createdAt:new Date().toISOString(),completedAt:""});
+  closeTaskEditor();saveState();renderMoneyDashboard();renderTasks();renderToday();
+});
+document.querySelector(".pm-task-tabs").addEventListener("click",e=>{
+  const btn=e.target.closest("[data-task-view]");if(!btn)return;
+  taskView=btn.dataset.taskView;renderTasks();
+});
+document.getElementById("taskSearch").addEventListener("input",e=>{taskSearchTerm=e.target.value.trim();renderTasks();});
+document.getElementById("taskPriorityFilter").addEventListener("change",e=>{taskPriorityFilter=e.target.value;renderTasks();});
+document.getElementById("taskDueFilter").addEventListener("change",e=>{taskDueFilter=e.target.value;renderTasks();});
+function handleTaskAction(button){
+  const task=tasks.find(item=>item.id===button.dataset.taskId);if(!task)return;
+  if(button.dataset.taskAction==="toggle"){
+    task.completed=!task.completed;task.completedAt=task.completed?new Date().toISOString():"";
+    saveState();renderMoneyDashboard();renderTasks();renderToday();
+  }else if(button.dataset.taskAction==="edit")openTaskEditor(task);
+  else if(button.dataset.taskAction==="schedule")openModal(null,task.scheduleDate||viewDate,task.id);
+  else if(button.dataset.taskAction==="delete")showConfirmPopup({title:"ลบงานนี้ใช่ไหม?",message:`“${task.title}” จะถูกลบ แต่ช่วงเวลาที่ผูกไว้จะคงอยู่และยกเลิกการเชื่อมโยง`,variant:"destructive",confirmLabel:"ลบงาน",onConfirm:()=>{blocks=unlinkTaskFromBlocks(blocks,task.id,task.title);tasks=tasks.filter(item=>item.id!==task.id);saveState();renderMoneyDashboard();renderTasks();renderToday();}});
+}
+document.getElementById("taskList").addEventListener("click",e=>{const button=e.target.closest("[data-task-action]");if(button)handleTaskAction(button);});
+document.getElementById("pmDashboard").addEventListener("click",e=>{
+  if(e.target.closest("[data-open-personal-finance]")){openWorkspaceRoute("money");}
+});
+document.getElementById("todayOverview").addEventListener("click",e=>{
+  const taskAction=e.target.closest("[data-task-action]");if(taskAction){handleTaskAction(taskAction);return;}
+  if(e.target.closest("[data-open-plan-tasks]")){openWorkspaceRoute("tasks");}
+  if(e.target.closest("[data-open-personal-finance]")){openWorkspaceRoute("money");}
+});
 document.getElementById("upcomingEventsCard").addEventListener("click",e=>{
   const b=e.target.closest("[data-del-event]");if(!b)return;
   events=events.filter(ev=>ev.id!==b.dataset.delEvent);
@@ -2183,6 +2696,9 @@ function renderPlanHighlight(){
 }
 
 function renderPlan(){
+  renderMoneyDashboard();
+  renderTasks();
+  if(planSection==="money")renderPlanMoney();
   renderPlanHighlight();
   renderUpcomingEvents();
   if(planViewMode==="wk"){
@@ -2277,7 +2793,7 @@ function renderLightWeekAgenda(){
     html+=`<p class="light-week-agenda-empty">ไม่มีงานวันนี้</p>`;
   }else{
     dayBlocks.forEach(b=>{
-      html+=`<div class="light-week-agenda-row" data-id="${b.id}"><span>${esc(b.title)}</span><span class="light-week-agenda-time">${b.start}</span></div>`;
+      html+=`<div class="light-week-agenda-row" data-id="${b.id}"><span>${esc(blockDisplayTitle(b))}</span><span class="light-week-agenda-time">${b.start}</span></div>`;
     });
   }
   el.innerHTML=html;
@@ -2299,15 +2815,16 @@ function renderTimelineWeek(ws){
     if(h<TL_END_HOUR) hLines+=`<div class="cal-h-line half" style="top:${y+30*TL_PXM}px"></div>`;
   }
   const nm=currentNowMin();
-  const stColor={done:"#9BA0A6",active:"#1F6F5C",upcoming:"#E08C2B"}, stBg={done:"#E8EAEC",active:"#E4EFEC",upcoming:"#FBEEDD"};
+  const stColor={done:"var(--ink-soft)",active:"var(--focus)",upcoming:"var(--ink)"};
+  const blockTones=["var(--tone-violet)","var(--tone-blue)","var(--tone-mint)","var(--tone-sand)","var(--tone-rose)"];
   const dayCols=days.map(d=>{
     const dayBlocks=blocks.filter(b=>b.date===d).sort((a,b)=>toMinutes(a.start)-toMinutes(b.start));
-    const bEls=dayBlocks.map(b=>{
+    const bEls=dayBlocks.map((b,blockIndex)=>{
       const sm=toMinutes(b.start)-TL_START_HOUR*60, em=toMinutes(b.end)-TL_START_HOUR*60;
       const top=Math.max(0,sm)*TL_PXM, height=Math.max(16,(em-sm))*TL_PXM;
       const st=(d===today)?statusOf(b,nm):(d<today?"done":"upcoming");
-      return`<div class="cal-block" data-block-id="${b.id}" data-date="${d}" style="top:${top}px;height:${height}px;background:${stBg[st]};border-left:3px solid ${stColor[st]};">
-        ${height>=20?`<div class="cal-block-title" style="color:${stColor[st]}">${esc(b.title)}</div>`:""}
+      return`<div class="cal-block" data-block-id="${b.id}" data-date="${d}" style="top:${top}px;height:${height}px;background:${blockTones[blockIndex%blockTones.length]};">
+        ${height>=20?`<div class="cal-block-title" style="color:${stColor[st]}">${esc(blockDisplayTitle(b))}</div>`:""}
         ${height>=34?`<div class="cal-block-time" style="color:${stColor[st]}">${b.start}–${b.end}</div>`:""}
         <div class="cal-resize-handle" data-block-id="${b.id}"></div>
       </div>`;
@@ -2434,9 +2951,9 @@ function openDayModal(ds){
           const sl=ts.paused?Math.max(0,Math.round((ts.remainingMs||0)/1000)):Math.max(0,Math.round((ts.phaseEndsAt-Date.now())/1000));
           liveMeta=" · "+(ts.phase==="focus"?"กำลังโฟกัส":"กำลังพัก")+" "+String(Math.floor(sl/60)).padStart(2,"0")+":"+String(sl%60).padStart(2,"0");
         }
-        return`<div class="day-popup-row ${st==="active"?"is-active":""}" data-edit-id="${b.id}"><div class="day-popup-bar" style="background:${color}"></div><div style="flex:1"><p class="day-popup-title">${esc(b.title)}</p><p class="day-popup-meta">${b.start}–${b.end}${mm?" · "+modeLabel(b):""}${liveMeta}</p></div></div>`;
+        return`<div class="day-popup-row ${st==="active"?"is-active":""}" data-edit-id="${b.id}"><div class="day-popup-bar" style="background:${color}"></div><div style="flex:1"><p class="day-popup-title">${esc(blockDisplayTitle(b))}</p><p class="day-popup-meta">${b.start}–${b.end}${mm?" · "+modeLabel(b):""}${liveMeta}</p></div></div>`;
       }).join("")
-    : '<p class="empty">ยังไม่มี time block ในวันนี้</p>';
+    : '<p class="empty">ยังไม่มีช่วงเวลาในวันนี้</p>';
   document.getElementById("dayModalBody").innerHTML = eventsHtml + blocksHtml;
   document.getElementById("dayModalOverlay").classList.add("show");
 }
@@ -2469,7 +2986,7 @@ function updateCountAmountField(){
 }
 document.getElementById("f_goalId").addEventListener("change",updateCountAmountField);
 function updateModeGrid(){
-  document.querySelectorAll("#modeGrid button").forEach(b=>b.classList.toggle("picked",b.dataset.mode===pickedMode));
+  document.querySelectorAll("#modeGrid button,#savedPomoModes button").forEach(b=>b.classList.toggle("picked",b.dataset.mode===pickedMode));
   document.getElementById("customRow").style.display=pickedMode==="custom"?"flex":"none";
 }
 // NOT-DONE REASON MODAL
@@ -2530,10 +3047,14 @@ document.getElementById("notDoneConfirmBtn").addEventListener("click",()=>{
   showToast(document.getElementById("notDoneReschedule").checked?"บันทึกแล้ว เลื่อนไปพรุ่งนี้ให้แล้ว":"บันทึกแล้ว");
 });
 
-function openModal(block,defDate){
+function openModal(block,defDate,linkedTaskId=""){
+  const linkId=block?.taskId||linkedTaskId||"",linkedTask=tasks.find(task=>task.id===linkId);
   editingId=block?block.id:null;
-  document.getElementById("modalTitle").textContent=block?"แก้ไข time block":"time block ใหม่";
-  document.getElementById("f_title").value=block?.title||"";
+  document.getElementById("modalTitle").textContent=block?"แก้ไขช่วงเวลา":"ช่วงเวลาใหม่";
+  document.getElementById("f_title").value=linkedTask?.title||block?.title||"";
+  document.getElementById("f_taskId").value=linkedTask?linkId:"";
+  const taskLinkInfo=document.getElementById("f_taskLinkInfo");taskLinkInfo.style.display=linkedTask?"flex":"none";
+  document.getElementById("f_taskLinkText").textContent=linkedTask?`ผูกกับงาน: ${linkedTask.title}`:"";
   document.getElementById("f_date").value=block?.date||defDate||viewDate;
   document.getElementById("f_start").value=block?.start||nowPlus(0);
   document.getElementById("f_end").value=block?.end||nowPlus(60);
@@ -2558,11 +3079,15 @@ document.getElementById("modeGrid").addEventListener("click",e=>{
   const b=e.target.closest("button");if(!b)return;
   pickedMode=b.dataset.mode;updateModeGrid();
 });
+document.getElementById("savedPomoModes")?.addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;
+  pickedMode=b.dataset.mode;updateModeGrid();
+});
 document.getElementById("cancelBtn").addEventListener("click",()=>blockOverlay.classList.remove("show"));
 document.getElementById("deleteBtnInModal").addEventListener("click",()=>{
   if(!editingId)return;
   const b=blocks.find(b=>b.id===editingId);if(!b)return;
-  showConfirmPopup({title:`ลบ "${b.title}" ใช่ไหม?`,message:"ลบแล้วกู้คืนไม่ได้ — time block และประวัติที่เกี่ยวข้องจะหายไปด้วย",variant:"destructive",confirmLabel:"ลบเลย",onConfirm:()=>{
+  showConfirmPopup({title:`ลบ "${b.title}" ใช่ไหม?`,message:"ลบแล้วกู้คืนไม่ได้ — ช่วงเวลาและประวัติที่เกี่ยวข้องจะหายไปด้วย",variant:"destructive",confirmLabel:"ลบช่วงเวลา",onConfirm:()=>{
     blocks=blocks.filter(b=>b.id!==editingId);delete timerState[editingId];
     saveState();blockOverlay.classList.remove("show");renderAll();
   }});
@@ -2584,13 +3109,10 @@ if(repeatDaysRowEl) repeatDaysRowEl.addEventListener("click",e=>{
   document.querySelectorAll(".day-chip").forEach(b=>b.classList.toggle("picked",pickedRepeatDays.has(Number(b.dataset.day))));
 });
 document.getElementById("openAddBtn").addEventListener("click",()=>openModal(null));
-document.getElementById("shortcutFinanceBtn").addEventListener("click",()=>{
-  switchTabById("progress");
-  setProgressViewMode("finance");
-});
-document.getElementById("shortcutGoalsBtn").addEventListener("click",()=>switchTabById("projects"));
+document.getElementById("f_taskUnlinkBtn").addEventListener("click",()=>{document.getElementById("f_taskId").value="";document.getElementById("f_taskLinkInfo").style.display="none";showToast("ยกเลิกการผูกงานแล้ว — ช่วงเวลาจะเก็บชื่อไว้");});
+document.getElementById("shortcutGoalsBtn").addEventListener("click",()=>openWorkspaceRoute("goals"));
 document.getElementById("shortcutEventsBtn").addEventListener("click",()=>{
-  switchTabById("plan");
+  openWorkspaceRoute("calendar");
   setPlanViewMode("mo");
 });
 
@@ -2599,7 +3121,8 @@ document.getElementById("saveBtn").addEventListener("click",()=>{
   if(!title||!start||!end){alert("กรอกชื่องานและช่วงเวลาด้วยครับ");return;}
   if(toMinutes(end)<=toMinutes(start)){alert("เวลาจบต้องอยู่หลังเวลาเริ่ม");return;}
   const countAmountRaw=document.getElementById("f_countAmount").value;
-  const data={title,start,end,date:document.getElementById("f_date").value||viewDate,goalId:document.getElementById("f_goalId").value||"",countAmount:countAmountRaw!==""?Number(countAmountRaw):undefined,mode:pickedMode,customFocus:Number(document.getElementById("f_customFocus").value)||25,customBreak:Number(document.getElementById("f_customBreak").value)||5,details:document.getElementById("f_details").value.trim(),notify:document.getElementById("f_notify").checked};
+  const linkedTask=tasks.find(task=>task.id===document.getElementById("f_taskId").value);
+  const data={title:linkedTask?.title||title,start,end,date:document.getElementById("f_date").value||viewDate,goalId:document.getElementById("f_goalId").value||"",taskId:linkedTask?.id||"",countAmount:countAmountRaw!==""?Number(countAmountRaw):undefined,mode:pickedMode,customFocus:Number(document.getElementById("f_customFocus").value)||25,customBreak:Number(document.getElementById("f_customBreak").value)||5,details:document.getElementById("f_details").value.trim(),notify:document.getElementById("f_notify").checked};
   if(editingId){
     const idx=blocks.findIndex(b=>b.id===editingId),oldBlock=blocks[idx],oldTs=timerState[editingId];
     blocks[idx]={...oldBlock,...data};
@@ -2677,11 +3200,11 @@ function renderSubtaskList(){
   const sum=subtaskWeightSum();
   document.getElementById("subtaskWeightSum").textContent="รวม "+sum+"%";
   document.getElementById("subtaskWeightSum").style.color=sum===100?"var(--focus)":"var(--danger)";
-  if(!currentSubtasks.length){el.innerHTML=`<p style="font-size:12px;color:var(--ink-muted);margin:0 0 8px">ยังไม่มี milestone — กด "+ เพิ่ม milestone" ด้านล่าง</p>`;return;}
+  if(!currentSubtasks.length){el.innerHTML=`<p style="font-size:12px;color:var(--ink-muted);margin:0 0 8px">ยังไม่มีขั้นย่อย — กด “+ เพิ่มขั้นย่อย” ด้านล่าง</p>`;return;}
   el.innerHTML=currentSubtasks.map((s,i)=>`
     <div style="display:flex;align-items:center;gap:10px;background:var(--paper);border-radius:12px;padding:10px 12px;margin-bottom:8px;">
       <input type="checkbox" class="subtask-done" data-idx="${i}" ${s.done?"checked":""} style="width:20px;height:20px;border-radius:6px;accent-color:var(--focus);flex-shrink:0;margin:0;">
-      <input type="text" class="subtask-title" data-idx="${i}" value="${esc(s.title)}" placeholder="ชื่อ milestone" style="flex:1;min-width:0;border:none;background:transparent;font-size:13px;font-family:inherit;color:var(--ink);${s.done?"text-decoration:line-through;color:var(--ink-muted);":""}">
+      <input type="text" class="subtask-title" data-idx="${i}" value="${esc(s.title)}" placeholder="ชื่อขั้นย่อย" style="flex:1;min-width:0;border:none;background:transparent;font-size:13px;font-family:inherit;color:var(--ink);${s.done?"text-decoration:line-through;color:var(--ink-muted);":""}">
       <span style="font-family:ui-monospace,monospace;font-size:12px;font-weight:600;color:var(--ink-soft);flex-shrink:0;">${s.weight??0}%</span>
       <button type="button" class="subtask-remove" data-idx="${i}" style="border:none;background:none;color:var(--ink-muted);font-size:13px;cursor:pointer;flex-shrink:0;padding:0;">✕</button>
     </div>`).join("");
@@ -2736,6 +3259,7 @@ function openGoalModal(goal){
   document.getElementById("g_title").value=goal?.title||"";
   document.getElementById("g_category").value=goal?.category||"work";
   document.getElementById("g_deadline").value=goal?.deadline||"";
+  document.getElementById("g_visualType").value=goal?.visualType||"auto";
   document.getElementById("g_targetHours").value=goal?.targetHours||20;
   syncTargetHoursDisplay();
   const presetUnits=["กม.","นาที","เซ็ต","แก้ว","บาท","ครั้ง"];
@@ -2798,6 +3322,7 @@ document.getElementById("goalSaveBtn").addEventListener("click",()=>{
     icon:pickedIconId||"",
     category:document.getElementById("g_category").value||"work",
     deadline:document.getElementById("g_deadline").value||"",
+    visualType:document.getElementById("g_visualType").value||"auto",
     mode:pickedGoalMode,
     targetHours:pickedGoalMode==="time"?(parseFloat(document.getElementById("g_targetHours").value)||0):0,
     unit:pickedGoalMode==="count"?currentUnitValue():"",
@@ -2814,7 +3339,7 @@ document.getElementById("goalSaveBtn").addEventListener("click",()=>{
   renderAll();
 });
 document.getElementById("goalDeleteBtn").addEventListener("click",()=>{
-  showConfirmPopup({title:"ลบโปรเจกต์นี้ใช่ไหม?",message:"ลบแล้วกู้คืนไม่ได้ — milestone และ time block ที่ผูกไว้กับโปรเจกต์นี้จะหายไปด้วย",variant:"destructive",confirmLabel:"ลบเลย",onConfirm:()=>{
+  showConfirmPopup({title:"ลบโปรเจกต์นี้ใช่ไหม?",message:"ลบแล้วกู้คืนไม่ได้ — ขั้นย่อยและช่วงเวลาที่ผูกไว้กับโปรเจกต์นี้จะหายไปด้วย",variant:"destructive",confirmLabel:"ลบโปรเจกต์",onConfirm:()=>{
     goals=goals.filter(g=>g.id!==editingGoalId);blocks.forEach(b=>{if(b.goalId===editingGoalId)b.goalId="";});saveState();goalOverlay.classList.remove("show");renderAll();
   }});
 });
@@ -2986,14 +3511,13 @@ document.getElementById("openProfileBtn").addEventListener("click",()=>{
 
 // SETTINGS MISC
 document.getElementById("resetDataBtn").addEventListener("click",()=>{
-  showConfirmPopup({title:"ล้างข้อมูลทั้งหมดใช่ไหม?",message:"ข้อมูลทั้งหมดจะหายถาวร ไม่สามารถกู้คืนได้ — time block, เป้าหมาย, และประวัติทั้งหมดจะถูกลบ",variant:"destructive",confirmLabel:"ล้างข้อมูลเลย",onConfirm:()=>{
-    blocks=[];goals=[];Object.keys(timerState).forEach(k=>delete timerState[k]);stats={byDate:{}};journal={};expenses=[];events=[];accounts=[{id:"acc_cash",name:"เงินสด",color:"#2f6b52",startingBalance:0}];budgets={};saveState();renderAll();
+  showConfirmPopup({title:"ล้างข้อมูลทั้งหมดใช่ไหม?",message:"ข้อมูลทั้งหมดจะหายถาวร ไม่สามารถกู้คืนได้ — งาน ช่วงเวลา เป้าหมาย การเงิน และประวัติจะถูกลบ",variant:"destructive",confirmLabel:"ล้างข้อมูลทั้งหมด",onConfirm:()=>{
+    blocks=[];goals=[];Object.keys(timerState).forEach(k=>delete timerState[k]);stats={byDate:{}};journal={};expenses=[];events=[];accounts=[{id:"acc_cash",name:"เงินสด",color:"#2f6b52",startingBalance:0}];budgets={};tasks=[];saveState();renderAll();
   }});
 });
 
 // PROJECTS TAB — ดึงข้อมูลจาก goals ตรงๆ ไม่มี projects array แยก
 function weekDates(){const td=todayStr();const dow=new Date(td+"T00:00:00").getDay();const sun=addDays(td,-dow);return Array.from({length:7},(_,i)=>addDays(sun,i));}
-function todayDoneHours(){const td=todayStr(),nm=currentNowMin();return blocks.filter(b=>b.date===td&&statusOf(b,nm)!=="upcoming").reduce((s,b)=>s+(toMinutes(b.end)-toMinutes(b.start))/60,0);}
 function streakCount(){return computeStreak();}
 
 let disciplineRange=7;
@@ -3016,6 +3540,42 @@ function disciplineChartHtml(rangeDays){
 }
 
 
+function constructionBuildingHtml(g){
+  const p=goalProgress(g);
+  const pct=Math.max(0,Math.min(100,Number(p.pct)||0));
+  const floors=Array.from({length:5},(_,i)=>{
+    const start=i*20;
+    const progress=Math.max(0,Math.min(1,(pct-start)/20));
+    const state=pct>=start+20?"is-built":progress>0?"is-current":"is-planned";
+    const windows=Array.from({length:3},()=>'<span class="construction-window"></span>').join("");
+    return`<div class="construction-floor ${state}" style="--floor-progress:${progress}"><span class="construction-floor-label">${i+1}</span><span class="construction-windows">${windows}</span></div>`;
+  }).join("");
+  const title=esc(String(g.title||"โปรเจกต์"));
+  const goalId=esc(String(g.id||""));
+  const visualType=g.visualType&&g.visualType!=="auto"?g.visualType:(g.category==="money"||g.category==="income"?"money":g.category==="body"||g.category==="mind"?"tree":"building");
+  const visualLabel=visualType==="tree"?"ต้นไม้เติบโต":visualType==="money"?"เงินกำลังสะสม":"ตึกกำลังก่อสร้าง";
+  return`<div class="construction-scene construction-scene-3d progress-visual-${visualType}" data-construction-3d data-goal-id="${goalId}" data-visual-type="${visualType}" data-progress="${pct}" role="img" aria-label="${title} ${visualLabel} ความคืบหน้า ${pct}%">
+    <canvas class="construction-3d-canvas" aria-hidden="true"></canvas>
+    <div class="construction-3d-status" aria-hidden="true"><span class="construction-3d-status-dot"></span><span>กำลังเตรียมแบบจำลอง 3D…</span></div>
+    <div class="construction-3d-fallback" aria-hidden="true">
+      <div class="construction-sun"></div>
+      <div class="construction-crane"><span class="construction-crane-mast"></span><span class="construction-crane-arm"></span><span class="construction-crane-hook"></span></div>
+      <div class="construction-building">${floors}</div>
+      <div class="construction-scaffold"><i></i><i></i><i></i><b></b><b></b><b></b></div>
+      <div class="construction-ground"></div>
+    </div>
+    <div class="construction-scene-footer"><span>${visualType==="tree"?"ต้นไม้ 3D · กำลังเติบโต":visualType==="money"?"เงิน 3D · กำลังสะสม":"ตึก 3D · กำลังก่อสร้าง"}</span><span class="construction-scene-footer-right"><button type="button" class="construction-sequence-btn" onclick="startConstructionSequence('${goalId}',event)">▶ ดูขั้นตอน 10 วิ</button><strong>${pct}%</strong></span></div>
+  </div>`;
+}
+function startConstructionSequence(goalId,event){
+  event?.preventDefault();
+  event?.stopPropagation();
+  if(window.playConstructionSequence&&window.playConstructionSequence(goalId)){
+    showToast("กำลังจำลองขั้นตอนการก่อสร้าง 10 วินาที — ไม่เปลี่ยนข้อมูลจริง");
+  }else{
+    showToast("กำลังเตรียมแบบจำลอง 3D ลองกดอีกครั้งในอีกสักครู่");
+  }
+}
 function staircaseHtml(g){
   const p=goalProgress(g.id);
   const STEPS=5;
@@ -3111,8 +3671,8 @@ function renderProjects(){
     sorted.forEach(g=>{
       const p=goalProgress(g.id);
       const isHold=g.category==="hold";
-      const modeLabel=p.mode==="count"?"📊 จำนวน":p.mode==="project"?"☑ งานเสร็จ":"⏱ เวลา";
-      const metaRight=p.mode==="count"?`${p.logged}/${p.target||0} ${p.unit||""}`:p.mode==="project"?`${p.subtasksDone}/${p.subtasksTotal} milestone`:`${p.logged}/${p.target||0} ชม.`;
+      const modeLabel=p.mode==="count"?"จำนวน":p.mode==="project"?"งานเสร็จ":"เวลา";
+      const metaRight=p.mode==="count"?`${p.logged}/${p.target||0} ${p.unit||""}`:p.mode==="project"?`${p.subtasksDone}/${p.subtasksTotal} ขั้นย่อย`:`${p.logged}/${p.target||0} ชม.`;
       const financeBadge=p.financeLinked?`<span class="proj-finance-badge">⚡ อัตโนมัติจากการเงิน</span>`:"";
       if(p.financeLinked&&p.pct>=100){
         leftHtml+=`<div class="proj-card2 proj-card2-celebrate" onclick="openGoalModal(goals.find(g=>g.id==='${g.id}'))">
@@ -3130,7 +3690,7 @@ function renderProjects(){
           <div class="proj-card2-name">${goalIconHtml(g,16)} ${esc(g.title)}${financeBadge}</div>
           <div class="proj-card2-pct">${p.pct}%</div>
         </div>
-        ${staircaseHtml(g)}
+        ${constructionBuildingHtml(g)}
         <p class="proj-card2-status">${goalStepStatusLine(g)}</p>
         <p class="proj-card2-hint">${goalMotivation(p.pct)}</p>
         <div class="proj-card2-bottom">
@@ -3144,7 +3704,7 @@ function renderProjects(){
   const td=todayStr();
   let rightHtml=`<div class="proj-col-label">นิสัย</div><div class="habit-panel">`;
   if(!habitGoals.length){
-    rightHtml+='<p class="empty" style="padding:8px 0;">ยังไม่มีนิสัย</p>';
+    rightHtml+='<p class="empty habit-empty" style="padding:8px 0;">ยังไม่มีนิสัย<br><span>กด “เลือกนิสัย” เพื่อเริ่มติดตาม</span></p>';
   }else{
     habitGoals.forEach(g=>{
       const streak=habitStreak(g.id);
@@ -3162,6 +3722,7 @@ function renderProjects(){
     <div>${leftHtml}</div>
     <div>${rightHtml}</div>
   </div>`;
+  if(window.initConstruction3D)window.initConstruction3D();
 }
 
 function totalFocusSessions(){
@@ -3176,9 +3737,9 @@ function celebrationHeadline(streak){
 }
 let progressViewMode="overview";
 function setProgressViewMode(mode){
+  if(!["overview","habit","mind"].includes(mode))mode="overview";
   progressViewMode=mode;
-  document.querySelectorAll("#page-progress .progress-underline-tab").forEach(b=>b.classList.remove("active"));
-  document.getElementById("progView"+mode.charAt(0).toUpperCase()+mode.slice(1)+"Btn").classList.add("active");
+  document.querySelectorAll("#page-progress .progress-underline-tab").forEach(b=>{const active=b.id==="progView"+mode.charAt(0).toUpperCase()+mode.slice(1)+"Btn";b.classList.toggle("active",active);b.setAttribute("aria-selected",String(active));});
   renderProgress();
 }
 function progressOverviewHtml(){
@@ -3218,6 +3779,8 @@ function progressOverviewHtml(){
 
   const tb=blocks.filter(b=>b.date===td&&b.completed===true);
   if(tb.length>0)html+=`<div class="proj-win-banner"><p class="proj-win-title">วันนี้ทำเสร็จไปแล้ว ${tb.length} งาน 💪</p><p class="proj-win-sub">สู้ๆ ต่อไปนะ</p></div>`;
+  const recent=weekBlocks.slice().sort((a,b)=>(b.date+b.start).localeCompare(a.date+a.start)).slice(0,8);
+  html+=`<section class="activity-table-section"><h3>รายการสัปดาห์นี้</h3><p class="activity-table-note">แสดงช่วงเวลาที่จัดไว้ล่าสุดไม่เกิน 8 รายการ</p><div class="activity-table-wrap"><table class="activity-table"><thead><tr><th scope="col">รายการ</th><th scope="col">วันที่ / เวลา</th><th scope="col">สถานะ</th></tr></thead><tbody>${recent.length?recent.map(b=>`<tr><td>${esc(blockDisplayTitle(b))}</td><td>${esc(b.date)} · ${esc(b.start)}–${esc(b.end)}</td><td><span class="activity-status ${b.completed===true?"is-done":b.completed===false?"is-missed":"is-planned"}">${b.completed===true?"เสร็จแล้ว":b.completed===false?"ไม่ได้ทำ":"จัดเวลาแล้ว"}</span></td></tr>`).join(""):`<tr><td colspan="3">ยังไม่มีช่วงเวลาที่จัดไว้ในสัปดาห์นี้</td></tr>`}</tbody></table></div></section>`;
   return html;
 }
 function progressHabitHtml(){
@@ -3267,52 +3830,146 @@ function renderProgress(){
   if(!el)return;
   if(progressViewMode==="overview")el.innerHTML=progressOverviewHtml();
   else if(progressViewMode==="habit")el.innerHTML=progressHabitHtml();
-  else if(progressViewMode==="finance")el.innerHTML=financeTabHtml();
   else if(progressViewMode==="mind")el.innerHTML=progressMindHtml();
 }
 
 document.getElementById("openProjAddBtn").addEventListener("click",()=>openGoalModal(null));
 
+/* PRODUCTIVE TIME BACKUP CORE START */
+function backupRecord(value){return value!==null&&typeof value==="object"&&!Array.isArray(value);}
+function backupSafeId(value){return typeof value==="string"&&value.length<=120&&/^[A-Za-z0-9_-]+$/.test(value);}
+function backupClone(value){
+  if(Array.isArray(value))return value.map(backupClone);
+  if(!backupRecord(value))return value;
+  const out={};
+  Object.keys(value).forEach(key=>{
+    if(key==="__proto__"||key==="prototype"||key==="constructor")throw new Error("พบ property ที่ไม่อนุญาต");
+    out[key]=backupClone(value[key]);
+  });
+  return out;
+}
+function backupValidDate(value){
+  if(typeof value!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(value))return false;
+  const date=new Date(value+"T00:00:00Z");return !Number.isNaN(date.getTime())&&date.toISOString().slice(0,10)===value;
+}
+function backupStable(value){
+  if(Array.isArray(value))return"["+value.map(backupStable).join(",")+"]";
+  if(backupRecord(value))return"{"+Object.keys(value).sort().map(key=>JSON.stringify(key)+":"+backupStable(value[key])).join(",")+"}";
+  return JSON.stringify(value);
+}
+function validateBackupData(input){
+  if(!backupRecord(input))return{error:"ไฟล์ JSON ต้องเป็น object"};
+  if(input.type!=="timeblock_import")return{error:'ไม่พบ type "timeblock_import"'};
+  const version=input.version===undefined?1:Number(input.version);
+  if(!Number.isInteger(version)||![1,2].includes(version))return{error:"ไม่รองรับ backup version นี้"};
+  try{
+    const readArray=key=>{
+      const value=input[key]===undefined?[]:input[key];
+      if(!Array.isArray(value))throw new Error("รูปแบบ "+key+" ไม่ถูกต้อง");
+      return value.map(item=>backupClone(item));
+    };
+    const projects=readArray("projects"),goalsIn=readArray("goals"),blocksIn=readArray("blocks"),tasksIn=readArray("tasks"),eventsIn=readArray("events"),expensesIn=readArray("expenses"),accountsIn=readArray("accounts");
+    const checkTitles=(items,label)=>items.forEach(item=>{if(!backupRecord(item)||typeof item.title!=="string"||!item.title.trim()||item.title.length>500)throw new Error("ข้อมูล "+label+" ไม่ถูกต้อง");});
+    checkTitles(projects,"project");checkTitles(goalsIn,"goal");checkTitles(tasksIn,"task");checkTitles(blocksIn,"block");checkTitles(eventsIn,"event");
+    blocksIn.forEach(item=>{if(!backupValidDate(item.date)||typeof item.start!=="string"||!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(item.start)||typeof item.end!=="string"||!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(item.end))throw new Error("ข้อมูล block ไม่ถูกต้อง");});
+    tasksIn.forEach(item=>{
+      if(item.scheduleDate&&!backupValidDate(item.scheduleDate))throw new Error("ข้อมูล task date ไม่ถูกต้อง");
+      if(item.dueDate&&!backupValidDate(item.dueDate))throw new Error("ข้อมูล task due date ไม่ถูกต้อง");
+      if(item.priority!==undefined&&!["high","normal","low"].includes(item.priority))throw new Error("ข้อมูล task priority ไม่ถูกต้อง");
+      if(item.goalId!==undefined&&item.goalId!==""&&!backupSafeId(item.goalId))throw new Error("ข้อมูล task goalId ไม่ถูกต้อง");
+    });
+    blocksIn.forEach(item=>{
+      if(item.taskId!==undefined&&item.taskId!==""&&!backupSafeId(item.taskId))throw new Error("ข้อมูล block taskId ไม่ถูกต้อง");
+      if(item.goalId!==undefined&&item.goalId!==""&&!backupSafeId(item.goalId))throw new Error("ข้อมูล block goalId ไม่ถูกต้อง");
+    });
+    eventsIn.forEach(item=>{if(!backupValidDate(item.date))throw new Error("ข้อมูล event date ไม่ถูกต้อง");});
+    const checkIds=(items,label)=>{
+      const seen=new Set();items.forEach(item=>{if(item.id!==undefined&&item.id!==""&&!backupSafeId(item.id))throw new Error("ข้อมูล "+label+" id ไม่ถูกต้อง");if(item.id&&seen.has(item.id))throw new Error("พบ id ซ้ำใน "+label);if(item.id)seen.add(item.id);});
+    };
+    checkIds([...projects,...goalsIn],"goal");checkIds(blocksIn,"block");checkIds(tasksIn,"task");checkIds(eventsIn,"event");checkIds(expensesIn,"expense");checkIds(accountsIn,"account");
+    expensesIn.forEach(item=>{if(!backupRecord(item)||!backupValidDate(item.date)||typeof item.category!=="string"||!item.category.trim()||!Number.isFinite(Number(item.amount))||Number(item.amount)<0||!["income","expense"].includes(item.type))throw new Error("ข้อมูล expense ไม่ถูกต้อง");if(item.note!==undefined&&typeof item.note!=="string")throw new Error("ข้อมูล expense note ไม่ถูกต้อง");if(item.accountId!==undefined&&item.accountId!==""&&!backupSafeId(item.accountId))throw new Error("ข้อมูล expense accountId ไม่ถูกต้อง");});
+    accountsIn.forEach(item=>{if(!backupRecord(item)||typeof item.name!=="string"||!item.name.trim())throw new Error("ข้อมูล account ไม่ถูกต้อง");if(item.startingBalance!==undefined&&!Number.isFinite(Number(item.startingBalance)))throw new Error("ข้อมูล account balance ไม่ถูกต้อง");});
+    const readDateMap=(value,label)=>{
+      if(value===undefined)return{};if(!backupRecord(value))throw new Error("รูปแบบ "+label+" ไม่ถูกต้อง");
+      const out={};Object.keys(value).forEach(date=>{if(!backupValidDate(date)||!backupRecord(value[date]))throw new Error("ข้อมูลวันที่ใน "+label+" ไม่ถูกต้อง");out[date]=backupClone(value[date]);});return out;
+    };
+    let stats={byDate:{}};
+    if(input.stats!==undefined){if(!backupRecord(input.stats))throw new Error("รูปแบบ stats ไม่ถูกต้อง");stats=backupClone(input.stats);stats.byDate=readDateMap(input.stats.byDate||{},"stats");}
+    const journal=readDateMap(input.journal,"journal");
+    const rawBudgets=input.budgets===undefined?{}:input.budgets;
+    if(!backupRecord(rawBudgets))throw new Error("รูปแบบ budgets ไม่ถูกต้อง");
+    const budgets={};Object.keys(rawBudgets).forEach(category=>{
+      if(!category.trim()||category==="__proto__"||category==="constructor"||!Number.isFinite(Number(rawBudgets[category]))||Number(rawBudgets[category])<0)throw new Error("ข้อมูล budget ไม่ถูกต้อง");
+      budgets[category]=Number(rawBudgets[category]);
+    });
+    return{data:{type:"timeblock_import",version,exportedAt:typeof input.exportedAt==="string"?input.exportedAt:"",projects,goals:goalsIn,blocks:blocksIn,tasks:tasksIn,events:eventsIn,journal,stats,expenses:expensesIn,accounts:accountsIn,budgets}};
+  }catch(error){return{error:error instanceof Error?error.message:"รูปแบบ backup ไม่ถูกต้อง"};}
+}
+function mergeBackupData(localInput,incoming,makeId){
+  const local=backupClone(localInput),next={...local};
+  ["goals","blocks","tasks","events","expenses","accounts"].forEach(key=>{if(!Array.isArray(next[key]))next[key]=[];});
+  if(!backupRecord(next.journal))next.journal={};if(!backupRecord(next.stats))next.stats={byDate:{}};if(!backupRecord(next.stats.byDate))next.stats.byDate={};if(!backupRecord(next.budgets))next.budgets={};
+  const counts={added:0,skipped:0,conflicts:0};
+  const goalMap=new Map(),taskMap=new Map(),accountMap=new Map();
+  const appendMapped=(key,items,kind,map)=>{
+    const target=next[key];
+    items.forEach(raw=>{
+      const item=backupClone(raw),sourceId=typeof item.id==="string"?item.id:"";
+      const existing=sourceId?target.find(row=>row.id===sourceId):null;
+      if(existing&&backupStable(existing)===backupStable(item)){if(map&&sourceId)map.set(sourceId,String(existing.id));counts.skipped++;return;}
+      let id=sourceId||makeId(kind);
+      if(existing){counts.conflicts++;if(kind==="block"||kind==="event"||kind==="expense"){counts.skipped++;return;}id=makeId(kind);while(target.some(row=>row.id===id))id=makeId(kind);}
+      else while(target.some(row=>row.id===id))id=makeId(kind);
+      item.id=id;if(map&&sourceId)map.set(sourceId,id);
+      target.push(item);counts.added++;
+    });
+  };
+  appendMapped("goals",[...incoming.projects,...incoming.goals],"goal",goalMap);
+  appendMapped("accounts",incoming.accounts,"account",accountMap);
+  const mapReference=(value,map,localItems)=>{
+    if(!value)return"";if(map.has(value))return map.get(value);return localItems.some(item=>item.id===value)?value:"";
+  };
+  const tasksToAdd=incoming.tasks.map(raw=>{const item=backupClone(raw);if(item.goalId)item.goalId=mapReference(item.goalId,goalMap,next.goals);return item;});
+  appendMapped("tasks",tasksToAdd,"task",taskMap);
+  const blocksToAdd=incoming.blocks.map(raw=>{
+    const item=backupClone(raw);if(item.goalId)item.goalId=mapReference(item.goalId,goalMap,next.goals);if(item.taskId)item.taskId=mapReference(item.taskId,taskMap,next.tasks);return item;
+  });
+  const expensesToAdd=incoming.expenses.map(raw=>{const item=backupClone(raw);if(item.accountId&&accountMap.has(item.accountId))item.accountId=accountMap.get(item.accountId);return item;});
+  appendMapped("blocks",blocksToAdd,"block",null);
+  appendMapped("events",incoming.events,"event",null);
+  appendMapped("expenses",expensesToAdd,"expense",null);
+  const mergeDates=(target,source)=>Object.keys(source).forEach(date=>{if(Object.prototype.hasOwnProperty.call(target,date))counts.skipped++;else{target[date]=backupClone(source[date]);counts.added++;}});
+  mergeDates(next.journal,incoming.journal);mergeDates(next.stats.byDate,incoming.stats.byDate);
+  Object.keys(incoming.budgets).forEach(category=>{
+    if(!Object.prototype.hasOwnProperty.call(next.budgets,category)){next.budgets[category]=incoming.budgets[category];counts.added++;}
+    else if(Number(next.budgets[category])!==Number(incoming.budgets[category]))counts.conflicts++;
+    else counts.skipped++;
+  });
+  return{...next,counts};
+}
+function buildBackupData(state,exportedAt){
+  return{type:"timeblock_import",version:2,exportedAt,projects:(state.goals||[]).filter(goal=>goal._isProject),goals:(state.goals||[]).filter(goal=>!goal._isProject),blocks:state.blocks||[],tasks:state.tasks||[],events:state.events||[],journal:state.journal||{},stats:state.stats||{byDate:{}},expenses:state.expenses||[],accounts:state.accounts||[],budgets:state.budgets||{}};
+}
+function tasksForDate(taskItems,date){
+  const rank={high:0,normal:1,low:2};
+  return taskItems.filter(task=>!task.completed&&(task.scheduleDate||task.dueDate)===date).slice().sort((a,b)=>(rank[a.priority||"normal"]??1)-(rank[b.priority||"normal"]??1)||String(a.createdAt||"").localeCompare(String(b.createdAt||"")));
+}
+function unlinkTaskFromBlocks(blockItems,taskId,taskTitle){
+  return blockItems.map(block=>block.taskId===taskId?{...block,title:taskTitle||block.title||"",taskId:""}:block);
+}
+/* PRODUCTIVE TIME BACKUP CORE END */
+
 // IMPORT / EXPORT
 function parseImportJson(raw){
-  let data;
-  try{data=JSON.parse(raw);}catch(e){return{error:"JSON ไม่ถูกต้อง: "+e.message};}
-  if(data.type!=="timeblock_import")return{error:'ต้องมี "type": "timeblock_import" ในไฟล์'};
-  const res={projects:[],blocks:[],skipped:{projects:0,blocks:0}};
-  // projects — supports all goal modes: time / count / project(milestone) / habit
-  (data.projects||[]).forEach(p=>{
-    if(!p.title)return;
-    if(p.id&&goals.find(g=>g.id===p.id)){res.skipped.projects++;return;}
-    const mode=["time","count","project","habit"].includes(p.mode)?p.mode:"time";
-    const item={
-      id:p.id||uid(),emoji:p.emoji||"📌",icon:p.icon||"",title:p.title,
-      category:p.category||"work",deadline:mode==="habit"?"":(p.deadline||""),
-      mode,targetHours:mode==="time"?(Number(p.targetHours)||20):0,
-      unit:mode==="count"?(p.unit||""):"",targetCount:mode==="count"?(Number(p.targetCount)||0):0,
-      subtasks:mode==="project"?(Array.isArray(p.subtasks)?p.subtasks.map(s=>({id:uid(),title:s.title||"",done:!!s.done,due:s.due||"",weight:Number(s.weight)||0})):[]):undefined,
-      habitFreq:mode==="habit"?(p.habitFreq||"custom"):undefined,
-      habitDays:mode==="habit"?(Array.isArray(p.habitDays)?p.habitDays:[]):undefined,
-      habitTime:mode==="habit"?(p.habitTime||""):undefined,
-      habitDuration:mode==="habit"?(Number(p.habitDuration)||15):undefined,
-      habitAutoBlock:mode==="habit"?(p.habitAutoBlock!==false):undefined,
-      note:p.note||"",_isProject:true,
-    };
-    res.projects.push(item);
-  });
-  // blocks — supports countAmount (for count-mode goals) and completed state
-  (data.blocks||[]).forEach(b=>{
-    if(!b.title||!b.date||!b.start||!b.end)return;
-    res.blocks.push({id:uid(),title:b.title,date:b.date,start:b.start,end:b.end,goalId:b.goalId||"",mode:b.mode||"none",customFocus:b.customFocus||25,customBreak:b.customBreak||5,details:b.details||"",notify:b.notify!==false,countAmount:b.countAmount!==undefined?Number(b.countAmount):undefined,completed:b.completed===true?true:(b.completed===false?false:null)});
-  });
-  return res;
+  let data;try{data=JSON.parse(raw);}catch(e){return{error:"JSON ไม่ถูกต้อง: "+e.message};}
+  return validateBackupData(data);
 }
-
+function currentBackupState(){return{goals,blocks,tasks,events,journal,stats,expenses,accounts,budgets};}
 function applyImport(parsed){
-  if(parsed.error)return false;
-  parsed.projects.forEach(p=>goals.push(p));
-  parsed.blocks.forEach(b=>blocks.push(b));
-  saveState();renderAll();
-  return true;
+  if(parsed.error||!parsed.data)return null;
+  const merged=mergeBackupData(currentBackupState(),parsed.data,kind=>uid()+"-"+kind);
+  goals=merged.goals;blocks=merged.blocks;tasks=merged.tasks;events=merged.events;journal=merged.journal;stats=merged.stats;expenses=merged.expenses;accounts=merged.accounts;budgets=merged.budgets;
+  saveState();renderAll();return merged;
 }
 
 function getImportRaw(){
@@ -3334,11 +3991,10 @@ document.getElementById("importPreviewBtn").addEventListener("click",()=>{
   const parsed=parseImportJson(raw);
   prev.style.display="block";
   if(parsed.error){prev.innerHTML=`<span style="color:var(--danger)">❌ ${esc(parsed.error)}</span>`;return;}
-  const lines=[];
-  if(parsed.projects.length)lines.push(`✅ โปรเจกต์ใหม่ ${parsed.projects.length} รายการ`);
-  if(parsed.skipped.projects)lines.push(`⏭ ข้าม ${parsed.skipped.projects} โปรเจกต์ (id ซ้ำ)`);
-  if(parsed.blocks.length)lines.push(`✅ Time block ใหม่ ${parsed.blocks.length} รายการ`);
-  if(!parsed.projects.length&&!parsed.blocks.length)lines.push("ไม่มีข้อมูลใหม่ที่จะเพิ่ม");
+  const preview=mergeBackupData(currentBackupState(),parsed.data,kind=>"preview-"+kind+"-"+Math.random().toString(36).slice(2,8));
+  const lines=[`จะเพิ่ม ${preview.counts.added} รายการ`,`จะข้ามข้อมูลเดิม ${preview.counts.skipped} รายการ`];
+  if(preview.counts.conflicts)lines.push(`พบข้อมูลชนกัน ${preview.counts.conflicts} จุด — ระบบจะเก็บข้อมูลเดิมหรือแยก ID โดยไม่เขียนทับ`);
+  lines.push("ตรวจสอบ JSON แล้ว และจะไม่รันเนื้อหาในไฟล์");
   prev.innerHTML=lines.map(l=>`<div style="margin-bottom:3px">${esc(l)}</div>`).join("");
 });
 
@@ -3347,16 +4003,16 @@ document.getElementById("importConfirmBtn").addEventListener("click",()=>{
   if(!raw){alert("วาง JSON ก่อนนะครับ");return;}
   const parsed=parseImportJson(raw);
   if(parsed.error){alert("❌ "+parsed.error);return;}
-  if(!parsed.projects.length&&!parsed.blocks.length){alert("ไม่มีข้อมูลใหม่ที่จะเพิ่ม");return;}
-  const total=parsed.projects.length+parsed.blocks.length;
-  showConfirmPopup({title:`เพิ่มข้อมูล ${total} รายการ?`,message:"ข้อมูลเดิมในแอปจะไม่ถูกแตะต้อง — รายการใหม่จะถูกเพิ่มเข้าไปเท่านั้น",variant:"neutral",confirmLabel:"ยืนยัน",onConfirm:()=>{
-    const ok=applyImport(parsed);
-    if(ok){
+  const preview=mergeBackupData(currentBackupState(),parsed.data,kind=>"preview-"+kind+"-"+Math.random().toString(36).slice(2,8));
+  if(!preview.counts.added){alert("ไม่มีข้อมูลใหม่ที่จะเพิ่ม");return;}
+  showConfirmPopup({title:`เพิ่มข้อมูล ${preview.counts.added} รายการ?`,message:`ข้ามข้อมูลเดิม ${preview.counts.skipped} รายการ · ความขัดแย้ง ${preview.counts.conflicts} จุด — ไม่มีการเขียนทับข้อมูลเดิม`,variant:"neutral",confirmLabel:"เพิ่มข้อมูล",onConfirm:()=>{
+    const result=applyImport(parsed);
+    if(result){
       document.getElementById("importOverlay").classList.remove("show");
       document.getElementById("importJson").value="";
       document.getElementById("importFile").value="";
       document.getElementById("importPreview").style.display="none";
-      showToast(`✅ Import สำเร็จ! เพิ่ม ${total} รายการ`);
+      showToast(`✅ Import สำเร็จ! เพิ่ม ${result.counts.added} รายการ`);
     }
   }});
 });
@@ -3370,15 +4026,8 @@ document.getElementById("openImportBtn").addEventListener("click",()=>{
 });
 
 // EXPORT
-document.getElementById("openExportBtn").addEventListener("click",()=>{
-  const exportData={
-    type:"timeblock_import",
-    version:1,
-    exportedAt:new Date().toISOString(),
-    projects:goals.filter(g=>g._isProject),
-    goals:goals.filter(g=>!g._isProject),
-    blocks:blocks
-  };
+function downloadBackup(){
+  const exportData=buildBackupData(currentBackupState(),new Date().toISOString());
   const blob=new Blob([JSON.stringify(exportData,null,2)],{type:"application/json"});
   const url=URL.createObjectURL(blob);
   const a=document.createElement("a");
@@ -3386,7 +4035,12 @@ document.getElementById("openExportBtn").addEventListener("click",()=>{
   document.body.appendChild(a);a.click();
   document.body.removeChild(a);URL.revokeObjectURL(url);
   showToast("✅ Export สำเร็จ!");
-});
+}
+document.getElementById("openExportBtn").addEventListener("click",()=>showConfirmPopup({
+  title:"ส่งออกข้อมูลส่วนตัว?",
+  message:"ไฟล์ JSON ที่ดาวน์โหลดไม่เข้ารหัส และมีข้อมูลส่วนตัว/การเงิน เช่น รายรับ รายจ่าย บัญชี และงบประมาณ เก็บไฟล์นี้ในที่ปลอดภัย",
+  variant:"neutral",confirmLabel:"ดาวน์โหลดไฟล์",onConfirm:downloadBackup
+}));
 
 // CLOUD SYNC
 const syncOverlay=document.getElementById("syncOverlay");const syncStatusEl=document.getElementById("syncStatus");
@@ -3408,7 +4062,7 @@ function saveCloudConfig(c){try{localStorage.setItem(CK,JSON.stringify(c));}catc
 
 function ensureFirebaseInit(fc){
   if(firebaseInitialized) return true;
-  if(!window.firebase){ syncStatusEl.textContent="โหลด Firebase ไม่สำเร็จ (ต้องใช้ผ่านเว็บที่ host จริง)"; return false; }
+  if(!window.firebase){ syncStatusEl.textContent="ซิงค์ยังไม่พร้อม · เปิดแอปผ่านเว็บที่โฮสต์จริงเพื่อใช้ Firebase"; return false; }
   try{
     if(!firebase.apps.length) firebase.initializeApp(fc);
     cloudDb=firebase.firestore();
@@ -3423,7 +4077,7 @@ function ensureFirebaseInit(fc){
           cloudConnected=true;
           syncStatusEl.textContent=`ซิงค์แล้ว · ${user.displayName||user.email}`;
           if(doc.exists) applyRemoteSnapshot(doc.data()); else queueCloudPush();
-        },err=>{ cloudConnected=false; syncStatusEl.textContent="ซิงค์ไม่สำเร็จ — เช็คการตั้งค่า"; console.error(err); });
+        },err=>{ cloudConnected=false; syncStatusEl.textContent="ซิงค์ไม่สำเร็จ · ตรวจสอบการตั้งค่า Firebase"; console.error(err); });
       } else {
         if(cloudUnsub) cloudUnsub();
         cloudUnsub=null; cloudDocRef=null; cloudConnected=false;
@@ -3524,10 +4178,10 @@ document.getElementById("syncSignOutBtn").addEventListener("click",async()=>{
   syncOverlay.classList.remove("show");
 });
 
-function queueCloudPush(){if(!cloudConnected||!cloudDocRef||applyingRemoteUpdate){pendingLocalChange=true;return;}pendingLocalChange=false;clearTimeout(cloudPushTimer);cloudPushTimer=setTimeout(()=>cloudDocRef.set({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,accounts,budgets,updatedAt:Date.now()}).catch(e=>console.error(e)),500);}
+function queueCloudPush(){if(!cloudConnected||!cloudDocRef||applyingRemoteUpdate){pendingLocalChange=true;return;}pendingLocalChange=false;clearTimeout(cloudPushTimer);cloudPushTimer=setTimeout(()=>cloudDocRef.set({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,accounts,budgets,tasks,pomoCustomModes,pomoSettings,updatedAt:Date.now()}).catch(e=>console.error(e)),500);}
 function applyRemoteSnapshot(data){
   if(pendingLocalChange){ pendingLocalChange=false; queueCloudPush(); return; } // local changes happened before the cloud connected — push ours instead of overwriting with stale server data
-  applyingRemoteUpdate=true;if(Array.isArray(data.blocks)){blocks=data.blocks;blocks.forEach(b=>{if(!b.date)b.date=todayStr();});}if(Array.isArray(data.goals))goals=data.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;});if(data.timerState){Object.keys(timerState).forEach(k=>delete timerState[k]);Object.assign(timerState,data.timerState);}if(data.prevActiveId!==undefined)prevActiveId=data.prevActiveId;if(data.stats?.byDate)stats=data.stats;if(data.journal&&typeof data.journal==="object")journal=data.journal;if(Array.isArray(data.expenses))expenses=data.expenses;if(Array.isArray(data.events))events=data.events;if(Array.isArray(data.accounts)&&data.accounts.length)accounts=data.accounts;if(data.budgets&&typeof data.budgets==="object")budgets=data.budgets;try{localStorage.setItem(SK,JSON.stringify({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,accounts,budgets}));}catch(e){}renderAll();applyingRemoteUpdate=false;}
+  applyingRemoteUpdate=true;if(Array.isArray(data.blocks)){blocks=data.blocks;blocks.forEach(b=>{if(!b.date)b.date=todayStr();});}if(Array.isArray(data.goals))goals=data.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;});if(data.timerState){Object.keys(timerState).forEach(k=>delete timerState[k]);Object.assign(timerState,data.timerState);}if(data.prevActiveId!==undefined)prevActiveId=data.prevActiveId;if(data.stats?.byDate)stats=data.stats;if(data.journal&&typeof data.journal==="object")journal=data.journal;if(Array.isArray(data.expenses))expenses=data.expenses;if(Array.isArray(data.events))events=data.events;if(Array.isArray(data.accounts)&&data.accounts.length)accounts=data.accounts;if(data.budgets&&typeof data.budgets==="object")budgets=data.budgets;if(Array.isArray(data.tasks))tasks=data.tasks;if(Array.isArray(data.pomoCustomModes))pomoCustomModes=data.pomoCustomModes;if(data.pomoSettings&&typeof data.pomoSettings==="object")pomoSettings={...pomoSettings,...data.pomoSettings};try{localStorage.setItem(SK,JSON.stringify({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,accounts,budgets,tasks,pomoCustomModes,pomoSettings}));}catch(e){}renderPomoSoundSettings();renderPomoPresetList();renderSavedPomoModes();renderAll();applyingRemoteUpdate=false;}
 
 // VISIBILITY / FOCUS
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){ensureHabitBlocksForToday();tick();}});
@@ -3550,7 +4204,7 @@ function applyDarkMode(){
   if(toggle)toggle.checked=isDark;
   if(label)label.textContent=(pref===null?(isDark?"เปิดอยู่":"ปิดอยู่")+" · ตามระบบ":(isDark?"เปิดอยู่":"ปิดอยู่"));
   const meta=document.querySelector('meta[name="theme-color"]');
-  if(meta)meta.setAttribute("content",isDark?"#15171A":"#1C2024");
+  if(meta)meta.setAttribute("content",isDark?"#003C45":"#ECFFB6");
 }
 document.getElementById("darkModeToggle").addEventListener("change",e=>{
   saveDarkPref(e.target.checked?"1":"0");
@@ -3562,8 +4216,12 @@ if(window.matchMedia)window.matchMedia("(prefers-color-scheme: dark)").addEventL
 const hasData=loadState();
 if(!hasData)seedBlocks();
 applyDarkMode();
+renderPomoSoundSettings();
+renderPomoPresetList();
+renderSavedPomoModes();
 ensureHabitBlocksForToday();
 renderAll();
+openWorkspaceRouteFromHash();
 setInterval(tick,1000);
 tick();
 
@@ -3641,8 +4299,8 @@ ensureFirebaseInit(activeFirebaseConfig());
     <!-- STEP 1: Welcome -->
     <div id="loginGateStepWelcome">
       <svg width="56" height="56" viewBox="0 0 56 56" style="margin:0 auto 18px;display:block;"><path d="M8 40 Q 16 16 28 28 Q 40 40 48 16" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/><circle cx="48" cy="16" r="7" fill="var(--focus)"/></svg>
-      <h1 style="font-size:26px;font-weight:800;margin:0 0 10px;color:var(--ink);">ยินดีต้อนรับสู่ FlowMate</h1>
-      <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 28px;">วางแผนเวลา นิสัย เป้าหมาย การเงิน และอารมณ์ของคุณ ในที่เดียว<br>ข้อมูลทั้งหมดเก็บในบัญชี Firebase ของคุณเอง ปลอดภัยและเป็นส่วนตัว</p>
+      <h1 style="font-size:26px;font-weight:800;margin:0 0 10px;color:var(--ink);">ยินดีต้อนรับสู่ Productive Time</h1>
+      <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 28px;">วางแผนเวลา งาน นิสัย เป้าหมาย การเงิน และอารมณ์ในที่เดียว ข้อมูลเริ่มต้นเก็บในเบราว์เซอร์ของคุณ และเลือกซิงค์ข้ามอุปกรณ์ได้ภายหลัง</p>
       <button id="loginGateStartBtn" style="width:100%;border:none;background:var(--ink);color:var(--paper);border-radius:12px;padding:14px 16px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:14px;">เริ่มต้นใช้งาน</button>
       <button id="loginGateSkipSetupBtn" style="border:none;background:none;color:var(--ink-muted);font-size:12.5px;cursor:pointer;text-decoration:underline;">ข้ามการตั้งค่า — ใช้บัญชีทดลองร่วมกัน (ไม่แนะนำ)</button>
     </div>
@@ -3651,7 +4309,8 @@ ensureFirebaseInit(activeFirebaseConfig());
     <div id="loginGateStepFirebase" style="display:none;text-align:left;">
       <button id="loginGateBackFromFirebaseBtn" style="border:none;background:none;color:var(--ink-soft);font-size:13px;cursor:pointer;margin-bottom:14px;padding:0;">‹ กลับ</button>
       <h1 style="font-size:21px;font-weight:800;margin:0 0 6px;color:var(--ink);text-align:left;">เชื่อมต่อ Firebase ของคุณ</h1>
-      <p style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 18px;">สร้าง Firebase project ฟรีของตัวเอง (ใช้เวลา ~5 นาที) แล้วคัดลอกค่า config มาวางที่นี่ — ข้อมูลของคุณจะเก็บแยกในบัญชีของคุณเองเท่านั้น ไม่ปนกับใคร</p>
+      <p style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 10px;">สร้าง Firebase project แล้วคัดลอกค่า config มาวางที่นี่ ก่อนเชื่อมต่อ โปรดทราบว่าข้อมูลที่จะซิงค์รวมถึงงาน เป้าหมาย บันทึก รายรับ–รายจ่าย บัญชี และงบประมาณด้วย</p>
+      <p class="sync-data-disclosure">เชื่อมต่อเฉพาะเมื่อคุณยอมรับให้ข้อมูลชุดนี้ถูกเก็บใน Firebase ของคุณ ไม่มีการเชื่อมธนาคาร และไม่รวม P&amp;L เทรด คุณย้อนกลับและใช้แบบเก็บในเครื่องได้</p>
       <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;">
         <input type="text" id="lg_cfg_apiKey" placeholder="API Key" style="width:100%;border:0.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:12px 14px;font-size:13.5px;font-family:inherit;">
         <input type="text" id="lg_cfg_authDomain" placeholder="Auth Domain (your-app.firebaseapp.com)" style="width:100%;border:0.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:12px 14px;font-size:13.5px;font-family:inherit;">
@@ -3668,7 +4327,8 @@ ensureFirebaseInit(activeFirebaseConfig());
     <div id="loginGateStepAuth" style="display:none;">
     <svg width="56" height="56" viewBox="0 0 56 56" style="margin:0 auto 18px;display:block;"><path d="M8 40 Q 16 16 28 28 Q 40 40 48 16" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/><circle cx="48" cy="16" r="7" fill="var(--focus)"/></svg>
     <h1 style="font-size:26px;font-weight:800;margin:0 0 10px;color:var(--ink);">ยินดีต้อนรับกลับ</h1>
-    <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 26px;">เข้าสู่ระบบเพื่อซิงค์ time block เป้าหมาย<br>และข้อมูลทั้งหมดของคุณข้ามอุปกรณ์</p>
+    <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 12px;">เข้าสู่ระบบเพื่อซิงค์ข้อมูลข้ามอุปกรณ์</p>
+    <p class="sync-data-disclosure">การซิงค์จะส่งช่วงเวลา เป้าหมาย งาน บันทึกส่วนตัว รายรับ–รายจ่าย บัญชี และงบประมาณไปยัง Firebase ด้วย ไม่มีการเชื่อมธนาคาร และไม่รวม P&amp;L เทรด หากไม่ต้องการส่งข้อมูล กด “ข้ามไปก่อน” เพื่อใช้แบบเก็บในเครื่อง</p>
     <p id="loginGateEnvWarning" style="display:none;text-align:left;font-size:11.5px;color:var(--rest);background:var(--rest-soft);border-radius:10px;padding:8px 12px;margin:0 0 16px;line-height:1.5;">⚠️ หน้าพรีวิวนี้ยังล็อกอินไม่ได้ (ต้องเปิดผ่าน http/https จริง) — Publish/Deploy แอปก่อนแล้วค่อยล็อกอิน หรือกด "ข้ามไปก่อน" ด้านล่างได้เลย</p>
     <button id="loginGateGoogleBtn" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--card);color:var(--ink);border:0.5px solid var(--line);border-radius:12px;padding:13px 16px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:18px;">
       <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62Z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.97 10.72A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.18.29-1.72V4.95H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.05l3.01-2.33Z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58Z"/></svg>
@@ -3693,6 +4353,6 @@ ensureFirebaseInit(activeFirebaseConfig());
 
   </div>
 </div>
-
+<script src="construction-3d.js"></script>
 </body>
 </html>
