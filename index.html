@@ -619,7 +619,7 @@ button{touch-action:manipulation;}
 </style>
 <link rel="stylesheet" href="workspace-ui.css?v=20261021b">
 <link rel="stylesheet" href="sage-workspace.css?v=20261026-lime-teal">
-<link rel="stylesheet" href="productive-ui.css?v=20261027-momenta-b13">
+<link rel="stylesheet" href="productive-ui.css?v=20261027-momenta-b15">
 </head>
 <body>
 
@@ -4549,8 +4549,7 @@ document.getElementById("syncConnectBtn").addEventListener("click",()=>{
   const fc={apiKey:document.getElementById("cfg_apiKey").value.trim(),authDomain:document.getElementById("cfg_authDomain").value.trim(),projectId:document.getElementById("cfg_projectId").value.trim(),storageBucket:document.getElementById("cfg_storageBucket").value.trim(),messagingSenderId:document.getElementById("cfg_messagingSenderId").value.trim(),appId:document.getElementById("cfg_appId").value.trim()};
   if(!fc.apiKey||!fc.projectId){ alert("กรอกอย่างน้อย API Key และ Project ID"); return; }
   saveCloudConfig({firebaseConfig:fc});
-  firebaseInitialized=false;
-  if(ensureFirebaseInit(fc)) showToast("บันทึกค่า Firebase แล้ว กดเข้าสู่ระบบด้วย Google ต่อได้เลย");
+  location.reload();
 });
 
 function authEnvUnsupported(){
@@ -4819,9 +4818,7 @@ document.getElementById("loginGateFirebaseSaveBtn").addEventListener("click",()=
   if(!fc.apiKey||!fc.projectId){errEl.textContent="กรอกอย่างน้อย API Key และ Project ID";errEl.style.display="block";return;}
   errEl.style.display="none";
   saveCloudConfig({firebaseConfig:fc});
-  firebaseInitialized=false;
-  if(ensureFirebaseInit(fc)) loginGateGoStep("auth");
-  else{errEl.textContent="ตั้งค่า Firebase ไม่สำเร็จ ตรวจสอบค่าที่กรอกอีกครั้ง";errEl.style.display="block";}
+  location.reload();
 });
 let loginGateMode="signin";
 function updateLoginGateMode(){
@@ -4914,6 +4911,6 @@ ensureFirebaseInit(activeFirebaseConfig());
   </div>
 </div>
 <script src="construction-3d.js"></script>
-<script src="productive-ui.js?v=20261027-momenta-b13"></script>
+<script src="productive-ui.js?v=20261027-momenta-b14"></script>
 </body>
 </html>
