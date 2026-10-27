@@ -435,10 +435,10 @@
 
   function initConstruction3D(){
     states.forEach(state=>{if(!document.documentElement.contains(state.el))disposeState(state);});
-    const projectPage=document.getElementById("page-projects");
-    if(projectPage&&!projectPage.classList.contains("active"))return;
+    const activePage=document.querySelector("#page-projects.active, #page-growth.active");
+    if(!activePage)return;
     if(!window.THREE){loadThree();return;}
-    document.querySelectorAll("[data-construction-3d]").forEach(createState);
+    activePage.querySelectorAll("[data-construction-3d]").forEach(createState);
     scheduleFrame();
   }
 

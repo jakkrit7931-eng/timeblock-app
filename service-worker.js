@@ -1,27 +1,39 @@
-const CACHE_NAME = "productive-time-v20261026-1";
+const CACHE_NAME = "productive-time-v20261027-momenta-b13";
 const APP_SHELL = [
   "./index.html",
   "./sage-workspace.css",
   "./workspace-ui.css",
+  "./productive-ui.css",
+  "./productive-ui.js",
   "./construction-3d.js",
+  "./momenta-domain.js",
+  "./momenta-sync.js",
+  "./momenta-metrics.js",
+  "./momenta-focus.js",
+  "./momenta-audio.js",
+  "./momenta-finance.js",
+  "./momenta-farm.js",
   "./vendor/three.min.js",
   "./manifest.json",
+  "./momenta-icon.png",
   "./icon-192.png",
   "./icon-512.png"
 ];
 
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL)));
-  self.skipWaiting();
+});
+
+self.addEventListener("message", event => {
+  if (event.data?.type === "ACTIVATE_UPDATE") self.skipWaiting();
 });
 
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(keys => Promise.all(
-      keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
-    ))
+      keys.filter(key => key.startsWith("productive-time-") && key !== CACHE_NAME).map(key => caches.delete(key))
+    )).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 self.addEventListener("fetch", event => {

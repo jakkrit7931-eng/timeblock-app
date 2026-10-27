@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-192.png">
-<title>Productive Time</title>
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+<title>MOMENTA</title>
 <style>
 :root{--ink:#1C2024;--ink-soft:#5B6168;--ink-muted:#9BA0A6;--paper:#F1F1ED;--card:#FFFFFF;--line:#E4E3DC;--line-strong:#C8C7BF;--focus:#2f6b52;--focus-soft:#E4EFEC;--focus-border:#2f6b5244;--rest:#E08C2B;--rest-soft:#FBEEDD;--danger:#B23B3B;--tab-h:64px;--bg-page:#E9E9E4;--icon-filter:none;--staircase-undone:#EDEBE2;}
 html[data-theme="dark"]{--ink:#EDEDE9;--ink-soft:#B7BEC4;--ink-muted:#9BA1A8;--paper:#1A1C1F;--card:#1F2226;--line:#2C2F34;--line-strong:#3A3F45;--focus:#4A9B78;--focus-soft:#1F2A25;--focus-border:#4A9B7844;--rest:#E08C2B;--rest-soft:#3A2D18;--danger:#E05C5C;--bg-page:#15171A;--icon-filter:invert(1) brightness(1.5);--staircase-undone:#3A3F45;}
@@ -619,13 +619,14 @@ button{touch-action:manipulation;}
 </style>
 <link rel="stylesheet" href="workspace-ui.css?v=20261021b">
 <link rel="stylesheet" href="sage-workspace.css?v=20261026-lime-teal">
+<link rel="stylesheet" href="productive-ui.css?v=20261027-momenta-b13">
 </head>
 <body>
 
 <!-- PAGE: Today -->
 <div class="page active" id="page-today">
-  <div class="workspace-breadcrumb"><span>Productive Time</span><span aria-hidden="true">/</span><strong>วันนี้</strong></div>
-  <header class="workspace-intro"><h1>ภาพรวมวันนี้</h1><p>งานสำคัญและเวลาของคุณ รวมไว้ในที่เดียว</p></header>
+  <div class="workspace-breadcrumb"><span>MOMENTA</span><span aria-hidden="true">/</span><strong>วันนี้</strong></div>
+  <header class="workspace-intro"><div><div class="momenta-brand"><img src="momenta-icon.png" alt="" width="32" height="32"><strong>MOMENTA</strong></div><p class="ui-date" id="uiTodayDate"></p><h1>วันนี้ของคุณ</h1><p id="uiTodaySummary">เริ่มจากสิ่งสำคัญทีละอย่าง</p></div><button type="button" class="ui-icon-button" data-ui-route="settings" aria-label="เปิดหน้าฉัน"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg></button></header>
   <nav class="workspace-route-strip" aria-label="ไปยังพื้นที่หลัก">
     <button type="button" class="workspace-route-btn is-active" data-workspace-route="today" aria-current="page"><strong>วันนี้</strong><span>โฟกัสและตาราง</span></button>
     <button type="button" class="workspace-route-btn" data-workspace-route="tasks"><strong>งาน</strong><span>งานเข้าและกำหนดส่ง</span></button>
@@ -634,6 +635,8 @@ button{touch-action:manipulation;}
   </nav>
   <div class="app-head app-head-tools" aria-label="การควบคุมวันนี้"><div style="display:flex;align-items:center;gap:10px;"><span class="clock" id="clockNow">--:--:--</span><button id="openProfileBtn" aria-label="เปิดโปรไฟล์" style="width:28px;height:28px;border-radius:50%;border:0.5px solid var(--line);background:var(--paper);padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></button></div></div>
   <div class="today-layout">
+    <section id="momentaTodaySummary" class="momenta-today-summary" aria-label="ความคืบหน้าวันนี้"></section>
+    <section class="ui-focus-card" id="uiFocusCard" aria-label="งานที่ทำต่อได้"></section>
     <section class="today-overview" id="todayOverview" aria-label="งานที่วางแผนไว้และภาพรวมการเงิน"></section>
     <main class="today-schedule">
       <div class="day-nav">
@@ -641,10 +644,10 @@ button{touch-action:manipulation;}
         <span class="day-nav-label" id="dateLabel" aria-live="polite">วันนี้</span>
         <button class="day-nav-btn" id="nextDayBtn" aria-label="วันถัดไป">›</button>
       </div>
-      <div class="today-actions">
+      <div class="ui-section-heading"><h2>ตารางของคุณ</h2><div class="today-actions">
         <button type="button" class="today-add-task" id="todayAddTaskBtn">＋ เพิ่มงาน</button>
         <button class="add-btn" id="openAddBtn">＋ จัดช่วงเวลา</button>
-      </div>
+      </div></div>
       <div class="today-view-control"><button class="view-toggle" id="viewModeToggle">ดูสัปดาห์</button></div>
       <div id="blocksList"></div>
     </main>
@@ -671,14 +674,13 @@ button{touch-action:manipulation;}
 
 <!-- PAGE: Plan — lightweight week/month/year calendar + popup detail -->
 <div class="page" id="page-plan">
-  <div class="workspace-breadcrumb"><span>Productive Time</span><span aria-hidden="true">/</span><strong>แผน</strong></div>
-  <header class="workspace-intro"><h1>พื้นที่วางแผน</h1><p>ดูตาราง จัดงาน และวางแผนการเงินส่วนตัว</p></header>
+  <div class="workspace-breadcrumb"><span>MOMENTA</span><span aria-hidden="true">/</span><strong>แผน</strong></div>
+  <header class="workspace-intro"><h1>แผนของคุณ</h1><p>งานและเวลาที่จัดไว้ ดูได้จากที่เดียว</p></header>
   <div class="app-head app-head-tools" aria-label="เวลาปัจจุบัน"><span class="clock" id="clockNow2"></span></div>
 
   <div class="plan-view-tabs" role="tablist" aria-label="ส่วนของแผน">
     <button type="button" id="planSectionCalendarBtn" class="plan-view-tab plan-view-tab-active" role="tab" aria-controls="planCalendarSection" aria-selected="true" onclick="setPlanSection('calendar')">ปฏิทิน</button>
     <button type="button" id="planSectionTasksBtn" class="plan-view-tab" role="tab" aria-controls="planTasksSection" aria-selected="false" onclick="setPlanSection('tasks')">งาน</button>
-    <button type="button" id="planSectionMoneyBtn" class="plan-view-tab" role="tab" aria-controls="planMoneySection" aria-selected="false" onclick="setPlanSection('money')">การเงิน</button>
   </div>
   <section class="plan-section-context" id="planSectionContext" aria-live="polite"></section>
 
@@ -745,9 +747,13 @@ button{touch-action:manipulation;}
     </div>
     <div id="taskList" aria-live="polite"></div>
   </section>
-  <section id="planMoneySection" style="display:none" aria-label="การเงินส่วนตัว">
-    <div id="planMoneyContent"></div>
-  </section>
+</div>
+
+<!-- PAGE: Personal finance — intentionally separate from Plan -->
+<div class="page" id="page-money">
+  <div class="workspace-breadcrumb"><span>MOMENTA</span><span aria-hidden="true">/</span><strong>การเงิน</strong></div>
+  <header class="workspace-intro"><h1>การเงินส่วนตัว</h1><p>รายรับ รายจ่าย งบประมาณ การออม และพอร์ตลงทุน</p></header>
+  <section id="planMoneySection" aria-label="การเงินส่วนตัว"><div id="planMoneyContent"></div></section>
 </div>
 
 <!-- TASK EDITOR -->
@@ -757,12 +763,26 @@ button{touch-action:manipulation;}
     <div class="modal-head"><h2 id="taskModalTitle">เพิ่มงาน</h2><button type="button" class="modal-close" id="taskCloseBtn" aria-label="ปิด">✕</button></div>
     <div class="modal-body">
       <div class="field"><label for="taskTitleInput">ชื่องาน</label><input type="text" id="taskTitleInput" maxlength="180" placeholder="เช่น วางแผนงานประจำสัปดาห์" autocomplete="off"></div>
+      <p id="taskTitleError" class="ui-field-error" role="alert" hidden></p>
+      <details class="ui-task-options" id="taskOptions"><summary>วันที่ ความสำคัญ และเป้าหมาย <span aria-hidden="true">＋</span></summary>
       <div class="row2">
         <div class="field"><label for="taskScheduleInput">วางแผนทำวันที่</label><input type="date" id="taskScheduleInput"></div>
         <div class="field"><label for="taskDueInput">กำหนดส่ง</label><input type="date" id="taskDueInput"></div>
       </div>
       <div class="field"><label for="taskPriorityInput">ความสำคัญ</label><select id="taskPriorityInput"><option value="high">สูง</option><option value="normal" selected>ปกติ</option><option value="low">ต่ำ</option></select></div>
       <div class="field"><label for="taskGoalInput">เป้าหมายที่เกี่ยวข้อง (ไม่บังคับ)</label><select id="taskGoalInput"><option value="">ไม่ผูกเป้าหมาย</option></select></div>
+      <section class="task-measure-editor" aria-labelledby="taskMeasureHeading">
+        <h3 id="taskMeasureHeading">ตัววัดงาน</h3>
+        <div class="field"><label for="taskMeasureKind">วัดจาก</label><select id="taskMeasureKind"><option value="binary">ทำเสร็จ / ยังไม่เสร็จ</option><option value="count">จำนวน</option><option value="duration">เวลา</option></select></div>
+        <div id="taskMeasureFields" class="row2" hidden>
+          <div class="field"><label for="taskMeasureTarget">เป้าหมาย</label><input id="taskMeasureTarget" type="number" min="0.01" step="any" inputmode="decimal"></div>
+          <div class="field"><label for="taskMeasureValue">ทำได้แล้ว</label><input id="taskMeasureValue" type="number" min="0" step="any" inputmode="decimal" value="0"></div>
+          <div class="field"><label for="taskMeasureUnit">หน่วย</label><input id="taskMeasureUnit" type="text" maxlength="24" placeholder="เช่น หน้า / ชั่วโมง"></div>
+        </div>
+        <p id="taskMeasurePreview" role="status" aria-live="polite">งานจะมีสถานะเสร็จหรือยังไม่เสร็จ</p>
+        <p id="taskMeasureError" class="ui-field-error" role="alert" hidden></p>
+      </section>
+      </details>
     </div>
     <div class="modal-foot"><button type="button" class="btn-primary" id="taskSaveBtn">บันทึกงาน</button></div>
   </div>
@@ -871,9 +891,12 @@ button{touch-action:manipulation;}
 </div>
 <!-- PAGE: Settings -->
 <div class="page" id="page-settings">
-  <div class="workspace-breadcrumb"><span>Productive Time</span><span aria-hidden="true">/</span><strong>ตั้งค่า</strong></div>
-  <header class="workspace-intro"><h1>ตั้งค่าพื้นที่ทำงาน</h1><p>รูปแบบหน้าจอ การแจ้งเตือน และการจัดการข้อมูลของคุณ</p></header>
+  <div class="workspace-breadcrumb"><span>MOMENTA</span><span aria-hidden="true">/</span><strong>ตั้งค่า</strong></div>
+  <header class="workspace-intro"><h1>ฉัน</h1><p>บัญชี ความก้าวหน้า และการตั้งค่าของคุณ</p></header>
+  <details class="momenta-widget-preview"><summary>ดูตัวอย่างวิดเจ็ต</summary><p>ตัวอย่างในแอปจากข้อมูลของคุณ · การติดตั้งบนหน้าจอ iPhone ต้องมีแอป iOS เพิ่ม</p><div id="momentaWidgetPreview" class="momenta-widget-grid"></div></details>
+  <div class="ui-account-actions"><button type="button" class="ui-link-row" data-ui-profile><span>โปรไฟล์ของฉัน</span><span aria-hidden="true">›</span></button><button type="button" class="ui-link-row" data-ui-route="progress"><span>สรุปพัฒนาการ</span><span aria-hidden="true">›</span></button></div>
   <p class="sync-status" id="syncStatus">ใช้ข้อมูลเฉพาะบนเครื่องนี้</p>
+  <section id="syncConflictPanel" class="sync-conflict-panel" hidden role="alert"><strong>ข้อมูลบนอุปกรณ์กับ Cloud ไม่ตรงกัน</strong><p id="syncConflictText">เก็บสำเนาทั้งสองฝั่งไว้ก่อนเลือกว่าจะใช้ข้อมูลชุดใด</p><div><button type="button" id="syncDownloadLocalBtn">ดาวน์โหลดข้อมูลเครื่องนี้</button><button type="button" id="syncDownloadCloudBtn">ดาวน์โหลดข้อมูล Cloud</button></div><div><button type="button" id="syncResolveMergedBtn">รวมข้อมูลและคงค่าจากเครื่องนี้ในจุดที่ชน</button><button type="button" id="syncResolveCloudBtn">โหลดข้อมูล Cloud</button></div></section>
   <p class="section-label" style="margin-top:0">การแสดงผล</p>
   <div class="settings-group">
     <div class="settings-row">
@@ -908,6 +931,10 @@ button{touch-action:manipulation;}
     <div class="pomo-settings-controls">
       <label class="pomo-setting-field"><span>เสียงแจ้งเตือน</span><select id="pomoSoundSelect" aria-label="เลือกเสียง Pomodoro"><option value="chime">ระฆังใส</option><option value="soft">นุ่ม</option><option value="pulse">สองจังหวะ</option><option value="digital">ดิจิทัล</option><option value="silent">ปิดเสียง</option></select></label>
       <button type="button" class="pomo-preview-btn" id="pomoPreviewSoundBtn">ฟังตัวอย่าง</button>
+      <label class="pomo-setting-field"><span>ระดับเสียงแจ้งเตือน <output id="pomoAlertVolumeLabel">28%</output></span><input id="pomoAlertVolume" type="range" min="0" max="50" value="28" aria-label="ระดับเสียงแจ้งเตือน"></label>
+      <label class="pomo-setting-field"><span>เสียงพื้นหลังระหว่างโฟกัส</span><select id="pomoAmbientSelect" aria-label="เลือกเสียงพื้นหลัง Pomodoro"><option value="silent">ปิดเสียง</option><option value="rain">ฝนสังเคราะห์</option><option value="waves">คลื่นสังเคราะห์</option><option value="nature">ธรรมชาติสังเคราะห์</option></select></label>
+      <label class="pomo-setting-field"><span>ระดับเสียงพื้นหลัง <output id="pomoAmbientVolumeLabel">20%</output></span><input id="pomoAmbientVolume" type="range" min="0" max="100" value="20" aria-label="ระดับเสียงพื้นหลัง Pomodoro"></label>
+      <button type="button" class="pomo-preview-btn" id="pomoPreviewAmbientBtn">ฟังเสียงพื้นหลัง 7 วินาที</button>
       <label class="pomo-setting-toggle"><span><strong>นับถอยหลัง 5 วินาที</strong><small>มีเสียงเตือนเบาก่อนเปลี่ยนช่วง</small></span><span class="toggle-wrap"><input type="checkbox" id="pomoCountdownToggle" checked><span class="toggle-track"><span class="toggle-thumb"></span></span></span></label>
     </div>
     <div class="pomo-preset-editor">
@@ -1090,16 +1117,27 @@ button{touch-action:manipulation;}
   </div>
 </div>
 
-<!-- PAGE: Goals -->
+<!-- PAGE: Projects and goals -->
 <div class="page" id="page-projects">
-  <div class="workspace-breadcrumb"><span>Productive Time</span><span aria-hidden="true">/</span><strong>เป้าหมาย</strong></div>
-  <header class="workspace-intro"><h1>เป้าหมายและนิสัย</h1><p>มองภาพใหญ่ แล้วเดินหน้าด้วยสิ่งเล็ก ๆ ที่ทำได้ทุกวัน</p></header>
-  <div class="app-head app-head-tools" aria-label="เวลาปัจจุบัน"><span class="clock" id="clockNow3"></span></div>
-  <div class="proj-top-btn-row">
-    <button class="add-btn" id="openProjAddBtn" style="margin-bottom:0;">+ เพิ่มเป้าหมาย</button>
-    <button class="btn-secondary" id="openHabitGalleryBtn" style="white-space:nowrap;">เลือกนิสัย</button>
+  <div class="workspace-breadcrumb"><span>MOMENTA</span><span aria-hidden="true">/</span><strong>โปรเจกต์และเป้าหมาย</strong></div>
+  <header class="workspace-intro"><h1>โปรเจกต์และเป้าหมาย</h1><p>แยกงานที่มีหลายขั้นออกจากเป้าหมายส่วนตัวให้ชัด</p></header>
+  <div class="plan-view-tabs project-view-tabs" id="projectViewTabs" role="tablist" aria-label="โปรเจกต์หรือเป้าหมาย">
+    <button type="button" id="projectViewProjectsBtn" class="plan-view-tab plan-view-tab-active" data-project-view="projects" role="tab" aria-selected="true">โปรเจกต์</button>
+    <button type="button" id="projectViewGoalsBtn" class="plan-view-tab" data-project-view="goals" role="tab" aria-selected="false">เป้าหมาย</button>
   </div>
-  <div class="proj-dash" id="projDash"></div>
+  <section id="projectsManagementSection" aria-label="จัดการโปรเจกต์">
+    <div class="app-head app-head-tools" aria-label="เวลาปัจจุบัน"><span class="clock" id="clockNow3"></span></div>
+    <div class="proj-top-btn-row">
+      <button class="add-btn" id="openProjAddBtn" style="margin-bottom:0;">+ เพิ่มโปรเจกต์</button>
+      <button class="btn-secondary" id="openHabitGalleryBtn" style="white-space:nowrap;">เลือกนิสัย</button>
+    </div>
+    <div class="proj-dash" id="projDash"></div>
+  </section>
+  <section id="projectGoalsSection" aria-label="เป้าหมายส่วนตัว" hidden>
+    <header class="workspace-intro"><h2>เป้าหมายส่วนตัว</h2><p>ติดตามเป้าหมายที่วัดด้วยเวลา จำนวน หรือเงินออม</p></header>
+    <button type="button" class="btn-primary goal-view-add" data-growth-add>＋ เพิ่มเป้าหมาย</button>
+    <div id="momentaGrowth"></div>
+  </section>
 </div>
 
 <!-- HABIT GALLERY POPUP -->
@@ -1119,39 +1157,62 @@ button{touch-action:manipulation;}
   </div>
 </div>
 
-<!-- PAGE: Progress -->
+<!-- PAGE: Focus -->
 <div class="page" id="page-progress">
-  <div class="workspace-breadcrumb"><span>Productive Time</span><span aria-hidden="true">/</span><strong>พัฒนาการ</strong></div>
-  <header class="workspace-intro"><h1>มองเห็นความก้าวหน้า</h1><p>ทบทวนความต่อเนื่อง งานที่ทำ และจังหวะของคุณ</p></header>
+  <div class="workspace-breadcrumb"><span>MOMENTA</span><span aria-hidden="true">/</span><strong>โฟกัส</strong></div>
+  <header class="workspace-intro"><h1>โฟกัสและสมาธิ</h1><p>ค่อย ๆ สร้างเวลาที่มีคุณภาพให้ตัวเอง</p></header>
   <div class="app-head app-head-tools" aria-label="เวลาปัจจุบัน"><span class="clock" id="clockNow4"></span></div>
-  <div class="progress-underline-tabs" role="tablist" aria-label="มุมมองพัฒนาการ">
-    <button id="progViewOverviewBtn" role="tab" aria-selected="true" class="progress-underline-tab active" onclick="setProgressViewMode('overview')">ภาพรวม</button>
-    <button id="progViewHabitBtn" role="tab" aria-selected="false" class="progress-underline-tab" onclick="setProgressViewMode('habit')">นิสัย</button>
-    <button id="progViewMindBtn" role="tab" aria-selected="false" class="progress-underline-tab" onclick="setProgressViewMode('mind')">ใจ</button>
+  <div class="focus-section-tabs" role="tablist" aria-label="เครื่องมือโฟกัส">
+    <button type="button" role="tab" id="focusSectionPomodoroTab" aria-controls="focusSectionPomodoro" aria-selected="false" tabindex="-1" data-focus-view="pomodoro" onclick="setFocusSection('pomodoro')">Pomodoro</button>
+    <button type="button" role="tab" id="focusSectionMeditationTab" aria-controls="focusSectionMeditation" aria-selected="false" tabindex="-1" data-focus-view="meditation" onclick="setFocusSection('meditation')">นั่งสมาธิ</button>
+    <button type="button" role="tab" id="focusSectionGrowthTab" aria-controls="focusSectionGrowth" aria-selected="true" tabindex="0" class="active" data-focus-view="growth" onclick="setFocusSection('growth')">การเติบโต</button>
   </div>
-  <div id="progressDash"></div>
+  <section id="focusSectionPomodoro" class="focus-section-panel" role="tabpanel" aria-labelledby="focusSectionPomodoroTab" data-focus-panel="pomodoro" hidden>
+    <section class="momenta-focus-picker" aria-labelledby="momentaFocusTitle"><p>โฟกัสในงานที่เลือก</p><h2 id="momentaFocusTitle">เริ่มจากงานเดียว</h2><label for="momentaFocusTask">เลือกงานที่ยังไม่เสร็จ</label><select id="momentaFocusTask" aria-describedby="momentaFocusHint"></select><div class="momenta-focus-actions"><button type="button" class="btn-primary" id="momentaFocusOpen" data-ui-task="" disabled>เปิดงานและ Pomodoro</button><button type="button" class="btn-secondary" data-ui-route="tasks" id="momentaFocusTasks">ดูงานทั้งหมด</button></div><small id="momentaFocusHint">Pomodoro อยู่ในรายละเอียดงาน เลือกเวลาและเสียงได้ก่อนเริ่ม</small></section>
+  </section>
+  <section id="focusSectionMeditation" class="focus-section-panel" role="tabpanel" aria-labelledby="focusSectionMeditationTab" data-focus-panel="meditation" hidden>
+    <section class="meditation-card" aria-labelledby="meditationTitle">
+      <h2 id="meditationTitle">เวลานั่งสมาธิ</h2><p>เลือกเวลาและเสียง แล้วให้เวลาตัวเองสักครู่</p>
+      <div class="meditation-options"><label>ระยะเวลา <select id="meditationMinutes"><option value="5">5 นาที</option><option value="10">10 นาที</option><option value="15">15 นาที</option><option value="25">25 นาที</option></select></label><label>เสียงพื้นหลัง <select id="meditationSound"><option value="silent">เงียบ</option><option value="rain">ฝนสังเคราะห์</option><option value="waves">คลื่นสังเคราะห์</option><option value="nature">ธรรมชาติสังเคราะห์</option></select></label><label>ระดับเสียง <input id="meditationVolume" type="range" min="0" max="100" value="20" aria-label="ระดับเสียงสมาธิ"></label></div>
+      <p id="meditationTime" class="meditation-time" role="timer">05:00</p><p id="meditationStatus" role="status">พร้อมเริ่ม</p>
+      <div class="meditation-actions"><button type="button" class="btn-primary" id="meditationStart">เริ่มสมาธิ</button><button type="button" class="btn-secondary" id="meditationPreview">ฟังตัวอย่างเสียง</button><button type="button" class="btn-secondary" id="meditationReset">เริ่มใหม่</button></div>
+      <small>เสียงเล่นขณะเปิดหน้านี้อยู่ และอาจหยุดเมื่อเบราว์เซอร์พักการทำงาน</small>
+    </section>
+  </section>
+  <section id="focusSectionGrowth" class="focus-section-panel" role="tabpanel" aria-labelledby="focusSectionGrowthTab" data-focus-panel="growth">
+    <div class="progress-underline-tabs" role="tablist" aria-label="มุมมองภายในการเติบโต">
+      <button id="progViewOverviewBtn" role="tab" aria-selected="true" class="progress-underline-tab active" onclick="setProgressViewMode('overview')">ภาพรวม</button>
+      <button id="progViewHabitBtn" role="tab" aria-selected="false" class="progress-underline-tab" onclick="setProgressViewMode('habit')">นิสัย</button>
+      <button id="progViewMindBtn" role="tab" aria-selected="false" class="progress-underline-tab" onclick="setProgressViewMode('mind')">ใจ</button>
+    </div>
+    <div id="progressDash"></div>
+  </section>
 </div>
 
+<details class="momenta-more"><summary>ทางลัด</summary><div><button type="button" data-ui-route="tasks">งานทั้งหมด</button><button type="button" data-ui-route="goals">เป้าหมาย</button><button type="button" data-ui-route="money">การเงิน</button><button type="button" data-ui-route="widget">ตัวอย่างวิดเจ็ต</button></div></details>
 <!-- TAB BAR -->
-<nav class="tab-bar">
+<nav class="tab-bar" aria-label="เมนูหลัก">
   <button class="tab-btn active" data-page="today">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>
     <span>วันนี้</span>
   </button>
   <button class="tab-btn" data-page="plan">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3"/><path d="M16 2v3"/><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M8 13h.01"/><path d="M12 13h.01"/><path d="M16 13h.01"/><path d="M8 17h.01"/><path d="M12 17h.01"/><path d="M16 17h.01"/></svg>
-    <span>แผน</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 15 2 2 4-4"/></svg>
+    <span>วางแผน</span>
   </button>
   <button class="tab-btn" data-page="projects">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-    <span>เป้าหมาย</span>
+    <span>โปรเจกต์</span>
+  </button>
+  <button class="tab-btn" data-page="money">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M16 14h2"/><circle cx="8" cy="14" r="1"/></svg>
+    <span>การเงิน</span>
   </button>
   <button class="tab-btn" data-page="progress">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg>
-    <span>พัฒนาการ</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>โฟกัส</span>
   </button>
   <button class="tab-btn" data-page="settings">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.7 2.9-.2-.1a1.7 1.7 0 0 0-1.9.3l-.1.1h-3.4l-.1-.2a1.7 1.7 0 0 0-1.6-1.1 1.7 1.7 0 0 0-1.6 1.1l-.1.2H5.7l-.1-.1a1.7 1.7 0 0 0-1.9-.3l-.2.1-1.7-2.9.1-.1A1.7 1.7 0 0 0 2.2 15l-.1-.2v-3.4l.2-.1a1.7 1.7 0 0 0 1.1-1.6 1.7 1.7 0 0 0-1.1-1.6l-.2-.1V4.6l.1-.1a1.7 1.7 0 0 0 .3-1.9l-.1-.2 2.9-1.7.1.1a1.7 1.7 0 0 0 1.9.3l.2-.1h3.4l.1.2a1.7 1.7 0 0 0 1.6 1.1 1.7 1.7 0 0 0 1.6-1.1l.1-.2h3.4l.1.1a1.7 1.7 0 0 0 1.9.3l.2-.1 1.7 2.9-.1.1a1.7 1.7 0 0 0-.3 1.9l.1.2v3.4l-.2.1a1.7 1.7 0 0 0-1.1 1.6 1.7 1.7 0 0 0 1.1 1.6l.2.1v3.4z" transform="translate(1 1) scale(.92)"/></svg>
     <span>ตั้งค่า</span>
   </button>
 </nav>
@@ -1236,9 +1297,10 @@ button{touch-action:manipulation;}
         <div class="field" id="g_deadlineField"><label>Deadline</label><input type="date" id="g_deadline"></div>
       </div>
       <div class="field">
-        <label>รูปแบบภาพความคืบหน้า</label>
+        <label for="g_visualType">รูปแบบภาพความคืบหน้า</label>
         <select id="g_visualType">
-          <option value="auto">อัตโนมัติตามหมวดหมู่</option>
+          <option value="auto">🌾 ฟาร์ม (ค่าเริ่มต้น)</option>
+          <option value="farm">🌾 ฟาร์ม</option>
           <option value="building">🏗️ ตึกกำลังก่อสร้าง</option>
           <option value="tree">🌱 ต้นไม้เติบโต</option>
           <option value="money">💰 เงินกำลังสะสม</option>
@@ -1302,6 +1364,11 @@ button{touch-action:manipulation;}
         </div>
       </div>
       <div id="goalModeProjectFields" style="display:none;">
+        <div class="field"><label for="g_progressSource">คำนวณความคืบหน้าจาก</label><select id="g_progressSource"><option value="subtasks">ขั้นย่อยของโปรเจกต์</option><option value="tasks">งานที่ผูกกับโปรเจกต์</option><option value="time">เวลาโฟกัสจริง</option><option value="count">จำนวนที่ทำได้</option></select></div>
+        <p id="g_progressSourceHelp" class="goal-progress-source-help">ระบบจะนับจากแหล่งที่เลือกเพียงอย่างเดียว ไม่บวกขั้นย่อยกับงานซ้ำ</p>
+        <div id="goalProjectSourceTime" class="field" hidden><label for="g_projectTargetHours">เป้าหมายเวลา (ชั่วโมง)</label><input id="g_projectTargetHours" type="number" min="0.1" step="0.1" value="20"></div>
+        <div id="goalProjectSourceCount" class="row2" hidden><div class="field"><label for="g_projectTargetCount">เป้าหมายจำนวน</label><input id="g_projectTargetCount" type="number" min="0.01" step="any" value="1"></div><div class="field"><label for="g_projectCountUnit">หน่วย</label><input id="g_projectCountUnit" maxlength="24" placeholder="ชิ้น / หน้า" value="ชิ้น"></div></div>
+        <div id="goalProjectSubtaskSource">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
           <span style="font-size:12px;font-weight:600;color:var(--ink-soft);">Milestone (แบ่ง % ให้อัตโนมัติ)</span>
           <span id="subtaskWeightSum" style="font-family:ui-monospace,monospace;font-size:12px;font-weight:700;color:var(--focus);">รวม 100%</span>
@@ -1309,6 +1376,7 @@ button{touch-action:manipulation;}
         <div id="projectSubtaskList" style="margin-bottom:8px;"></div>
         <button type="button" id="addSubtaskBtn" style="width:100%;background:none;border:1px dashed var(--line-strong);color:var(--ink-soft);border-radius:10px;padding:11px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:12px;">+ เพิ่มขั้นย่อย</button>
         <p style="font-size:11px;color:var(--ink-muted);margin:0 0 10px;line-height:1.6;">เพิ่มหรือลบขั้นย่อย แล้วเปอร์เซ็นต์จะแบ่งให้อัตโนมัติ</p>
+        </div>
       </div>
     </div>
     <div class="modal-foot"><div class="modal-actions"><button class="btn-secondary" id="goalDeleteBtn" style="display:none;color:var(--danger)">ลบ</button><button class="btn-primary" id="goalSaveBtn" style="flex:2">บันทึก</button></div></div>
@@ -1353,7 +1421,7 @@ button{touch-action:manipulation;}
           <h3 style="font-size:20px;font-weight:800;margin:0 0 8px;color:var(--ink);">ยินดีต้อนรับกลับ</h3>
           <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin:0;">เข้าสู่ระบบเพื่อซิงค์ข้อมูลข้ามอุปกรณ์</p>
         </div>
-        <p class="sync-data-disclosure"><strong>ก่อนเปิดซิงค์:</strong> Firebase จะรับข้อมูลของแอปนี้ รวมถึงช่วงเวลา เป้าหมาย งาน บันทึกส่วนตัว รายรับ–รายจ่าย บัญชี และงบประมาณ ไม่มีการเชื่อมธนาคาร และไม่รวม P&amp;L เทรด หากไม่ต้องการส่งข้อมูล ให้ปิดหน้าต่างนี้และใช้ข้อมูลในเครื่องต่อได้</p>
+        <p class="sync-data-disclosure"><strong>ก่อนเปิดซิงค์:</strong> Firebase จะรับข้อมูลของแอปนี้ รวมถึงช่วงเวลา เป้าหมาย งาน บันทึกส่วนตัว รายรับ–รายจ่าย บัญชี งบประมาณ และสินทรัพย์ลงทุนที่กรอกเอง ไม่มีการเชื่อมธนาคาร หากไม่ต้องการส่งข้อมูล ให้ปิดหน้าต่างนี้และใช้ข้อมูลในเครื่องต่อได้</p>
         <p id="syncEnvWarning" style="display:none;font-size:11.5px;color:var(--rest);background:var(--rest-soft);border-radius:10px;padding:8px 12px;margin:0 0 14px;line-height:1.5;">⚠️ หน้าพรีวิวนี้ยังล็อกอินไม่ได้ (ต้องเปิดผ่าน http/https จริง) — Publish/Deploy แอปก่อนแล้วค่อยล็อกอิน หรือใช้แบบไม่ล็อกอินไปก่อนได้</p>
         <button class="btn-primary" id="googleSignInBtn" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;background:var(--card);color:var(--ink);border:0.5px solid var(--line);">
           <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62Z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.97 10.72A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.18.29-1.72V4.95H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.05l3.01-2.33Z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58Z"/></svg>
@@ -1401,21 +1469,49 @@ button{touch-action:manipulation;}
   </div>
 </div>
 
+<dialog class="ui-dialog" id="guestImportDialog" aria-labelledby="guestImportTitle">
+  <div class="ui-dialog-head"><span id="guestImportTitle">ข้อมูลบัญชีนี้ยังว่าง</span></div>
+  <div class="ui-dialog-body">
+    <p id="guestImportTarget" style="font-weight:700;margin:0 0 12px;overflow-wrap:anywhere"></p>
+    <p style="margin:0 0 10px;color:var(--ink-soft);line-height:1.65">มีข้อมูล Productive Time อยู่บนอุปกรณ์นี้ การนำเข้าจะคัดลอกงาน เป้าหมาย ตาราง โฟกัส และข้อมูลการเงินส่วนตัวไปยังบัญชีที่แสดง โดยเก็บข้อมูลเดิมบนอุปกรณ์นี้ไว้ด้วย</p>
+    <p style="margin:0;color:var(--ink-muted);font-size:12px;line-height:1.6">เลือกนำเข้าเฉพาะเมื่อคุณตั้งใจใช้ข้อมูลชุดนี้กับบัญชีดังกล่าว หากเลือกเริ่มแบบว่าง ข้อมูลบนอุปกรณ์จะยังอยู่และไม่ถูกส่งไปบัญชี</p>
+  </div>
+  <div class="ui-dialog-foot" style="display:grid;gap:10px">
+    <button class="btn-primary" id="guestImportConfirmBtn" type="button">คัดลอกข้อมูลเครื่องเข้าบัญชีนี้</button>
+    <button class="btn-secondary" id="guestImportEmptyBtn" type="button">เริ่มบัญชีนี้โดยไม่ย้ายข้อมูล</button>
+  </div>
+</dialog>
+
 <div id="ttsToast"></div>
+<aside id="stateRecoveryNotice" class="state-recovery-notice" role="alert" hidden></aside>
+<aside id="appUpdateNotice" class="app-update-notice" role="status" hidden><span><strong>มี MOMENTA เวอร์ชันใหม่</strong><small>บันทึกหรือปิดหน้าต่างที่กำลังกรอกก่อนอัปเดต</small></span><button type="button" id="applyAppUpdateBtn">อัปเดตตอนนี้</button><button type="button" id="dismissAppUpdateBtn" aria-label="ปิดข้อความอัปเดต">×</button></aside>
 <script src="https://cdn.jsdelivr.net/npm/firebase@10.14.0/firebase-app-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/firebase@10.14.0/firebase-firestore-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/firebase@10.14.0/firebase-auth-compat.js"></script>
+<script src="momenta-domain.js"></script>
+<script src="momenta-sync.js"></script>
+<script src="momenta-metrics.js"></script>
+<script src="momenta-focus.js"></script>
+<script src="momenta-finance.js"></script>
+<script src="momenta-farm.js"></script>
+<script src="momenta-audio.js"></script>
 <script>
 const SK="tbv3_state",CK="tbv3_cloud",VK="tbv3_voice",MK="tbv3_mascot",PK="tbv3_phonecatch";
 const MODES={sprint:{focus:15,break:3},classic:{focus:25,break:5},flow:{focus:45,break:10},deep:{focus:50,break:10},long:{focus:90,break:15}};
 const MODE_LABELS={sprint:"Sprint",classic:"Classic",flow:"Flow",deep:"Deep work",long:"Long focus"};
 const POMO_SOUND_LABELS={chime:"ระฆังใส",soft:"นุ่ม",pulse:"สองจังหวะ",digital:"ดิจิทัล",silent:"ปิดเสียง"};
-let goals=[{id:"g1",title:"ปิดโปรเจกต์ Q3",_isProject:true}],blocks=[],stats={byDate:{}},timerState={},journal={},expenses=[],events=[],accounts=[{id:"acc_cash",name:"เงินสด",color:"#2f6b52",startingBalance:0}],budgets={},tasks=[];
-let pomoCustomModes=[],pomoSettings={sound:"chime",countdown:true,volume:0.28};
+let goals=[],blocks=[],stats={byDate:{}},timerState={},journal={},expenses=[],events=[],accounts=[{id:"acc_cash",name:"เงินสด",color:"#2f6b52",startingBalance:0}],budgets={},tasks=[];
+let investmentAssets=[],monthlyBudgets={},recurringBills=[],focusSessions=[],farmStates={},syncMeta={};
+let pomoCustomModes=[],pomoSettings={sound:"chime",countdown:true,volume:0.28,ambient:"silent",ambientVolume:0.2};
+window.momentaAudio=window.MomentaAudio?.createAudioController();
+window.meditationAudio=window.MomentaAudio?.createAudioController();
+let stateLoadBlocked=false;
 let prevActiveId=null,viewDate=todayStr(),viewMode="day";
 let currentTab="today",lastCountdownKey=null;
-let planSection="calendar",taskView="inbox",taskPriorityFilter="all",taskDueFilter="all",taskSearchTerm="",editingTaskId=null;
+let pomoAmbientPreviewUntil=0;
+let planSection="calendar",taskView="today",taskPriorityFilter="all",taskDueFilter="all",taskSearchTerm="",editingTaskId=null;
 let cloudDb=null,cloudDocRef=null,cloudUnsub=null,cloudConnected=false,cloudPushTimer=null,applyingRemoteUpdate=false,pendingLocalChange=false;
+let activeSyncUid=null,syncBaseState=null,syncRemoteRevision=0,syncConflict=null,syncAccountHasLocal=false,syncAccountHadScoped=false,guestStateSnapshot=null,pendingGuestImport=null,syncPushInProgress=false;
 
 function dateStrFromDate(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
 function todayStr(){return dateStrFromDate(new Date());}
@@ -1468,8 +1564,59 @@ function showConfirmPopup({title,message,variant="neutral",confirmLabel="ยื�
 }
 
 // PERSISTENCE
-function saveState(){try{localStorage.setItem(SK,JSON.stringify({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,accounts,budgets,tasks,pomoCustomModes,pomoSettings}));}catch(e){}queueCloudPush();}
-function loadState(){try{const r=localStorage.getItem(SK);if(!r)return false;const d=JSON.parse(r);if(d&&Array.isArray(d.blocks)){blocks=d.blocks;blocks.forEach(b=>{if(!b.date)b.date=todayStr();});if(Array.isArray(d.goals))goals=d.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;});if(d.timerState)Object.assign(timerState,d.timerState);if(d.prevActiveId)prevActiveId=d.prevActiveId;if(d.stats?.byDate)stats=d.stats;if(d.journal&&typeof d.journal==="object")journal=d.journal;if(Array.isArray(d.expenses))expenses=d.expenses;if(Array.isArray(d.events))events=d.events;if(Array.isArray(d.accounts)&&d.accounts.length)accounts=d.accounts;if(d.budgets&&typeof d.budgets==="object")budgets=d.budgets;if(Array.isArray(d.tasks))tasks=d.tasks;if(Array.isArray(d.pomoCustomModes))pomoCustomModes=d.pomoCustomModes.filter(item=>item&&typeof item.id==="string"&&Number(item.focus)>0&&Number(item.break)>0).map(item=>({id:item.id,name:String(item.name||"กำหนดเอง"),focus:Number(item.focus),break:Number(item.break)}));if(d.pomoSettings&&typeof d.pomoSettings==="object")pomoSettings={...pomoSettings,...d.pomoSettings};return true;}}catch(e){}return false;}
+function persistedState(){return{schemaVersion:window.MomentaDomain?.CURRENT_SCHEMA_VERSION||3,blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,accounts,budgets,tasks,pomoCustomModes,pomoSettings,investmentAssets,monthlyBudgets,recurringBills,focusSessions,farmStates,syncMeta};}
+function saveState(){
+  if(stateLoadBlocked){if(typeof uiSaveStatus==="function")uiSaveStatus("error");showToast("ยังไม่บันทึก เพราะข้อมูลเดิมต้องกู้คืนก่อน");return false;}
+  let oldRaw=null,oldScoped=null,oldGuest=null,scopeKey="";try{oldRaw=localStorage.getItem(SK);oldGuest=localStorage.getItem("tbv3_guest_state");scopeKey=activeSyncUid&&window.MomentaSync?MomentaSync.scopedStateKey(activeSyncUid):"";if(scopeKey)oldScoped=localStorage.getItem(scopeKey);const serialized=JSON.stringify(persistedState());localStorage.setItem(SK,serialized);if(scopeKey){localStorage.setItem(scopeKey,serialized);syncAccountHasLocal=true;}else localStorage.setItem("tbv3_guest_state",serialized);if(typeof uiSaveStatus==="function")uiSaveStatus("local");}
+  catch(e){try{if(oldRaw===null)localStorage.removeItem(SK);else localStorage.setItem(SK,oldRaw);if(oldGuest===null)localStorage.removeItem("tbv3_guest_state");else localStorage.setItem("tbv3_guest_state",oldGuest);if(scopeKey){if(oldScoped===null)localStorage.removeItem(scopeKey);else localStorage.setItem(scopeKey,oldScoped);}}catch(rollbackError){}showToast("บันทึกในเครื่องไม่สำเร็จ โปรดส่งออกข้อมูลสำรอง");if(typeof uiSaveStatus==="function")uiSaveStatus("error");return false;}
+  queueCloudPush();return true;
+}
+function showStateRecoveryNotice(message){
+  stateLoadBlocked=true;const notice=document.getElementById("stateRecoveryNotice");if(!notice)return;
+  notice.hidden=false;notice.innerHTML=`<strong>ข้อมูลเดิมยังไม่ถูกแก้ไข</strong><span>${message}</span><button type="button" id="downloadRawStateBtn">ดาวน์โหลดข้อมูลดิบ</button>`;
+  document.getElementById("downloadRawStateBtn").addEventListener("click",downloadRawStateForRecovery);
+}
+function downloadRawStateForRecovery(){
+  let raw;try{raw=localStorage.getItem(SK);}catch(e){showToast("เบราว์เซอร์อ่านข้อมูลเดิมไม่ได้");return;}
+  if(raw===null){showToast("ไม่พบข้อมูลเดิมในเครื่อง");return;}
+  const url=URL.createObjectURL(new Blob([raw],{type:"application/json"})),a=document.createElement("a");a.href=url;a.download="momenta-recovery-raw.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function preserveRawState(raw,kind){
+  try{
+    if(kind==="migration"){const key="tbv3_state_pre_migration_v3";if(localStorage.getItem(key)===null)localStorage.setItem(key,raw);return true;}
+    const stamp=Date.now();let key=`tbv3_state_quarantine_${stamp}`,suffix=1;while(localStorage.getItem(key)!==null)key=`tbv3_state_quarantine_${stamp}_${suffix++}`;localStorage.setItem(key,raw);return true;
+  }catch(e){return false;}
+}
+function hydrateState(d){
+  blocks=d.blocks;blocks.forEach(b=>{if(!b.date)b.date=todayStr();});
+  if(Array.isArray(d.goals))goals=d.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;});
+  if(d.timerState)Object.assign(timerState,d.timerState);if(d.prevActiveId)prevActiveId=d.prevActiveId;
+  if(d.stats?.byDate)stats=d.stats;if(d.journal&&typeof d.journal==="object")journal=d.journal;
+  if(Array.isArray(d.expenses))expenses=d.expenses;if(Array.isArray(d.events))events=d.events;
+  if(Array.isArray(d.accounts)&&d.accounts.length)accounts=d.accounts;if(d.budgets&&typeof d.budgets==="object")budgets=d.budgets;
+  if(Array.isArray(d.tasks))tasks=d.tasks;
+  if(Array.isArray(d.pomoCustomModes))pomoCustomModes=d.pomoCustomModes.filter(item=>item&&typeof item.id==="string"&&Number(item.focus)>0&&Number(item.break)>0).map(item=>({id:item.id,name:String(item.name||"กำหนดเอง"),focus:Number(item.focus),break:Number(item.break)}));
+  if(d.pomoSettings&&typeof d.pomoSettings==="object")pomoSettings={...pomoSettings,...d.pomoSettings};
+  if(Array.isArray(d.investmentAssets))investmentAssets=d.investmentAssets;
+  if(d.monthlyBudgets&&typeof d.monthlyBudgets==="object")monthlyBudgets=d.monthlyBudgets;
+  if(Array.isArray(d.recurringBills))recurringBills=d.recurringBills;
+  if(Array.isArray(d.focusSessions))focusSessions=d.focusSessions;
+  if(d.farmStates&&typeof d.farmStates==="object")farmStates=d.farmStates;
+  if(d.syncMeta&&typeof d.syncMeta==="object")syncMeta=d.syncMeta;
+}
+function loadState(){
+  let raw;try{raw=localStorage.getItem(SK);}catch(e){showStateRecoveryNotice("เปิด localStorage ไม่ได้ โปรดอย่าล้างข้อมูลไซต์ และเปิดแอปจากเบราว์เซอร์เดิม");showToast("เปิดข้อมูลในเครื่องไม่ได้ เบราว์เซอร์อาจบล็อกพื้นที่จัดเก็บ");return false;}
+  if(raw===null)return false;
+  const result=window.MomentaDomain?.parseStoredState(raw);
+  if(!result?.ok){const copied=preserveRawState(raw,"quarantine");showStateRecoveryNotice(copied?"อ่านข้อมูลไม่สำเร็จ สำเนาต้นฉบับถูกเก็บไว้และปิดการบันทึกชั่วคราว":"อ่านข้อมูลไม่สำเร็จและเก็บสำเนาเพิ่มไม่ได้ ข้อมูลต้นฉบับยังอยู่ ห้ามล้างข้อมูลไซต์");showToast(copied?"เก็บข้อมูลดิบไว้แล้ว โปรดดาวน์โหลดและกู้คืน JSON ก่อนใช้งานต่อ":"ข้อมูลเดิมอ่านไม่ได้ กรุณาดาวน์โหลดข้อมูลดิบก่อนทำอย่างอื่น");return false;}
+  if(result.needsMigration){
+    if(!preserveRawState(raw,"migration")){showStateRecoveryNotice("สร้างสำเนาก่อนอัปเกรดไม่สำเร็จ ข้อมูลเดิมยังอยู่และปิดการบันทึกไว้");showToast("ยังแปลงข้อมูลไม่ได้เพราะสร้างสำเนาความปลอดภัยไม่สำเร็จ ข้อมูลเดิมยังอยู่ครบ");return false;}
+    try{localStorage.setItem(SK,JSON.stringify(result.state));}
+    catch(e){showToast("เปิดข้อมูลรุ่นใหม่ในเซสชันนี้ได้ แต่บันทึกการแปลงไม่สำเร็จ สำเนาข้อมูลเดิมถูกเก็บไว้แล้ว");}
+    if(result.warnings.length)showToast("พบข้อมูลเก่าบางส่วนที่ควรตรวจ เช่น น้ำหนักขั้นย่อยไม่รวม 100% โดยยังเก็บตัวเลขเดิมไว้");
+  }
+  hydrateState(result.state);return true;
+}
 function seedBlocks(){function mk(t,s,e,g,m){return{id:uid(),title:t,start:s,end:e,goalId:g||"",mode:m,customFocus:25,customBreak:5,details:"",notify:true,date:todayStr()};}blocks=[mk("ออกกำลังกาย","08:00","09:00","","none"),mk("เขียนรายงาน Q3",nowPlus(0),nowPlus(120),"g1","deep"),mk("ประชุมทีม",nowPlus(125),nowPlus(155),"","none"),mk("ออกแบบ ui",nowPlus(170),nowPlus(290),"g1","classic")];}
 
 // AUDIO / NOTIFICATIONS
@@ -1506,7 +1653,8 @@ async function playPomoSound(kind="complete"){
       digital:{complete:[[540,.12],[760,.12],[980,.25]],start:[[440,.1],[720,.2]],countdown:[[440,.07],[440,.07],[440,.07]]}
     };
     const pattern=patterns[pomoSettings.sound]?.[kind]||patterns.chime.complete;
-    const now=ctx.currentTime,volume=Math.max(.03,Math.min(.5,Number(pomoSettings.volume)||.28));
+    const volume=Math.max(0,Math.min(.5,Number.isFinite(Number(pomoSettings.volume))?Number(pomoSettings.volume):.28));if(volume===0)return;
+    const now=ctx.currentTime;
     pattern.forEach(([frequency,duration],index)=>schedulePomoTone(ctx,frequency,now+index*(duration+.035),duration,volume,index%2?"triangle":"sine"));
   }catch(e){}
 }
@@ -1516,9 +1664,19 @@ async function playCountdownTick(){
 }
 
 function renderPomoSoundSettings(){
-  const sound=document.getElementById("pomoSoundSelect"),countdown=document.getElementById("pomoCountdownToggle");
+  const sound=document.getElementById("pomoSoundSelect"),countdown=document.getElementById("pomoCountdownToggle"),ambient=document.getElementById("pomoAmbientSelect"),ambientVolume=document.getElementById("pomoAmbientVolume"),ambientLabel=document.getElementById("pomoAmbientVolumeLabel"),alertVolume=document.getElementById("pomoAlertVolume"),alertLabel=document.getElementById("pomoAlertVolumeLabel");
   if(sound)sound.value=POMO_SOUND_LABELS[pomoSettings.sound]?pomoSettings.sound:"chime";
   if(countdown)countdown.checked=pomoSettings.countdown!==false;
+  if(ambient)ambient.value=["silent","rain","waves","nature"].includes(pomoSettings.ambient)?pomoSettings.ambient:"silent";
+  if(ambientVolume)ambientVolume.value=Math.round(Math.max(0,Math.min(1,Number(pomoSettings.ambientVolume)||0))*100);
+  if(ambientLabel)ambientLabel.value=ambientLabel.textContent=ambientVolume.value+"%";
+  if(alertVolume)alertVolume.value=Math.round(Math.max(0,Math.min(0.5,Number(pomoSettings.volume)||0))*100);
+  if(alertLabel)alertLabel.value=alertLabel.textContent=alertVolume.value+"%";
+}
+function syncPomoAmbient(block,ts){
+  if(document.visibilityState==="visible"&&block&&ts&&ts.phase==="focus"&&!ts.paused&&pomoSettings.ambient!=="silent")window.momentaAudio?.startAmbient(pomoSettings.ambient,pomoSettings.ambientVolume);
+  else if(document.visibilityState==="visible"&&pomoAmbientPreviewUntil>Date.now())return;
+  else{pomoAmbientPreviewUntil=0;window.momentaAudio?.stopAmbient();}
 }
 function renderPomoPresetList(){
   const list=document.getElementById("pomoPresetList");if(!list)return;
@@ -1531,7 +1689,11 @@ function renderSavedPomoModes(){
 }
 document.getElementById("pomoSoundSelect")?.addEventListener("change",e=>{pomoSettings.sound=e.target.value;saveState();});
 document.getElementById("pomoCountdownToggle")?.addEventListener("change",e=>{pomoSettings.countdown=e.target.checked;saveState();});
+document.getElementById("pomoAlertVolume")?.addEventListener("input",e=>{pomoSettings.volume=Math.max(0,Math.min(0.5,Number(e.target.value)/100));document.getElementById("pomoAlertVolumeLabel").value=document.getElementById("pomoAlertVolumeLabel").textContent=e.target.value+"%";saveState();});
 document.getElementById("pomoPreviewSoundBtn")?.addEventListener("click",()=>playPomoSound("complete"));
+document.getElementById("pomoAmbientSelect")?.addEventListener("change",e=>{pomoSettings.ambient=e.target.value;saveState();const b=getActiveBlock();syncPomoAmbient(b,b&&timerState[b.id]);});
+document.getElementById("pomoAmbientVolume")?.addEventListener("input",e=>{pomoSettings.ambientVolume=Math.max(0,Math.min(1,Number(e.target.value)/100));document.getElementById("pomoAmbientVolumeLabel").value=document.getElementById("pomoAmbientVolumeLabel").textContent=e.target.value+"%";const b=getActiveBlock();syncPomoAmbient(b,b&&timerState[b.id]);});
+document.getElementById("pomoPreviewAmbientBtn")?.addEventListener("click",()=>{if(pomoSettings.ambient==="silent"){pomoAmbientPreviewUntil=0;window.momentaAudio?.stopAmbient();showToast("เลือกปิดเสียงพื้นหลังอยู่");return;}pomoAmbientPreviewUntil=Date.now()+7000;const ok=window.momentaAudio?.startAmbient(pomoSettings.ambient,pomoSettings.ambientVolume);if(!ok)pomoAmbientPreviewUntil=0;showToast(ok?"เล่นเสียงพื้นหลังสังเคราะห์ 7 วินาที":"เบราว์เซอร์นี้ไม่รองรับเสียง");});
 document.getElementById("pomoSavePresetBtn")?.addEventListener("click",()=>{
   const name=document.getElementById("pomoPresetName").value.trim()||"โหมดของฉัน";
   const focus=Math.max(1,Math.min(240,Number(document.getElementById("pomoPresetFocus").value)||25));
@@ -1614,8 +1776,24 @@ const ICON_LIB={
 };
 function accessoryMarkup(tier){if(tier===3)return'<svg viewBox="0 0 24 24"><polygon points="2,9 6,5 9,9 12,3 15,9 18,5 22,9 19,19 5,19" fill="#F2A623" stroke="#C97A1B" stroke-width="1"/></svg>';if(tier===2)return'<svg viewBox="0 0 24 24"><polygon points="12,2 20,20 4,20" fill="#1F6F5C"/><circle cx="12" cy="2" r="2.2" fill="#F2A623"/></svg>';if(tier===1)return'<svg viewBox="0 0 24 24"><polygon points="12,1 15,9 23,9 16,14 19,22 12,17 5,22 8,14 1,9 9,9" fill="#F2A623"/></svg>';return"";}
 function computeStreak(){let s=0,d=todayStr();while(stats.byDate[d]?.focusRounds>0){s++;d=addDays(d,-1);}if(!s){d=addDays(todayStr(),-1);while(stats.byDate[d]?.focusRounds>0){s++;d=addDays(d,-1);}}return s;}
-function recordFocusCompletions(n){const d=todayStr();if(!stats.byDate[d])stats.byDate[d]={focusRounds:0};stats.byDate[d].focusRounds+=n;saveState();refreshGamification();}
-function recordDisciplineScore(score){const d=todayStr();if(!stats.byDate[d])stats.byDate[d]={focusRounds:0};if(!Array.isArray(stats.byDate[d].disciplineScores))stats.byDate[d].disciplineScores=[];stats.byDate[d].disciplineScores.push(score);}
+function recordFocusCompletions(n,day=todayStr()){const d=day;if(!stats.byDate[d])stats.byDate[d]={focusRounds:0};stats.byDate[d].focusRounds+=n;saveState();refreshGamification();}
+function recordDisciplineScore(score,day=todayStr()){const d=day;if(!stats.byDate[d])stats.byDate[d]={focusRounds:0};if(!Array.isArray(stats.byDate[d].disciplineScores))stats.byDate[d].disciplineScores=[];stats.byDate[d].disciplineScores.push(score);}
+function recordFocusSession(block,ts,endReason,endedAt){
+  if(!window.MomentaFocus||!Number.isFinite(Number(ts.phaseStartedAt)))return null;
+  const sessionEnd=Number(endedAt)||Date.now(),seconds=MomentaFocus.focusedSeconds({startedAt:Number(ts.phaseStartedAt),endedAt:sessionEnd,pausedDurationMs:Number(ts.pausedDurationMs)||0});
+  if(seconds<=0)return null;
+  const session=MomentaFocus.makeSession({blockId:block.id,taskId:block.taskId||"",goalId:block.goalId||"",startedAt:Number(ts.phaseStartedAt),endedAt:sessionEnd,focusedSeconds:seconds,endReason});
+  focusSessions=MomentaFocus.upsertSession(focusSessions,session);
+  const task=tasks.find(item=>String(item.id)===String(block.taskId||""));
+  if(task?.measure?.kind==="duration"){
+    const unit=String(task.measure.unit||"").toLowerCase();
+    const increment=unit.includes("ชั่วโมง")||unit==="hour"||unit==="hours"?seconds/3600:unit.includes("นาที")||unit==="minute"||unit==="minutes"?seconds/60:unit.includes("วินาที")||unit==="second"||unit==="seconds"?seconds:0;
+    if(increment>0)task.measure.value=Math.round((Math.max(0,Number(task.measure.value)||0)+increment)*100)/100;
+  }
+  saveState();
+  return session;
+}
+function localDateKey(timestamp){const d=new Date(timestamp);return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;}
 function refreshGamification(){const streak=computeStreak(),tier=streak>=14?3:streak>=7?2:streak>=3?1:0;const acc=document.getElementById("mascotAccessory");if(acc)acc.innerHTML=accessoryMarkup(tier);if(currentTab==="projects")renderProjects();if(currentTab==="progress")renderProgress();}
 
 // NOTIFY — sound-only alert (no character popup, no push notification)
@@ -1640,7 +1818,7 @@ function tick(){
     const mm=modeMinutes(active),ts=timerState[active.id];
     if(mm&&ts&&ts.phase==="ready"){
       if(Date.now()>=ts.readyUntil){
-        ts.phase="focus";ts.phaseEndsAt=Date.now()+mm.focus*60000;ts.distractionsThisPhase=0;
+        ts.phase="focus";ts.phaseStartedAt=Date.now();ts.pausedDurationMs=0;ts.phaseEndsAt=ts.phaseStartedAt+mm.focus*60000;ts.distractionsThisPhase=0;
         saveState();
       }
     } else if(mm&&ts&&!ts.paused){
@@ -1649,27 +1827,32 @@ function tick(){
         const key=active.id+":"+ts.phase+":"+ts.phaseEndsAt+":"+remainSec;
         if(lastCountdownKey!==key){lastCountdownKey=key;playCountdownTick();}
       }
-      let transitions=0,focusCompletions=0;
+      let transitions=0,focusCompletions=0;const completedFocusDays=[];
       while(Date.now()>=ts.phaseEndsAt&&transitions<500){
         if(ts.phase==="focus"){
+          const focusEnd=ts.phaseEndsAt;
+          recordFocusSession(active,ts,"completed",focusEnd);
+          completedFocusDays.push(localDateKey(focusEnd));
           const score=(ts.distractionsThisPhase||0)===0?100:50;
-          recordDisciplineScore(score);
+          recordDisciplineScore(score,localDateKey(focusEnd));
           ts.distractionsThisPhase=0;
-          ts.phase="break";ts.phaseEndsAt+=mm.break*60000;focusCompletions++;
+          ts.phase="break";ts.phaseStartedAt=0;ts.pausedDurationMs=0;ts.phaseEndsAt+=mm.break*60000;focusCompletions++;
         } else {
           ts.distractionsThisPhase=0;
-          ts.phase="focus";ts.round++;ts.phaseEndsAt+=mm.focus*60000;
+          ts.phase="focus";ts.phaseStartedAt=ts.phaseEndsAt;ts.pausedDurationMs=0;ts.round++;ts.phaseEndsAt+=mm.focus*60000;
         }
         transitions++;
       }
       if(transitions>0){
         if(transitions===1&&active.notify){if(ts.phase==="break")notify("หมดเวลาโฟกัส",pick(MSG.focusEnd).replace("{title}",active.title));else notify("พักจบแล้ว",pick(MSG.breakEnd));}
         else if(transitions>1&&active.notify)notify("ตอนที่ไม่อยู่","ระหว่างที่ปิดหน้าจอ ครบไป "+transitions+" ช่วง ตอนนี้"+(ts.phase==="focus"?"โฟกัส":"พัก")+"รอบที่ "+ts.round);
-        if(focusCompletions>0)recordFocusCompletions(focusCompletions);saveState();
+        if(focusCompletions>0){const perDay=completedFocusDays.reduce((map,day)=>(map[day]=(map[day]||0)+1,map),{});Object.entries(perDay).forEach(([day,count])=>recordFocusCompletions(count,day));}saveState();
       }
     }
+    syncPomoAmbient(active,ts);
     updatePomoDisplays(active,ts,mm);
   } else {
+    syncPomoAmbient(null,null);
     document.getElementById("pomoFullOverlay").classList.remove("show");
   }
   if(currentTab==="today")renderToday();
@@ -1712,13 +1895,24 @@ function startFocus(blockId){
   const b=blocks.find(x=>x.id===blockId);if(!b)return;
   const mm=modeMinutes(b);if(!mm)return;
   if(timerState[blockId])return; // already running
-  timerState[blockId]={phase:"ready",readyUntil:Date.now()+5000,round:1,paused:false,distractionsThisPhase:0};
+  timerState[blockId]={phase:"ready",readyUntil:Date.now()+5000,round:1,paused:false,pausedDurationMs:0,distractionsThisPhase:0};
   if(b.notify)playPomoSound("start");
   saveState();
   renderToday();
 }
-function togglePomoPause(){const b=getActiveBlock();if(!b||!timerState[b.id])return;const ts=timerState[b.id];if(ts.phase==="ready")return;if(!ts.paused){ts.paused=true;ts.remainingMs=ts.phaseEndsAt-Date.now();}else{ts.paused=false;ts.phaseEndsAt=Date.now()+ts.remainingMs;}saveState();}
-function skipPomoPhase(){const b=getActiveBlock();if(!b)return;const ts=timerState[b.id],mm=modeMinutes(b);if(!ts||!mm)return;if(ts.phase==="ready"){ts.phase="focus";ts.phaseEndsAt=Date.now()+mm.focus*60000;ts.distractionsThisPhase=0;saveState();return;}if(ts.phase==="focus"){recordDisciplineScore(0);ts.distractionsThisPhase=0;ts.phase="break";ts.phaseEndsAt=Date.now()+mm.break*60000;recordFocusCompletions(1);}else{ts.distractionsThisPhase=0;ts.phase="focus";ts.round++;ts.phaseEndsAt=Date.now()+mm.focus*60000;}ts.paused=false;saveState();}
+function togglePomoPause(){const b=getActiveBlock();if(!b||!timerState[b.id])return;const ts=timerState[b.id];if(ts.phase==="ready")return;if(!ts.paused){ts.paused=true;ts.pausedAt=Date.now();ts.remainingMs=ts.phaseEndsAt-Date.now();}else{const now=Date.now();ts.pausedDurationMs=(Number(ts.pausedDurationMs)||0)+Math.max(0,now-(Number(ts.pausedAt)||now));ts.pausedAt=0;ts.paused=false;ts.phaseEndsAt=now+ts.remainingMs;}syncPomoAmbient(b,ts);saveState();}
+function skipPomoPhase(){
+  const b=getActiveBlock();if(!b)return;const ts=timerState[b.id],mm=modeMinutes(b);if(!ts||!mm)return;
+  const now=Date.now();
+  if(ts.phase==="ready"){ts.phase="focus";ts.phaseStartedAt=now;ts.pausedDurationMs=0;ts.phaseEndsAt=now+mm.focus*60000;ts.distractionsThisPhase=0;ts.paused=false;saveState();return;}
+  if(ts.phase==="focus"){
+    recordFocusSession(b,ts,"skipped",ts.paused?(Number(ts.pausedAt)||now):now);
+    ts.distractionsThisPhase=0;ts.phase="break";ts.phaseStartedAt=0;ts.pausedDurationMs=0;ts.pausedAt=0;ts.phaseEndsAt=now+mm.break*60000;
+  }else{
+    ts.distractionsThisPhase=0;ts.phase="focus";ts.phaseStartedAt=now;ts.pausedDurationMs=0;ts.pausedAt=0;ts.round++;ts.phaseEndsAt=now+mm.focus*60000;
+  }
+  ts.paused=false;syncPomoAmbient(b,ts);saveState();
+}
 document.getElementById("pomoFullClose").addEventListener("click",()=>document.getElementById("pomoFullOverlay").classList.remove("show"));
 document.getElementById("pomoFullPause").addEventListener("click",togglePomoPause);
 document.getElementById("pomoFullSkip").addEventListener("click",skipPomoPhase);
@@ -1738,7 +1932,7 @@ function mfCheckSchedule(){
   if(hhmm===mfState.time&&mfState.lastNotifiedDate!==today){
     mfState.lastNotifiedDate=today;saveMF(mfState);
     if("Notification"in window&&Notification.permission==="granted"){
-      new Notification("โฟกัสเช้า",{body:"ถึงเวลาโฟกัสเช้า 30 นาทีแล้ว",icon:"icon-192.png"});
+      new Notification("โฟกัสเช้า",{body:"ถึงเวลาโฟกัสเช้า 30 นาทีแล้ว",icon:"momenta-icon.png"});
     }
   }
 }
@@ -1800,20 +1994,21 @@ setInterval(()=>{mfCheckSchedule();renderMF();},1000);
 // TABS
 document.querySelectorAll(".tab-btn").forEach(btn=>{
   btn.addEventListener("click",()=>{
-    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.toggle("active",b===btn));
-    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     const page=btn.dataset.page;
-    document.getElementById("page-"+page).classList.add("active");
-    currentTab=page;
-    if(page==="plan"){setPlanSection(planSection);renderPlan();}
-    else if(page==="projects") renderProjects();
-    else if(page==="progress") renderProgress();
-    syncWorkspaceRoute(page,page==="plan"?planSection:"");
+    const route={today:"today",plan:"calendar",projects:"projects",money:"money",progress:"progress",settings:"settings"}[page]||"today";
+    openWorkspaceRoute(route);
+    window.scrollTo({top:0});
   });
 });
 function switchTabById(id){
-  const btn=document.querySelector(`.tab-btn[data-page="${id}"]`);
-  if(btn) btn.click();
+  const page=document.getElementById("page-"+id);if(!page)return;
+  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p===page));
+  document.querySelectorAll(".tab-btn").forEach(b=>{const selected=b.dataset.page===id;b.classList.toggle("active",selected);if(selected)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");});
+  currentTab=id;
+  if(id==="plan"){setPlanSection(planSection);renderPlan();}
+  if(id==="projects")renderProjects();
+  if(id==="money")renderPlanMoney();
+  if(id==="progress")renderProgress();
 }
 
 // Shared workspace routes keep Today, planning, tasks and personal finance connected.
@@ -1821,12 +2016,16 @@ const WORKSPACE_ROUTES={
   today:{page:"today"},
   calendar:{page:"plan",section:"calendar"},
   tasks:{page:"plan",section:"tasks"},
-  money:{page:"plan",section:"money"},
-  goals:{page:"projects"},
+  money:{page:"money"},
+  goals:{page:"projects",section:"goals"},
+  projects:{page:"projects",section:"projects"},
+  growth:{page:"projects",section:"goals"},
+  widget:{page:"settings",focus:"widget"},
   progress:{page:"progress"},
   settings:{page:"settings"}
 };
 function routeHash(page,section){
+  if(page==="projects"&&section==="goals")return "#goals";
   if(page!=="plan")return "#"+page;
   return "#plan/"+(section||"calendar");
 }
@@ -1841,16 +2040,22 @@ function syncWorkspaceRoute(page=currentTab,section=planSection){
 }
 function openWorkspaceRoute(route,options={}){
   const target=WORKSPACE_ROUTES[route]||WORKSPACE_ROUTES.today;
-  const btn=document.querySelector(`.tab-btn[data-page="${target.page}"]`);
-  if(btn&&!btn.classList.contains("active"))btn.click();
-  else currentTab=target.page;
+  const hash=routeHash(target.page,target.section);
+  if(options.updateHash!==false&&window.location.hash!==hash)window.history.pushState(null,"",hash);
+  if(target.page==="plan")planSection=target.section||"calendar";
+  switchTabById(target.page);
   if(target.page==="plan")setPlanSection(target.section);
+  if(target.page==="projects")setProjectView(target.section||"projects");
+  if(target.focus==="widget"){
+    const preview=document.querySelector(".momenta-widget-preview");if(preview)preview.open=true;
+    document.querySelector(".page.active .momenta-widget-preview")?.scrollIntoView({block:"start",behavior:"smooth"});
+  }
   if(options.updateHash!==false)syncWorkspaceRoute(target.page,target.section||"");
 }
 function openWorkspaceRouteFromHash(){
   const raw=String(window.location.hash||"").replace(/^#/ ,"");
   const [page,section]=raw.split("/");
-  const route=page==="plan"&&["calendar","tasks","money"].includes(section)?section:WORKSPACE_ROUTES[page]?page:"today";
+  const route=page==="plan"&&["calendar","tasks","money"].includes(section)?section:WORKSPACE_ROUTES[page]?page:"goals";
   openWorkspaceRoute(route,{updateHash:false});
 }
 document.querySelectorAll("[data-workspace-route]").forEach(btn=>btn.addEventListener("click",()=>openWorkspaceRoute(btn.dataset.workspaceRoute)));
@@ -1867,11 +2072,19 @@ function goalHoursLogged(goalId){
     return sum;
   },0);
 }
+function goalModeOf(goal){return goal?.mode||(goal?.targetHours>0?"time":"project");}
 function goalProgress(goalId){
   const g=goals.find(x=>x.id===goalId);
-  const mode=g?.mode||(g?.targetHours>0?"time":"project"); // infer for goals saved before mode existed
+  const mode=goalModeOf(g); // infer for goals saved before mode existed
   const blocksTotal=blocks.filter(b=>b.goalId===goalId).length;
   const blocksDone=blocks.filter(b=>b.goalId===goalId&&b.completed===true).length; // explicit ✓ mark, not time-elapsed
+
+  if(mode==="project"&&window.MomentaMetrics){
+    const metric=MomentaMetrics.projectProgress(g,tasks,blocks,focusSessions);
+    const linked=tasks.filter(task=>String(task.goalId||"")===String(goalId));
+    const subtasks=g.subtasks||[];
+    return{...metric,logged:metric.done,target:metric.target,subtasksDone:metric.source==="subtasks"?metric.done:linked.filter(task=>task.completed).length,subtasksTotal:metric.source==="subtasks"?subtasks.length:linked.length,blocksDone,blocksTotal,mode};
+  }
 
   if(mode==="habit"){
     const streak=goalStreak(goalId);
@@ -1879,6 +2092,8 @@ function goalProgress(goalId){
   }
   if(mode==="project"){
     const subtasks=g?.subtasks||[];
+    const linkedTasks=tasks.filter(task=>task.goalId===goalId);
+    if(!subtasks.length&&linkedTasks.length){const finished=linkedTasks.filter(task=>task.completed).length;return{pct:Math.round(finished/linkedTasks.length*100),logged:finished,target:linkedTasks.length,subtasksDone:finished,subtasksTotal:linkedTasks.length,blocksDone,blocksTotal,mode};}
     const subDone=subtasks.filter(s=>s.done).length;
     const hasWeights=subtasks.some(s=>s.weight);
     const pct=hasWeights?Math.round(subtasks.filter(s=>s.done).reduce((a,s)=>a+(Number(s.weight)||0),0)):(subtasks.length?Math.round(subDone/subtasks.length*100):0);
@@ -2106,20 +2321,24 @@ document.getElementById("newAccountSaveBtn").addEventListener("click",()=>{
 // budget modal
 function openBudgetModal(){
   document.getElementById("budget_amount").value="";
+  const monthBudgets=monthlyBudgets[financeMonth]||{};
+  document.querySelector('#budgetOverlay .confirm-popup>div>span').textContent=`ตั้งงบเดือน ${formatFinanceMonth(financeMonth)}`;
   const grid=document.getElementById("budgetCatGrid");
   grid.innerHTML=Object.entries(EXP_CATS).map(([k,c])=>`<button type="button" class="expense-cat-dot-chip" data-cat="${k}"><span class="expense-cat-dot" style="background:${c.dot}"></span>${c.label}</button>`).join("");
-  let pickedBudgetCat=Object.keys(EXP_CATS)[0];
+  let pickedBudgetCat=Object.keys(EXP_CATS).find(cat=>Number(monthBudgets[cat]??budgets[cat])>0)||Object.keys(EXP_CATS)[0];
+  document.getElementById("budget_amount").value=monthBudgets[pickedBudgetCat]??budgets[pickedBudgetCat]??"";
   grid.querySelectorAll(".expense-cat-dot-chip")[0].classList.add("picked");
   grid.onclick=e=>{
     const b=e.target.closest(".expense-cat-dot-chip");if(!b)return;
     pickedBudgetCat=b.dataset.cat;
+    document.getElementById("budget_amount").value=monthBudgets[pickedBudgetCat]??budgets[pickedBudgetCat]??"";
     grid.querySelectorAll(".expense-cat-dot-chip").forEach(x=>x.classList.toggle("picked",x.dataset.cat===pickedBudgetCat));
   };
   document.getElementById("budgetSaveBtn").onclick=()=>{
     const amt=parseFloat(document.getElementById("budget_amount").value);
     if(!amt||amt<=0){alert("กรอกวงเงินด้วยครับ");return;}
-    budgets[pickedBudgetCat]=amt;
-    saveState();
+    const before=backupClone(monthlyBudgets);monthlyBudgets[financeMonth]={...(monthlyBudgets[financeMonth]||{}),[pickedBudgetCat]:amt};
+    if(!saveState()){monthlyBudgets=before;return;}
     document.getElementById("budgetOverlay").classList.remove("show");
     renderPlanMoney();renderMoneyDashboard();
   };
@@ -2139,7 +2358,7 @@ function formatFinanceMonth(month){
   return new Intl.DateTimeFormat("th-TH",{month:"long",year:"numeric"}).format(new Date(year,monthNumber-1,1));
 }
 function financeBudgetPlanHtml(month){
-  const budgetedCats=Object.entries(budgets).filter(([,limit])=>Number(limit)>0);
+  const budgetedCats=window.MomentaFinance?MomentaFinance.budgetForMonth(monthlyBudgets,budgets,month).map(row=>[row.category,row.amount,row.source]):Object.entries(budgets).map(([category,amount])=>[category,amount,'template']).filter(([,limit])=>Number(limit)>0);
   const totalBudget=budgetedCats.reduce((sum,[,limit])=>sum+Number(limit),0);
   const monthExpenses=expenses.filter(e=>e.type!=="income"&&monthKey(e.date)===month);
   const plannedSpend=budgetedCats.reduce((sum,[cat])=>sum+monthExpenses.filter(e=>e.category===cat).reduce((total,e)=>total+Number(e.amount||0),0),0);
@@ -2169,15 +2388,15 @@ function financeBudgetPlanHtml(month){
   </section>`;
 }
 function budgetSectionHtml(month){
-  const cats=Object.keys(budgets).filter(cat=>Number(budgets[cat])>0);
+  const effective=window.MomentaFinance?MomentaFinance.budgetForMonth(monthlyBudgets,budgets,month):Object.entries(budgets).map(([category,amount])=>({category,amount,source:'template'}));
+  const cats=effective;
   let html=`<p class="section-label" style="margin-top:22px;">งบประมาณรายเดือน · ทุกบัญชี</p>`;
   if(!cats.length){
     html+=`<p class="empty" style="padding:4px 0 12px;">ยังไม่ได้ตั้งงบ</p>`;
   }else{
     const thisMonth=expenses.filter(e=>e.type!=="income"&&monthKey(e.date)===month);
-    cats.forEach(cat=>{
+    cats.forEach(({category:cat,amount:limit,source})=>{
       const c=EXP_CATS[cat]||EXP_CATS.other;
-      const limit=budgets[cat];
       const spent=thisMonth.filter(e=>e.category===cat).reduce((s,e)=>s+e.amount,0);
       const pct=Math.min(100,Math.round(spent/limit*100));
       const over=spent>limit;
@@ -2186,7 +2405,7 @@ function budgetSectionHtml(month){
       let warn="";
       if(over)warn=`<p class="budget-row-warn" style="color:var(--danger)">เกินงบ ฿${(spent-limit).toLocaleString()}</p>`;
       else if(near)warn=`<p class="budget-row-warn" style="color:var(--rest)">ใกล้เต็มงบแล้ว</p>`;
-      html+=`<div class="budget-row"><div class="budget-row-top"><span class="budget-row-name">${c.label}</span><span class="budget-row-amt">฿${spent.toLocaleString()} / ฿${limit.toLocaleString()}</span></div><div class="budget-bar-wrap"><div class="budget-bar-fill" style="width:${pct}%;background:${barColor}"></div></div>${warn}</div>`;
+      html+=`<div class="budget-row"><div class="budget-row-top"><span class="budget-row-name">${c.label}<small class="budget-source-note">${source==='override'?'ตั้งเฉพาะเดือนนี้':'ใช้วงเงินตั้งต้น'}</small></span><span class="budget-row-amt">฿${spent.toLocaleString()} / ฿${limit.toLocaleString()}</span></div><div class="budget-bar-wrap"><div class="budget-bar-fill" style="width:${pct}%;background:${barColor}"></div></div>${warn}</div>`;
     });
   }
   html+=`<button type="button" class="acct-add-btn" id="openBudgetBtn">+ ตั้งงบหมวดใหม่</button>`;
@@ -2238,6 +2457,40 @@ function financeCategoryInsightHtml(entries){
   </section>`;
 }
 
+function savingsPanelHtml(){
+  const savings=goals.filter(g=>g.mode!=='habit'&&(g.financeLinked||g.category==='money'||g.category==='income'));
+  const items=savings.map(g=>{const p=goalProgress(g.id),pct=Math.max(0,Math.min(100,Number(p.pct)||0));return `<button type="button" class="savings-row" data-finance-goal="${esc(String(g.id))}"><span><strong>${esc(g.title)}</strong><small>${p.mode==='count'?`${Number(p.logged).toLocaleString('th-TH')} / ${Number(p.target).toLocaleString('th-TH')} ${esc(p.unit||'')}`:p.mode==='time'?`${p.logged} / ${p.target} ชั่วโมง`:`${p.subtasksDone||0} / ${p.subtasksTotal||0} งาน`}</small></span><span><strong>${pct}%</strong><progress max="100" value="${pct}" aria-label="ความคืบหน้า ${pct}%"></progress></span></button>`;}).join('');
+  return `<section class="savings-panel"><h2>เป้าหมายการเงิน</h2><p>เป้าหมายที่จัดอยู่ในหมวดเงินหรือเชื่อมบัญชี</p>${items||'<p>ยังไม่มีเป้าหมายการเงิน</p>'}<button type="button" class="momenta-b-secondary" data-finance-add-goal>เพิ่มเป้าหมาย</button></section>`;
+}
+function investmentPanelHtml(){
+  const summary=window.MomentaFinance?.investmentSummary(investmentAssets)||{value:0,cost:0,change:0};
+  const types={cash:'เงินสด',stock:'หุ้น',fund:'กองทุน',bond:'ตราสารหนี้',crypto:'สินทรัพย์ดิจิทัล',other:'อื่น ๆ'};
+  const rows=investmentAssets.map(a=>`<div class="investment-row"><div><strong>${esc(a.name)}</strong><small>${types[a.type]||'ไม่ระบุประเภท'} · จำนวน ${Number(a.quantity).toLocaleString('th-TH')} · ต้นทุน ฿${Number(a.cost).toLocaleString('th-TH')} · มูลค่า ณ ${esc(a.updatedAt)}</small>${a.note?`<small>${esc(a.note)}</small>`:''}</div><div><strong>฿${Number(a.value).toLocaleString('th-TH')}</strong><small>${summary.value>0?Math.round(Number(a.value)/summary.value*100):0}% ของพอร์ต</small><button type="button" data-invest-edit="${esc(String(a.id))}">แก้ไข</button> <button type="button" data-invest-delete="${esc(String(a.id))}">ลบ</button></div></div>`).join('');
+  return `<section class="investment-panel" aria-labelledby="investmentTitle"><div class="investment-heading"><div><p>บันทึกมูลค่าด้วยตัวเอง</p><h2 id="investmentTitle">พอร์ตลงทุน</h2></div><strong>฿${summary.value.toLocaleString('th-TH')}</strong></div><p>ต้นทุนรวม ฿${summary.cost.toLocaleString('th-TH')} · ${summary.change>=0?'เพิ่มขึ้น':'ลดลง'} ฿${Math.abs(summary.change).toLocaleString('th-TH')} · ไม่ดึงราคาตลาดอัตโนมัติ</p>${rows||'<p>ยังไม่มีสินทรัพย์ เพิ่มรายการแรกเพื่อเริ่มติดตาม</p>'}<details id="investmentEditor"><summary>เพิ่มหรือแก้ไขสินทรัพย์</summary><form id="investmentForm"><input type="hidden" name="id"><label>ชื่อสินทรัพย์<input name="name" maxlength="120" required></label><label>ประเภท<select name="type"><option value="stock">หุ้น</option><option value="fund">กองทุน</option><option value="bond">ตราสารหนี้</option><option value="crypto">สินทรัพย์ดิจิทัล</option><option value="cash">เงินสด</option><option value="other">อื่น ๆ</option></select></label><label>จำนวนหน่วย<input name="quantity" type="number" min="0.000001" step="any" required></label><label>ต้นทุนรวม (บาท)<input name="cost" type="number" min="0" step="0.01" required></label><label>มูลค่าล่าสุดรวม (บาท)<input name="value" type="number" min="0" step="0.01" required></label><label>วันที่อัปเดตมูลค่า<input name="updatedAt" type="date" value="${todayStr()}" required></label><label>หมายเหตุ (ไม่บังคับ)<input name="note" maxlength="300" placeholder="เช่น บันทึกจาก statement"></label><button type="submit" class="btn-primary">บันทึกสินทรัพย์</button></form></details></section>`;
+}
+function recurringBillsPanelHtml(month){
+  const monthBills=recurringBills.filter(bill=>bill.active!==false);
+  const rows=monthBills.map(bill=>{const paid=(bill.paidMonths||[]).includes(month),dueDay=Math.min(Number(bill.dueDay)||1,new Date(Number(month.slice(0,4)),Number(month.slice(5,7)),0).getDate());return `<div class="recurring-bill-row"><div><strong>${esc(bill.name)}</strong><small>฿${Number(bill.amount).toLocaleString('th-TH')} · ${EXP_CATS[bill.category]?.label||esc(bill.category)} · วันที่ ${dueDay}</small><small>${paid?`บันทึกเป็นรายจ่ายใน ${formatFinanceMonth(month)}`:'เตือนความจำเท่านั้น · ยังไม่ลงบัญชี'}</small></div><div class="recurring-bill-actions"><button type="button" data-bill-edit="${esc(String(bill.id))}">แก้ไข</button><button type="button" data-bill-post="${esc(String(bill.id))}" data-bill-month="${esc(month)}" ${paid?'disabled':''}>${paid?'บันทึกแล้ว':'ยืนยันจ่าย'}</button><button type="button" data-bill-delete="${esc(String(bill.id))}" aria-label="ลบบิล ${esc(bill.name)}">ลบ</button></div></div>`;}).join('');
+  return `<section class="recurring-bills-panel" aria-labelledby="recurringBillsTitle"><div class="investment-heading"><div><p>รายการเตือน ไม่บันทึกเงินเอง</p><h2 id="recurringBillsTitle">บิลประจำ</h2></div><span>${monthBills.length} รายการ</span></div><p>กด “ยืนยันจ่าย” แล้วตรวจอีกครั้งก่อนสร้างรายจ่ายในบัญชี</p>${rows||'<p>ยังไม่มีบิลประจำ เพิ่มค่าใช้จ่ายที่เกิดซ้ำเพื่อช่วยเตือน</p>'}<details id="billEditor"><summary>เพิ่มหรือแก้ไขบิล</summary><form id="billForm"><input type="hidden" name="id"><label>ชื่อบิล<input name="name" maxlength="120" required placeholder="เช่น ค่าอินเทอร์เน็ต"></label><label>จำนวนเงินต่อรอบ (บาท)<input name="amount" type="number" min="0.01" step="0.01" required></label><div class="row2"><label>หมวดหมู่<select name="category">${Object.entries(EXP_CATS).map(([key,item])=>`<option value="${key}">${item.label}</option>`).join('')}</select></label><label>วันครบกำหนด<input name="dueDay" type="number" min="1" max="31" step="1" value="1" required></label></div><label>จ่ายจากบัญชี<select name="accountId">${accounts.map(account=>`<option value="${esc(String(account.id))}">${esc(account.name)}</option>`).join('')}</select></label><button type="submit" class="btn-primary">บันทึกบิลประจำ</button></form></details></section>`;
+}
+function financeDisciplineHtml(month){
+  const todayExpenses=expenses.filter(row=>row.date===todayStr()).length,budgetCount=(window.MomentaFinance?.budgetForMonth(monthlyBudgets,budgets,month)||[]).length,savingGoals=goals.filter(goal=>goal.mode!=='habit'&&(goal.category==='money'||goal.category==='income'||goal.financeLinked)).length,bills=recurringBills.filter(bill=>bill.active!==false).length;
+  const items=[['บันทึกรายการวันนี้',todayExpenses?'มีรายการแล้ว':'เพิ่มรายรับหรือรายจ่าย',!!todayExpenses,'expense'],['กำหนดงบรายเดือน',budgetCount?`${budgetCount} หมวด`:'ยังไม่มีงบ',!!budgetCount,'budget'],['ติดตามเป้าหมายออม',savingGoals?`${savingGoals} เป้าหมาย`:'ยังไม่มีเป้าหมาย',!!savingGoals,'goals'],['ทบทวนบิลประจำ',bills?`${bills} รายการ · ยืนยันเองก่อนลงบัญชี`:'ยังไม่มีรายการ',!!bills,'bills']];
+  return `<section class="finance-discipline-panel" aria-labelledby="financeDisciplineTitle"><h2 id="financeDisciplineTitle">วินัยการเงิน</h2><p>เช็กลิสต์ช่วยทบทวน ไม่มีคะแนนลงโทษเมื่อเว้นวัน</p><div>${items.map(([title,detail,done,action])=>`<button type="button" class="finance-discipline-row" data-discipline-action="${action}"><span aria-hidden="true" class="finance-discipline-mark ${done?'is-done':''}">${done?'✓':'○'}</span><span><strong>${title}</strong><small>${detail}</small></span><span aria-hidden="true">→</span></button>`).join('')}</div></section>`;
+}
+let financeSectionView="overview";
+function setFinanceSectionView(view){
+  if(!["overview","savings","portfolio","discipline"].includes(view))view="overview";
+  financeSectionView=view;
+  const root=document.getElementById("planMoneyContent");if(!root)return;
+  root.querySelectorAll("[data-finance-section]").forEach(button=>{
+    const active=button.dataset.financeSection===view;
+    button.classList.toggle("active",active);
+    button.setAttribute("aria-selected",String(active));
+    button.tabIndex=active?0:-1;
+  });
+  root.querySelectorAll("[data-finance-panel]").forEach(panel=>{panel.hidden=panel.dataset.financePanel!==view;});
+}
 function financeTabHtml(){
   const mk=financeMonth;
   const currentMonth=monthKey(todayStr());
@@ -2247,7 +2500,7 @@ function financeTabHtml(){
   const totalExpense=thisMonth.filter(e=>e.type!=="income").reduce((s,e)=>s+e.amount,0);
   const net=totalIncome-totalExpense;
 
-  let html=`<div class="fin-month-nav" role="group" aria-label="เลือกเดือนการเงิน">
+  let overview=`<div class="fin-month-nav" role="group" aria-label="เลือกเดือนการเงิน">
     <button type="button" data-finance-month-shift="-1" aria-label="ดูเดือนก่อน">‹</button>
     <div class="fin-month-copy"><p class="fin-month-label" aria-live="polite">${formatFinanceMonth(mk)}</p>${mk!==currentMonth?`<button type="button" class="fin-month-reset" data-finance-current-month>กลับเดือนนี้</button>`:""}</div>
     <button type="button" data-finance-month-shift="1" aria-label="ดูเดือนถัดไป">›</button>
@@ -2256,38 +2509,53 @@ function financeTabHtml(){
     <button type="button" class="acct-filter-chip${accountFilter==="all"?" active":""}" data-acct-filter="all">ทุกบัญชี</button>
     ${accounts.map(a=>`<button type="button" class="acct-filter-chip${accountFilter===a.id?" active":""}" data-acct-filter="${a.id}">${esc(a.name)}</button>`).join("")}
   </div>`;
-  html+=`<button type="button" class="acct-manage-link" id="manageAccountsLink">จัดการบัญชี</button>`;
-  html+=`<div class="fin-net-hero">
+  overview+=`<button type="button" class="acct-manage-link" id="manageAccountsLink">จัดการบัญชี</button>`;
+  const selectedBalance=accounts.filter(a=>accountFilter==='all'||a.id===accountFilter).reduce((sum,a)=>sum+accountBalance(a.id),0);
+  overview+=`<div class="fin-net-hero">
     <p class="fin-net-hero-lbl">ยอดสุทธิ · ${formatFinanceMonth(mk)}</p>
     <p class="fin-net-hero-val ${net>=0?"pos":"neg"}">${net>=0?"+":"-"}฿${Math.abs(net).toLocaleString()}</p>
     <div class="fin-net-split">
       <div class="fin-net-split-item"><span class="fin-net-split-lbl">รายรับ</span><span class="fin-net-split-val" style="color:var(--focus)">฿${totalIncome.toLocaleString()}</span></div>
       <div class="fin-net-split-item"><span class="fin-net-split-lbl">รายจ่าย</span><span class="fin-net-split-val" style="color:var(--danger)">฿${totalExpense.toLocaleString()}</span></div>
     </div>
+    <p class="momenta-finance-balance">ยอดบัญชีปัจจุบัน ฿${selectedBalance.toLocaleString('th-TH')} · ${accountFilter==='all'?'ทุกบัญชี':'บัญชีที่เลือก'}</p>
   </div>`;
-  html+=`<div class="fin-btn-row">
+  overview+=`<div class="fin-btn-row">
     <button type="button" class="fin-btn-expense" id="expenseAddBtn">+ รายจ่าย</button>
     <button type="button" class="fin-btn-income" id="incomeAddBtn">+ รายรับ</button>
   </div>`;
 
-  html+=financeBudgetPlanHtml(mk);
-  html+=financeCategoryInsightHtml(thisMonth);
-  html+=`<p class="finance-budget-scope">งบแต่ละหมวดคำนวณจากทุกบัญชี ไม่เปลี่ยนตามตัวกรองบัญชี และใช้วงเงินเดิมซ้ำในแต่ละเดือน</p>`;
+  overview+='<div class="momenta-finance-columns">';
+  overview+=financeBudgetPlanHtml(mk);
+  overview+=financeCategoryInsightHtml(thisMonth);
+  overview+='</div>';
+  overview+=`<p class="finance-budget-scope">งบแต่ละหมวดคำนวณจากทุกบัญชี ไม่เปลี่ยนตามตัวกรองบัญชี และใช้วงเงินเดิมซ้ำในแต่ละเดือน</p>`;
 
   if(!thisMonth.length){
-    html+=`<p class="empty" style="padding:4px 0 0;">ยังไม่มีรายการเดือนนี้</p>`;
+    overview+=`<p class="empty" style="padding:4px 0 0;">ยังไม่มีรายการเดือนนี้</p>`;
   }else{
     const recent=[...thisMonth].sort((a,b)=>b.date.localeCompare(a.date)||0).slice(0,8);
-    html+=`<p class="section-label" style="margin-top:0;">รายการล่าสุด</p>`;
+    overview+=`<p class="section-label" style="margin-top:0;">รายการล่าสุด</p>`;
     recent.forEach(e=>{
       const isIncome=e.type==="income";
       const c=(isIncome?INC_CATS:EXP_CATS)[e.category]||EXP_CATS.other;
       const acc=accountById(e.accountId);
-      html+=`<div class="fin-txn-item"><div><p class="fin-txn-title">${esc(String(e.note||c.label))}</p><p class="fin-txn-meta">${acc?esc(acc.name)+" · ":""}${formatShortDate(e.date)}</p></div><span class="fin-txn-amt ${isIncome?"pos":"neg"}">${isIncome?"+":"-"}฿${e.amount.toLocaleString()}</span></div>`;
+      overview+=`<div class="fin-txn-item"><div><p class="fin-txn-title">${esc(String(e.note||c.label))}</p><p class="fin-txn-meta">${acc?esc(acc.name)+" · ":""}${formatShortDate(e.date)}</p></div><span class="fin-txn-amt ${isIncome?"pos":"neg"}">${isIncome?"+":"-"}฿${e.amount.toLocaleString()}</span></div>`;
     });
   }
 
-  html+=budgetSectionHtml(mk);
+  overview+=budgetSectionHtml(mk);
+  const tabs=[
+    ["overview","ภาพรวม","financePanelOverview"],
+    ["savings","การออม","financePanelSavings"],
+    ["portfolio","พอร์ตลงทุน","financePanelPortfolio"],
+    ["discipline","วินัยการเงิน","financePanelDiscipline"]
+  ];
+  let html=`<nav class="momenta-fin-nav" role="tablist" aria-label="ส่วนการเงิน">${tabs.map(([key,label,id])=>`<button type="button" role="tab" id="financeTab-${key}" aria-controls="${id}" aria-selected="${financeSectionView===key}" tabindex="${financeSectionView===key?0:-1}" data-finance-section="${key}" class="${financeSectionView===key?'active':''}">${label}</button>`).join("")}</nav>`;
+  html+=`<section id="financePanelOverview" class="finance-view-panel" role="tabpanel" aria-labelledby="financeTab-overview" data-finance-panel="overview" ${financeSectionView!=="overview"?"hidden":""}>${overview}</section>`;
+  html+=`<section id="financePanelSavings" class="finance-view-panel" role="tabpanel" aria-labelledby="financeTab-savings" data-finance-panel="savings" ${financeSectionView!=="savings"?"hidden":""}>${savingsPanelHtml().replace("เป้าหมายการเงิน","การออม")}</section>`;
+  html+=`<section id="financePanelPortfolio" class="finance-view-panel" role="tabpanel" aria-labelledby="financeTab-portfolio" data-finance-panel="portfolio" ${financeSectionView!=="portfolio"?"hidden":""}>${investmentPanelHtml()}</section>`;
+  html+=`<section id="financePanelDiscipline" class="finance-view-panel" role="tabpanel" aria-labelledby="financeTab-discipline" data-finance-panel="discipline" ${financeSectionView!=="discipline"?"hidden":""}>${financeDisciplineHtml(mk)}${recurringBillsPanelHtml(mk)}</section>`;
   return html;
 }
 function renderPlanMoney(){
@@ -2295,15 +2563,28 @@ function renderPlanMoney(){
   content.innerHTML=financeTabHtml();renderMoneyDashboard();
 }
 document.getElementById("planMoneyContent").addEventListener("click",e=>{
+  const goalButton=e.target.closest('[data-finance-goal]');if(goalButton){const goal=goals.find(g=>String(g.id)===goalButton.dataset.financeGoal);if(goal)openGoalModal(goal);return;}
+  if(e.target.closest('[data-finance-add-goal]')){openGoalModal(null);return;}
+  const discipline=e.target.closest('[data-discipline-action]');if(discipline){const action=discipline.dataset.disciplineAction;if(action==='expense')openExpenseModal();else if(action==='budget')openBudgetModal();else if(action==='goals')setFinanceSectionView('savings');else if(action==='bills')document.querySelector('.recurring-bills-panel')?.scrollIntoView({block:'start',behavior:'smooth'});return;}
+  const section=e.target.closest('[data-finance-section]');if(section){setFinanceSectionView(section.dataset.financeSection);return;}
+  const edit=e.target.closest('[data-invest-edit]');if(edit){const a=investmentAssets.find(x=>String(x.id)===edit.dataset.investEdit);if(a){document.getElementById('investmentEditor').open=true;const form=document.getElementById('investmentForm');['id','name','type','quantity','cost','value','updatedAt','note'].forEach(key=>form.elements[key].value=a[key]||'');form.elements.name.focus();}return;}
+  const remove=e.target.closest('[data-invest-delete]');if(remove){const a=investmentAssets.find(x=>String(x.id)===remove.dataset.investDelete);if(a)showConfirmPopup({title:'ลบสินทรัพย์นี้?',message:a.name,variant:'destructive',confirmLabel:'ลบ',onConfirm:()=>{const before=investmentAssets;investmentAssets=investmentAssets.filter(x=>x.id!==a.id);if(!saveState())investmentAssets=before;renderPlanMoney();}});return;}
   if(e.target.closest("#expenseAddBtn"))openExpenseModal();
   if(e.target.closest("#incomeAddBtn"))openIncomeModal();
   if(e.target.closest("#manageAccountsLink"))openAccountsModal();
   if(e.target.closest("#openBudgetBtn"))openBudgetModal();
+  const billEdit=e.target.closest('[data-bill-edit]');if(billEdit){const bill=recurringBills.find(item=>String(item.id)===billEdit.dataset.billEdit);if(bill){const details=document.getElementById('billEditor'),form=document.getElementById('billForm');details.open=true;['id','name','amount','category','dueDay','accountId'].forEach(key=>form.elements[key].value=bill[key]??'');form.elements.name.focus();}return;}
+  const billDelete=e.target.closest('[data-bill-delete]');if(billDelete){const bill=recurringBills.find(item=>String(item.id)===billDelete.dataset.billDelete);if(bill)showConfirmPopup({title:'ลบบิลประจำ?',message:`ลบ “${bill.name}” ออกจากรายการเตือน · รายจ่ายเดิมไม่ถูกลบ`,variant:'destructive',confirmLabel:'ลบบิล',onConfirm:()=>{const before=recurringBills;recurringBills=recurringBills.filter(item=>item.id!==bill.id);if(!saveState()){recurringBills=before;return;}renderPlanMoney();showToast('ลบบิลประจำแล้ว');}});return;}
+  const billPost=e.target.closest('[data-bill-post]');if(billPost){const bill=recurringBills.find(item=>String(item.id)===billPost.dataset.billPost),month=billPost.dataset.billMonth;if(!bill)return;const daysInMonth=new Date(Number(month.slice(0,4)),Number(month.slice(5,7)),0).getDate(),day=month===monthKey(todayStr())?Number(todayStr().slice(8,10)):Math.min(Number(bill.dueDay)||1,daysInMonth),date=`${month}-${String(day).padStart(2,'0')}`;showConfirmPopup({title:'ยืนยันว่าจ่ายบิลแล้ว?',message:`สร้างรายจ่าย ฿${Number(bill.amount).toLocaleString('th-TH')} สำหรับ “${bill.name}” ในบัญชี ${accountById(bill.accountId)?.name||'ค่าเริ่มต้น'} หรือไม่`,variant:'neutral',confirmLabel:'ยืนยันและบันทึกรายจ่าย',onConfirm:()=>{const row=window.MomentaFinance?.createBillExpense(bill,month,date,true);if(!row||expenses.some(item=>item.id===row.id)){showToast('บิลนี้ถูกบันทึกแล้วหรือข้อมูลไม่ครบ');return;}const beforeExpenses=expenses,beforeBills=recurringBills;expenses=[...expenses,row];recurringBills=recurringBills.map(item=>item.id===bill.id?{...item,paidMonths:[...new Set([...(item.paidMonths||[]),month])]}:item);if(!saveState()){expenses=beforeExpenses;recurringBills=beforeBills;return;}renderPlanMoney();showToast('ยืนยันบิลและบันทึกรายจ่ายแล้ว');}});return;}
   const monthShift=e.target.closest("[data-finance-month-shift]");
   if(monthShift){financeMonth=shiftFinanceMonth(financeMonth,Number(monthShift.dataset.financeMonthShift));renderPlanMoney();return;}
   if(e.target.closest("[data-finance-current-month]")){financeMonth=monthKey(todayStr());renderPlanMoney();return;}
   const filterBtn=e.target.closest("[data-acct-filter]");
   if(filterBtn){accountFilter=filterBtn.dataset.acctFilter;renderPlanMoney();}
+});
+document.getElementById('planMoneyContent').addEventListener('submit',e=>{
+  if(e.target.matches('#investmentForm')){e.preventDefault();const f=e.target,name=f.elements.name.value.trim(),type=f.elements.type.value,quantity=Number(f.elements.quantity.value),cost=Number(f.elements.cost.value),value=Number(f.elements.value.value),updatedAt=f.elements.updatedAt.value,note=f.elements.note.value.trim();if(!name||!['stock','fund','bond','crypto','cash','other'].includes(type)||![quantity,cost,value].every(Number.isFinite)||quantity<=0||cost<0||value<0||!backupValidDate(updatedAt)){showToast('กรุณาตรวจสอบข้อมูลสินทรัพย์');return;}const before=investmentAssets,previous=investmentAssets.find(a=>String(a.id)===f.elements.id.value);const asset={id:previous?.id||uid(),name,type,quantity,cost,value,updatedAt,note};investmentAssets=previous?investmentAssets.map(a=>a.id===previous.id?asset:a):[...investmentAssets,asset];if(!saveState()){investmentAssets=before;return;}renderPlanMoney();showToast('บันทึกสินทรัพย์แล้ว');return;}
+  if(e.target.matches('#billForm')){e.preventDefault();const f=e.target,name=f.elements.name.value.trim(),amount=Number(f.elements.amount.value),category=f.elements.category.value,dueDay=Number(f.elements.dueDay.value),accountId=f.elements.accountId.value;if(!name||!Number.isFinite(amount)||amount<=0||!EXP_CATS[category]||!Number.isInteger(dueDay)||dueDay<1||dueDay>31){showToast('กรุณาตรวจสอบข้อมูลบิลประจำ');return;}const before=recurringBills,existing=recurringBills.find(item=>String(item.id)===f.elements.id.value);const bill={...(existing||{}),id:existing?.id||uid(),name,amount,category,dueDay,accountId,active:true,paidMonths:Array.isArray(existing?.paidMonths)?existing.paidMonths:[]};recurringBills=existing?recurringBills.map(item=>item.id===existing.id?bill:item):[...recurringBills,bill];if(!saveState()){recurringBills=before;return;}renderPlanMoney();showToast('บันทึกบิลประจำแล้ว');}
 });
 
 
@@ -2383,7 +2664,7 @@ function renderWeekInToday(){
     return`<div class="week-day ${isToday?"is-today":""}"><div class="week-day-head" data-jump-date="${d}">${esc(lbl)}${isToday?" · วันนี้":""}</div>${rows}</div>`;
   }).join("");
 }
-function renderAll(){renderToday();renderPlan();renderProjects();renderProgress();}
+function renderAll(){renderToday();renderPlan();renderProjects();if(currentTab==='money')renderPlanMoney();if(currentTab==='projects'&&projectView==='goals')renderGrowth();renderProgress();}
 
 // INTERACTIONS
 document.getElementById("blocksList").addEventListener("click",e=>{
@@ -2524,6 +2805,7 @@ function taskTargetDate(task){return[task.scheduleDate,task.dueDate].filter(Bool
 function taskBucket(task){if(task.completed)return"done";const target=taskTargetDate(task);if(!target)return"inbox";return target<=todayStr()?"today":"upcoming";}
 function taskCounts(){return tasks.reduce((counts,task)=>{counts[taskBucket(task)]++;return counts;},{inbox:0,today:0,upcoming:0,done:0});}
 function renderMoneyDashboard(){
+  if(typeof uiRenderToday==="function"){uiRenderToday();return;}
   const mk=monthKey(todayStr()),monthly=expenses.filter(item=>monthKey(item.date)===mk);
   const income=monthly.filter(item=>item.type==="income").reduce((sum,item)=>sum+Number(item.amount||0),0);
   const spending=monthly.filter(item=>item.type!=="income").reduce((sum,item)=>sum+Number(item.amount||0),0),net=income-spending;
@@ -2569,30 +2851,39 @@ function renderTasks(){
     if(task.dueDate)meta.push(`<span class="pm-task-chip${late?" overdue":""}">${late?"เลยกำหนด · ":"ส่ง "}${formatShortDate(task.dueDate)}</span>`);
     meta.push(`<span class="pm-task-chip priority-${priority}">สำคัญ${priorityLabel[priority]||"ปกติ"}</span>`);
     const goal=goals.find(item=>item.id===task.goalId);if(goal)meta.push(`<span class="pm-task-chip pm-task-goal-chip">เป้าหมาย · ${esc(goal.title)}</span>`);
-    const sessions=blocks.filter(block=>block.taskId===task.id).length;if(sessions)meta.push(`<span class="pm-task-chip">โฟกัส ${sessions} รอบ</span>`);
+    const sessions=blocks.filter(block=>block.taskId===task.id).length;if(sessions)meta.push(`<span class="pm-task-chip">จัดเวลา ${sessions} ช่วง</span>`);
+    if(typeof uiTaskRow==="function")return uiTaskRow(task,meta);
     const taskId=esc(String(task.id||""));
     return`<article class="pm-task-row${task.completed?" is-done":""}"><button type="button" class="pm-task-check" data-task-action="toggle" data-task-id="${taskId}" aria-label="${task.completed?"ทำเครื่องหมายว่ายังไม่เสร็จ":"ทำเสร็จแล้ว"}" aria-pressed="${!!task.completed}">✓</button><div class="pm-task-main"><p class="pm-task-title">${esc(String(task.title||""))}</p><div class="pm-task-meta">${meta.join("")}</div></div><div class="pm-task-actions">${task.completed?"":`<button type="button" data-task-action="schedule" data-task-id="${taskId}" aria-label="จัดเวลาให้ ${esc(String(task.title||""))}">จัดเวลา</button>`}<button type="button" data-task-action="edit" data-task-id="${taskId}" aria-label="แก้ไขงาน">แก้ไข</button><button type="button" data-task-action="delete" data-task-id="${taskId}" aria-label="ลบงาน">×</button></div></article>`;
   }).join("");
 }
 function setPlanSection(section){
-  planSection=["tasks","money"].includes(section)?section:"calendar";
-  const active={calendar:planSection==="calendar",tasks:planSection==="tasks",money:planSection==="money"};
+  planSection=section==="tasks"?"tasks":"calendar";
+  const active={calendar:planSection==="calendar",tasks:planSection==="tasks"};
   document.getElementById("planCalendarSection").style.display=active.calendar?"block":"none";
   document.getElementById("planTasksSection").style.display=active.tasks?"block":"none";
-  document.getElementById("planMoneySection").style.display=active.money?"block":"none";
-  ["Calendar","Tasks","Money"].forEach(key=>{const btn=document.getElementById("planSection"+key+"Btn"),selected=active[key.toLowerCase()];btn.classList.toggle("plan-view-tab-active",selected);btn.setAttribute("aria-selected",String(selected));});
+  ["Calendar","Tasks"].forEach(key=>{const btn=document.getElementById("planSection"+key+"Btn"),selected=active[key.toLowerCase()];btn.classList.toggle("plan-view-tab-active",selected);btn.setAttribute("aria-selected",String(selected));});
   const context=document.getElementById("planSectionContext");
   const copy={
     calendar:{kicker:"จัดวันให้ชัด",title:"ปฏิทินของคุณ",description:"เลือกวัน ดูช่วงเวลาที่ว่าง แล้วเปลี่ยนงานให้เป็นเวลาที่ทำได้จริง",action:"กลับไปวันนี้",route:"today"},
-    tasks:{kicker:"จัดสิ่งที่ต้องทำ",title:"งานทั้งหมด",description:"เริ่มจากงานเข้า แล้วกำหนดวันส่งและผูกงานเข้ากับช่วงเวลาบนปฏิทิน",action:"เปิดปฏิทิน",route:"calendar"},
-    money:{kicker:"ดูภาพรวมส่วนตัว",title:"การเงิน",description:"รายรับ รายจ่าย และงบประมาณอยู่ในพื้นที่ส่วนตัว แยกจากข้อมูลเทรดโดยสิ้นเชิง",action:"ดูงานวันนี้",route:"today"}
+    tasks:{kicker:"จัดสิ่งที่ต้องทำ",title:"งานทั้งหมด",description:"เริ่มจากงานเข้า แล้วกำหนดวันส่งและผูกงานเข้ากับช่วงเวลาบนปฏิทิน",action:"เปิดปฏิทิน",route:"calendar"}
   }[planSection];
   if(context)context.innerHTML=`<div><p class="plan-section-kicker">${copy.kicker}</p><h3>${copy.title}</h3><p>${copy.description}</p></div><button type="button" class="plan-context-link" data-workspace-route="${copy.route}">${copy.action} <span aria-hidden="true">→</span></button>`;
   if(context)context.querySelector("[data-workspace-route]")?.addEventListener("click",e=>openWorkspaceRoute(e.currentTarget.dataset.workspaceRoute));
   syncWorkspaceRoute("plan",planSection);
   if(active.tasks){renderMoneyDashboard();renderTasks();}
-  if(active.money)renderPlanMoney();
 }
+function updateTaskMeasureEditor(){
+  const kind=document.getElementById("taskMeasureKind").value,fields=document.getElementById("taskMeasureFields"),preview=document.getElementById("taskMeasurePreview");
+  const measured=kind!=="binary";fields.hidden=!measured;
+  if(!measured){preview.textContent="งานจะมีสถานะเสร็จหรือยังไม่เสร็จ";return;}
+  const target=Number(document.getElementById("taskMeasureTarget").value),value=Math.max(0,Number(document.getElementById("taskMeasureValue").value)||0),unit=document.getElementById("taskMeasureUnit").value.trim();
+  if(!Number.isFinite(target)||target<=0){preview.textContent="ใส่เป้าหมายมากกว่า 0 เพื่อดูเปอร์เซ็นต์";return;}
+  const pct=Math.max(0,Math.min(100,Math.round(value/target*100)));
+  preview.textContent=`คืบหน้า ${value.toLocaleString("th-TH")} / ${target.toLocaleString("th-TH")} ${unit} · ${pct}% · สถานะเสร็จยังให้คุณยืนยันเอง`;
+}
+document.getElementById("taskMeasureKind").addEventListener("change",()=>{document.getElementById("taskMeasureError").hidden=true;updateTaskMeasureEditor();});
+["taskMeasureTarget","taskMeasureValue","taskMeasureUnit"].forEach(id=>document.getElementById(id).addEventListener("input",updateTaskMeasureEditor));
 function openTaskEditor(task=null,defaultDate=""){
   editingTaskId=task?.id||null;
   document.getElementById("taskModalTitle").textContent=task?"แก้ไขงาน":"เพิ่มงาน";
@@ -2600,6 +2891,15 @@ function openTaskEditor(task=null,defaultDate=""){
   document.getElementById("taskScheduleInput").value=task?.scheduleDate||defaultDate||(!task&&taskView==="today"?todayStr():!task&&taskView==="upcoming"?addDays(todayStr(),1):"");
   document.getElementById("taskDueInput").value=task?.dueDate||"";
   document.getElementById("taskPriorityInput").value=task?.priority||"normal";
+  const measure=task?.measure||{kind:"binary",target:1,value:task?.completed?1:0,unit:""};
+  document.getElementById("taskMeasureKind").value=["binary","count","duration"].includes(measure.kind)?measure.kind:"binary";
+  document.getElementById("taskMeasureTarget").value=measure.target??"";
+  document.getElementById("taskMeasureValue").value=measure.value??0;
+  document.getElementById("taskMeasureUnit").value=measure.unit||"";
+  document.getElementById("taskMeasureError").hidden=true;updateTaskMeasureEditor();
+  document.getElementById("taskOptions").open=!!task;
+  document.getElementById("taskTitleError").hidden=true;
+  document.getElementById("taskTitleInput").removeAttribute("aria-invalid");
   const goalSelect=document.getElementById("taskGoalInput");goalSelect.innerHTML='<option value="">ไม่ผูกเป้าหมาย</option>'+goals.map(goal=>`<option value="${esc(String(goal.id))}">${esc(goal.title)}</option>`).join("");goalSelect.value=task?.goalId||"";
   document.getElementById("taskOverlay").classList.add("show");
   setTimeout(()=>document.getElementById("taskTitleInput").focus(),50);
@@ -2609,14 +2909,22 @@ document.getElementById("openTaskAddBtn").addEventListener("click",()=>openTaskE
 document.getElementById("todayAddTaskBtn").addEventListener("click",()=>openTaskEditor(null,viewDate));
 document.getElementById("taskCloseBtn").addEventListener("click",closeTaskEditor);
 document.getElementById("taskOverlay").addEventListener("click",e=>{if(e.target.id==="taskOverlay")closeTaskEditor();});
-document.getElementById("taskSaveBtn").addEventListener("click",()=>{
+document.getElementById("taskSaveBtn").addEventListener("click",async()=>{
   const title=document.getElementById("taskTitleInput").value.trim();
-  if(!title){document.getElementById("taskTitleInput").focus();showToast("ใส่ชื่องานก่อนบันทึก");return;}
-  const data={title,scheduleDate:document.getElementById("taskScheduleInput").value,dueDate:document.getElementById("taskDueInput").value,priority:document.getElementById("taskPriorityInput").value,goalId:document.getElementById("taskGoalInput").value||""};
+  if(!title){const error=document.getElementById("taskTitleError");error.textContent="ใส่ชื่องานก่อนบันทึก";error.hidden=false;document.getElementById("taskTitleInput").setAttribute("aria-invalid","true");document.getElementById("taskTitleInput").focus();return;}
+  const kind=document.getElementById("taskMeasureKind").value,oldMeasure=tasks.find(task=>task.id===editingTaskId)?.measure||{kind:"binary",target:1,value:0,unit:""};
+  let measure={kind:"binary",target:1,value:0,unit:""};
+  if(kind!=="binary"){
+    const target=Number(document.getElementById("taskMeasureTarget").value),value=Number(document.getElementById("taskMeasureValue").value),unit=document.getElementById("taskMeasureUnit").value.trim();
+    if(!Number.isFinite(target)||target<=0||!Number.isFinite(value)||value<0||!unit){const error=document.getElementById("taskMeasureError");error.textContent="ระบุเป้าหมายมากกว่า 0 จำนวนที่ทำได้ และหน่วย";error.hidden=false;document.getElementById("taskMeasureTarget").focus();return;}
+    measure={kind,target,value,unit};
+  }
+  if(editingTaskId&&oldMeasure.kind!==measure.kind){const before=oldMeasure.kind==="binary"?"เสร็จ/ไม่เสร็จ":`${oldMeasure.value||0}/${oldMeasure.target||0} ${oldMeasure.unit||""}`,after=measure.kind==="binary"?"เสร็จ/ไม่เสร็จ":`${measure.value}/${measure.target} ${measure.unit}`;const confirmed=await showConfirmPopup({title:"เปลี่ยนตัววัดงาน?",message:`เดิม: ${before} → ใหม่: ${after} · ระบบจะเก็บตัววัดเดิมไว้ในประวัติงาน`,variant:"neutral",confirmLabel:"เปลี่ยนตัววัด"});if(!confirmed)return;}
+  const data={title,scheduleDate:document.getElementById("taskScheduleInput").value,dueDate:document.getElementById("taskDueInput").value,priority:document.getElementById("taskPriorityInput").value,goalId:document.getElementById("taskGoalInput").value||"",measure};
   const existing=tasks.find(task=>task.id===editingTaskId);
-  if(existing)Object.assign(existing,data);
-  else tasks.unshift({id:uid(),...data,completed:false,createdAt:new Date().toISOString(),completedAt:""});
-  closeTaskEditor();saveState();renderMoneyDashboard();renderTasks();renderToday();
+  let created=null,before=null;if(existing){before=backupClone(existing);if(oldMeasure.kind!==measure.kind)existing.measureHistory=[...(existing.measureHistory||[]),{...oldMeasure,changedAt:new Date().toISOString()}];Object.assign(existing,data);}else{created={id:uid(),...data,completed:false,createdAt:new Date().toISOString(),completedAt:""};tasks.unshift(created);}
+  if(!saveState()){if(existing)Object.assign(existing,before);else tasks=tasks.filter(task=>task!==created);return;}
+  closeTaskEditor();renderMoneyDashboard();renderTasks();renderToday();renderProjects();showToast("บันทึกงานแล้ว");
 });
 document.querySelector(".pm-task-tabs").addEventListener("click",e=>{
   const btn=e.target.closest("[data-task-view]");if(!btn)return;
@@ -2632,7 +2940,7 @@ function handleTaskAction(button){
     saveState();renderMoneyDashboard();renderTasks();renderToday();
   }else if(button.dataset.taskAction==="edit")openTaskEditor(task);
   else if(button.dataset.taskAction==="schedule")openModal(null,task.scheduleDate||viewDate,task.id);
-  else if(button.dataset.taskAction==="delete")showConfirmPopup({title:"ลบงานนี้ใช่ไหม?",message:`“${task.title}” จะถูกลบ แต่ช่วงเวลาที่ผูกไว้จะคงอยู่และยกเลิกการเชื่อมโยง`,variant:"destructive",confirmLabel:"ลบงาน",onConfirm:()=>{blocks=unlinkTaskFromBlocks(blocks,task.id,task.title);tasks=tasks.filter(item=>item.id!==task.id);saveState();renderMoneyDashboard();renderTasks();renderToday();}});
+  else if(button.dataset.taskAction==="delete"&&typeof uiDeleteTask==="function")uiDeleteTask(task);
 }
 document.getElementById("taskList").addEventListener("click",e=>{const button=e.target.closest("[data-task-action]");if(button)handleTaskAction(button);});
 document.getElementById("pmDashboard").addEventListener("click",e=>{
@@ -2698,7 +3006,6 @@ function renderPlanHighlight(){
 function renderPlan(){
   renderMoneyDashboard();
   renderTasks();
-  if(planSection==="money")renderPlanMoney();
   renderPlanHighlight();
   renderUpcomingEvents();
   if(planViewMode==="wk"){
@@ -3118,8 +3425,8 @@ document.getElementById("shortcutEventsBtn").addEventListener("click",()=>{
 
 document.getElementById("saveBtn").addEventListener("click",()=>{
   const title=document.getElementById("f_title").value.trim(),start=document.getElementById("f_start").value,end=document.getElementById("f_end").value;
-  if(!title||!start||!end){alert("กรอกชื่องานและช่วงเวลาด้วยครับ");return;}
-  if(toMinutes(end)<=toMinutes(start)){alert("เวลาจบต้องอยู่หลังเวลาเริ่ม");return;}
+  if(!title||!start||!end){if(typeof uiBlockError==="function")uiBlockError("กรอกชื่องาน เวลาเริ่ม และเวลาจบ");return;}
+  if(toMinutes(end)<=toMinutes(start)){if(typeof uiBlockError==="function")uiBlockError("เวลาจบต้องอยู่หลังเวลาเริ่ม");return;}
   const countAmountRaw=document.getElementById("f_countAmount").value;
   const linkedTask=tasks.find(task=>task.id===document.getElementById("f_taskId").value);
   const data={title:linkedTask?.title||title,start,end,date:document.getElementById("f_date").value||viewDate,goalId:document.getElementById("f_goalId").value||"",taskId:linkedTask?.id||"",countAmount:countAmountRaw!==""?Number(countAmountRaw):undefined,mode:pickedMode,customFocus:Number(document.getElementById("f_customFocus").value)||25,customBreak:Number(document.getElementById("f_customBreak").value)||5,details:document.getElementById("f_details").value.trim(),notify:document.getElementById("f_notify").checked};
@@ -3139,7 +3446,8 @@ document.getElementById("saveBtn").addEventListener("click",()=>{
     if(dates.length>120){alert(`จะสร้าง ${dates.length} block ลองย่อช่วงลง`);return;}
     dates.forEach(dt=>blocks.push({id:uid(),...data,date:dt}));
   } else blocks.push({id:uid(),...data});
-  saveState();blockOverlay.classList.remove("show");renderAll();
+  if(linkedTask&&!linkedTask.scheduleDate)linkedTask.scheduleDate=data.date;
+  saveState();blockOverlay.classList.remove("show");renderAll();showToast("จัดเวลาแล้ว");
 });
 
 // GOAL MODAL
@@ -3205,7 +3513,7 @@ function renderSubtaskList(){
     <div style="display:flex;align-items:center;gap:10px;background:var(--paper);border-radius:12px;padding:10px 12px;margin-bottom:8px;">
       <input type="checkbox" class="subtask-done" data-idx="${i}" ${s.done?"checked":""} style="width:20px;height:20px;border-radius:6px;accent-color:var(--focus);flex-shrink:0;margin:0;">
       <input type="text" class="subtask-title" data-idx="${i}" value="${esc(s.title)}" placeholder="ชื่อขั้นย่อย" style="flex:1;min-width:0;border:none;background:transparent;font-size:13px;font-family:inherit;color:var(--ink);${s.done?"text-decoration:line-through;color:var(--ink-muted);":""}">
-      <span style="font-family:ui-monospace,monospace;font-size:12px;font-weight:600;color:var(--ink-soft);flex-shrink:0;">${s.weight??0}%</span>
+      <label style="display:flex;align-items:center;gap:3px;font-size:11px;color:var(--ink-soft);flex-shrink:0;"><input type="number" class="subtask-weight" data-idx="${i}" min="0" max="100" step="1" value="${Number(s.weight)||0}" aria-label="น้ำหนักของ ${esc(s.title||`ขั้นที่ ${i+1}`)} เป็นเปอร์เซ็นต์" style="width:48px;min-height:36px;padding:4px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit;">%</label>
       <button type="button" class="subtask-remove" data-idx="${i}" style="border:none;background:none;color:var(--ink-muted);font-size:13px;cursor:pointer;flex-shrink:0;padding:0;">✕</button>
     </div>`).join("");
 }
@@ -3227,6 +3535,8 @@ document.getElementById("projectSubtaskList").addEventListener("change",e=>{
 document.getElementById("projectSubtaskList").addEventListener("input",e=>{
   const ti=e.target.closest(".subtask-title");
   if(ti)currentSubtasks[Number(ti.dataset.idx)].title=ti.value;
+  const weight=e.target.closest(".subtask-weight");
+  if(weight){const value=Number(weight.value);currentSubtasks[Number(weight.dataset.idx)].weight=Number.isFinite(value)?Math.max(0,Math.min(100,value)):0;const sum=subtaskWeightSum(),label=document.getElementById("subtaskWeightSum");label.textContent="รวม "+sum+"%";label.style.color=sum===100?"var(--focus)":"var(--danger)";}
 });
 function syncTargetHoursDisplay(){document.getElementById("g_targetHoursVal").textContent=document.getElementById("g_targetHours").value+" ชม.";}
 document.getElementById("g_targetHoursMinus").addEventListener("click",()=>{
@@ -3246,13 +3556,24 @@ function updateGoalModeGrid(){
   document.getElementById("goalModeProjectFields").style.display=pickedGoalMode==="project"?"block":"none";
   document.getElementById("g_deadlineField").style.display="block";
 }
+document.getElementById("g_progressSource").addEventListener("change",()=>{
+  const selected=document.getElementById("g_progressSource").value;
+  document.getElementById("goalProjectSourceTime").hidden=selected!=="time";
+  document.getElementById("goalProjectSourceCount").hidden=selected!=="count";
+  document.getElementById("goalProjectSubtaskSource").style.display=selected==="subtasks"?"block":"none";
+  document.getElementById("g_progressSourceHelp").textContent=selected==="tasks"
+    ?"ใช้ค่าเฉลี่ยความคืบหน้าของงานที่ผูกกับโปรเจกต์: งานทั่วไปนับสถานะ ส่วนงานจำนวน/เวลานับตามตัววัด แต่ไม่ติ๊กเสร็จให้อัตโนมัติ"
+    :selected==="time"?"รวมเฉพาะเวลาจาก Pomodoro ที่บันทึกจริงของงานที่ผูกกับโปรเจกต์ ไม่รวมช่วงพัก และไม่สร้างชั่วโมงให้ข้อมูลเก่า"
+    :selected==="count"?"รวมค่าตัววัดชนิดจำนวนของงานที่ผูก หากยังไม่มีงานที่ผูกจะอ่านค่าจำนวนจากช่วงเวลาที่ทำเครื่องหมายเสร็จ"
+    :"ใช้ขั้นย่อยและน้ำหนักของโปรเจกต์เท่านั้น งานที่ผูกไว้จะแสดงประกอบแต่ไม่นำมาบวกซ้ำ";
+});
 document.getElementById("goalModeGrid").addEventListener("click",e=>{
   const b=e.target.closest("button");if(!b)return;
   pickedGoalMode=b.dataset.mode;updateGoalModeGrid();
 });
 function openGoalModal(goal){
   editingGoalId=goal?goal.id:null;
-  document.getElementById("goalModalTitle").textContent=goal?"แก้ไขโปรเจกต์":"โปรเจกต์ใหม่";
+  document.getElementById("goalModalTitle").textContent=goal?(goalModeOf(goal)==="project"?"แก้ไขโปรเจกต์":"แก้ไขเป้าหมาย"):"เป้าหมายใหม่";
   document.getElementById("g_emoji").value=goal?.emoji||"📌";
   pickedIconId=(goal?.icon&&ICON_LIB[goal.icon])?goal.icon:"";
   document.getElementById("g_iconPreview").innerHTML=pickedIconId?lucideSvg(ICON_LIB[pickedIconId].svg,26):(goal?.emoji||"📌");
@@ -3260,7 +3581,12 @@ function openGoalModal(goal){
   document.getElementById("g_category").value=goal?.category||"work";
   document.getElementById("g_deadline").value=goal?.deadline||"";
   document.getElementById("g_visualType").value=goal?.visualType||"auto";
+  document.getElementById("g_progressSource").value=goal?.progressSource||((goal?.subtasks||[]).length?"subtasks":"tasks");
+  document.getElementById("g_progressSource").dispatchEvent(new Event("change"));
   document.getElementById("g_targetHours").value=goal?.targetHours||20;
+  document.getElementById("g_projectTargetHours").value=goal?.targetHours||20;
+  document.getElementById("g_projectTargetCount").value=goal?.targetCount||1;
+  document.getElementById("g_projectCountUnit").value=goal?.unit||"ชิ้น";
   syncTargetHoursDisplay();
   const presetUnits=["กม.","นาที","เซ็ต","แก้ว","บาท","ครั้ง"];
   const savedUnit=goal?.unit||"";
@@ -3274,7 +3600,6 @@ function openGoalModal(goal){
   updateFinanceSourceRows();
   document.getElementById("g_targetCount").value=goal?.targetCount||"";
   currentSubtasks=(goal?.subtasks||[]).map(s=>({due:"",weight:0,...s}));
-  if(currentSubtasks.length&&currentSubtasks.some(s=>!s.weight))rebalanceSubtaskWeights();
   renderSubtaskList();
   // infer mode for goals saved before the mode selector existed; legacy "task" goals map to project (milestone) mode
   pickedGoalMode=goal?.mode||(goal?.targetHours>0?"time":goal?"project":"time");
@@ -3316,6 +3641,12 @@ document.getElementById("goalSaveBtn").addEventListener("click",()=>{
     if(!unit){alert("กรอกหน่วยด้วยครับ เช่น กม., เซ็ต");return;}
     if(!targetCount||targetCount<=0){alert("กรอกเป้าหมายจำนวนด้วยครับ");return;}
   }
+  if(pickedGoalMode==="project"){
+    const source=document.getElementById("g_progressSource").value;
+    if(source==="time"&&!(Number(document.getElementById("g_projectTargetHours").value)>0)){showToast("ระบุเป้าหมายเวลาให้มากกว่า 0 ชั่วโมง");return;}
+    if(source==="count"&&(!(Number(document.getElementById("g_projectTargetCount").value)>0)||!document.getElementById("g_projectCountUnit").value.trim())){showToast("ระบุจำนวนเป้าหมายและหน่วยให้ครบ");return;}
+    if(source==="subtasks"&&currentSubtasks.filter(step=>step.title.trim()).length&&subtaskWeightSum()!==100){showToast("น้ำหนักขั้นย่อยต้องรวม 100% ปรับตัวเลขก่อนบันทึก");return;}
+  }
   const data={
     title,
     emoji:document.getElementById("g_emoji").value.trim()||"📌",
@@ -3324,9 +3655,10 @@ document.getElementById("goalSaveBtn").addEventListener("click",()=>{
     deadline:document.getElementById("g_deadline").value||"",
     visualType:document.getElementById("g_visualType").value||"auto",
     mode:pickedGoalMode,
-    targetHours:pickedGoalMode==="time"?(parseFloat(document.getElementById("g_targetHours").value)||0):0,
-    unit:pickedGoalMode==="count"?currentUnitValue():"",
-    targetCount:pickedGoalMode==="count"?(parseFloat(document.getElementById("g_targetCount").value)||0):0,
+    progressSource:pickedGoalMode==="project"?document.getElementById("g_progressSource").value:"",
+    targetHours:pickedGoalMode==="time"?(parseFloat(document.getElementById("g_targetHours").value)||0):pickedGoalMode==="project"&&document.getElementById("g_progressSource").value==="time"?(parseFloat(document.getElementById("g_projectTargetHours").value)||0):0,
+    unit:pickedGoalMode==="count"?currentUnitValue():pickedGoalMode==="project"&&document.getElementById("g_progressSource").value==="count"?document.getElementById("g_projectCountUnit").value.trim():"",
+    targetCount:pickedGoalMode==="count"?(parseFloat(document.getElementById("g_targetCount").value)||0):pickedGoalMode==="project"&&document.getElementById("g_progressSource").value==="count"?(parseFloat(document.getElementById("g_projectTargetCount").value)||0):0,
     subtasks:pickedGoalMode==="project"?currentSubtasks.filter(s=>s.title.trim()).map(s=>({id:s.id,title:s.title.trim(),done:!!s.done,due:s.due||"",weight:Number(s.weight)||0})):undefined,
     financeLinked:pickedGoalMode==="count"&&currentUnitValue()==="บาท"?document.getElementById("g_financeLinked").checked:false,
     financeSource:document.querySelector('input[name="g_financeSource"]:checked')?.value||"net",
@@ -3512,7 +3844,7 @@ document.getElementById("openProfileBtn").addEventListener("click",()=>{
 // SETTINGS MISC
 document.getElementById("resetDataBtn").addEventListener("click",()=>{
   showConfirmPopup({title:"ล้างข้อมูลทั้งหมดใช่ไหม?",message:"ข้อมูลทั้งหมดจะหายถาวร ไม่สามารถกู้คืนได้ — งาน ช่วงเวลา เป้าหมาย การเงิน และประวัติจะถูกลบ",variant:"destructive",confirmLabel:"ล้างข้อมูลทั้งหมด",onConfirm:()=>{
-    blocks=[];goals=[];Object.keys(timerState).forEach(k=>delete timerState[k]);stats={byDate:{}};journal={};expenses=[];events=[];accounts=[{id:"acc_cash",name:"เงินสด",color:"#2f6b52",startingBalance:0}];budgets={};tasks=[];saveState();renderAll();
+    blocks=[];goals=[];Object.keys(timerState).forEach(k=>delete timerState[k]);stats={byDate:{}};journal={};expenses=[];events=[];accounts=[{id:"acc_cash",name:"เงินสด",color:"#2f6b52",startingBalance:0}];budgets={};tasks=[];investmentAssets=[];saveState();renderAll();
   }});
 });
 
@@ -3540,33 +3872,48 @@ function disciplineChartHtml(rangeDays){
 }
 
 
-function constructionBuildingHtml(g){
-  const p=goalProgress(g);
-  const pct=Math.max(0,Math.min(100,Number(p.pct)||0));
-  const floors=Array.from({length:5},(_,i)=>{
-    const start=i*20;
-    const progress=Math.max(0,Math.min(1,(pct-start)/20));
-    const state=pct>=start+20?"is-built":progress>0?"is-current":"is-planned";
-    const windows=Array.from({length:3},()=>'<span class="construction-window"></span>').join("");
-    return`<div class="construction-floor ${state}" style="--floor-progress:${progress}"><span class="construction-floor-label">${i+1}</span><span class="construction-windows">${windows}</span></div>`;
-  }).join("");
-  const title=esc(String(g.title||"โปรเจกต์"));
-  const goalId=esc(String(g.id||""));
-  const visualType=g.visualType&&g.visualType!=="auto"?g.visualType:(g.category==="money"||g.category==="income"?"money":g.category==="body"||g.category==="mind"?"tree":"building");
-  const visualLabel=visualType==="tree"?"ต้นไม้เติบโต":visualType==="money"?"เงินกำลังสะสม":"ตึกกำลังก่อสร้าง";
-  return`<div class="construction-scene construction-scene-3d progress-visual-${visualType}" data-construction-3d data-goal-id="${goalId}" data-visual-type="${visualType}" data-progress="${pct}" role="img" aria-label="${title} ${visualLabel} ความคืบหน้า ${pct}%">
-    <canvas class="construction-3d-canvas" aria-hidden="true"></canvas>
-    <div class="construction-3d-status" aria-hidden="true"><span class="construction-3d-status-dot"></span><span>กำลังเตรียมแบบจำลอง 3D…</span></div>
-    <div class="construction-3d-fallback" aria-hidden="true">
-      <div class="construction-sun"></div>
-      <div class="construction-crane"><span class="construction-crane-mast"></span><span class="construction-crane-arm"></span><span class="construction-crane-hook"></span></div>
-      <div class="construction-building">${floors}</div>
-      <div class="construction-scaffold"><i></i><i></i><i></i><b></b><b></b><b></b></div>
-      <div class="construction-ground"></div>
-    </div>
-    <div class="construction-scene-footer"><span>${visualType==="tree"?"ต้นไม้ 3D · กำลังเติบโต":visualType==="money"?"เงิน 3D · กำลังสะสม":"ตึก 3D · กำลังก่อสร้าง"}</span><span class="construction-scene-footer-right"><button type="button" class="construction-sequence-btn" onclick="startConstructionSequence('${goalId}',event)">▶ ดูขั้นตอน 10 วิ</button><strong>${pct}%</strong></span></div>
-  </div>`;
+const FARM_DECOR=[{id:'chicken',icon:'🐔',label:'ไก่'},{id:'coop',icon:'🛖',label:'เล้าไก่'},{id:'pig',icon:'🐖',label:'หมู'},{id:'shed',icon:'🌾',label:'โรงเก็บของ'},{id:'cow',icon:'🐄',label:'วัว'},{id:'barn',icon:'🏠',label:'โรงเรือน'},{id:'sunflower',icon:'🌻',label:'ทานตะวัน'}];
+let farmSelectedGoalId=null,farmSelectedItemId=null;
+function farmSceneHtml(g){
+  const p=goalProgress(g.id),pct=Math.max(0,Math.min(100,Number(p.pct)||0)),stage=pct>=100?'ฟาร์มสมบูรณ์':pct>=75?'เพิ่มวัวและโรงเรือน':pct>=50?'เพิ่มหมูและโรงเก็บของ':pct>=25?'เพิ่มไก่และเล้า':'เตรียมพื้นที่ฟาร์ม';
+  const progressItems=[{at:25,icon:'🐔',cls:'chicken'},{at:25,icon:'🛖',cls:'coop'},{at:50,icon:'🐖',cls:'pig'},{at:50,icon:'🌾',cls:'field'},{at:75,icon:'🐄',cls:'cow'},{at:75,icon:'🏠',cls:'barn'},{at:100,icon:'🌻',cls:'flower'}];
+  let farm=MomentaFarm.normalize(farmStates[g.id]);const earned=MomentaFarm.applyProgress(g.id,pct,farm);
+  if(earned.newlyUnlocked.length){farm=earned.state;farmStates={...farmStates,[g.id]:farm};saveState();}
+  const unlocked=new Set(farm.rewardLedger.map(item=>item.itemId)),selected=farmSelectedGoalId===String(g.id)?farmSelectedItemId:null;
+  const placed=farm.placedItems.map(item=>{const decor=FARM_DECOR.find(row=>row.id===item.itemId);return decor?`<span class="farm-item farm-decor-${item.slot}" aria-hidden="true">${decor.icon}</span>`:''}).join('');
+  const inventory=FARM_DECOR.map(item=>{const isUnlocked=unlocked.has(item.id);return `<button type="button" class="farm-inventory-item ${isUnlocked?'':'is-locked'} ${selected===item.id?'is-selected':''}" data-farm-pick="${item.id}" data-farm-goal="${esc(String(g.id))}" ${isUnlocked?'':'disabled'} aria-pressed="${selected===item.id}" aria-label="${isUnlocked?`เลือก ${item.label} สำหรับวาง`:`${item.label} ปลดล็อกตามความคืบหน้าโปรเจกต์`}"><span aria-hidden="true">${item.icon}</span><small>${item.label}</small></button>`}).join('');
+  const slots=MomentaFarm.SLOTS.map((slot,index)=>{const item=farm.placedItems.find(row=>row.slot===slot),decor=FARM_DECOR.find(row=>row.id===item?.itemId),name=['โซนเหนือ','โซนกลาง','โซนใต้'][index];return `<button type="button" class="farm-slot" data-farm-slot="${slot}" data-farm-goal="${esc(String(g.id))}" aria-label="${name}${decor?` มี ${decor.label}`:' ว่าง'}">${decor?decor.icon:'＋'}<small>${name}</small></button>`}).join('');
+  const status=selected?'เลือก '+(FARM_DECOR.find(item=>item.id===selected)?.label||'ของตกแต่ง')+' แล้ว · แตะช่องวาง':'เลือกของที่ปลดล็อกแล้ว แล้วแตะช่องวาง';
+  return `<section class="farm-scene" aria-label="ฟาร์มของ ${esc(String(g.title||'โปรเจกต์'))} ความคืบหน้า ${pct}% ${stage}"><div class="farm-landscape" aria-hidden="true"><span class="farm-sun">☀</span><span class="farm-hills"></span><span class="farm-fence">╫ ╫ ╫ ╫ ╫ ╫ ╫ ╫ ╫ ╫ ╫</span><span class="farm-ground"></span>${progressItems.filter(item=>pct>=item.at).map(item=>`<span class="farm-item farm-${item.cls}">${item.icon}</span>`).join('')}${placed}</div><div class="farm-caption"><span><strong>ฟาร์มของคุณ</strong><small>${stage}</small></span><strong>${pct}%</strong></div><progress class="farm-progress" max="100" value="${pct}" aria-label="ความคืบหน้าฟาร์ม ${pct}%"></progress><p class="farm-note">ภาพฐานโตตามงานที่เสร็จ · ของตกแต่งที่ปลดล็อกแล้วจะยังอยู่เมื่อเปอร์เซ็นต์ลดลง</p><div class="farm-game-controls"><strong>คลังฟาร์ม <small>${unlocked.size}/${FARM_DECOR.length} ชิ้น</small></strong><div class="farm-inventory">${inventory}</div><p class="farm-placement-hint" aria-live="polite">${status}</p><div class="farm-slots" aria-label="ตำแหน่งวางของตกแต่ง">${slots}</div></div></section>`;
 }
+document.addEventListener('click',event=>{
+  const pick=event.target.closest('[data-farm-pick]');
+  if(pick){farmSelectedGoalId=pick.dataset.farmGoal;farmSelectedItemId=pick.dataset.farmPick;if(currentTab==='projects'&&projectView==='goals')renderGrowth();else renderProjects();return;}
+  const slot=event.target.closest('[data-farm-slot]');if(!slot)return;
+  const goalId=slot.dataset.farmGoal,itemId=farmSelectedGoalId===goalId?farmSelectedItemId:null;
+  if(!itemId){showToast('เลือกของตกแต่งที่ปลดล็อกก่อน แล้วแตะช่องวาง');return;}
+  const result=MomentaFarm.placeItem(itemId,slot.dataset.farmSlot,farmStates[goalId]);
+  if(!result.ok){showToast('ของชิ้นนี้ยังล็อกอยู่หรือช่องวางไม่ถูกต้อง');return;}
+  farmStates={...farmStates,[goalId]:result.state};farmSelectedGoalId=null;farmSelectedItemId=null;
+  if(!saveState())return;if(currentTab==='projects'&&projectView==='goals')renderGrowth();else renderProjects();showToast('วางของตกแต่งในฟาร์มแล้ว');
+});
+function constructionBuildingHtml(g){
+  const visualType=g.visualType||'auto';
+  if(visualType==='auto'||visualType==='farm'||!['building','tree','money'].includes(visualType))return farmSceneHtml(g);
+  const pct=Math.max(0,Math.min(100,Number(goalProgress(g.id).pct)||0));
+  const title=esc(String(g.title||'โปรเจกต์')),goalId=esc(String(g.id||''));
+  const labels={building:'ตึกกำลังก่อสร้าง',tree:'ต้นไม้เติบโต',money:'เงินกำลังสะสม'};
+  return `<div class="construction-scene construction-scene-3d progress-visual-${visualType}" data-construction-3d data-goal-id="${goalId}" data-visual-type="${visualType}" data-progress="${pct}" aria-label="${title} ${labels[visualType]} ความคืบหน้า ${pct}%"><canvas class="construction-3d-canvas" aria-hidden="true"></canvas><div class="construction-3d-status" aria-hidden="true"><span class="construction-3d-status-dot"></span><span>กำลังเตรียมแบบจำลอง 3D…</span></div><div class="construction-3d-fallback" aria-hidden="true"><span class="progress-model-fallback">${{building:'🏗️',tree:'🌳',money:'🪙'}[visualType]}</span><div class="construction-ground"></div></div><div class="construction-scene-footer"><span>${labels[visualType]}</span><span class="construction-scene-footer-right"><button type="button" class="construction-sequence-btn" onclick="startConstructionSequence(this.closest('[data-goal-id]').dataset.goalId,event)">▶ ดูขั้นตอน 10 วิ</button><strong>${pct}%</strong></span></div></div>`;
+}
+function renderGrowth(){
+  const el=document.getElementById('momentaGrowth');if(!el)return;
+  const list=goals.filter(g=>!['project','habit'].includes(goalModeOf(g)));if(!list.length){el.innerHTML='<div class="momenta-b-steps"><h2>ยังไม่มีเป้าหมายส่วนตัว</h2><p>สร้างเป้าหมายที่วัดด้วยเวลา จำนวน หรือเงินออม</p></div>';return;}
+  const goal=list.find(g=>String(g.id)===momentaSelectedGoalId)||list[0],progress=goalProgress(goal.id),pct=Math.max(0,Math.min(100,Number(progress.pct)||0));
+  el.innerHTML=`<label class="momenta-project-picker">เลือกเป้าหมาย<select id="momentaGrowthSelect">${list.map(g=>`<option value="${esc(String(g.id))}" ${g.id===goal.id?'selected':''}>${esc(g.title)}</option>`).join('')}</select></label><div class="momenta-b-project"><section class="momenta-b-hero"><p>เป้าหมายของคุณ</p><div><h2>${esc(goal.title)}</h2><strong>${pct}%</strong></div><progress max="100" value="${pct}" aria-label="ความคืบหน้าเป้าหมาย ${pct}%"></progress>${constructionBuildingHtml(goal)}</section><section class="momenta-b-steps"><h2>การเติบโต</h2><p>ภาพเปลี่ยนตามความคืบหน้าของเป้าหมายส่วนตัวที่วัดด้วยเวลา จำนวน หรือเงินออม</p><button type="button" class="momenta-b-secondary" data-growth-edit="${esc(String(goal.id))}">แก้ไขเป้าหมายและภาพ</button></section></div>`;
+  if(window.initConstruction3D)window.initConstruction3D();
+}
+document.getElementById('momentaGrowth').addEventListener('change',event=>{if(event.target.id==='momentaGrowthSelect'){momentaSelectedGoalId=event.target.value;renderGrowth();}});
+document.getElementById('momentaGrowth').addEventListener('click',event=>{const button=event.target.closest('[data-growth-edit]');if(!button)return;const goal=goals.find(g=>String(g.id)===button.dataset.growthEdit);if(goal)openGoalModal(goal);});
 function startConstructionSequence(goalId,event){
   event?.preventDefault();
   event?.stopPropagation();
@@ -3637,7 +3984,7 @@ function goalStepStatusLine(g){
   const p=goalProgress(g.id);
   const STEPS=5;
   if(g.mode==="project"){
-    const n=(g.subtasks||[]).length;
+    const n=p.subtasksTotal||0;
     if(!n)return"ยังไม่เริ่มทำ";
     const done=p.subtasksDone;
     if(done===0)return"ยังไม่เริ่มทำ";
@@ -3650,15 +3997,36 @@ function goalStepStatusLine(g){
   if(pct>=100)return"เสร็จแล้ว 🎉";
   return`กำลังทำ · ขั้นที่ ${step} จาก ${STEPS}`;
 }
+let momentaSelectedGoalId='';
+let projectView="projects";
+function setProjectView(view){
+  projectView=view==="goals"?"goals":"projects";
+  const projects=document.getElementById("projectsManagementSection"),personalGoals=document.getElementById("projectGoalsSection");
+  if(projects)projects.hidden=projectView!=="projects";
+  if(personalGoals)personalGoals.hidden=projectView!=="goals";
+  document.querySelectorAll("[data-project-view]").forEach(button=>{
+    const selected=button.dataset.projectView===projectView;
+    button.classList.toggle("plan-view-tab-active",selected);button.setAttribute("aria-selected",String(selected));
+  });
+  if(projectView==="projects")renderProjects();else renderGrowth();
+}
+document.getElementById("projectViewTabs").addEventListener("click",event=>{
+  const button=event.target.closest("[data-project-view]");if(!button)return;
+  openWorkspaceRoute(button.dataset.projectView==="goals"?"goals":"projects");
+});
+document.getElementById("projectGoalsSection").addEventListener("click",event=>{
+  if(!event.target.closest("[data-growth-add]"))return;
+  openGoalModal(null);pickedGoalMode="time";updateGoalModeGrid();document.getElementById("goalModalTitle").textContent="เป้าหมายใหม่";
+});
 function renderProjects(){
   const el=document.getElementById("projDash");
   if(!el)return;
 
-  const projectGoals=goals.filter(g=>g.mode!=="habit");
+  const projectGoals=goals.filter(g=>goalModeOf(g)==="project");
   const habitGoals=goals.filter(g=>g.mode==="habit");
 
   let leftHtml=`<div class="proj-col-label">โปรเจกต์</div>`;
-  if(!projectGoals.length){leftHtml+='<p class="empty">ยังไม่มีเป้าหมาย — กด + เพื่อเพิ่ม</p>';}
+  if(!projectGoals.length){leftHtml+='<p class="empty">ยังไม่มีโปรเจกต์ — กด “เพิ่มโปรเจกต์” เพื่อเริ่ม</p>';}
   else{
     const catOrder={work:0,main:0,body:1,mind:2,learn:3,skill:3,money:4,income:4,home:5,social:6,hold:7};
     const sorted=[...projectGoals].sort((a,b)=>{
@@ -3668,29 +4036,37 @@ function renderProjects(){
       if(db!==null) return 1;
       return (catOrder[a.category]??2)-(catOrder[b.category]??2);
     });
+    const featured=sorted.find(g=>String(g.id)===momentaSelectedGoalId)||sorted[0],featuredProgress=goalProgress(featured.id),featuredId=esc(String(featured.id));
+    const steps=Array.isArray(featured.subtasks)?featured.subtasks:[];
+    const linked=tasks.filter(t=>t.goalId===featured.id);
+    const progressSource=featured.progressSource||(steps.length?'subtasks':'tasks');
+    const usesTasks=progressSource==="tasks";
+    const weightedSource=progressSource==="subtasks";
+    const weightTotal=steps.reduce((sum,step)=>sum+(Number(step.weight)||0),0);
+    const weightedRows=steps.map((step,index)=>`<button type="button" class="momenta-step" data-momenta-step="${index}" data-momenta-step-goal="${featuredId}" aria-pressed="${!!step.done}" aria-label="${step.done?'ยกเลิกสถานะเสร็จ':'ทำเสร็จแล้ว'} ${esc(step.title)}"><span aria-hidden="true">${step.done?'✓':'○'}</span><span>${esc(step.title)}<small>${step.done?'เสร็จแล้ว':'ยังไม่เสร็จ'}</small></span><strong>${Number(step.weight)||0}%</strong></button>`).join('');
+    const linkedRows=linked.map(t=>{const metric=window.MomentaMetrics.taskProgress(t);return `<button type="button" class="momenta-step" data-ui-task="${esc(String(t.id))}"><span aria-hidden="true">${t.completed?'✓':'○'}</span><span>${esc(t.title)}<small>${metric.kind==='binary'?(t.completed?'เสร็จแล้ว':'ยังไม่เสร็จ'):`${metric.value} / ${metric.target} ${esc(metric.unit)} · ${metric.pct}%`}</small></span><strong>${metric.pct}%</strong></button>`;}).join('');
+    const stepRows=steps.length?weightedRows:(linked.length?linkedRows:'<p>ยังไม่มีขั้นตอนหรืองานที่เชื่อมกับโปรเจกต์</p>');
+    const stepTitle=steps.length?'ขั้นตอนในโปรเจกต์':'งานในโปรเจกต์';
+    const stepNote=steps.length?(weightedSource?'ทำเครื่องหมายแต่ละขั้น · น้ำหนักรวมคิดเป็นเปอร์เซ็นต์โปรเจกต์':`เช็กลิสต์เสริม · เปอร์เซ็นต์หลักคำนวณจาก ${esc(featuredProgress.sourceLabel||'ตัววัดที่เลือก')}`):'รายการงานที่เชื่อมกับโปรเจกต์และตัววัดความคืบหน้ารายงาน';
+    const taskDisclosure=steps.length&&linked.length?`<details class="project-linked-tasks" ${usesTasks?'open':''}><summary>งานที่เชื่อม (${linked.length})${usesTasks?' · ใช้คำนวณเปอร์เซ็นต์':''}</summary>${linkedRows}</details>`:'';
+    leftHtml+=`<label class="momenta-project-picker">เลือกโปรเจกต์<select id="momentaProjectSelect">${sorted.map(g=>`<option value="${esc(String(g.id))}" ${g.id===featured.id?'selected':''}>${esc(g.title)}</option>`).join('')}</select></label>`;
+    leftHtml+=`<section class="momenta-b-project" aria-label="ภาพรวมโปรเจกต์"><div class="momenta-b-hero"><p>โปรเจกต์และงาน</p><div><h2>${esc(featured.title)}</h2><strong>${Math.max(0,Math.min(100,Number(featuredProgress.pct)||0))}%</strong></div><p class="project-progress-source">คำนวณจาก: ${esc(featuredProgress.sourceLabel||'เป้าหมายที่ตั้งไว้')}</p>${featuredProgress.warning?`<p class="project-progress-warning" role="status">${esc(featuredProgress.warning)}</p>`:''}<progress max="100" value="${Math.max(0,Math.min(100,Number(featuredProgress.pct)||0))}" aria-label="ความคืบหน้าโปรเจกต์"></progress><button type="button" class="momenta-b-action" data-momenta-goal="${featuredId}">ตั้งค่าโปรเจกต์</button>${constructionBuildingHtml(featured)}</div><div class="momenta-b-steps"><div class="momenta-b-steps-heading"><div><h2>${stepTitle}</h2><p>${stepNote}</p></div>${steps.length?`<span class="momenta-weight-total${weightTotal===100?' is-complete':' is-incomplete'}">รวม ${weightTotal}%</span>`:''}</div>${stepRows}${taskDisclosure}<div class="momenta-project-actions"><button type="button" class="momenta-b-secondary" data-momenta-add-task="${featuredId}">＋ เพิ่มงานในโปรเจกต์</button>${steps.length?`<button type="button" class="momenta-b-secondary" data-momenta-goal="${featuredId}">แก้ไขขั้นตอนและน้ำหนัก</button>`:''}</div></div></section>`;
     sorted.forEach(g=>{
+      if(g.id===featured.id)return;
       const p=goalProgress(g.id);
       const isHold=g.category==="hold";
       const modeLabel=p.mode==="count"?"จำนวน":p.mode==="project"?"งานเสร็จ":"เวลา";
       const metaRight=p.mode==="count"?`${p.logged}/${p.target||0} ${p.unit||""}`:p.mode==="project"?`${p.subtasksDone}/${p.subtasksTotal} ขั้นย่อย`:`${p.logged}/${p.target||0} ชม.`;
+      const linkedTasks=tasks.filter(t=>t.goalId===g.id);
+      const taskPreview=linkedTasks.length?`<div class="project-linked-tasks"><strong>งานที่เชื่อมกับโปรเจกต์</strong>${linkedTasks.slice(0,3).map(t=>`<button type="button" class="project-linked-task" data-ui-task="${esc(String(t.id))}" onclick="event.stopPropagation();uiOpenTask(this.dataset.uiTask)"><span aria-hidden="true">${t.completed?'✓':'○'}</span><span>${esc(t.title)}</span><small>${t.completed?'เสร็จแล้ว':'ยังไม่เสร็จ'}</small></button>`).join('')}${linkedTasks.length>3?`<small>และอีก ${linkedTasks.length-3} งาน</small>`:''}</div>`:'';
       const financeBadge=p.financeLinked?`<span class="proj-finance-badge">⚡ อัตโนมัติจากการเงิน</span>`:"";
-      if(p.financeLinked&&p.pct>=100){
-        leftHtml+=`<div class="proj-card2 proj-card2-celebrate" onclick="openGoalModal(goals.find(g=>g.id==='${g.id}'))">
-          <div class="proj-celebrate-check">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-10" stroke="var(--card)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <p class="proj-celebrate-title">${esc(g.title)} — สำเร็จแล้ว!</p>
-          ${financeBadge}
-          <p class="proj-celebrate-sub">เก็บครบ ${p.target?.toLocaleString?.()||p.target} ตามเป้า 🎉</p>
-        </div>`;
-        return;
-      }
       leftHtml+=`<div class="proj-card2${isHold?" proj-dimmed":""}" onclick="openGoalModal(goals.find(g=>g.id==='${g.id}'))">
         <div class="proj-card2-top">
           <div class="proj-card2-name">${goalIconHtml(g,16)} ${esc(g.title)}${financeBadge}</div>
           <div class="proj-card2-pct">${p.pct}%</div>
         </div>
         ${constructionBuildingHtml(g)}
+        ${taskPreview}
         <p class="proj-card2-status">${goalStepStatusLine(g)}</p>
         <p class="proj-card2-hint">${goalMotivation(p.pct)}</p>
         <div class="proj-card2-bottom">
@@ -3736,6 +4112,20 @@ function celebrationHeadline(streak){
   return `🌱 วันนี้เริ่มสตรีคใหม่กันเถอะ`;
 }
 let progressViewMode="overview";
+let focusSectionView="growth";
+function setFocusSection(view){
+  if(!["pomodoro","meditation","growth"].includes(view))view="growth";
+  focusSectionView=view;
+  document.querySelectorAll("#page-progress [data-focus-view]").forEach(button=>{
+    const active=button.dataset.focusView===view;
+    button.classList.toggle("active",active);
+    button.setAttribute("aria-selected",String(active));
+    button.tabIndex=active?0:-1;
+  });
+  document.querySelectorAll("#page-progress [data-focus-panel]").forEach(panel=>{panel.hidden=panel.dataset.focusPanel!==view;});
+  if(view==="growth")renderProgress();
+  if(view==="pomodoro"&&typeof uiRenderFocusPicker==="function")uiRenderFocusPicker();
+}
 function setProgressViewMode(mode){
   if(!["overview","habit","mind"].includes(mode))mode="overview";
   progressViewMode=mode;
@@ -3831,9 +4221,20 @@ function renderProgress(){
   if(progressViewMode==="overview")el.innerHTML=progressOverviewHtml();
   else if(progressViewMode==="habit")el.innerHTML=progressHabitHtml();
   else if(progressViewMode==="mind")el.innerHTML=progressMindHtml();
+  if(progressViewMode==="overview"){
+    const rounds=Math.max(0,totalFocusSessions());
+    const levels=[{at:0,label:'เริ่มสร้างจังหวะ'},{at:5,label:'สร้างจังหวะได้ต่อเนื่อง'},{at:20,label:'เติบโตต่อเนื่อง'},{at:50,label:'สะสมประสบการณ์'}];
+    const current=levels.filter(level=>rounds>=level.at).at(-1),next=levels.find(level=>rounds<level.at);
+    const from=current.at,to=next?.at||current.at,amount=next?Math.min(100,Math.round((rounds-from)/(to-from)*100)):100;
+    const estimatedMinutes=rounds*25,estimatedTime=estimatedMinutes>=60?`${Math.floor(estimatedMinutes/60)} ชม. ${estimatedMinutes%60} นาที`:`${estimatedMinutes} นาที`;
+    const stage=levels.indexOf(current)+1;
+    el.insertAdjacentHTML('afterbegin',`<section class="focus-growth" aria-label="การเติบโตจากการโฟกัส"><div class="focus-growth-main"><p class="focus-growth-eyebrow">ภาพแทนความสม่ำเสมอ ไม่ใช่การวัดสมองจริง</p><h2>ค่อย ๆ เติบโตไปด้วยกัน</h2><div class="focus-growth-visual" data-growth-stage="${stage}" aria-hidden="true">🧠</div><span class="focus-growth-stage">ระดับ ${stage} · ${current.label}</span><p class="focus-growth-caption">ภาพเปลี่ยนตามรอบโฟกัสที่บันทึกไว้</p><progress max="100" value="${amount}" aria-label="ความคืบหน้าสู่ภาพขั้นถัดไป ${amount}%"></progress><strong class="focus-growth-next">${rounds}${next?` / ${next.at} รอบเพื่อปลดล็อกภาพถัดไป`:' รอบ · ปลดล็อกครบทุกขั้นแล้ว'}</strong></div><div class="focus-growth-metrics"><div><span>รอบโฟกัส</span><strong>${rounds}</strong><small>รอบที่บันทึก</small></div><div><span>เวลาโดยประมาณ</span><strong>${estimatedTime}</strong><small>คำนวณที่ 25 นาที/รอบ</small></div></div></section>`);
+  }
 }
 
-document.getElementById("openProjAddBtn").addEventListener("click",()=>openGoalModal(null));
+document.getElementById("openProjAddBtn").addEventListener("click",()=>{openGoalModal(null);pickedGoalMode="project";updateGoalModeGrid();document.getElementById("goalModalTitle").textContent="โปรเจกต์ใหม่";});
+document.getElementById("projDash").addEventListener("change",event=>{if(event.target.id==='momentaProjectSelect'){momentaSelectedGoalId=event.target.value;renderProjects();}});
+document.getElementById("projDash").addEventListener("click",event=>{const step=event.target.closest('[data-momenta-step]');if(step){const goal=goals.find(item=>String(item.id)===step.dataset.momentaStepGoal),index=Number(step.dataset.momentaStep);if(goal&&Number.isInteger(index)&&goal.subtasks?.[index]){const previous=goal.subtasks[index].done;goal.subtasks[index].done=!previous;if(!saveState()){goal.subtasks[index].done=previous;return;}renderAll();}return;}const add=event.target.closest('[data-momenta-add-task]');if(add){const goalId=add.dataset.momentaAddTask;openTaskEditor();document.getElementById('taskOptions').open=true;document.getElementById('taskGoalInput').value=goalId;return;}const button=event.target.closest('[data-momenta-goal]');if(!button)return;const goal=goals.find(item=>String(item.id)===button.dataset.momentaGoal);if(goal)openGoalModal(goal);});
 
 /* PRODUCTIVE TIME BACKUP CORE START */
 function backupRecord(value){return value!==null&&typeof value==="object"&&!Array.isArray(value);}
@@ -3861,14 +4262,14 @@ function validateBackupData(input){
   if(!backupRecord(input))return{error:"ไฟล์ JSON ต้องเป็น object"};
   if(input.type!=="timeblock_import")return{error:'ไม่พบ type "timeblock_import"'};
   const version=input.version===undefined?1:Number(input.version);
-  if(!Number.isInteger(version)||![1,2].includes(version))return{error:"ไม่รองรับ backup version นี้"};
+  if(!Number.isInteger(version)||![1,2,3].includes(version))return{error:"ไม่รองรับ backup version นี้"};
   try{
     const readArray=key=>{
       const value=input[key]===undefined?[]:input[key];
       if(!Array.isArray(value))throw new Error("รูปแบบ "+key+" ไม่ถูกต้อง");
       return value.map(item=>backupClone(item));
     };
-    const projects=readArray("projects"),goalsIn=readArray("goals"),blocksIn=readArray("blocks"),tasksIn=readArray("tasks"),eventsIn=readArray("events"),expensesIn=readArray("expenses"),accountsIn=readArray("accounts");
+    const projects=readArray("projects"),goalsIn=readArray("goals"),blocksIn=readArray("blocks"),tasksIn=readArray("tasks"),eventsIn=readArray("events"),expensesIn=readArray("expenses"),accountsIn=readArray("accounts"),investmentsIn=readArray("investmentAssets"),recurringBillsIn=readArray("recurringBills"),focusSessionsIn=readArray("focusSessions"),pomoCustomModesIn=readArray("pomoCustomModes");
     const checkTitles=(items,label)=>items.forEach(item=>{if(!backupRecord(item)||typeof item.title!=="string"||!item.title.trim()||item.title.length>500)throw new Error("ข้อมูล "+label+" ไม่ถูกต้อง");});
     checkTitles(projects,"project");checkTitles(goalsIn,"goal");checkTitles(tasksIn,"task");checkTitles(blocksIn,"block");checkTitles(eventsIn,"event");
     blocksIn.forEach(item=>{if(!backupValidDate(item.date)||typeof item.start!=="string"||!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(item.start)||typeof item.end!=="string"||!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(item.end))throw new Error("ข้อมูล block ไม่ถูกต้อง");});
@@ -3889,6 +4290,10 @@ function validateBackupData(input){
     checkIds([...projects,...goalsIn],"goal");checkIds(blocksIn,"block");checkIds(tasksIn,"task");checkIds(eventsIn,"event");checkIds(expensesIn,"expense");checkIds(accountsIn,"account");
     expensesIn.forEach(item=>{if(!backupRecord(item)||!backupValidDate(item.date)||typeof item.category!=="string"||!item.category.trim()||!Number.isFinite(Number(item.amount))||Number(item.amount)<0||!["income","expense"].includes(item.type))throw new Error("ข้อมูล expense ไม่ถูกต้อง");if(item.note!==undefined&&typeof item.note!=="string")throw new Error("ข้อมูล expense note ไม่ถูกต้อง");if(item.accountId!==undefined&&item.accountId!==""&&!backupSafeId(item.accountId))throw new Error("ข้อมูล expense accountId ไม่ถูกต้อง");});
     accountsIn.forEach(item=>{if(!backupRecord(item)||typeof item.name!=="string"||!item.name.trim())throw new Error("ข้อมูล account ไม่ถูกต้อง");if(item.startingBalance!==undefined&&!Number.isFinite(Number(item.startingBalance)))throw new Error("ข้อมูล account balance ไม่ถูกต้อง");});
+    checkIds(investmentsIn,"investment");investmentsIn.forEach(item=>{if(!backupRecord(item)||typeof item.name!=="string"||!item.name.trim()||!backupValidDate(item.updatedAt)||![item.quantity,item.cost,item.value].every(n=>Number.isFinite(Number(n))&&Number(n)>=0))throw new Error("ข้อมูลสินทรัพย์ไม่ถูกต้อง");if(item.note!==undefined&&typeof item.note!=="string")throw new Error("หมายเหตุสินทรัพย์ไม่ถูกต้อง");});
+    checkIds(recurringBillsIn,"bill");recurringBillsIn.forEach(item=>{if(!backupRecord(item)||typeof item.name!=="string"||!item.name.trim()||!Number.isFinite(Number(item.amount))||Number(item.amount)<0||!Number.isInteger(Number(item.dueDay))||Number(item.dueDay)<1||Number(item.dueDay)>31||typeof item.category!=="string"||!item.category.trim())throw new Error("ข้อมูลบิลประจำไม่ถูกต้อง");if(item.accountId&&item.accountId!==""&&!backupSafeId(item.accountId))throw new Error("บัญชีบิลประจำไม่ถูกต้อง");});
+    checkIds(focusSessionsIn,"focus");focusSessionsIn.forEach(item=>{if(!backupRecord(item)||typeof item.startedAt!=="string"||Number.isNaN(Date.parse(item.startedAt))||typeof item.endedAt!=="string"||Number.isNaN(Date.parse(item.endedAt))||!Number.isFinite(Number(item.focusedSeconds))||Number(item.focusedSeconds)<0||!["completed","skipped","cancelled"].includes(item.endReason))throw new Error("ข้อมูลช่วงโฟกัสไม่ถูกต้อง");});
+    pomoCustomModesIn.forEach(item=>{if(!backupRecord(item)||typeof item.name!=="string"||!item.name.trim()||!Number.isFinite(Number(item.focus))||Number(item.focus)<1||!Number.isFinite(Number(item.break))||Number(item.break)<0)throw new Error("โหมด Pomodoro ไม่ถูกต้อง");});checkIds(pomoCustomModesIn,"pomo");
     const readDateMap=(value,label)=>{
       if(value===undefined)return{};if(!backupRecord(value))throw new Error("รูปแบบ "+label+" ไม่ถูกต้อง");
       const out={};Object.keys(value).forEach(date=>{if(!backupValidDate(date)||!backupRecord(value[date]))throw new Error("ข้อมูลวันที่ใน "+label+" ไม่ถูกต้อง");out[date]=backupClone(value[date]);});return out;
@@ -3902,13 +4307,18 @@ function validateBackupData(input){
       if(!category.trim()||category==="__proto__"||category==="constructor"||!Number.isFinite(Number(rawBudgets[category]))||Number(rawBudgets[category])<0)throw new Error("ข้อมูล budget ไม่ถูกต้อง");
       budgets[category]=Number(rawBudgets[category]);
     });
-    return{data:{type:"timeblock_import",version,exportedAt:typeof input.exportedAt==="string"?input.exportedAt:"",projects,goals:goalsIn,blocks:blocksIn,tasks:tasksIn,events:eventsIn,journal,stats,expenses:expensesIn,accounts:accountsIn,budgets}};
+    const rawMonthly=input.monthlyBudgets===undefined?{}:input.monthlyBudgets;if(!backupRecord(rawMonthly))throw new Error("รูปแบบงบรายเดือนไม่ถูกต้อง");
+    const monthlyBudgets={};Object.keys(rawMonthly).forEach(month=>{if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(month)||!backupRecord(rawMonthly[month]))throw new Error("เดือนในงบไม่ถูกต้อง");monthlyBudgets[month]={};Object.keys(rawMonthly[month]).forEach(category=>{const amount=rawMonthly[month][category];if(!category.trim()||category==="__proto__"||category==="constructor"||!Number.isFinite(Number(amount))||Number(amount)<0)throw new Error("ยอดงบรายเดือนไม่ถูกต้อง");monthlyBudgets[month][category]=Number(amount);});});
+    const farmStates=input.farmStates===undefined?{}:input.farmStates;if(!backupRecord(farmStates))throw new Error("รูปแบบข้อมูลฟาร์มไม่ถูกต้อง");
+    Object.entries(farmStates).forEach(([goalId,farm])=>{if(!backupSafeId(goalId)||!backupRecord(farm)||!Array.isArray(farm.placedItems)||!Array.isArray(farm.rewardLedger))throw new Error("ข้อมูลฟาร์มไม่ถูกต้อง");farm.placedItems.forEach(item=>{if(!backupRecord(item)||typeof item.itemId!=="string"||!item.itemId||typeof item.slot!=="string"||!item.slot)throw new Error("ตำแหน่งของในฟาร์มไม่ถูกต้อง");});farm.rewardLedger.forEach(entry=>{if(!backupRecord(entry)||!Number.isInteger(Number(entry.milestone))||Number(entry.milestone)<1||Number(entry.milestone)>100)throw new Error("รางวัลฟาร์มไม่ถูกต้อง");});});
+    const settings=input.pomoSettings===undefined?{}:input.pomoSettings;if(!backupRecord(settings))throw new Error("การตั้งค่า Pomodoro ไม่ถูกต้อง");
+    return{data:{type:"timeblock_import",version:3,sourceVersion:version,exportedAt:typeof input.exportedAt==="string"?input.exportedAt:"",projects,goals:goalsIn,blocks:blocksIn,tasks:tasksIn,events:eventsIn,journal,stats,expenses:expensesIn,accounts:accountsIn,budgets,investmentAssets:investmentsIn,recurringBills:recurringBillsIn,monthlyBudgets,focusSessions:focusSessionsIn,farmStates,pomoCustomModes:pomoCustomModesIn,pomoSettings:backupClone(settings)}};
   }catch(error){return{error:error instanceof Error?error.message:"รูปแบบ backup ไม่ถูกต้อง"};}
 }
 function mergeBackupData(localInput,incoming,makeId){
   const local=backupClone(localInput),next={...local};
-  ["goals","blocks","tasks","events","expenses","accounts"].forEach(key=>{if(!Array.isArray(next[key]))next[key]=[];});
-  if(!backupRecord(next.journal))next.journal={};if(!backupRecord(next.stats))next.stats={byDate:{}};if(!backupRecord(next.stats.byDate))next.stats.byDate={};if(!backupRecord(next.budgets))next.budgets={};
+  ["goals","blocks","tasks","events","expenses","accounts","investmentAssets","recurringBills","focusSessions","pomoCustomModes"].forEach(key=>{if(!Array.isArray(next[key]))next[key]=[];});
+  if(!backupRecord(next.journal))next.journal={};if(!backupRecord(next.stats))next.stats={byDate:{}};if(!backupRecord(next.stats.byDate))next.stats.byDate={};if(!backupRecord(next.budgets))next.budgets={};if(!backupRecord(next.monthlyBudgets))next.monthlyBudgets={};if(!backupRecord(next.farmStates))next.farmStates={};if(!backupRecord(next.pomoSettings))next.pomoSettings={};
   const counts={added:0,skipped:0,conflicts:0};
   const goalMap=new Map(),taskMap=new Map(),accountMap=new Map();
   const appendMapped=(key,items,kind,map)=>{
@@ -3926,6 +4336,10 @@ function mergeBackupData(localInput,incoming,makeId){
   };
   appendMapped("goals",[...incoming.projects,...incoming.goals],"goal",goalMap);
   appendMapped("accounts",incoming.accounts,"account",accountMap);
+  appendMapped("investmentAssets",incoming.investmentAssets||[],"investment",null);
+  appendMapped("recurringBills",incoming.recurringBills||[],"bill",null);
+  appendMapped("focusSessions",incoming.focusSessions||[],"focus",null);
+  appendMapped("pomoCustomModes",incoming.pomoCustomModes||[],"pomo",null);
   const mapReference=(value,map,localItems)=>{
     if(!value)return"";if(map.has(value))return map.get(value);return localItems.some(item=>item.id===value)?value:"";
   };
@@ -3938,6 +4352,12 @@ function mergeBackupData(localInput,incoming,makeId){
   appendMapped("blocks",blocksToAdd,"block",null);
   appendMapped("events",incoming.events,"event",null);
   appendMapped("expenses",expensesToAdd,"expense",null);
+  Object.keys(incoming.monthlyBudgets||{}).forEach(month=>{
+    if(!backupRecord(next.monthlyBudgets[month]))next.monthlyBudgets[month]={};
+    Object.entries(incoming.monthlyBudgets[month]).forEach(([category,amount])=>{if(!Object.prototype.hasOwnProperty.call(next.monthlyBudgets[month],category)){next.monthlyBudgets[month][category]=amount;counts.added++;}else if(Number(next.monthlyBudgets[month][category])!==Number(amount))counts.conflicts++;else counts.skipped++;});
+  });
+  Object.entries(incoming.farmStates||{}).forEach(([sourceGoalId,farm])=>{const targetGoalId=goalMap.get(sourceGoalId)||(next.goals.some(goal=>goal.id===sourceGoalId)?sourceGoalId:"");if(!targetGoalId){counts.conflicts++;return;}if(!Object.prototype.hasOwnProperty.call(next.farmStates,targetGoalId)){next.farmStates[targetGoalId]=backupClone(farm);counts.added++;}else if(backupStable(next.farmStates[targetGoalId])===backupStable(farm))counts.skipped++;else counts.conflicts++;});
+  Object.entries(incoming.pomoSettings||{}).forEach(([key,value])=>{if(!Object.prototype.hasOwnProperty.call(next.pomoSettings,key)){next.pomoSettings[key]=backupClone(value);counts.added++;}else if(backupStable(next.pomoSettings[key])!==backupStable(value))counts.conflicts++;else counts.skipped++;});
   const mergeDates=(target,source)=>Object.keys(source).forEach(date=>{if(Object.prototype.hasOwnProperty.call(target,date))counts.skipped++;else{target[date]=backupClone(source[date]);counts.added++;}});
   mergeDates(next.journal,incoming.journal);mergeDates(next.stats.byDate,incoming.stats.byDate);
   Object.keys(incoming.budgets).forEach(category=>{
@@ -3948,7 +4368,7 @@ function mergeBackupData(localInput,incoming,makeId){
   return{...next,counts};
 }
 function buildBackupData(state,exportedAt){
-  return{type:"timeblock_import",version:2,exportedAt,projects:(state.goals||[]).filter(goal=>goal._isProject),goals:(state.goals||[]).filter(goal=>!goal._isProject),blocks:state.blocks||[],tasks:state.tasks||[],events:state.events||[],journal:state.journal||{},stats:state.stats||{byDate:{}},expenses:state.expenses||[],accounts:state.accounts||[],budgets:state.budgets||{}};
+  return{type:"timeblock_import",version:3,exportedAt,schemaVersion:window.MomentaDomain?.CURRENT_SCHEMA_VERSION||3,projects:(state.goals||[]).filter(goal=>goal._isProject),goals:(state.goals||[]).filter(goal=>!goal._isProject),blocks:state.blocks||[],tasks:state.tasks||[],events:state.events||[],journal:state.journal||{},stats:state.stats||{byDate:{}},expenses:state.expenses||[],accounts:state.accounts||[],budgets:state.budgets||{},investmentAssets:state.investmentAssets||[],recurringBills:state.recurringBills||[],monthlyBudgets:state.monthlyBudgets||{},focusSessions:state.focusSessions||[],farmStates:state.farmStates||{},pomoCustomModes:state.pomoCustomModes||[],pomoSettings:state.pomoSettings||{}};
 }
 function tasksForDate(taskItems,date){
   const rank={high:0,normal:1,low:2};
@@ -3964,12 +4384,14 @@ function parseImportJson(raw){
   let data;try{data=JSON.parse(raw);}catch(e){return{error:"JSON ไม่ถูกต้อง: "+e.message};}
   return validateBackupData(data);
 }
-function currentBackupState(){return{goals,blocks,tasks,events,journal,stats,expenses,accounts,budgets};}
+function currentBackupState(){return{schemaVersion:window.MomentaDomain?.CURRENT_SCHEMA_VERSION||3,goals,blocks,tasks,events,journal,stats,expenses,accounts,budgets,investmentAssets,recurringBills,monthlyBudgets,focusSessions,farmStates,pomoCustomModes,pomoSettings};}
 function applyImport(parsed){
   if(parsed.error||!parsed.data)return null;
+  const before=backupClone(persistedState());
   const merged=mergeBackupData(currentBackupState(),parsed.data,kind=>uid()+"-"+kind);
-  goals=merged.goals;blocks=merged.blocks;tasks=merged.tasks;events=merged.events;journal=merged.journal;stats=merged.stats;expenses=merged.expenses;accounts=merged.accounts;budgets=merged.budgets;
-  saveState();renderAll();return merged;
+  goals=merged.goals;blocks=merged.blocks;tasks=merged.tasks;events=merged.events;journal=merged.journal;stats=merged.stats;expenses=merged.expenses;accounts=merged.accounts;budgets=merged.budgets;investmentAssets=merged.investmentAssets;
+  recurringBills=merged.recurringBills;monthlyBudgets=merged.monthlyBudgets;focusSessions=merged.focusSessions;farmStates=merged.farmStates;pomoCustomModes=merged.pomoCustomModes;pomoSettings=merged.pomoSettings;
+  if(!saveState()){hydrateState(before);renderAll();return null;}renderAll();return merged;
 }
 
 function getImportRaw(){
@@ -4068,20 +4490,31 @@ function ensureFirebaseInit(fc){
     cloudDb=firebase.firestore();
     firebaseInitialized=true;
     firebase.auth().onAuthStateChanged(user=>{
+      const previousUid=activeSyncUid;
       currentUser=user;
       updateSyncModalView();
+      if(cloudUnsub){cloudUnsub();cloudUnsub=null;}
+      cloudConnected=false;cloudDocRef=null;syncConflict=null;hideSyncConflict();
       if(user){
+        activateSyncAccount(user,previousUid);
         cloudDocRef=cloudDb.collection("users").doc(user.uid).collection("data").doc("main");
-        if(cloudUnsub) cloudUnsub();
+        syncStatusEl.textContent="กำลังตรวจข้อมูลบัญชีและ Cloud…";
         cloudUnsub=cloudDocRef.onSnapshot(doc=>{
+          if(activeSyncUid!==user.uid)return;
           cloudConnected=true;
-          syncStatusEl.textContent=`ซิงค์แล้ว · ${user.displayName||user.email}`;
-          if(doc.exists) applyRemoteSnapshot(doc.data()); else queueCloudPush();
-        },err=>{ cloudConnected=false; syncStatusEl.textContent="ซิงค์ไม่สำเร็จ · ตรวจสอบการตั้งค่า Firebase"; console.error(err); });
-      } else {
-        if(cloudUnsub) cloudUnsub();
-        cloudUnsub=null; cloudDocRef=null; cloudConnected=false;
-        syncStatusEl.textContent="ยังไม่ได้ล็อกอิน — ใช้ข้อมูลแค่เครื่องนี้";
+          if(doc.exists){cancelGuestImportPrompt();applyRemoteSnapshot(doc.data());}
+          else if(!syncAccountHadScoped)prepareNewSyncAccount(user.uid);
+          else queueCloudPush();
+        },err=>{cloudConnected=false;syncStatusEl.textContent="ซิงค์ไม่สำเร็จ · ข้อมูลในเครื่องยังเก็บแยกไว้";console.error(err);});
+      }else{
+        cancelGuestImportPrompt();
+        if(previousUid)saveScopedState(previousUid,persistedState());
+        activeSyncUid=null;syncBaseState=null;syncRemoteRevision=0;syncAccountHasLocal=false;syncAccountHadScoped=false;pendingLocalChange=false;syncPushInProgress=false;
+        cloudUnsub=null;cloudDocRef=null;cloudConnected=false;
+        const guest=readStoredState("tbv3_guest_state")||guestStateSnapshot;
+        if(guest)replaceAppState(guest);
+        syncStatusEl.textContent="ยังไม่ได้ล็อกอิน — ใช้ข้อมูลเฉพาะอุปกรณ์นี้";
+        renderAll();
       }
     });
     return true;
@@ -4178,18 +4611,147 @@ document.getElementById("syncSignOutBtn").addEventListener("click",async()=>{
   syncOverlay.classList.remove("show");
 });
 
-function queueCloudPush(){if(!cloudConnected||!cloudDocRef||applyingRemoteUpdate){pendingLocalChange=true;return;}pendingLocalChange=false;clearTimeout(cloudPushTimer);cloudPushTimer=setTimeout(()=>cloudDocRef.set({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,accounts,budgets,tasks,pomoCustomModes,pomoSettings,updatedAt:Date.now()}).catch(e=>console.error(e)),500);}
+function syncBaseKey(uidValue){return`tbv3_sync_base_${encodeURIComponent(uidValue)}`;}
+function syncComparableState(state){const copy=MomentaSync.clone(state||persistedState());delete copy.syncMeta;return copy;}
+function readStoredState(key){try{const raw=localStorage.getItem(key);if(!raw)return null;const parsed=MomentaDomain.parseStoredState(raw);return parsed?.ok?parsed.state:null;}catch(e){return null;}}
+function saveScopedState(uidValue,state){try{localStorage.setItem(MomentaSync.scopedStateKey(uidValue),JSON.stringify(state));return true;}catch(e){showToast("สำรองข้อมูลบัญชีนี้ในเครื่องไม่สำเร็จ โปรดส่งออกไฟล์ข้อมูล");return false;}}
+function saveSyncBase(uidValue,state,revision){try{const base={revision:Number(revision)||0,state:syncComparableState(state)};localStorage.setItem(syncBaseKey(uidValue),JSON.stringify(base));syncBaseState=base.state;syncRemoteRevision=base.revision;return true;}catch(e){return false;}}
+function loadSyncBase(uidValue){try{const saved=JSON.parse(localStorage.getItem(syncBaseKey(uidValue))||"null");if(saved&&saved.state&&Number.isFinite(Number(saved.revision))){syncBaseState=syncComparableState(saved.state);syncRemoteRevision=Number(saved.revision);return true;}}catch(e){}syncBaseState=null;syncRemoteRevision=0;return false;}
+function emptyAppState(){return MomentaDomain.migrateState({schemaVersion:3,blocks:[],goals:[],tasks:[],events:[],expenses:[],accounts:[{id:"acc_cash",name:"เงินสด",color:"#2f6b52",startingBalance:0}],pomoCustomModes:[],timerState:{},stats:{byDate:{}},journal:{},budgets:{},monthlyBudgets:{},recurringBills:[],focusSessions:[],farmStates:{},investmentAssets:[],syncMeta:{},pomoSettings:{}}).state;}
+function replaceAppState(state,persist=true){
+  const next=MomentaDomain.migrateState(state).state;applyingRemoteUpdate=true;
+  goals=next.goals;blocks=next.blocks;stats=next.stats;timerState=next.timerState;journal=next.journal;expenses=next.expenses;events=next.events;accounts=next.accounts.length?next.accounts:[{id:"acc_cash",name:"เงินสด",color:"#2f6b52",startingBalance:0}];budgets=next.budgets;tasks=next.tasks;pomoCustomModes=next.pomoCustomModes;pomoSettings={sound:"chime",countdown:true,volume:0.28,ambient:"silent",ambientVolume:0.2,...next.pomoSettings};investmentAssets=next.investmentAssets;monthlyBudgets=next.monthlyBudgets;recurringBills=next.recurringBills;focusSessions=next.focusSessions;farmStates=next.farmStates;syncMeta=next.syncMeta;prevActiveId=next.prevActiveId||null;
+  if(persist){let oldRaw=null,oldScoped=null,scopeKey="";try{oldRaw=localStorage.getItem(SK);scopeKey=activeSyncUid?MomentaSync.scopedStateKey(activeSyncUid):"";if(scopeKey)oldScoped=localStorage.getItem(scopeKey);const raw=JSON.stringify(persistedState());localStorage.setItem(SK,raw);if(scopeKey&&!saveScopedState(activeSyncUid,persistedState()))throw new Error("scoped storage failed");}catch(e){try{if(oldRaw===null)localStorage.removeItem(SK);else localStorage.setItem(SK,oldRaw);if(scopeKey){if(oldScoped===null)localStorage.removeItem(scopeKey);else localStorage.setItem(scopeKey,oldScoped);}}catch(rollbackError){}showToast("โหลดข้อมูลแล้ว แต่บันทึกสำเนาในเครื่องไม่สำเร็จ");}}
+  renderPomoSoundSettings();renderPomoPresetList();renderSavedPomoModes();renderAll();applyingRemoteUpdate=false;
+}
+function activateSyncAccount(user,previousUid){
+  if(previousUid&&previousUid!==user.uid)saveScopedState(previousUid,persistedState());
+  if(!previousUid){guestStateSnapshot=readStoredState("tbv3_guest_state")||MomentaSync.clone(persistedState());try{if(!localStorage.getItem("tbv3_guest_state"))localStorage.setItem("tbv3_guest_state",JSON.stringify(guestStateSnapshot));}catch(e){}}
+  cancelGuestImportPrompt();activeSyncUid=user.uid;syncAccountHasLocal=false;syncAccountHadScoped=false;syncBaseState=null;syncRemoteRevision=0;pendingLocalChange=false;
+  const local=readStoredState(MomentaSync.scopedStateKey(user.uid));
+  if(local){syncAccountHasLocal=true;syncAccountHadScoped=true;replaceAppState(local);loadSyncBase(user.uid);}
+  else replaceAppState(emptyAppState(),false);
+}
+function cancelGuestImportPrompt(){
+  pendingGuestImport=null;
+  const dialog=document.getElementById("guestImportDialog");if(dialog?.open)dialog.close();
+}
+function startNewSyncAccount(uidValue,state){
+  if(!uidValue||activeSyncUid!==uidValue||currentUser?.uid!==uidValue||!cloudConnected)return;
+  const next=MomentaDomain.migrateState(MomentaSync.clone(state||emptyAppState())).state;
+  cancelGuestImportPrompt();
+  replaceAppState(next);
+  syncAccountHasLocal=true;syncAccountHadScoped=true;
+  saveSyncBase(uidValue,emptyAppState(),0);
+  syncStatusEl.textContent="บัญชีพร้อมซิงค์ · ข้อมูล guest จะถูกนำเข้าเฉพาะเมื่อคุณเลือกแล้ว";
+  queueCloudPush();
+}
+function prepareNewSyncAccount(uidValue){
+  if(!uidValue||activeSyncUid!==uidValue||syncAccountHadScoped)return;
+  const seed=guestStateSnapshot;
+  if(seed&&!MomentaSync.equal(syncComparableState(seed),syncComparableState(emptyAppState()))){
+    if(pendingGuestImport?.uid===uidValue)return;
+    pendingGuestImport={uid:uidValue,state:MomentaSync.clone(seed)};
+    const target=document.getElementById("guestImportTarget");if(target)target.textContent=`ปลายทาง: ${currentUser?.email||currentUser?.displayName||"บัญชีที่ลงชื่อเข้าใช้"}`;
+    const dialog=document.getElementById("guestImportDialog");
+    if(dialog&&!dialog.open){if(typeof dialog.showModal==="function")dialog.showModal();else dialog.setAttribute("open","");}
+    syncStatusEl.textContent="รอคุณเลือกว่าจะนำข้อมูลบนอุปกรณ์เข้าบัญชีนี้หรือไม่";
+    return;
+  }
+  startNewSyncAccount(uidValue,emptyAppState());
+}
+document.getElementById("guestImportDialog")?.addEventListener("cancel",event=>event.preventDefault());
+document.getElementById("guestImportConfirmBtn")?.addEventListener("click",()=>{
+  const pending=pendingGuestImport;if(!pending)return;
+  startNewSyncAccount(pending.uid,pending.state);
+});
+document.getElementById("guestImportEmptyBtn")?.addEventListener("click",()=>{
+  const pending=pendingGuestImport;if(!pending)return;
+  startNewSyncAccount(pending.uid,emptyAppState());
+});
+function stateFromCloudDocument(data){
+  if(data?.ownerUid&&currentUser?.uid&&data.ownerUid!==currentUser.uid)throw new Error("Cloud document owner does not match the signed-in account");
+  if(data?.state&&typeof data.state==="object")return{state:MomentaDomain.migrateState(data.state).state,revision:Number(data.revision)||0};
+  const legacy={schemaVersion:3};["blocks","goals","timerState","prevActiveId","stats","journal","expenses","events","accounts","budgets","tasks","pomoCustomModes","pomoSettings","investmentAssets","monthlyBudgets","recurringBills","focusSessions","farmStates"].forEach(key=>{if(data?.[key]!==undefined)legacy[key]=data[key];});
+  return{state:MomentaDomain.migrateState(legacy).state,revision:Number(data?.revision)||0};
+}
+function showSyncConflict(localState,remoteState,conflicts,revision){
+  syncConflict={local:syncComparableState(localState),remote:syncComparableState(remoteState),conflicts:conflicts||[],revision:Number(revision)||0,downloaded:{local:false,cloud:false}};
+  const panel=document.getElementById("syncConflictPanel"),text=document.getElementById("syncConflictText");if(panel)panel.hidden=false;
+  if(text)text.textContent=`พบ ${syncConflict.conflicts.length||1} จุดที่แก้ไขชนกัน · ดาวน์โหลดสำเนาเครื่องและ Cloud ก่อนเลือกว่าจะรวม หรือโหลด Cloud`;
+  ["syncResolveMergedBtn","syncResolveCloudBtn"].forEach(id=>{const button=document.getElementById(id);if(button)button.disabled=true;});
+  syncStatusEl.textContent="พบข้อมูลแก้ไขชนกัน · ยังไม่เขียนทับ Cloud";
+  showToast("ข้อมูลซิงค์ชนกัน · เปิดตั้งค่าเพื่อดาวน์โหลดสำเนาทั้งสองชุดก่อนเลือก");
+}
+function hideSyncConflict(){const panel=document.getElementById("syncConflictPanel");if(panel)panel.hidden=true;}
+function downloadSyncConflict(which){if(!syncConflict)return;try{const state=which==="cloud"?syncConflict.remote:syncConflict.local;const backup=buildBackupData(state,new Date().toISOString());const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=`momenta-${which}-conflict-${todayStr()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);syncConflict.downloaded[which]=true;const ready=syncConflict.downloaded.local&&syncConflict.downloaded.cloud;["syncResolveMergedBtn","syncResolveCloudBtn"].forEach(id=>{const button=document.getElementById(id);if(button)button.disabled=!ready;});const text=document.getElementById("syncConflictText");if(text)text.textContent=ready?"ได้เริ่มดาวน์โหลดสำเนาทั้งสองชุดแล้ว · เลือกวิธีจัดการข้อมูลชนกันได้":"ดาวน์โหลดแล้ว 1 จาก 2 ชุด · ดาวน์โหลดอีกชุดก่อนเลือก";}catch(e){showToast("สร้างไฟล์สำเนาไม่สำเร็จ · ยังไม่มีการเขียนทับข้อมูล");}}
+document.getElementById("syncDownloadLocalBtn")?.addEventListener("click",()=>downloadSyncConflict("local"));
+document.getElementById("syncDownloadCloudBtn")?.addEventListener("click",()=>downloadSyncConflict("cloud"));
+document.getElementById("syncResolveCloudBtn")?.addEventListener("click",()=>{if(!syncConflict||!activeSyncUid)return;try{localStorage.setItem(`tbv3_conflict_local_${Date.now()}`,JSON.stringify(syncConflict.local));}catch(e){showToast("เก็บสำเนาข้อมูลในเครื่องไม่สำเร็จ จึงยังไม่โหลด Cloud");return;}const remote=syncConflict.remote,revision=syncConflict.revision;syncConflict=null;replaceAppState(remote);saveSyncBase(activeSyncUid,remote,revision);hideSyncConflict();syncStatusEl.textContent="ใช้ข้อมูล Cloud แล้ว · เก็บสำเนาข้อมูลเครื่องไว้ในเครื่องนี้";});
+document.getElementById("syncResolveMergedBtn")?.addEventListener("click",()=>{if(!syncConflict||!activeSyncUid)return;const conflict=syncConflict,merged=syncBaseState?MomentaSync.mergeConcurrentState(syncBaseState,conflict.local,conflict.remote):MomentaSync.mergeConcurrentState(emptyAppState(),conflict.local,conflict.remote);const next=merged.state||conflict.local;syncConflict=null;saveSyncBase(activeSyncUid,conflict.remote,conflict.revision);replaceAppState(next);hideSyncConflict();queueCloudPush();});
+function queueCloudPush(){
+  if(!activeSyncUid||!cloudConnected||!cloudDocRef||applyingRemoteUpdate||syncConflict||syncPushInProgress){pendingLocalChange=true;return;}
+  pendingLocalChange=false;clearTimeout(cloudPushTimer);if(typeof uiSaveStatus==="function")uiSaveStatus("saving");
+  cloudPushTimer=setTimeout(()=>pushCloudTransaction(),450);
+}
+async function pushCloudTransaction(){
+  if(!activeSyncUid||!cloudConnected||!cloudDocRef||syncConflict||syncPushInProgress)return;
+  const uidAtStart=activeSyncUid,refAtStart=cloudDocRef,local=syncComparableState(persistedState());syncPushInProgress=true;
+  try{
+    const serialized=JSON.stringify({state:local,ownerUid:uidAtStart,revision:syncRemoteRevision+1,schemaVersion:3,updatedAt:Date.now()});
+    if(new Blob([serialized]).size>900000)throw new Error("ข้อมูลมีขนาดเกินขีดจำกัด Firestore ที่กำหนด");
+    const outcome=await cloudDb.runTransaction(async transaction=>{
+      const doc=await transaction.get(refAtStart);if(activeSyncUid!==uidAtStart)throw new Error("บัญชีเปลี่ยนระหว่างซิงค์");
+      if(!doc.exists){transaction.set(refAtStart,{ownerUid:uidAtStart,revision:1,schemaVersion:3,state:local,updatedAt:Date.now()});return{state:local,revision:1};}
+      const cloud=stateFromCloudDocument(doc.data());let merged;
+      if(syncBaseState)merged=MomentaSync.mergeConcurrentState(syncBaseState,local,syncComparableState(cloud.state));
+      else if(MomentaSync.equal(local,syncComparableState(cloud.state)))merged={ok:true,state:local,conflicts:[]};
+      else merged={ok:false,state:local,conflicts:[{path:"(root)"}]};
+      if(!merged.ok)return{conflict:true,local,remote:syncComparableState(cloud.state),conflicts:merged.conflicts,revision:cloud.revision};
+      const envelope={ownerUid:uidAtStart,revision:Math.max(cloud.revision,syncRemoteRevision)+1,schemaVersion:3,state:merged.state,updatedAt:Date.now()};if(JSON.stringify(envelope).length>900000)throw new Error("ข้อมูลที่รวมแล้วเกินขีดจำกัด Cloud ที่กำหนด");transaction.set(refAtStart,envelope);return{state:merged.state,revision:envelope.revision};
+    });
+    if(activeSyncUid!==uidAtStart)return;
+    if(outcome.conflict){showSyncConflict(outcome.local,outcome.remote,outcome.conflicts,outcome.revision);return;}
+    if(!MomentaSync.equal(local,outcome.state))replaceAppState(outcome.state);
+    saveSyncBase(uidAtStart,outcome.state,outcome.revision);syncAccountHasLocal=true;
+    syncStatusEl.textContent=`ซิงค์แล้ว · ${currentUser?.displayName||currentUser?.email||"บัญชีนี้"}`;if(typeof uiSaveStatus==="function")uiSaveStatus("synced");
+  }catch(e){if(typeof uiSaveStatus==="function")uiSaveStatus("error");syncStatusEl.textContent=`ซิงค์ไม่สำเร็จ · ${e.message||"ข้อมูลในเครื่องยังอยู่"}`;console.error(e);}
+  finally{syncPushInProgress=false;if(pendingLocalChange&&!syncConflict){pendingLocalChange=false;queueCloudPush();}}
+}
 function applyRemoteSnapshot(data){
-  if(pendingLocalChange){ pendingLocalChange=false; queueCloudPush(); return; } // local changes happened before the cloud connected — push ours instead of overwriting with stale server data
-  applyingRemoteUpdate=true;if(Array.isArray(data.blocks)){blocks=data.blocks;blocks.forEach(b=>{if(!b.date)b.date=todayStr();});}if(Array.isArray(data.goals))goals=data.goals;goals.forEach(g=>{if(!g._isProject)g._isProject=true;});if(data.timerState){Object.keys(timerState).forEach(k=>delete timerState[k]);Object.assign(timerState,data.timerState);}if(data.prevActiveId!==undefined)prevActiveId=data.prevActiveId;if(data.stats?.byDate)stats=data.stats;if(data.journal&&typeof data.journal==="object")journal=data.journal;if(Array.isArray(data.expenses))expenses=data.expenses;if(Array.isArray(data.events))events=data.events;if(Array.isArray(data.accounts)&&data.accounts.length)accounts=data.accounts;if(data.budgets&&typeof data.budgets==="object")budgets=data.budgets;if(Array.isArray(data.tasks))tasks=data.tasks;if(Array.isArray(data.pomoCustomModes))pomoCustomModes=data.pomoCustomModes;if(data.pomoSettings&&typeof data.pomoSettings==="object")pomoSettings={...pomoSettings,...data.pomoSettings};try{localStorage.setItem(SK,JSON.stringify({blocks,goals,timerState,prevActiveId,stats,journal,expenses,events,accounts,budgets,tasks,pomoCustomModes,pomoSettings}));}catch(e){}renderPomoSoundSettings();renderPomoPresetList();renderSavedPomoModes();renderAll();applyingRemoteUpdate=false;}
+  if(!activeSyncUid||!currentUser?.uid||currentUser.uid!==activeSyncUid||syncPushInProgress)return;
+  try{
+    const remote=stateFromCloudDocument(data),remoteComparable=syncComparableState(remote.state),local=syncComparableState(persistedState());
+    if(!syncBaseState){
+      if(!syncAccountHasLocal){replaceAppState(remote.state);saveSyncBase(activeSyncUid,remote.state,remote.revision);syncAccountHasLocal=true;syncStatusEl.textContent=`ซิงค์แล้ว · ${currentUser?.displayName||currentUser?.email||"บัญชีนี้"}`;return;}
+      if(MomentaSync.equal(local,remoteComparable)){saveSyncBase(activeSyncUid,remote.state,remote.revision);syncStatusEl.textContent="ซิงค์แล้ว · ข้อมูลตรงกัน";return;}
+      showSyncConflict(local,remoteComparable,[{path:"(root)"}],remote.revision);return;
+    }
+    const merged=MomentaSync.mergeConcurrentState(syncBaseState,local,remoteComparable);
+    if(!merged.ok){showSyncConflict(local,remoteComparable,merged.conflicts,remote.revision);return;}
+    if(!MomentaSync.equal(local,merged.state))replaceAppState(merged.state);
+    saveSyncBase(activeSyncUid,merged.state,remote.revision);syncAccountHasLocal=true;
+    if(!MomentaSync.equal(merged.state,remoteComparable))queueCloudPush();else syncStatusEl.textContent=`ซิงค์แล้ว · ${currentUser?.displayName||currentUser?.email||"บัญชีนี้"}`;
+  }catch(e){syncStatusEl.textContent="อ่านข้อมูล Cloud ไม่สำเร็จ · เก็บข้อมูลเครื่องไว้ก่อน";console.error(e);}
+}
 
 // VISIBILITY / FOCUS
-document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){ensureHabitBlocksForToday();tick();}});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){ensureHabitBlocksForToday();tick();}else{pomoAmbientPreviewUntil=0;window.momentaAudio?.stopAmbient();}});
 window.addEventListener("focus",()=>{ensureHabitBlocksForToday();tick();});
 window.addEventListener("pageshow",()=>{ensureHabitBlocksForToday();tick();});
 
-// SERVICE WORKER
-if("serviceWorker" in navigator)navigator.serviceWorker.register("service-worker.js").catch(()=>{});
+// SERVICE WORKER — wait for the user before activating an update over an open session.
+let waitingAppWorker=null;
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("service-worker.js").then(registration=>{
+    const offer=worker=>{if(!worker)return;waitingAppWorker=worker;const notice=document.getElementById("appUpdateNotice");if(notice)notice.hidden=false;};
+    if(registration.waiting&&navigator.serviceWorker.controller)offer(registration.waiting);
+    registration.addEventListener("updatefound",()=>{const worker=registration.installing;if(!worker)return;worker.addEventListener("statechange",()=>{if(worker.state==="installed"&&navigator.serviceWorker.controller)offer(worker);});});
+  }).catch(()=>{});
+  document.getElementById("applyAppUpdateBtn")?.addEventListener("click",()=>{if(!waitingAppWorker)return;try{sessionStorage.setItem("momenta_reload_after_update","1");}catch(e){}waitingAppWorker.postMessage({type:"ACTIVATE_UPDATE"});});
+  document.getElementById("dismissAppUpdateBtn")?.addEventListener("click",()=>{document.getElementById("appUpdateNotice").hidden=true;});
+  navigator.serviceWorker.addEventListener("controllerchange",()=>{let reload=false;try{reload=sessionStorage.getItem("momenta_reload_after_update")==="1";if(reload)sessionStorage.removeItem("momenta_reload_after_update");}catch(e){}if(reload)location.reload();});
+}
 
 // DARK MODE
 const DMK="tb_dark_mode";
@@ -4204,7 +4766,7 @@ function applyDarkMode(){
   if(toggle)toggle.checked=isDark;
   if(label)label.textContent=(pref===null?(isDark?"เปิดอยู่":"ปิดอยู่")+" · ตามระบบ":(isDark?"เปิดอยู่":"ปิดอยู่"));
   const meta=document.querySelector('meta[name="theme-color"]');
-  if(meta)meta.setAttribute("content",isDark?"#003C45":"#ECFFB6");
+  if(meta)meta.setAttribute("content",isDark?"#151A1C":"#F5F6F2");
 }
 document.getElementById("darkModeToggle").addEventListener("change",e=>{
   saveDarkPref(e.target.checked?"1":"0");
@@ -4214,7 +4776,7 @@ if(window.matchMedia)window.matchMedia("(prefers-color-scheme: dark)").addEventL
 
 // BOOT
 const hasData=loadState();
-if(!hasData)seedBlocks();
+// A new workspace starts empty; existing saved data is loaded above.
 applyDarkMode();
 renderPomoSoundSettings();
 renderPomoPresetList();
@@ -4247,11 +4809,9 @@ function loginGateGoStep(step){
   document.getElementById("loginGateStepAuth").style.display=step==="auth"?"block":"none";
 }
 document.getElementById("loginGateStartBtn").addEventListener("click",()=>{
-  const saved=loadCloudConfig();
-  if(saved?.firebaseConfig?.apiKey){loginGateGoStep("auth");}
-  else{loginGateGoStep("firebase");}
+  loginGateGoStep("auth");
 });
-document.getElementById("loginGateSkipSetupBtn").addEventListener("click",()=>loginGateGoStep("auth"));
+document.getElementById("loginGateSkipSetupBtn").addEventListener("click",dismissLoginGate);
 document.getElementById("loginGateBackFromFirebaseBtn").addEventListener("click",()=>loginGateGoStep("welcome"));
 document.getElementById("loginGateFirebaseSaveBtn").addEventListener("click",()=>{
   const fc={apiKey:document.getElementById("lg_cfg_apiKey").value.trim(),authDomain:document.getElementById("lg_cfg_authDomain").value.trim(),projectId:document.getElementById("lg_cfg_projectId").value.trim(),storageBucket:document.getElementById("lg_cfg_storageBucket").value.trim(),messagingSenderId:document.getElementById("lg_cfg_messagingSenderId").value.trim(),appId:document.getElementById("lg_cfg_appId").value.trim()};
@@ -4299,10 +4859,10 @@ ensureFirebaseInit(activeFirebaseConfig());
     <!-- STEP 1: Welcome -->
     <div id="loginGateStepWelcome">
       <svg width="56" height="56" viewBox="0 0 56 56" style="margin:0 auto 18px;display:block;"><path d="M8 40 Q 16 16 28 28 Q 40 40 48 16" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/><circle cx="48" cy="16" r="7" fill="var(--focus)"/></svg>
-      <h1 style="font-size:26px;font-weight:800;margin:0 0 10px;color:var(--ink);">ยินดีต้อนรับสู่ Productive Time</h1>
+      <h1 style="font-size:26px;font-weight:800;margin:0 0 10px;color:var(--ink);">ยินดีต้อนรับสู่ MOMENTA</h1>
       <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 28px;">วางแผนเวลา งาน นิสัย เป้าหมาย การเงิน และอารมณ์ในที่เดียว ข้อมูลเริ่มต้นเก็บในเบราว์เซอร์ของคุณ และเลือกซิงค์ข้ามอุปกรณ์ได้ภายหลัง</p>
-      <button id="loginGateStartBtn" style="width:100%;border:none;background:var(--ink);color:var(--paper);border-radius:12px;padding:14px 16px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:14px;">เริ่มต้นใช้งาน</button>
-      <button id="loginGateSkipSetupBtn" style="border:none;background:none;color:var(--ink-muted);font-size:12.5px;cursor:pointer;text-decoration:underline;">ข้ามการตั้งค่า — ใช้บัญชีทดลองร่วมกัน (ไม่แนะนำ)</button>
+      <button id="loginGateStartBtn" style="width:100%;border:none;background:var(--ink);color:var(--paper);border-radius:12px;padding:14px 16px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:14px;">เข้าสู่ระบบเพื่อซิงค์</button>
+      <button id="loginGateSkipSetupBtn" style="border:none;background:none;color:var(--ink-soft);font-size:14px;cursor:pointer;text-decoration:underline;">เริ่มใช้บนเครื่องนี้</button>
     </div>
 
     <!-- STEP 2: Firebase setup -->
@@ -4328,7 +4888,7 @@ ensureFirebaseInit(activeFirebaseConfig());
     <svg width="56" height="56" viewBox="0 0 56 56" style="margin:0 auto 18px;display:block;"><path d="M8 40 Q 16 16 28 28 Q 40 40 48 16" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/><circle cx="48" cy="16" r="7" fill="var(--focus)"/></svg>
     <h1 style="font-size:26px;font-weight:800;margin:0 0 10px;color:var(--ink);">ยินดีต้อนรับกลับ</h1>
     <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 12px;">เข้าสู่ระบบเพื่อซิงค์ข้อมูลข้ามอุปกรณ์</p>
-    <p class="sync-data-disclosure">การซิงค์จะส่งช่วงเวลา เป้าหมาย งาน บันทึกส่วนตัว รายรับ–รายจ่าย บัญชี และงบประมาณไปยัง Firebase ด้วย ไม่มีการเชื่อมธนาคาร และไม่รวม P&amp;L เทรด หากไม่ต้องการส่งข้อมูล กด “ข้ามไปก่อน” เพื่อใช้แบบเก็บในเครื่อง</p>
+    <p class="sync-data-disclosure">การซิงค์จะส่งช่วงเวลา เป้าหมาย งาน บันทึกส่วนตัว รายรับ–รายจ่าย บัญชี งบประมาณ และสินทรัพย์ลงทุนที่กรอกเองไปยัง Firebase ไม่มีการเชื่อมธนาคาร หากไม่ต้องการส่งข้อมูล กด “ข้ามไปก่อน” เพื่อใช้แบบเก็บในเครื่อง</p>
     <p id="loginGateEnvWarning" style="display:none;text-align:left;font-size:11.5px;color:var(--rest);background:var(--rest-soft);border-radius:10px;padding:8px 12px;margin:0 0 16px;line-height:1.5;">⚠️ หน้าพรีวิวนี้ยังล็อกอินไม่ได้ (ต้องเปิดผ่าน http/https จริง) — Publish/Deploy แอปก่อนแล้วค่อยล็อกอิน หรือกด "ข้ามไปก่อน" ด้านล่างได้เลย</p>
     <button id="loginGateGoogleBtn" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--card);color:var(--ink);border:0.5px solid var(--line);border-radius:12px;padding:13px 16px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:18px;">
       <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62Z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.97 10.72A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.18.29-1.72V4.95H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.05l3.01-2.33Z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58Z"/></svg>
@@ -4354,5 +4914,6 @@ ensureFirebaseInit(activeFirebaseConfig());
   </div>
 </div>
 <script src="construction-3d.js"></script>
+<script src="productive-ui.js?v=20261027-momenta-b13"></script>
 </body>
 </html>

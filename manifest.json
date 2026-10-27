@@ -1,6 +1,6 @@
 {
-  "name": "Productive Time",
-  "short_name": "Productive Time",
+  "name": "MOMENTA",
+  "short_name": "MOMENTA",
   "description": "วางแผนเวลา งาน นิสัย เป้าหมาย และการเงินส่วนตัวในที่เดียว",
   "start_url": "./index.html",
   "scope": "./",
@@ -10,7 +10,8 @@
   "lang": "th",
   "categories": ["productivity", "lifestyle"],
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "momenta-icon.png", "sizes": "1254x1254", "type": "image/png", "purpose": "any" }
   ]
 }

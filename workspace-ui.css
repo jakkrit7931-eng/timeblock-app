@@ -16,7 +16,8 @@ button,input,select,textarea{font-family:inherit;}
 .today-overview-title{font-size:18px;}
 .today-overview-subtitle,.today-priority-empty{font-size:14px;}
 .today-priority-row{padding:10px;background:var(--paper);border:1px solid transparent;}
-.today-priority-row:hover{border-color:var(--focus-border);}
+@media (hover: hover) and (pointer: fine){
+.today-priority-row:hover{border-color:var(--focus-border);}}
 .today-priority-title{font-size:14px;}
 .today-priority-row .pm-task-check{width:44px;height:44px;flex-basis:44px;}
 .today-schedule{background:var(--card);padding:18px;border:1px solid var(--line);border-radius:20px;box-shadow:var(--workspace-shadow);margin-bottom:16px;}
