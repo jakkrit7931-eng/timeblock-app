@@ -1,4 +1,4 @@
-const CACHE_NAME = "productive-time-v20261027-momenta-b15";
+const CACHE_NAME = "productive-time-v20261027-momenta-b16";
 const APP_SHELL = [
   "./index.html",
   "./sage-workspace.css",
@@ -38,6 +38,8 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
+  const requestUrl = new URL(event.request.url);
+  if (requestUrl.origin === self.location.origin && (requestUrl.pathname.startsWith('/__/auth/') || requestUrl.pathname.startsWith('/__/firebase/'))) return;
   event.respondWith(
     caches.match(event.request, {ignoreSearch: true}).then(cached => {
       if (cached) return cached;

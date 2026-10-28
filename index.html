@@ -4479,7 +4479,20 @@ const DEFAULT_FIREBASE_CONFIG={
   appId:"1:510294270836:web:60caa3cf4031f40bfd4221",
 };
 function loadCloudConfig(){try{const r=localStorage.getItem(CK);return r?JSON.parse(r):null;}catch(e){return null;}}
-function activeFirebaseConfig(){ const saved=loadCloudConfig(); return saved?.firebaseConfig?.apiKey ? saved.firebaseConfig : DEFAULT_FIREBASE_CONFIG; }
+function isIosStandalone(){return !!(window.navigator.standalone || (window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)) && /iPad|iPhone|iPod/.test(navigator.userAgent);}
+function activeFirebaseConfig(){
+  const saved=loadCloudConfig();
+  const config=saved?.firebaseConfig?.apiKey ? saved.firebaseConfig : DEFAULT_FIREBASE_CONFIG;
+  if(isIosStandalone() && location.hostname==='timeblock-app-iota.vercel.app' && config.projectId==='momenta-b9bc4') return {...config,authDomain:location.hostname};
+  return config;
+}
+function useIosRedirect(){return isIosStandalone() && location.hostname==='timeblock-app-iota.vercel.app' && activeFirebaseConfig().projectId==='momenta-b9bc4';}
+async function startGoogleSignIn(){
+  const provider=new firebase.auth.GoogleAuthProvider();
+  if(useIosRedirect()){await firebase.auth().signInWithRedirect(provider);return false;}
+  await firebase.auth().signInWithPopup(provider);
+  return true;
+}
 function saveCloudConfig(c){try{localStorage.setItem(CK,JSON.stringify(c));}catch(e){}}
 
 function ensureFirebaseInit(fc){
@@ -4575,8 +4588,7 @@ function friendlyAuthError(e){
 document.getElementById("googleSignInBtn").addEventListener("click",async()=>{
   if(!ensureFirebaseInit(activeFirebaseConfig())) return;
   try{
-    await firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider());
-    syncOverlay.classList.remove("show");
+    if(await startGoogleSignIn()) syncOverlay.classList.remove("show");
   }catch(e){ showToast(friendlyAuthError(e)); }
 });
 function showEmailAuthError(msg){const el=document.getElementById("emailAuthError");el.textContent=msg;el.style.display=msg?"block":"none";}
@@ -4831,7 +4843,7 @@ document.getElementById("loginGateToggleLink").addEventListener("click",e=>{e.pr
 document.getElementById("loginGateSkipBtn").addEventListener("click",()=>dismissLoginGate());
 document.getElementById("loginGateGoogleBtn").addEventListener("click",async()=>{
   if(!ensureFirebaseInit(activeFirebaseConfig()))return;
-  try{ await firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()); dismissLoginGate(); }
+  try{ if(await startGoogleSignIn()) dismissLoginGate(); }
   catch(e){ showLoginGateError(friendlyAuthError(e)); }
 });
 document.getElementById("loginGateSubmitBtn").addEventListener("click",async()=>{
@@ -4847,6 +4859,13 @@ document.getElementById("loginGateSubmitBtn").addEventListener("click",async()=>
   }catch(e){ showLoginGateError(friendlyAuthError(e)); }
 });
 ensureFirebaseInit(activeFirebaseConfig());
+if(firebaseInitialized && useIosRedirect()){
+  firebase.auth().getRedirectResult().then(result=>{if(result?.user)dismissLoginGate();}).catch(error=>{
+    const message=friendlyAuthError(error);
+    showLoginGateError(message);
+    showToast(message);
+  });
+}
 });
 </script>
 <!-- LOGIN GATE (full-screen, shown on first launch) -->
