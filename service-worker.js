@@ -1,4 +1,4 @@
-const CACHE_NAME = "productive-time-v20261028-momenta-b21";
+const CACHE_NAME = "productive-time-v20261028-momenta-b23";
 const APP_SHELL = [
   "./index.html",
   "./sage-workspace.css",

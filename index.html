@@ -934,10 +934,10 @@ button{touch-action:manipulation;}
       <label class="pomo-setting-field"><span>เสียงแจ้งเตือน</span><select id="pomoSoundSelect" aria-label="เลือกเสียง Pomodoro"><option value="chime">ระฆังใส</option><option value="soft">นุ่ม</option><option value="pulse">สองจังหวะ</option><option value="digital">ดิจิทัล</option><option value="silent">ปิดเสียง</option></select></label>
       <button type="button" class="pomo-preview-btn" id="pomoPreviewSoundBtn">ฟังตัวอย่าง</button>
       <label class="pomo-setting-field"><span>ระดับเสียงแจ้งเตือน <output id="pomoAlertVolumeLabel">28%</output></span><input id="pomoAlertVolume" type="range" min="0" max="50" value="28" aria-label="ระดับเสียงแจ้งเตือน"></label>
-      <label class="pomo-setting-field"><span>เสียงพื้นหลังระหว่างโฟกัส</span><select id="pomoAmbientSelect" aria-label="เลือกเสียงพื้นหลัง Pomodoro"><option value="silent">ปิดเสียง</option><option value="rain">ฝนสังเคราะห์</option><option value="waves">คลื่นสังเคราะห์</option><option value="nature">ธรรมชาติสังเคราะห์</option><option value="wind">ลมสังเคราะห์</option><option value="white">ไวต์นอยส์</option><option value="deep">เสียงทุ้ม</option><option value="hum">เสียงฮัม</option></select></label>
+      <label class="pomo-setting-field"><span>เสียงพื้นหลังระหว่างโฟกัส</span><select id="pomoAmbientSelect" aria-label="เลือกเสียงพื้นหลัง Pomodoro"><option value="silent">ปิดเสียง</option><option value="rain">ฝนสังเคราะห์</option><option value="waves">คลื่นสังเคราะห์</option><option value="nature">ธรรมชาติสังเคราะห์</option><option value="wind">ลมสังเคราะห์</option><option value="white">ไวต์นอยส์</option><option value="deep">เสียงทุ้ม</option><option value="hum">เสียงฮัม</option><option value="lofi">Lo-fi สังเคราะห์</option><option value="lofi-rain">Lo-fi กับฝนสังเคราะห์</option><option value="lofi-soft">Lo-fi ไม่มีบีต สังเคราะห์</option></select></label>
       <label class="pomo-setting-field"><span>ระดับเสียงพื้นหลัง <output id="pomoAmbientVolumeLabel">20%</output></span><input id="pomoAmbientVolume" type="range" min="0" max="100" value="20" aria-label="ระดับเสียงพื้นหลัง Pomodoro"></label>
       <button type="button" class="pomo-preview-btn" id="pomoPreviewAmbientBtn">ฟังเสียงพื้นหลัง 7 วินาที</button>
-      <label class="pomo-setting-toggle"><span><strong>นับถอยหลัง 5 วินาที</strong><small>มีเสียงเตือนเบาก่อนเปลี่ยนช่วง</small></span><span class="toggle-wrap"><input type="checkbox" id="pomoCountdownToggle" checked><span class="toggle-track"><span class="toggle-thumb"></span></span></span></label>
+      <label class="pomo-setting-toggle"><span><strong>เตือนก่อนจบช่วง</strong><small>มีเสียงก่อนจบ 1 นาที และนับถอยหลัง 5 วินาที</small></span><span class="toggle-wrap"><input type="checkbox" id="pomoCountdownToggle" checked><span class="toggle-track"><span class="toggle-thumb"></span></span></span></label>
     </div>
     <div class="pomo-preset-editor">
       <div><h4>บันทึกโหมดของคุณ</h4><p>สร้างรูปแบบ เช่น อ่านหนังสือ 40/10 แล้วเลือกใช้ตอนจัดช่วงเวลา</p></div>
@@ -1177,7 +1177,7 @@ button{touch-action:manipulation;}
   <section id="focusSectionMeditation" class="focus-section-panel" role="tabpanel" aria-labelledby="focusSectionMeditationTab" data-focus-panel="meditation" hidden>
     <section class="meditation-card" aria-labelledby="meditationTitle">
       <h2 id="meditationTitle">เวลานั่งสมาธิ</h2><p>เลือกเวลาและเสียง แล้วให้เวลาตัวเองสักครู่</p>
-      <div class="meditation-options"><label>ระยะเวลา <select id="meditationMinutes"><option value="5">5 นาที</option><option value="10">10 นาที</option><option value="15">15 นาที</option><option value="25">25 นาที</option></select></label><label>เสียงพื้นหลัง <select id="meditationSound"><option value="silent">เงียบ</option><option value="rain">ฝนสังเคราะห์</option><option value="waves">คลื่นสังเคราะห์</option><option value="nature">ธรรมชาติสังเคราะห์</option><option value="wind">ลมสังเคราะห์</option><option value="white">ไวต์นอยส์</option><option value="deep">เสียงทุ้ม</option><option value="hum">เสียงฮัม</option></select></label><label>ระดับเสียง <input id="meditationVolume" type="range" min="0" max="100" value="20" aria-label="ระดับเสียงสมาธิ"></label></div>
+      <div class="meditation-options"><label>ระยะเวลา <select id="meditationMinutes"><option value="5">5 นาที</option><option value="10">10 นาที</option><option value="15">15 นาที</option><option value="25">25 นาที</option></select></label><label>เสียงพื้นหลัง <select id="meditationSound"><option value="silent">เงียบ</option><option value="rain">ฝนสังเคราะห์</option><option value="waves">คลื่นสังเคราะห์</option><option value="nature">ธรรมชาติสังเคราะห์</option><option value="wind">ลมสังเคราะห์</option><option value="white">ไวต์นอยส์</option><option value="deep">เสียงทุ้ม</option><option value="hum">เสียงฮัม</option><option value="lofi">Lo-fi สังเคราะห์</option><option value="lofi-rain">Lo-fi กับฝนสังเคราะห์</option><option value="lofi-soft">Lo-fi ไม่มีบีต สังเคราะห์</option></select></label><label>ระดับเสียง <input id="meditationVolume" type="range" min="0" max="100" value="20" aria-label="ระดับเสียงสมาธิ"></label></div>
       <p id="meditationTime" class="meditation-time" role="timer">05:00</p><p id="meditationStatus" role="status">พร้อมเริ่ม</p>
       <div class="meditation-actions"><button type="button" class="btn-primary" id="meditationStart">เริ่มสมาธิ</button><button type="button" class="btn-secondary" id="meditationResumeSound" hidden>เล่นเสียงต่อ</button><button type="button" class="btn-secondary" id="meditationPreview">ฟังตัวอย่างเสียง</button><button type="button" class="btn-secondary" id="meditationReset">เริ่มใหม่</button></div>
       <small>เสียงเล่นขณะเปิดหน้านี้อยู่ และอาจหยุดเมื่อเบราว์เซอร์พักการทำงาน</small>
@@ -1512,7 +1512,7 @@ window.momentaAudio=window.MomentaAudio?.createAudioController();
 window.meditationAudio=window.MomentaAudio?.createAudioController();
 let stateLoadBlocked=false;
 let prevActiveId=null,viewDate=todayStr(),viewMode="day";
-let currentTab="today",lastCountdownKey=null;
+let currentTab="today",lastCountdownKey=null,lastWarningKey=null;
 let pomoAmbientPreviewUntil=0;
 let planSection="calendar",taskView="today",taskPriorityFilter="all",taskDueFilter="all",taskSearchTerm="",editingTaskId=null;
 let cloudDb=null,cloudDocRef=null,cloudUnsub=null,cloudConnected=false,cloudPushTimer=null,applyingRemoteUpdate=false,pendingLocalChange=false;
@@ -1672,7 +1672,7 @@ function renderPomoSoundSettings(){
   const sound=document.getElementById("pomoSoundSelect"),countdown=document.getElementById("pomoCountdownToggle"),ambient=document.getElementById("pomoAmbientSelect"),ambientVolume=document.getElementById("pomoAmbientVolume"),ambientLabel=document.getElementById("pomoAmbientVolumeLabel"),alertVolume=document.getElementById("pomoAlertVolume"),alertLabel=document.getElementById("pomoAlertVolumeLabel");
   if(sound)sound.value=POMO_SOUND_LABELS[pomoSettings.sound]?pomoSettings.sound:"chime";
   if(countdown)countdown.checked=pomoSettings.countdown!==false;
-  if(ambient)ambient.value=["silent","rain","waves","nature","wind","white","deep","hum"].includes(pomoSettings.ambient)?pomoSettings.ambient:"silent";
+  if(ambient)ambient.value=["silent","rain","waves","nature","wind","white","deep","hum","lofi","lofi-rain","lofi-soft"].includes(pomoSettings.ambient)?pomoSettings.ambient:"silent";
   if(ambientVolume)ambientVolume.value=Math.round(Math.max(0,Math.min(1,Number(pomoSettings.ambientVolume)||0))*100);
   if(ambientLabel)ambientLabel.value=ambientLabel.textContent=ambientVolume.value+"%";
   if(alertVolume)alertVolume.value=Math.round(Math.max(0,Math.min(0.5,Number(pomoSettings.volume)||0))*100);
@@ -1680,7 +1680,7 @@ function renderPomoSoundSettings(){
 }
 function syncPomoAmbient(block,ts){
   window.MomentaWake?.setActive('pomodoro',!!(block&&ts&&!ts.paused));
-  if(document.visibilityState==="visible"&&block&&ts&&ts.phase==="focus"&&!ts.paused&&pomoSettings.ambient!=="silent")window.momentaAudio?.startAmbient(pomoSettings.ambient,pomoSettings.ambientVolume);
+  if(block&&ts&&ts.phase==="focus"&&!ts.paused&&pomoSettings.ambient!=="silent")window.momentaAudio?.startAmbient(pomoSettings.ambient,pomoSettings.ambientVolume);
   else if(document.visibilityState==="visible"&&pomoAmbientPreviewUntil>Date.now())return;
   else{pomoAmbientPreviewUntil=0;window.momentaAudio?.stopAmbient();}
 }
@@ -1821,7 +1821,7 @@ function tick(){
     else if(prevActiveId){const pb=blocks.find(b=>b.id===prevActiveId);if(pb?.notify)notify("จบงานนี้แล้ว",pick(MSG.allDone));}
     prevActiveId=active?active.id:null;saveState();
   }
-  if(document.visibilityState==="visible"&&active){
+  if(active){
     const mm=modeMinutes(active),ts=timerState[active.id];
     if(mm&&ts&&ts.phase==="ready"){
       if(Date.now()>=ts.readyUntil){
@@ -1830,6 +1830,10 @@ function tick(){
       }
     } else if(mm&&ts&&!ts.paused){
       const remainSec=Math.max(0,Math.round((ts.phaseEndsAt-Date.now())/1000));
+      if(remainSec>5&&remainSec<=60&&active.notify&&pomoSettings.countdown!==false){
+        const warningKey=active.id+":"+ts.phase+":"+ts.phaseEndsAt;
+        if(lastWarningKey!==warningKey){lastWarningKey=warningKey;playPomoSound("countdown");}
+      }
       if(remainSec>=1&&remainSec<=5&&active.notify){
         const key=active.id+":"+ts.phase+":"+ts.phaseEndsAt+":"+remainSec;
         if(lastCountdownKey!==key){lastCountdownKey=key;playCountdownTick();}
@@ -4758,7 +4762,7 @@ function applyRemoteSnapshot(data){
 }
 
 // VISIBILITY / FOCUS
-document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){ensureHabitBlocksForToday();tick();}else{pomoAmbientPreviewUntil=0;window.momentaAudio?.stopAmbient();}});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){ensureHabitBlocksForToday();tick();}else{pomoAmbientPreviewUntil=0;const active=getActiveBlock();syncPomoAmbient(active,active&&timerState[active.id]);}});
 window.addEventListener("focus",()=>{ensureHabitBlocksForToday();tick();});
 window.addEventListener("pageshow",()=>{ensureHabitBlocksForToday();tick();});
 

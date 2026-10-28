@@ -5,7 +5,24 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function (root) {
   'use strict';
 
-  const AMBIENCE = new Set(['rain', 'waves', 'nature', 'wind', 'white', 'deep', 'hum']);
+  const AMBIENCE = new Set(['rain', 'waves', 'nature', 'wind', 'white', 'deep', 'hum', 'lofi', 'lofi-rain', 'lofi-soft']);
+  const LOFI = new Set(['lofi', 'lofi-rain', 'lofi-soft']);
+
+  function fillLofi(samples, rate, name) {
+    const chords = [[130.81, 155.56, 196], [110, 130.81, 164.81], [87.31, 110, 130.81], [98, 123.47, 146.83]];
+    for (let i = 0; i < samples.length; i++) {
+      const t = i / rate, beat = t % 0.8, chordTime = t % 1.6;
+      const notes = chords[Math.floor(t / 1.6) % chords.length];
+      const envelope = Math.exp(-chordTime * 1.8) * Math.min(1, chordTime * 25);
+      const keys = notes.reduce((sum, hz) => sum + Math.sin(2 * Math.PI * hz * t), 0) * envelope * 0.13;
+      const bass = Math.sin(2 * Math.PI * notes[0] * 0.5 * t) * Math.exp(-beat * 3) * Math.min(1, beat * 25) * 0.12;
+      const kick = name === 'lofi-soft' ? 0 : Math.sin(2 * Math.PI * (65 * beat - 20 * beat * beat)) * Math.exp(-beat * 24) * 0.18;
+      const noise = (Math.random() * 2 - 1) * (name === 'lofi-rain' ? 0.13 : 0.02);
+      const hatTime = t % 0.4;
+      const hat = name === 'lofi-soft' ? 0 : (Math.random() * 2 - 1) * Math.exp(-hatTime * 45) * 0.04;
+      samples[i] = Math.max(-1, Math.min(1, keys + bass + kick + noise + hat));
+    }
+  }
   const ALERTS = {
     chime: [660, 880, 1320],
     soft: [420, 560],
@@ -62,14 +79,18 @@
         stopAmbient();
         return true;
       }
-      if (graph?.name === name && graph.volume === level) return true;
+      if (graph?.name === name && graph.volume === level) {
+        if (context?.state === 'suspended') context.resume()?.catch?.(() => {});
+        return true;
+      }
       stopAmbient();
       try {
         const ctx = getContext();
-        const seconds = Math.max(1, Math.ceil(ctx.sampleRate * 2));
+        const seconds = Math.max(1, Math.ceil(ctx.sampleRate * (LOFI.has(name) ? 6.4 : 2)));
         const buffer = ctx.createBuffer(1, seconds, ctx.sampleRate);
         const samples = buffer.getChannelData(0);
-        for (let i = 0; i < samples.length; i++) samples[i] = Math.random() * 2 - 1;
+        if (LOFI.has(name)) fillLofi(samples, ctx.sampleRate, name);
+        else for (let i = 0; i < samples.length; i++) samples[i] = Math.random() * 2 - 1;
 
         const source = ctx.createBufferSource();
         const filter = ctx.createBiquadFilter();
@@ -77,7 +98,7 @@
         source.buffer = buffer;
         source.loop = true;
         filter.type = name === 'nature' || name === 'wind' ? 'bandpass' : 'lowpass';
-        filter.frequency.value = ({rain:1200, waves:420, nature:1500, wind:550, white:16000, deep:160, hum:280})[name];
+        filter.frequency.value = ({rain:1200, waves:420, nature:1500, wind:550, white:16000, deep:160, hum:280, lofi:2400, 'lofi-rain':2400, 'lofi-soft':2000})[name];
         output.gain.value = level * 0.22;
         source.connect(filter);
         filter.connect(output);
