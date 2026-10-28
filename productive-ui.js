@@ -1,6 +1,6 @@
 /* Productive Time: planning-first UI, sharing the existing data and actions. */
 /* Meditation is independent from task completion and uses a wall-clock deadline. */
-const meditation={remaining:300000,end:0,running:false,volume:0.2};
+const meditation={remaining:300000,end:0,running:false,volume:0.2,audioInterrupted:false};
 const meditationTime=document.getElementById('meditationTime'),meditationStatus=document.getElementById('meditationStatus');
 function stopMeditationAudio(){window.meditationAudio?.stopAmbient();}
 function startMeditationAudio(){
@@ -8,15 +8,18 @@ function startMeditationAudio(){
   return window.meditationAudio?.startAmbient(sound,meditation.volume)??sound==='silent';
 }
 function renderMeditation(){
- if(meditation.running){meditation.remaining=Math.max(0,meditation.end-Date.now());if(!meditation.remaining){meditation.running=false;stopMeditationAudio();meditationStatus.textContent='ครบเวลาแล้ว';}}
+ if(meditation.running){meditation.remaining=Math.max(0,meditation.end-Date.now());if(!meditation.remaining){meditation.running=false;meditation.audioInterrupted=false;stopMeditationAudio();if(document.visibilityState==='visible'&&document.getElementById('meditationSound').value!=='silent'&&meditation.volume>0)window.meditationAudio?.playAlert('soft',meditation.volume);meditationStatus.textContent='ครบเวลาแล้ว';}}
+ window.MomentaWake?.setActive('meditation',meditation.running);
+ document.getElementById('meditationResumeSound').hidden=!meditation.running||!meditation.audioInterrupted;
  const seconds=Math.ceil(meditation.remaining/1000);meditationTime.textContent=String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0');document.getElementById('meditationStart').textContent=meditation.running?'หยุดชั่วคราว':meditation.remaining?'เริ่มสมาธิ':'เริ่มอีกครั้ง';document.getElementById('meditationMinutes').disabled=meditation.running;document.getElementById('meditationSound').disabled=meditation.running;document.getElementById('meditationVolume').disabled=meditation.running;document.getElementById('meditationPreview').disabled=meditation.running;
 }
-document.getElementById('meditationStart').addEventListener('click',()=>{if(meditation.running){meditation.remaining=Math.max(0,meditation.end-Date.now());meditation.running=false;stopMeditationAudio();meditationStatus.textContent='หยุดชั่วคราว';}else{if(!meditation.remaining)meditation.remaining=Number(document.getElementById('meditationMinutes').value)*60000;meditation.end=Date.now()+meditation.remaining;meditation.running=true;meditationStatus.textContent=startMeditationAudio()?'กำลังนั่งสมาธิ':'กำลังนั่งสมาธิ · เบราว์เซอร์ไม่รองรับเสียง';}renderMeditation();});
+document.getElementById('meditationStart').addEventListener('click',()=>{meditation.audioInterrupted=false;if(meditation.running){meditation.remaining=Math.max(0,meditation.end-Date.now());meditation.running=false;stopMeditationAudio();meditationStatus.textContent='หยุดชั่วคราว';}else{if(!meditation.remaining)meditation.remaining=Number(document.getElementById('meditationMinutes').value)*60000;meditation.end=Date.now()+meditation.remaining;meditation.running=true;meditationStatus.textContent=startMeditationAudio()?'กำลังนั่งสมาธิ':'กำลังนั่งสมาธิ · เบราว์เซอร์ไม่รองรับเสียง';}renderMeditation();});
 document.getElementById('meditationReset').addEventListener('click',()=>{meditation.running=false;stopMeditationAudio();meditation.remaining=Number(document.getElementById('meditationMinutes').value)*60000;meditationStatus.textContent='พร้อมเริ่ม';renderMeditation();});
 document.getElementById('meditationMinutes').addEventListener('change',e=>{meditation.remaining=Number(e.target.value)*60000;renderMeditation();});
 document.getElementById('meditationVolume').addEventListener('input',e=>{meditation.volume=Math.max(0,Math.min(1,Number(e.target.value)/100));});
 document.getElementById('meditationPreview').addEventListener('click',()=>{const kind=document.getElementById('meditationSound').value;const ok=window.meditationAudio?.previewAmbient(kind,meditation.volume,7000);meditationStatus.textContent=kind==='silent'?'เลือกปิดเสียงอยู่':ok?'กำลังเล่นตัวอย่างเสียงสังเคราะห์ 7 วินาที':'เบราว์เซอร์นี้ไม่รองรับเสียง';});
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='visible'&&meditation.running){stopMeditationAudio();meditationStatus.textContent='พักเสียงเมื่อออกจากหน้าแอป · กลับมาเริ่มต่อได้';}});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='visible'&&meditation.running){stopMeditationAudio();meditation.audioInterrupted=document.getElementById('meditationSound').value!=='silent';meditationStatus.textContent='พักเสียงเมื่อออกจากแอป';}else if(document.visibilityState==='visible')renderMeditation();});
+document.getElementById('meditationResumeSound').addEventListener('click',()=>{if(!meditation.running)return;const ok=startMeditationAudio();meditation.audioInterrupted=!ok;meditationStatus.textContent=ok?'กำลังนั่งสมาธิ':'เล่นเสียงไม่ได้ ลองอีกครั้ง';renderMeditation();});
 setInterval(renderMeditation,1000);
 const uiIcons={play:'<path d="m9 5 11 7-11 7Z"/>',plus:'<path d="M12 5v14M5 12h14"/>',check:'<path d="m5 12 4 4L19 6"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/>',arrow:'<path d="M5 12h14m-5-5 5 5-5 5"/>'};
 function uiIcon(name){return '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+(uiIcons[name]||uiIcons.clock)+'</svg>';}
@@ -175,7 +178,7 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-ui-pomo-settings')){uiTaskDialog.close();openWorkspaceRoute('settings');document.querySelector('.pomo-settings-card').scrollIntoView({block:'start'});}
 });
 uiTaskDialog.addEventListener('click',e=>{if(e.target===uiTaskDialog){const rect=uiTaskDialog.getBoundingClientRect();if(e.clientX<rect.left||e.clientX>rect.right||e.clientY<rect.top||e.clientY>rect.bottom)uiTaskDialog.close();}});
-uiTaskDialog.addEventListener('change',e=>{if(e.target.id==='uiPomoSound'){pomoSettings.sound=e.target.value;saveState();renderPomoSoundSettings();}else if(e.target.id==='uiPomoAmbient'){pomoSettings.ambient=e.target.value;saveState();const b=getActiveBlock();syncPomoAmbient(b,b&&timerState[b.id]);}});
+uiTaskDialog.addEventListener('change',e=>{if(e.target.id==='uiPomoSound'){pomoSettings.sound=e.target.value;saveState({localOnly:true});renderPomoSoundSettings();}else if(e.target.id==='uiPomoAmbient'){pomoSettings.ambient=e.target.value;saveState({localOnly:true});const b=getActiveBlock();syncPomoAmbient(b,b&&timerState[b.id]);}});
 // Existing sheets receive keyboard containment, Escape and focus restoration.
 const uiSheets=[...document.querySelectorAll('.overlay,.day-modal-overlay,.pomo-full-overlay')];
 const uiSheetFocus=new WeakMap();

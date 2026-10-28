@@ -2,7 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap');
 :root{--bg-page:#F5F6F2;--paper:#F0F2ED;--card:#FFFFFF;--ink:#1C2024;--ink-soft:#59655F;--ink-muted:#64716B;--line:#DFE5DF;--line-strong:#9AA89E;--focus:#00545F;--focus-soft:#ECFFB6;--focus-border:#8AA956;--brand:#00545F;--brand-navy:#003E46;--sage-canvas:var(--bg-page);--sage-rail:var(--card);--glow:transparent;--glow-strong:transparent;--ui-accent:#D6FB00;--ui-on-accent:#173C39;--ui-radius:20px;--tab-h:80px;--workspace-shadow:none;}
 html[data-theme="dark"]{--bg-page:#151A1C;--paper:#252F30;--card:#20282A;--ink:#F1F1ED;--ink-soft:#B8C5C0;--ink-muted:#ADBCB6;--line:#3C4948;--line-strong:#7B8E86;--focus:#D6FB00;--focus-soft:#303D27;--focus-border:#9CAE64;--brand:#D6FB00;--brand-navy:#ECFFB6;--sage-canvas:var(--bg-page);--sage-rail:var(--card);}
-html{font-size:16px;scroll-padding-bottom:calc(110px + env(safe-area-inset-bottom));-webkit-text-size-adjust:100%;overscroll-behavior-y:none;}
+html{font-size:16px;scroll-padding-bottom:calc(110px + env(safe-area-inset-bottom));-webkit-text-size-adjust:100%;overscroll-behavior-y:none;touch-action:pan-y;}
+body{touch-action:pan-y;}
 body{font-family:'Noto Sans Thai','Leelawadee UI',Tahoma,system-ui,sans-serif;font-size:16px;line-height:1.6;background:var(--bg-page);padding:0 0 calc(100px + env(safe-area-inset-bottom));}
 button,input,select,textarea{font-family:inherit;}
 button,a,summary,[role="button"]{touch-action:manipulation;}
@@ -101,6 +102,7 @@ html[data-theme="dark"] .today-add-task{color:#1C2024;}
 .ui-overlap-choice input{width:22px;height:22px;min-height:22px;accent-color:var(--focus);}
 .field label{font-size:14px;line-height:1.6;margin-bottom:6px;color:var(--ink-soft);}
 .field input,.field select,.field textarea,input,select,textarea{font-size:16px;}
+@media (max-width: 768px){input,select,textarea{font-size:16px!important;}}
 .field input,.field select,.field textarea{min-height:48px;border:1px solid var(--line-strong);border-radius:12px;padding:10px 12px;background:var(--card);color:var(--ink);}
 .modal,.day-modal{background:var(--card);border:1px solid var(--line);box-shadow:0 24px 80px #00000030;border-radius:24px;}
 .overlay,.day-modal-overlay{background:rgba(8,22,23,.55);padding:24px;align-items:center;}
