@@ -619,7 +619,7 @@ button{touch-action:manipulation;}
 </style>
 <link rel="stylesheet" href="workspace-ui.css?v=20261021b">
 <link rel="stylesheet" href="sage-workspace.css?v=20261026-lime-teal">
-<link rel="stylesheet" href="productive-ui.css?v=20261028-momenta-b18">
+<link rel="stylesheet" href="productive-ui.css?v=20261028-momenta-b21">
 </head>
 <body>
 
@@ -934,7 +934,7 @@ button{touch-action:manipulation;}
       <label class="pomo-setting-field"><span>เสียงแจ้งเตือน</span><select id="pomoSoundSelect" aria-label="เลือกเสียง Pomodoro"><option value="chime">ระฆังใส</option><option value="soft">นุ่ม</option><option value="pulse">สองจังหวะ</option><option value="digital">ดิจิทัล</option><option value="silent">ปิดเสียง</option></select></label>
       <button type="button" class="pomo-preview-btn" id="pomoPreviewSoundBtn">ฟังตัวอย่าง</button>
       <label class="pomo-setting-field"><span>ระดับเสียงแจ้งเตือน <output id="pomoAlertVolumeLabel">28%</output></span><input id="pomoAlertVolume" type="range" min="0" max="50" value="28" aria-label="ระดับเสียงแจ้งเตือน"></label>
-      <label class="pomo-setting-field"><span>เสียงพื้นหลังระหว่างโฟกัส</span><select id="pomoAmbientSelect" aria-label="เลือกเสียงพื้นหลัง Pomodoro"><option value="silent">ปิดเสียง</option><option value="rain">ฝนสังเคราะห์</option><option value="waves">คลื่นสังเคราะห์</option><option value="nature">ธรรมชาติสังเคราะห์</option></select></label>
+      <label class="pomo-setting-field"><span>เสียงพื้นหลังระหว่างโฟกัส</span><select id="pomoAmbientSelect" aria-label="เลือกเสียงพื้นหลัง Pomodoro"><option value="silent">ปิดเสียง</option><option value="rain">ฝนสังเคราะห์</option><option value="waves">คลื่นสังเคราะห์</option><option value="nature">ธรรมชาติสังเคราะห์</option><option value="wind">ลมสังเคราะห์</option><option value="white">ไวต์นอยส์</option><option value="deep">เสียงทุ้ม</option><option value="hum">เสียงฮัม</option></select></label>
       <label class="pomo-setting-field"><span>ระดับเสียงพื้นหลัง <output id="pomoAmbientVolumeLabel">20%</output></span><input id="pomoAmbientVolume" type="range" min="0" max="100" value="20" aria-label="ระดับเสียงพื้นหลัง Pomodoro"></label>
       <button type="button" class="pomo-preview-btn" id="pomoPreviewAmbientBtn">ฟังเสียงพื้นหลัง 7 วินาที</button>
       <label class="pomo-setting-toggle"><span><strong>นับถอยหลัง 5 วินาที</strong><small>มีเสียงเตือนเบาก่อนเปลี่ยนช่วง</small></span><span class="toggle-wrap"><input type="checkbox" id="pomoCountdownToggle" checked><span class="toggle-track"><span class="toggle-thumb"></span></span></span></label>
@@ -1018,7 +1018,8 @@ button{touch-action:manipulation;}
       <span style="font-size:16px;font-weight:700;color:var(--ink);">เพิ่มรายจ่าย</span>
       <button type="button" class="gallery-popup-close" onclick="document.getElementById('expenseOverlay').classList.remove('show')">✕</button>
     </div>
-    <input type="number" id="exp_amount" min="0" step="1" placeholder="0" inputmode="decimal" style="width:100%;border:none;background:none;text-align:center;font-family:ui-monospace,monospace;font-size:34px;font-weight:700;color:var(--ink);margin-bottom:16px;">
+    <div id="expenseReceiptReader"></div>
+    <input type="number" id="exp_amount" min="0" step="0.01" placeholder="0" inputmode="decimal" style="width:100%;border:none;background:none;text-align:center;font-family:ui-monospace,monospace;font-size:34px;font-weight:700;color:var(--ink);margin-bottom:16px;">
     <div class="expense-cat-grid" id="expCatGrid">
       <button type="button" class="expense-cat-dot-chip" data-cat="food"><span class="expense-cat-dot" style="background:#E08C2B"></span>อาหาร</button>
       <button type="button" class="expense-cat-dot-chip" data-cat="transport"><span class="expense-cat-dot" style="background:#1a6ecc"></span>เดินทาง</button>
@@ -1049,7 +1050,8 @@ button{touch-action:manipulation;}
       <span style="font-size:16px;font-weight:700;color:var(--ink);">เพิ่มรายรับ</span>
       <button type="button" class="gallery-popup-close" onclick="document.getElementById('incomeOverlay').classList.remove('show')">✕</button>
     </div>
-    <input type="number" id="inc_amount" min="0" step="1" placeholder="0" inputmode="decimal" style="width:100%;border:none;background:none;text-align:center;font-family:ui-monospace,monospace;font-size:34px;font-weight:700;color:var(--focus);margin-bottom:16px;">
+    <div id="incomeReceiptReader"></div>
+    <input type="number" id="inc_amount" min="0" step="0.01" placeholder="0" inputmode="decimal" style="width:100%;border:none;background:none;text-align:center;font-family:ui-monospace,monospace;font-size:34px;font-weight:700;color:var(--focus);margin-bottom:16px;">
     <div class="expense-cat-grid" id="incCatGrid" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px;">
       <button type="button" class="expense-cat-dot-chip" data-cat="salary"><span class="expense-cat-dot" style="background:#2f6b52"></span>เงินเดือน</button>
       <button type="button" class="expense-cat-dot-chip" data-cat="freelance"><span class="expense-cat-dot" style="background:#4A9B78"></span>ฟรีแลนซ์</button>
@@ -1175,7 +1177,7 @@ button{touch-action:manipulation;}
   <section id="focusSectionMeditation" class="focus-section-panel" role="tabpanel" aria-labelledby="focusSectionMeditationTab" data-focus-panel="meditation" hidden>
     <section class="meditation-card" aria-labelledby="meditationTitle">
       <h2 id="meditationTitle">เวลานั่งสมาธิ</h2><p>เลือกเวลาและเสียง แล้วให้เวลาตัวเองสักครู่</p>
-      <div class="meditation-options"><label>ระยะเวลา <select id="meditationMinutes"><option value="5">5 นาที</option><option value="10">10 นาที</option><option value="15">15 นาที</option><option value="25">25 นาที</option></select></label><label>เสียงพื้นหลัง <select id="meditationSound"><option value="silent">เงียบ</option><option value="rain">ฝนสังเคราะห์</option><option value="waves">คลื่นสังเคราะห์</option><option value="nature">ธรรมชาติสังเคราะห์</option></select></label><label>ระดับเสียง <input id="meditationVolume" type="range" min="0" max="100" value="20" aria-label="ระดับเสียงสมาธิ"></label></div>
+      <div class="meditation-options"><label>ระยะเวลา <select id="meditationMinutes"><option value="5">5 นาที</option><option value="10">10 นาที</option><option value="15">15 นาที</option><option value="25">25 นาที</option></select></label><label>เสียงพื้นหลัง <select id="meditationSound"><option value="silent">เงียบ</option><option value="rain">ฝนสังเคราะห์</option><option value="waves">คลื่นสังเคราะห์</option><option value="nature">ธรรมชาติสังเคราะห์</option><option value="wind">ลมสังเคราะห์</option><option value="white">ไวต์นอยส์</option><option value="deep">เสียงทุ้ม</option><option value="hum">เสียงฮัม</option></select></label><label>ระดับเสียง <input id="meditationVolume" type="range" min="0" max="100" value="20" aria-label="ระดับเสียงสมาธิ"></label></div>
       <p id="meditationTime" class="meditation-time" role="timer">05:00</p><p id="meditationStatus" role="status">พร้อมเริ่ม</p>
       <div class="meditation-actions"><button type="button" class="btn-primary" id="meditationStart">เริ่มสมาธิ</button><button type="button" class="btn-secondary" id="meditationResumeSound" hidden>เล่นเสียงต่อ</button><button type="button" class="btn-secondary" id="meditationPreview">ฟังตัวอย่างเสียง</button><button type="button" class="btn-secondary" id="meditationReset">เริ่มใหม่</button></div>
       <small>เสียงเล่นขณะเปิดหน้านี้อยู่ และอาจหยุดเมื่อเบราว์เซอร์พักการทำงาน</small>
@@ -1670,7 +1672,7 @@ function renderPomoSoundSettings(){
   const sound=document.getElementById("pomoSoundSelect"),countdown=document.getElementById("pomoCountdownToggle"),ambient=document.getElementById("pomoAmbientSelect"),ambientVolume=document.getElementById("pomoAmbientVolume"),ambientLabel=document.getElementById("pomoAmbientVolumeLabel"),alertVolume=document.getElementById("pomoAlertVolume"),alertLabel=document.getElementById("pomoAlertVolumeLabel");
   if(sound)sound.value=POMO_SOUND_LABELS[pomoSettings.sound]?pomoSettings.sound:"chime";
   if(countdown)countdown.checked=pomoSettings.countdown!==false;
-  if(ambient)ambient.value=["silent","rain","waves","nature"].includes(pomoSettings.ambient)?pomoSettings.ambient:"silent";
+  if(ambient)ambient.value=["silent","rain","waves","nature","wind","white","deep","hum"].includes(pomoSettings.ambient)?pomoSettings.ambient:"silent";
   if(ambientVolume)ambientVolume.value=Math.round(Math.max(0,Math.min(1,Number(pomoSettings.ambientVolume)||0))*100);
   if(ambientLabel)ambientLabel.value=ambientLabel.textContent=ambientVolume.value+"%";
   if(alertVolume)alertVolume.value=Math.round(Math.max(0,Math.min(0.5,Number(pomoSettings.volume)||0))*100);
@@ -1691,13 +1693,14 @@ function renderSavedPomoModes(){
   el.innerHTML=pomoCustomModes.length?`<p class="saved-pomo-modes-label">โหมดที่บันทึกไว้</p>${pomoCustomModes.map(item=>`<button type="button" data-mode="${esc(item.id)}">${esc(item.name)} <small>${item.focus}/${item.break}</small></button>`).join("")}`:"";
   updateModeGrid();
 }
-document.getElementById("pomoSoundSelect")?.addEventListener("change",e=>{pomoSettings.sound=e.target.value;saveState({localOnly:true});});
+document.getElementById("pomoSoundSelect")?.addEventListener("change",e=>{pomoSettings.sound=e.target.value;saveState({localOnly:true});playPomoSound("complete");});
 document.getElementById("pomoCountdownToggle")?.addEventListener("change",e=>{pomoSettings.countdown=e.target.checked;saveState({localOnly:true});});
 document.getElementById("pomoAlertVolume")?.addEventListener("input",e=>{pomoSettings.volume=Math.max(0,Math.min(0.5,Number(e.target.value)/100));document.getElementById("pomoAlertVolumeLabel").value=document.getElementById("pomoAlertVolumeLabel").textContent=e.target.value+"%";saveState({localOnly:true});});
 document.getElementById("pomoPreviewSoundBtn")?.addEventListener("click",()=>playPomoSound("complete"));
-document.getElementById("pomoAmbientSelect")?.addEventListener("change",e=>{pomoSettings.ambient=e.target.value;saveState({localOnly:true});const b=getActiveBlock();syncPomoAmbient(b,b&&timerState[b.id]);});
+function previewPomoAmbient(){const b=getActiveBlock(),ts=b&&timerState[b.id];if(b&&ts&&ts.phase==="focus"&&!ts.paused){pomoAmbientPreviewUntil=0;syncPomoAmbient(b,ts);return;}if(pomoSettings.ambient==="silent"){pomoAmbientPreviewUntil=0;window.momentaAudio?.stopAmbient();return;}pomoAmbientPreviewUntil=Date.now()+7000;const ok=window.momentaAudio?.startAmbient(pomoSettings.ambient,pomoSettings.ambientVolume);if(!ok){pomoAmbientPreviewUntil=0;showToast("เบราว์เซอร์นี้ไม่รองรับเสียง");}}
+document.getElementById("pomoAmbientSelect")?.addEventListener("change",e=>{pomoSettings.ambient=e.target.value;saveState({localOnly:true});previewPomoAmbient();});
 document.getElementById("pomoAmbientVolume")?.addEventListener("input",e=>{pomoSettings.ambientVolume=Math.max(0,Math.min(1,Number(e.target.value)/100));document.getElementById("pomoAmbientVolumeLabel").value=document.getElementById("pomoAmbientVolumeLabel").textContent=e.target.value+"%";saveState({localOnly:true});const b=getActiveBlock();syncPomoAmbient(b,b&&timerState[b.id]);});
-document.getElementById("pomoPreviewAmbientBtn")?.addEventListener("click",()=>{if(pomoSettings.ambient==="silent"){pomoAmbientPreviewUntil=0;window.momentaAudio?.stopAmbient();showToast("เลือกปิดเสียงพื้นหลังอยู่");return;}pomoAmbientPreviewUntil=Date.now()+7000;const ok=window.momentaAudio?.startAmbient(pomoSettings.ambient,pomoSettings.ambientVolume);if(!ok)pomoAmbientPreviewUntil=0;showToast(ok?"เล่นเสียงพื้นหลังสังเคราะห์ 7 วินาที":"เบราว์เซอร์นี้ไม่รองรับเสียง");});
+document.getElementById("pomoPreviewAmbientBtn")?.addEventListener("click",()=>{previewPomoAmbient();if(pomoSettings.ambient==="silent")showToast("เลือกปิดเสียงพื้นหลังอยู่");});
 document.getElementById("pomoSavePresetBtn")?.addEventListener("click",()=>{
   const name=document.getElementById("pomoPresetName").value.trim()||"โหมดของฉัน";
   const focus=Math.max(1,Math.min(240,Number(document.getElementById("pomoPresetFocus").value)||25));
@@ -4938,6 +4941,7 @@ if(firebaseInitialized && useIosRedirect()){
   </div>
 </div>
 <script src="construction-3d.js"></script>
-<script src="productive-ui.js?v=20261028-momenta-b19"></script>
+<script src="momenta-receipt.js?v=20261028-b21"></script>
+<script src="productive-ui.js?v=20261028-momenta-b20"></script>
 </body>
 </html>

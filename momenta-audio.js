@@ -5,7 +5,7 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function (root) {
   'use strict';
 
-  const AMBIENCE = new Set(['rain', 'waves', 'nature']);
+  const AMBIENCE = new Set(['rain', 'waves', 'nature', 'wind', 'white', 'deep', 'hum']);
   const ALERTS = {
     chime: [660, 880, 1320],
     soft: [420, 560],
@@ -76,8 +76,8 @@
         const output = ctx.createGain();
         source.buffer = buffer;
         source.loop = true;
-        filter.type = name === 'rain' ? 'lowpass' : name === 'waves' ? 'lowpass' : 'bandpass';
-        filter.frequency.value = name === 'rain' ? 1200 : name === 'waves' ? 420 : 1500;
+        filter.type = name === 'nature' || name === 'wind' ? 'bandpass' : 'lowpass';
+        filter.frequency.value = ({rain:1200, waves:420, nature:1500, wind:550, white:16000, deep:160, hum:280})[name];
         output.gain.value = level * 0.22;
         source.connect(filter);
         filter.connect(output);
@@ -85,23 +85,23 @@
 
         const nodes = [source, filter, output];
         const sources = [source];
-        if (name === 'waves') {
+        if (name === 'waves' || name === 'wind') {
           const lfo = ctx.createOscillator();
           const depth = ctx.createGain();
           lfo.type = 'sine';
-          lfo.frequency.value = 0.11;
+          lfo.frequency.value = name === 'wind' ? 0.07 : 0.11;
           depth.gain.value = level * 0.12;
           lfo.connect(depth);
           depth.connect(output.gain);
           lfo.start();
           nodes.push(lfo, depth);
           sources.push(lfo);
-        } else if (name === 'nature') {
+        } else if (name === 'nature' || name === 'hum') {
           const tone = ctx.createOscillator();
           const toneGain = ctx.createGain();
           tone.type = 'sine';
-          tone.frequency.value = 1450;
-          toneGain.gain.value = level * 0.012;
+          tone.frequency.value = name === 'hum' ? 110 : 1450;
+          toneGain.gain.value = level * (name === 'hum' ? 0.08 : 0.012);
           tone.connect(toneGain);
           toneGain.connect(ctx.destination);
           tone.start();
