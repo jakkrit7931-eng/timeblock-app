@@ -33,6 +33,7 @@
   function createAudioController(options = {}) {
     let context = null;
     let graph = null;
+    let music = null;
     let previewTimer = null;
     const contextFactory = options.audioContextFactory || (() => {
       const Context = root?.AudioContext || root?.webkitAudioContext;
@@ -53,6 +54,7 @@
         clearTimer(previewTimer);
         previewTimer = null;
       }
+      if (music) { music.pause(); music.removeAttribute('src'); music.load(); music = null; }
       if (!graph) return;
       const current = graph;
       graph = null;
@@ -72,6 +74,13 @@
       if (name === 'silent' || !name) {
         stopAmbient();
         return true;
+      }
+      if (/^track-(0[1-9]|1[0-5])$/.test(name)) {
+        const level = Math.max(0, Math.min(1, Number(volume) || 0));
+        if (music && graph?.name === name) { music.volume = level; graph.volume = level; return true; }
+        stopAmbient();
+        if (!level) return true;
+        try { music = new Audio('audio/focus/' + name + '.mp3'); music.loop = true; music.volume = level; music.preload = 'auto'; graph = {name, volume:level, sources:[], nodes:[]}; music.play().catch(() => {}); return true; } catch (_) { stopAmbient(); return false; }
       }
       if (!AMBIENCE.has(name)) return false;
       const level = Math.max(0, Math.min(1, Number(volume) || 0));

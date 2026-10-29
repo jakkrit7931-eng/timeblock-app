@@ -1,4 +1,4 @@
-const CACHE_NAME = "productive-time-v20261028-momenta-b23";
+const CACHE_NAME = "productive-time-v20261028-momenta-b24";
 const APP_SHELL = [
   "./index.html",
   "./sage-workspace.css",
@@ -40,6 +40,8 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
+  // Audio is fetched on demand; leave range requests to the browser.
+  if (new URL(event.request.url).pathname.includes("/audio/focus/")) return;
   const requestUrl = new URL(event.request.url);
   if (requestUrl.origin === self.location.origin && (requestUrl.pathname.startsWith('/__/auth/') || requestUrl.pathname.startsWith('/__/firebase/'))) return;
   event.respondWith(

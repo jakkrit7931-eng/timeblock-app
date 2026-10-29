@@ -934,7 +934,7 @@ button{touch-action:manipulation;}
       <label class="pomo-setting-field"><span>เสียงแจ้งเตือน</span><select id="pomoSoundSelect" aria-label="เลือกเสียง Pomodoro"><option value="chime">ระฆังใส</option><option value="soft">นุ่ม</option><option value="pulse">สองจังหวะ</option><option value="digital">ดิจิทัล</option><option value="silent">ปิดเสียง</option></select></label>
       <button type="button" class="pomo-preview-btn" id="pomoPreviewSoundBtn">ฟังตัวอย่าง</button>
       <label class="pomo-setting-field"><span>ระดับเสียงแจ้งเตือน <output id="pomoAlertVolumeLabel">28%</output></span><input id="pomoAlertVolume" type="range" min="0" max="50" value="28" aria-label="ระดับเสียงแจ้งเตือน"></label>
-      <label class="pomo-setting-field"><span>เสียงพื้นหลังระหว่างโฟกัส</span><select id="pomoAmbientSelect" aria-label="เลือกเสียงพื้นหลัง Pomodoro"><option value="silent">ปิดเสียง</option><option value="rain">ฝนสังเคราะห์</option><option value="waves">คลื่นสังเคราะห์</option><option value="nature">ธรรมชาติสังเคราะห์</option><option value="wind">ลมสังเคราะห์</option><option value="white">ไวต์นอยส์</option><option value="deep">เสียงทุ้ม</option><option value="hum">เสียงฮัม</option><option value="lofi">Lo-fi สังเคราะห์</option><option value="lofi-rain">Lo-fi กับฝนสังเคราะห์</option><option value="lofi-soft">Lo-fi ไม่มีบีต สังเคราะห์</option></select></label>
+      <label class="pomo-setting-field"><span>เสียงพื้นหลังระหว่างโฟกัส</span><select id="pomoAmbientSelect" aria-label="เลือกเสียงพื้นหลัง Pomodoro"><option value="silent">ปิดเสียง</option><option value="rain">ฝนสังเคราะห์</option><option value="waves">คลื่นสังเคราะห์</option><option value="nature">ธรรมชาติสังเคราะห์</option><option value="wind">ลมสังเคราะห์</option><option value="white">ไวต์นอยส์</option><option value="deep">เสียงทุ้ม</option><option value="hum">เสียงฮัม</option><option value="lofi">Lo-fi สังเคราะห์</option><option value="lofi-rain">Lo-fi กับฝนสังเคราะห์</option><option value="lofi-soft">Lo-fi ไม่มีบีต สังเคราะห์</option><option value="track-01">เพลงโฟกัส 1</option><option value="track-02">เพลงโฟกัส 2</option><option value="track-03">เพลงโฟกัส 3</option><option value="track-04">เพลงโฟกัส 4</option><option value="track-05">เพลงโฟกัส 5</option><option value="track-06">เพลงโฟกัส 6</option><option value="track-07">เพลงโฟกัส 7</option><option value="track-08">เพลงโฟกัส 8</option><option value="track-09">เพลงโฟกัส 9</option><option value="track-10">เพลงโฟกัส 10</option><option value="track-11">เพลงโฟกัส 11</option><option value="track-12">เพลงโฟกัส 12</option><option value="track-13">เพลงโฟกัส 13</option><option value="track-14">เพลงโฟกัส 14</option><option value="track-15">เพลงโฟกัส 15</option></select></label>
       <label class="pomo-setting-field"><span>ระดับเสียงพื้นหลัง <output id="pomoAmbientVolumeLabel">20%</output></span><input id="pomoAmbientVolume" type="range" min="0" max="100" value="20" aria-label="ระดับเสียงพื้นหลัง Pomodoro"></label>
       <button type="button" class="pomo-preview-btn" id="pomoPreviewAmbientBtn">ฟังเสียงพื้นหลัง 7 วินาที</button>
       <label class="pomo-setting-toggle"><span><strong>เตือนก่อนจบช่วง</strong><small>มีเสียงก่อนจบ 1 นาที และนับถอยหลัง 5 วินาที</small></span><span class="toggle-wrap"><input type="checkbox" id="pomoCountdownToggle" checked><span class="toggle-track"><span class="toggle-thumb"></span></span></span></label>
@@ -1672,7 +1672,7 @@ function renderPomoSoundSettings(){
   const sound=document.getElementById("pomoSoundSelect"),countdown=document.getElementById("pomoCountdownToggle"),ambient=document.getElementById("pomoAmbientSelect"),ambientVolume=document.getElementById("pomoAmbientVolume"),ambientLabel=document.getElementById("pomoAmbientVolumeLabel"),alertVolume=document.getElementById("pomoAlertVolume"),alertLabel=document.getElementById("pomoAlertVolumeLabel");
   if(sound)sound.value=POMO_SOUND_LABELS[pomoSettings.sound]?pomoSettings.sound:"chime";
   if(countdown)countdown.checked=pomoSettings.countdown!==false;
-  if(ambient)ambient.value=["silent","rain","waves","nature","wind","white","deep","hum","lofi","lofi-rain","lofi-soft"].includes(pomoSettings.ambient)?pomoSettings.ambient:"silent";
+  if(ambient)ambient.value=(["silent","rain","waves","nature","wind","white","deep","hum","lofi","lofi-rain","lofi-soft"].includes(pomoSettings.ambient)||/^track-(0[1-9]|1[0-5])$/.test(pomoSettings.ambient))?pomoSettings.ambient:"silent";
   if(ambientVolume)ambientVolume.value=Math.round(Math.max(0,Math.min(1,Number(pomoSettings.ambientVolume)||0))*100);
   if(ambientLabel)ambientLabel.value=ambientLabel.textContent=ambientVolume.value+"%";
   if(alertVolume)alertVolume.value=Math.round(Math.max(0,Math.min(0.5,Number(pomoSettings.volume)||0))*100);
@@ -2704,7 +2704,7 @@ document.getElementById("blocksList").addEventListener("click",e=>{
       const isCount=g&&(g.mode||(g.targetHours>0?"time":"project"))==="count";
       if(isCount){ openCountConfirmModal(block,g); }
       else {
-        block.completed=true; saveState(); renderToday();
+        block.completed=true; syncTaskFromCompletedBlocks(block); saveState(); renderToday();
         bounceCheckButton(block.id);
       }
     }
@@ -2945,6 +2945,12 @@ document.querySelector(".pm-task-tabs").addEventListener("click",e=>{
 document.getElementById("taskSearch").addEventListener("input",e=>{taskSearchTerm=e.target.value.trim();renderTasks();});
 document.getElementById("taskPriorityFilter").addEventListener("change",e=>{taskPriorityFilter=e.target.value;renderTasks();});
 document.getElementById("taskDueFilter").addEventListener("change",e=>{taskDueFilter=e.target.value;renderTasks();});
+function syncTaskFromCompletedBlocks(block){
+  if (!block.taskId) return;
+  const task=tasks.find(t=>t.id===block.taskId);
+  const linked=blocks.filter(b=>b.taskId===block.taskId);
+  if(task && !task.completed && linked.length && linked.every(b=>b.completed===true)){task.completed=true;task.completedAt=new Date().toISOString();}
+}
 function handleTaskAction(button){
   const task=tasks.find(item=>item.id===button.dataset.taskId);if(!task)return;
   if(button.dataset.taskAction==="toggle"){
@@ -3325,7 +3331,7 @@ document.getElementById("countConfirmBtn").addEventListener("click",()=>{
   const val=document.getElementById("countConfirmInput").value;
   if(val===""||isNaN(Number(val))){alert("กรอกจำนวนด้วยครับ");return;}
   block.countAchieved=Number(val);
-  block.completed=true;
+  block.completed=true; syncTaskFromCompletedBlocks(block);
   saveState();
   document.getElementById("countConfirmOverlay").classList.remove("show");
   renderAll();
